@@ -1,0 +1,10 @@
+sudo: false
+language: python
+python:
+  - "3.5"
+install:
+  - pip install -r requirements.txt
+script:
+  # Fail early since some targets may take awhile to complete.
+  - make clean && make dummy && make preview
+  - flake8

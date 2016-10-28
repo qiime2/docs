@@ -1,0 +1,9 @@
+# Documentation building requirements.
+recommonmark==0.4.0
+Sphinx==1.4.6
+
+# Additional CI requirements.
+flake8
+
+# QIIME 2 packages required to build.
+git+git://github.com/qiime2/qiime2.git#egg=qiime
