@@ -61,7 +61,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+build/
 
 # PyBuilder
 target/
@@ -87,3 +87,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# vi
+.*.swp
+
+.DS_Store
