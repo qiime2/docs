@@ -1,0 +1,107 @@
+@import url('basic.css');
+
+h1 {
+  font-family: helvetica sans-serif;;
+  border-bottom: 1px dashed #bbb;
+}
+
+#github-banner {
+  display: none;
+}
+
+#header {
+  height: 125px;
+  padding: 10px;
+}
+
+#header-img {
+  content: url('logo200.png');
+}
+
+#content {
+  min-height: cal(100vh - 200px);
+}
+
+#sidebar {
+  padding: 15px;
+  border-top: 1px dashed #bbb;
+}
+
+div.admonition.question {
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
+}
+
+div.admonition.qiime1 {
+    color: #8A6D3B;
+    background-color: #FCF8E3;
+    border: 1px solid #FAEBCC;
+}
+
+div.admonition.tip, div.admonition.note {
+    color: #3A87AD;
+    background-color: #D9EDF7;
+    border: 1px solid #BCE8F1;
+}
+
+div.footer {
+    maring-top: 50px;
+    font-size: 11px;
+}
+
+@media screen and (min-width: 992px) {
+
+  #github-banner {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #wrapper {
+    width: 95%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  #header {
+    padding: 20px 0 0 100px;
+    height: 200px;
+  }
+
+  #header-img {
+    content: url('logo400.png');
+  }
+
+  #body {
+    border-left: 1px dashed #bbb;
+  }
+
+  #sidebar {
+    border-top: none;
+  }
+
+  #sidebar h3 {
+    font-size: 14px;
+  }
+
+  #sidebar ul {
+    padding: inherit;
+    font-size: 12px;
+  }
+
+  #sidebar ul li ul {
+    padding-left: 10px;
+  }
+
+  #sidebar ul li ul li {
+    padding: 5px 0;
+  }
+
+  div.footer {
+    float: right;
+    font-size: 14px;
+  }
+
+}

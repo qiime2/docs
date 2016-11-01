@@ -1,0 +1,89 @@
+{% extends "!layout.html" %}
+
+{# Override basic theme to be fully custom website #}
+{# Block reference found at: https://github.com/contpub/sphinx-themes/tree/master/basic #}
+
+{%- block doctype -%}
+<!DOCTYPE html>
+{%- endblock %}
+
+{# Extra files needed in head #}
+{% block extrahead %}
+  <link rel="icon" href="{{ pathto('_static/favicon.ico', 1) }}" type="image/png" />
+  <link rel="stylesheet" href="{{ pathto('_static/bootstrap.min.css', 1) }}" media="screen" />
+  <link rel="stylesheet" href="{{ pathto('_static/normalize.css', 1) }}" media="screen">
+{% endblock %}
+
+{# Github Banner #}
+{% block header %}
+<a href="https://github.com/qiime2/qiime2" id="github-banner">
+  <img
+    src="{{ pathto('_static/github_banner.png', 1) }}"
+    alt="Fork me on GitHub"
+  />
+</a>
+{% endblock %}
+
+{% block content %}
+<div id="wrapper" class="container clearfix">
+  <div id="header">
+    <img
+    id="header-img"
+    src="{{ pathto('_static/logo400.png', 1) }}" alt="QIIME 2"
+    />
+  </div>
+  <div id="content">
+    {% block document %}
+    <div id="body" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 main pull-right">
+      {% block body %} {% endblock %}
+    </div>
+    {% endblock %}
+
+    {% if render_sidebar %}
+    <div id="sidebar" class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-left">
+      {{ q2sidebar() }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+
+{# Removing content from header and footer relation bars #}
+{% block relbar1 %}{% endblock %}
+{%- block relbar2 %}{% endblock %}
+
+
+{# Custom sidebar override to stop sphinxwrapper from being generated #}
+{% macro q2sidebar() -%}
+  {%- block sidebarlogo %}
+    {%- if logo %}
+    <p class="logo"><a href="{{ pathto(master_doc) }}">
+      <img class="logo" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
+    </a></p>
+    {%- endif %}
+  {%- endblock %}
+  {%- if sidebars != None %}
+    {#- new style sidebar: explicitly include/exclude templates #}
+    {%- for sidebartemplate in sidebars %}
+    {%- include sidebartemplate %}
+    {%- endfor %}
+  {%- else %}
+    {#- old style sidebars: using blocks -- should be deprecated #}
+    {%- block sidebartoc %}
+    {%- include "localtoc.html" %}
+    {%- endblock %}
+    {%- block sidebarrel %}
+    {%- include "relations.html" %}
+    {%- endblock %}
+    {%- block sidebarsourcelink %}
+    {%- include "sourcelink.html" %}
+    {%- endblock %}
+    {%- if customsidebar %}
+    {%- include customsidebar %}
+    {%- endif %}
+    {%- block sidebarsearch %}
+    {%- include "searchbox.html" %}
+    {%- endblock %}
+  {%- endif %}
+{%- endmacro %}

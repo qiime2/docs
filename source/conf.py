@@ -141,17 +141,15 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'theme'  # use the theme in subdir 'theme'
+html_theme_path = ['.']  # make sphinx search for themes in current dir
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    'github_user': 'qiime2',
-    # 'github_repo': 'qiime2',
-    'github_banner': True
-}
+
+# html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -168,13 +166,13 @@ html_theme_options = {
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #
-html_logo = '_static/logo.png'
+# html_logo = '_static/logo.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or
 # 32x32 pixels large.
 #
-html_favicon = 'favicon.ico'
+# html_favicon = 'favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -201,7 +199,7 @@ html_static_path = ['_static']
 # Custom sidebar templates, maps document names to template names.
 #
 html_sidebars = {
-    "**": ['localtoc.html', 'relations.html']
+    "**": ['localtoc.html']
 }
 
 # Additional templates that should be rendered to pages, maps page names to
