@@ -130,17 +130,17 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
 
 * Alpha diversity
 
- * Shannon's diversity index (a quantitative measure of community richness)
- * Observed OTUs (a qualitative measure of community richness)
- * Faith's Phylogenetic Diversity (a qualitiative measure of community richness that incorporates phylogenetic relationships between the features)
- * Evenness (or Pielou's Evenness; a measure of community evenness)
+  * Shannon's diversity index (a quantitative measure of community richness)
+  * Observed OTUs (a qualitative measure of community richness)
+  * Faith's Phylogenetic Diversity (a qualitiative measure of community richness that incorporates phylogenetic relationships between the features)
+  * Evenness (or Pielou's Evenness; a measure of community evenness)
 
 * Beta diversity
 
- * Jaccard distance (a qualitative measure of community dissimilarity)
- * Bray-Curtis distance (a quantitative measure of community dissimilarity)
- * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
- * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
+  * Jaccard distance (a qualitative measure of community dissimilarity)
+  * Bray-Curtis distance (a quantitative measure of community dissimilarity)
+  * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
+  * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
 
 The only parameter that needs to be provided to this script is ``--p-counts-per-sample``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-counts-per-sample 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
