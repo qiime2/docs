@@ -96,24 +96,24 @@ Now that you have ``FeatureTable[Frequency]`` and ``FeatureData[Sequence]`` obje
 
 Below are some specific questions to answer about this data, grouped into a few categories. Try to collect at least one specific result to support your answer to each question.
 
-#. The personal human microbiome.
+1. The personal human microbiome.
 
-    #. Do samples differ in composition by subject-id (i.e., across individual)?
-    #. Do samples differ in richness by subject-id?
-    #. Do samples differ in evenness by subject-id?
+   a. Do samples differ in composition by subject-id (i.e., across individual)?
+   #. Do samples differ in richness by subject-id?
+   #. Do samples differ in evenness by subject-id?
 
 #. Microbiota engraftment.
 
-    #. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of unweighted UniFrac distances? (Hint: See the note above about ``qiime emperor plot``. The *color* and *visibility* tabs are also very important in this Emperor plot.)
-    #. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of Bray-Curtis distances?
-    #. Is this pattern stronger based on unweighted UniFrac or Bray-Curtis distance? Based on how you know about these metrics, what does this suggest to you about what is changing in the microbiome with fecal microbiota transplant? Use the Jaccard and weighted UniFrac distance Emperor plots to help you refine this idea.
+   a. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of unweighted UniFrac distances? (Hint: See the note above about ``qiime emperor plot``. The *color* and *visibility* tabs are also very important in this Emperor plot.)
+   #. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of Bray-Curtis distances?
+   #. Is this pattern stronger based on unweighted UniFrac or Bray-Curtis distance? Based on how you know about these metrics, what does this suggest to you about what is changing in the microbiome with fecal microbiota transplant? Use the Jaccard and weighted UniFrac distance Emperor plots to help you refine this idea.
 
 #. Experimental design: Comparing stool and swab sample collection methods.
 
-    #. What feature(s) differ most in abundance between the stool and swab samples? What taxonomy is associated with those feature ids based on their best BLAST hits, and based on the results of Naive Bayes feature classification with the QIIME 2 ``q2-feature-classifier`` plugin?
-    #. Is the microbial composition of stool and swab samples significantly different based on either unweighted UniFrac or Bray-Curtis distances between samples (*yes*, *no*, or *not possible to say with the current information*)?
-    #. Do the donated fecal material samples appear more similar in composition to the stool or swab samples?
-    #. Does community richness differ between stool samples and swab samples? Does community evenness differ between stool samples and swab samples?
+   a. What feature(s) differ most in abundance between the stool and swab samples? What taxonomy is associated with those feature ids based on their best BLAST hits, and based on the results of Naive Bayes feature classification with the QIIME 2 ``q2-feature-classifier`` plugin?
+   #. Is the microbial composition of stool and swab samples significantly different based on either unweighted UniFrac or Bray-Curtis distances between samples (*yes*, *no*, or *not possible to say with the current information*)?
+   #. Do the donated fecal material samples appear more similar in composition to the stool or swab samples?
+   #. Does community richness differ between stool samples and swab samples? Does community evenness differ between stool samples and swab samples?
 
 #. How many samples were sequenced in each sequencing run? Do you observe any systematic differences in the samples across sequencing runs?
 
