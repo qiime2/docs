@@ -37,8 +37,8 @@ Next, download the *demultiplexed sequences* that we'll use in this analysis. In
 
 .. command-block::
 
-   curl -sLO http://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
-   curl -sLO http://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
 
 Sequence quality control
 ------------------------

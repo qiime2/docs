@@ -30,8 +30,8 @@ Download the raw sequences that we'll use in this analysis. In this tutorial we'
 .. command-block::
 
    mkdir raw-sequences
-   curl -sL http://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz > raw-sequences/barcodes.fastq.gz
-   curl -sL http://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz > raw-sequences/sequences.fastq.gz
+   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz > raw-sequences/barcodes.fastq.gz
+   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz > raw-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these raw data files into a QIIME 2 artifact. The semantic type of this artifact is ``RawSequences``.
 
@@ -225,7 +225,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 .. command-block::
 
-   curl -sLO http://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
+   curl -sLO https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
 
    qiime feature-classifier classify --i-classifier gg-13-8-99-515-806-nb-classifier.qza --i-reads rep-seqs.qza --o-classification taxonomy
 
