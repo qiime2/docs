@@ -50,6 +50,11 @@ div.footer {
     font-size: 11px;
 }
 
+code.docutils.literal {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
 @media screen and (min-width: 992px) {
 
   #github-banner {
