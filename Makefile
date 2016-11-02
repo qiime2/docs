@@ -35,7 +35,7 @@ html: clean
 	@echo
 	@echo "Run the following command to view the build locally:"
 	@echo
-	@echo "    cd build/html && python -m http.server ; cd -"
+	@echo "cd build/html && python -m http.server ; cd -"
 
 .PHONY: preview
 preview: clean
@@ -45,7 +45,7 @@ preview: clean
 	@echo
 	@echo "Run the following command to view the build locally:"
 	@echo
-	@echo "    cd build/preview && python -m http.server ; cd -"
+	@echo "cd build/preview && python -m http.server ; cd -"
 
 .PHONY: linkcheck
 linkcheck:
