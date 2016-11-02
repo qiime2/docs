@@ -1,6 +1,8 @@
 "Moving Pictures" tutorial
 ==========================
 
+.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+
 In this tutorial you'll use QIIME 2 to perform an analysis of human microbiome samples from two individuals at four body sites at five timepoints, the first of which immediately followed antibiotic usage. A study based on these samples was originally published in `Caporaso et al. (2011)`_. The data used in this tutorial were sequenced on an Illumina HiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
 .. qiime1-users::
@@ -18,7 +20,7 @@ Next, explore the sample metadata to familiarize yourself with the samples used 
 
 .. command-block::
 
-   curl -sL "https://docs.google.com/spreadsheets/d/1FXHtTmvw1gM4oUMbRdwQIEOZJlhFGeMNUvZmuEFqpps/export?gid=0&format=tsv" > sample-metadata.tsv
+   curl -sL "https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv" > sample-metadata.tsv
 
 Obtaining and importing raw data
 --------------------------------
@@ -28,8 +30,8 @@ Download the raw sequences that we'll use in this analysis. In this tutorial we'
 .. command-block::
 
    mkdir raw-sequences
-   curl -sL https://data.qiime2.org/2.0.5/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz > raw-sequences/barcodes.fastq.gz
-   curl -sL https://data.qiime2.org/2.0.5/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz > raw-sequences/sequences.fastq.gz
+   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz > raw-sequences/barcodes.fastq.gz
+   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz > raw-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these raw data files into a QIIME 2 artifact. The semantic type of this artifact is ``RawSequences``.
 
@@ -92,7 +94,7 @@ After the ``dada2 denoise`` step completes, you'll want to explore the resulting
 .. command-block::
 
    qiime feature-table summarize --i-table table.qza --o-visualization table
-   qiime feature-table view-seq-data --i-data rep-seqs.qza --o-visualization rep-seqs
+   qiime feature-table tabulate-seqs --i-data rep-seqs.qza --o-visualization rep-seqs
 
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
@@ -149,7 +151,7 @@ The only parameter that needs to be provided to this script is ``--p-counts-per-
 
 .. command-block::
 
-   qiime diversity core-metrics --i-phylogeny rooted-tree.qza --i-table table.qza --p-counts-per-sample 1441 --output-dir cm1441
+   qiime diversity core-metrics --i-phylogeny rooted-tree.qza --i-table table.qza --p-sampling-depth 1441 --output-dir cm1441
 
 Here we set the ``--p-counts-per-sample`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts (on the order of tens or a couple of hundred samples) - you will typically want to exclude those from the analysis by choosing a larger value.
 
@@ -184,7 +186,7 @@ Next we'll analyze sample composition in the context of discrete metadata using 
 
 .. command-block::
 
-   qiime diversity beta-group-significance --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --m-metadata-category SampleType --o-visualization cm1441/unweighted-unifrac-sample-type-significance
+   qiime diversity beta-group-significance --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization cm1441/unweighted-unifrac-body-site-significance
 
    qiime diversity beta-group-significance --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --m-metadata-category Subject --o-visualization cm1441/unweighted-unifrac-subject-group-significance
 
@@ -223,11 +225,11 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 .. command-block::
 
-   curl -sLO https://data.qiime2.org/2.0.5/common/gg-13-8-99-515-806-nb-classifier.qza
+   curl -sLO https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
 
    qiime feature-classifier classify --i-classifier gg-13-8-99-515-806-nb-classifier.qza --i-reads rep-seqs.qza --o-classification taxonomy
 
-   qiime feature-table view-taxa-data --i-data taxonomy.qza --o-visualization taxonomy
+   qiime taxa tabulate --i-data taxonomy.qza --o-visualization taxonomy
 
 .. question::
     Recall that our ``rep-seqs.qzv`` artifact allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that artifact and the ``taxonomy.qzv`` artifact created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they're dissimilar, at what *taxonomic level* do they begin to differ (e.g., species, genus, family, ...)?
@@ -239,21 +241,21 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
    qiime taxa barplot --i-table table.qza --i-taxonomy taxonomy.qza --m-metadata-file sample-metadata.tsv --o-visualization taxa-bar-plots
 
 .. question::
-    Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by SampleType, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in SampleType? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
+    Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
 Differential abundance analysis
 -------------------------------
 
-Finally, we can quantify the process of identifying taxa that are differentially abundance (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` artifact, which is based on relative frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. We work around this by adding a pseudocount of 1 to every count in our ``FeatureTable[Frequency]`` table. We can run this on the ``SampleType`` category to determine what features differ in abundance across our sample types. This step may take about 5 minutes to complete.
+Finally, we can quantify the process of identifying taxa that are differentially abundance (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` artifact, which is based on relative frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. We work around this by adding a pseudocount of 1 to every count in our ``FeatureTable[Frequency]`` table. We can run this on the ``BodySite`` category to determine what features differ in abundance across our sample types. This step may take about 5 minutes to complete.
 
 .. command-block::
 
    qiime composition add-pseudocount --i-table table.qza --o-composition-table comp-table
 
-   qiime composition ancom --i-table comp-table.qza --m-metadata-file sample-metadata.tsv --m-metadata-category SampleType --o-visualization ancom-SampleType
+   qiime composition ancom --i-table comp-table.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization ancom-BodySite
 
 .. question::
-    What features differ in abundance across SampleType? What groups are they most and least abundant in? What are some the taxonomies of some of these features? (To answer that last question you'll need to refer to a visualization that we generated earlier in this tutorial.)
+    What features differ in abundance across BodySite? What groups are they most and least abundant in? What are some the taxonomies of some of these features? (To answer that last question you'll need to refer to a visualization that we generated earlier in this tutorial.)
 
 We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps.
 
@@ -263,12 +265,12 @@ We're also often interested in performing a differential abundance test at a spe
 
    qiime composition add-pseudocount --i-table table-l2.qza --o-composition-table comp-table-l2
 
-   qiime composition ancom --i-table comp-table-l2.qza --m-metadata-file sample-metadata.tsv --m-metadata-category SampleType --o-visualization l2-ancom-SampleType
+   qiime composition ancom --i-table comp-table-l2.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization l2-ancom-BodySite
 
 .. question::
-    What phyla differ in abundance across SampleType? How does this align with what you observed in the ``taxa-bar-plots.qza`` visualization that was generated above?
+    What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qza`` visualization that was generated above?
 
-.. _sample metadata: https://docs.google.com/spreadsheets/d/1FXHtTmvw1gM4oUMbRdwQIEOZJlhFGeMNUvZmuEFqpps/edit?usp=sharing
+.. _sample metadata: https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/edit?usp=sharing
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
 .. _Caporaso et al. (2011): https://www.ncbi.nlm.nih.gov/pubmed/21624126

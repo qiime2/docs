@@ -3,9 +3,9 @@
 
 .. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
 
-In this tutorial you'll use QIIME 2 to perform an analysis of soil samples from around the globe. A study based on these samples was originally published in `Lauber et al. (2009)`_. In that study, these samples had the hypervariable region 2 (V2) of the 16S rRNA sequenced on a Roche 454 instrument. The data used in this tutorial are based on a re-sequencing of those same samples on an Illumina HiSeq as part of the `Earth Microbiome Project`_. In this instance, the hypervariable region 4 (V4) of the 16S rRNA was sequenced.
+This tutorial is designed to be a self-guided exercise that could be run after :doc:`the moving pictures tutorial <moving-pictures>` and :doc:`the fecal microbiota transplant tutorial <fmt>` to gain more experience with QIIME 2.
 
-This tutorial is initially designed to be a self-guided exercise that could be run after :doc:`the installation document <../install>`, :doc:`the moving pictures tutorial <moving-pictures>`, and :doc:`the fecal microbiota transplant tutorial <fmt>` to gain more experience with QIIME 2.
+In this tutorial you'll use QIIME 2 to perform an analysis of soil samples from around the globe. A study based on these samples was originally published in `Lauber et al. (2009)`_. In that study, these samples had the hypervariable region 2 (V2) of the 16S rRNA sequenced on a Roche 454 instrument. The data used in this tutorial are based on a re-sequencing of those same samples on an Illumina HiSeq as part of the `Earth Microbiome Project`_. In this instance, the hypervariable region 4 (V4) of the 16S rRNA was sequenced.
 
 Prepare for the analysis
 ------------------------
@@ -16,7 +16,7 @@ You can next download the *demultiplexed sequences* that we'll use in this analy
 
 .. command-block::
 
-   curl -sLO https://data.qiime2.org/2.0.5/tutorials/88soils/88soils-tutorial-demux-1p.qza
+   curl -sLO https://data.qiime2.org/2.0.6/tutorials/88soils/88soils-tutorial-demux-1p.qza
 
 Sequence processing and diversity analyses
 ------------------------------------------
@@ -43,7 +43,7 @@ Use the following questions to guide your analyses of the data. (Note: if you're
 
 #. What features differ in abundance across pH groups? What groups are they most and least abundant in? What are some the taxonomies of some of these features?
 
-.. _sample metadata: https://docs.google.com/spreadsheets/d/1p-jHnu6O0DPXcQqERkKM9A0w1XlkhYuR1VCP2VSRl1M/edit?usp=sharing
+.. _sample metadata: https://docs.google.com/spreadsheets/d/1CTOCiyKWLlZiTFkmHjJcTkhHW0OkpEniNoSpscuZapk/edit?usp=sharing
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Lauber et al. (2009): https://www.ncbi.nlm.nih.gov/pubmed/19502440
 .. _Earth Microbiome Project: http://earthmicrobiome.org

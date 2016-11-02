@@ -1,7 +1,9 @@
 Fecal microbiota transplant (FMT) study: an exercise
 ====================================================
 
-This document is intended to be run after :doc:`the installation document <../install>` and :doc:`the moving pictures tutorial <moving-pictures>`. It is designed to introduce a few new ideas, and to be an exercise in applying the tools that were explored in those documents.
+.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+
+This document is intended to be run after :doc:`the moving pictures tutorial <moving-pictures>`. It is designed to introduce a few new ideas, and to be an exercise in applying the tools that were explored in that document.
 
 .. note::
    The data used in this study is currently under review for publication and we have been asked to not discuss some details of the study until its publication. We will expand the level of detail in this exercise, as well as the questions being addressed, upon publication. In the meantime, you should consider this to be a draft of this exercise.
@@ -29,14 +31,14 @@ Alternatively, the following command will download the sample metadata as tab-se
 
 .. command-block::
 
-   curl -sL "https://docs.google.com/spreadsheets/d/16ANHgoFhnpjehCO6ulVPD1b93FDGuDVgA_xh2O4mIRU/export?gid=0&format=tsv" > sample-metadata.tsv
+   curl -sL "https://docs.google.com/spreadsheets/d/15kqZlUrIp9FV4U7OSzeCzteuWMtbkaXgYvD_hTZZ9pw/export?gid=0&format=tsv" > sample-metadata.tsv
 
 Next, download the *demultiplexed sequences* that we'll use in this analysis. In this tutorial we'll work with a small subset (10%) of the complete sequence data so that the commands will run quickly. To learn how to start a QIIME 2 analysis from raw sequence data, see the :doc:`importing data documentation <../import>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
 
 .. command-block::
 
-   curl -sLO https://data.qiime2.org/2.0.5/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
-   curl -sLO https://data.qiime2.org/2.0.5/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
 
 Sequence quality control
 ------------------------
@@ -84,7 +86,7 @@ We'll also generate a summary of the merged ``FeatureData[Sequence]`` artifact. 
 
 .. command-block::
 
-   qiime feature-table view-seq-data --i-data rep-seqs.qza --o-visualization rep-seqs
+   qiime feature-table tabulate-seqs --i-data rep-seqs.qza --o-visualization rep-seqs
 
 Diversity analysis
 ------------------
@@ -119,4 +121,4 @@ Below are some specific questions to answer about this data, grouped into a few 
 
 
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
-.. _sample metadata: https://docs.google.com/spreadsheets/d/16ANHgoFhnpjehCO6ulVPD1b93FDGuDVgA_xh2O4mIRU/edit?usp=sharing
+.. _sample metadata: https://docs.google.com/spreadsheets/d/15kqZlUrIp9FV4U7OSzeCzteuWMtbkaXgYvD_hTZZ9pw/edit?usp=sharing
