@@ -157,7 +157,7 @@ html_theme_path = ['.']  # make sphinx search for themes in current dir
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'QIIME 2 v2.0.5'
+# html_title = 'QIIME 2'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
