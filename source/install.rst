@@ -105,7 +105,7 @@ Install the ``q2-diversity`` and ``q2-emperor`` plugins as well:
 .. command-block::
    :no-exec:
 
-   conda install -c qiime2 -c conda-forge q2-diversity q2-emperor emperor=1.0.0beta5
+   conda install -c qiime2 -c conda-forge q2-diversity q2-emperor
 
 You'll now have four plugins installed:
 
