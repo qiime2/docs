@@ -16,11 +16,16 @@ Before beginning this tutorial, it is recommended to create a new directory that
    mkdir qiime2-moving-pictures-tutorial
    cd qiime2-moving-pictures-tutorial
 
-Next, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
+Sample metadata
+---------------
+
+Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. command-block::
 
    curl -sL "https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv" > sample-metadata.tsv
+
+.. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
 
 Obtaining and importing raw data
 --------------------------------
@@ -271,6 +276,7 @@ We're also often interested in performing a differential abundance test at a spe
     What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qza`` visualization that was generated above?
 
 .. _sample metadata: https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/edit?usp=sharing
+.. _Keemei: http://keemei.qiime.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
 .. _Caporaso et al. (2011): https://www.ncbi.nlm.nih.gov/pubmed/21624126

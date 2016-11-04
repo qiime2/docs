@@ -7,3 +7,4 @@ Tutorials
    moving-pictures
    fmt
    88soils
+   import

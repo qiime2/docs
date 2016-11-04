@@ -1,52 +1,56 @@
-Key concepts
-============
+Core concepts
+=============
 
-This page covers several key concepts in QIIME 2 at a high level. It is **highly recommended** to start with this documentation before moving on to :doc:`installing <install>` and using QIIME 2, as these concepts are central to understanding and interacting with QIIME 2 to perform microbiome analyses.
+This page describes several core concepts in QIIME 2 that are important to understand before starting to use the software. The :doc:`glossary <glossary>` may be helpful to refer to as you read through this page and other documentation on the site.
 
-Multiple interfaces (interface-agnostic analysis)
--------------------------------------------------
+Data files: artifacts
+---------------------
 
-QIIME 2 supports the development of multiple interfaces that **all perform the same underlying analyses**. This is enabled by the QIIME 2 software development kit (SDK) that is accessible from the ``qiime.sdk`` package. The SDK provides a way for software engineers to build custom interfaces around QIIME, which can include embedding QIIME as a component in other systems (e.g., cloud-based bioinformatics platforms such as Illumina BaseSpace and `Qiita`_).
+Data produced by QIIME 2 are stored as *artifacts*. An artifact is a file containing data and metadata. The metadata describes things about the data, such as its type, format, and how it was generated (provenance). An artifact typically has the ``.qza`` file extension.
 
-There are currently three official QIIME 2 interfaces. `QIIME 2 Studio`_ is a graphical user interface, `q2cli`_ is a command-line interface, and the :doc:`Artifact API <Artifact-API>` is a Python 3 application programmer interface optimized for `Jupyter`_ users. Interface development is decentralized, so any developer can create their own QIIME 2 interface. Thus, we hope there will be many more interfaces than the ones we have initially provided.
+Since QIIME 2 works with artifacts instead of data files (e.g. FASTA files), you can create an artifact by importing data. You can import data at any step in an analysis, though typically you will start by importing raw sequence data. QIIME 2 also has tools to export data from an artifact. See the :doc:`importing guide <tutorials/import>` for details.
 
-.. qiime1-users::
-   Supporting decentralized development of multiple interfaces addresses a key limitation of QIIME 1, as there is only a single command-line interface provided to users. Command-line interfaces can be powerful tools for more advanced/technical users (e.g. for running analyses on a cluster) but can have a high learning curve for users with less technical experience. We support the development of graphical user interfaces (for example, `QIIME 2 Studio`_) to fit the specific needs of different user groups.
+By using artifacts instead of simple data files, QIIME 2 can automatically track the type, format, and provenance of data for researchers. Using artifacts instead of data files enables researchers to focus on the analyses they want to perform, instead of the particular format the data needs to be in for an analysis.
 
-Integrated provenance tracking via artifacts and visualizations
----------------------------------------------------------------
+Artifacts enable QIIME 2 to track, in addition to the data itself, the provenance of how the data came to be. With an artifact's provenance, you can trace back to all previous analyses that were run to produce the artifact, including the input data used at each step. This automatic, integrated, and decentralized provenance tracking of data enables a researcher to archive artifacts, or for example, send an artifact to a collaborator, with the ability to understand exactly how the artifact was created. This enables replicability and reproducibility of analyses, as well as generation of diagrams and text that can be used in the methods section of a paper. Provenance also supports and encourages the proper attribution to underlying tools (e.g. FastTree to build a phylogenetic tree) used to generate the artifact.
 
-Whenever you perform an analysis with QIIME 2, the output data files are stored as *artifacts*. These files typically have the ``.qza`` file extension. Artifacts enable QIIME 2 to track, in addition to the data itself, the provenance of how the data came to be. With an artifact's provenance, you can trace back to all previous analyses that were run to produce the artifact, including the input data used at each step. This automatic, integrated, and decentralized provenance tracking of data enables a researcher to archive artifacts, or for example, send an artifact to a collaborator, with the ability to understand exactly how the artifact was created. This enables replicability and reproducibility of analyses, as well as generation of diagrams and text that can be used in the methods section of a paper. Provenance also supports and encourages the proper attribution to underlying tools (e.g. FastTree to build a phylogenetic tree) used to generate the artifact.
+Data files: visualizations
+--------------------------
 
-*Visualizations* are another type of data file generated by QIIME 2 analyses. Visualization files typically have the ``.qzv`` file extension. Visualizations also support integrated provenance tracking. They are terminal outputs of an analysis, and can represent, for example, a statistical results table, an interactive visualization, static images, or really any combination of visual data representations. Similar to artifacts, visualizations are standalone data files that can be archived or shared with collaborators.
+*Visualizations* are another type of data file generated by QIIME 2. Visualization files typically have the ``.qzv`` file extension. Visualizations contain similar types of metadata as artifacts, including provenance information. Similar to artifacts, visualizations are standalone data files that can be archived or shared with collaborators.
 
-.. tip:: If you are using `q2cli`_, a QIIME 2 command-line interface, visualizations (``.qzv`` files) are easily viewable with the ``qiime tools view`` command. This will be a common command to run when a visualization is produced.
+In contrast to artifacts, visualizations are *terminal outputs* of an analysis, and can represent, for example, a statistical results table, an interactive visualization, static images, or really any combination of visual data representations. Since visualizations are terminal outputs, they cannot be used as input to other analyses in QIIME 2.
 
-.. qiime1-users::
-   Artifacts and visualizations have integrated provenance tracking, which is a manual and error-prone process in QIIME 1. In QIIME 1, researchers must track the exact commands that are executed, for example in a text file. It is difficult to also track the underlying tools that were used in the analyses, so those tools often do not receive proper attribution in publications. Integrated provenance tracking solves these issues as described in the section above.
+.. tip:: Use https://view.qiime2.org to easily view artifacts and visualizations (``.qza`` and ``.qzv`` files) without requiring a QIIME installation. This is helpful for sharing QIIME 2 data with collaborators that may not have QIIME 2 installed. https://view.qiime2.org also supports viewing data provenance!
 
-Support for the latest microbiome analyses
-------------------------------------------
+Semantic types
+--------------
 
-QIIME 2 microbiome analysis functionality is defined, and made available to users, in *plugins*. Plugins are software packages that can be developed by anyone. The QIIME 2 team has developed several plugins for an initial end-to-end microbiome analysis pipeline, but third-party developers are encouraged to create their own plugins to provide additional analyses. Third-party developers will define these plugins in the same way that the QIIME 2 team has defined the "official" plugins. This decentralized development of microbiome analysis functionality means that many more analyses and tools will be accessible to QIIME 2 users, including the latest techniques and protocols. This also allows users to choose and customize analysis pipelines for their specific needs.
+Every data file generated by QIIME 2 (i.e. *artifacts*) has a semantic type associated with it. Semantic types enable QIIME 2 to identify artifacts that are suitable inputs to an analysis. For example, if an analysis expects a distance matrix as input, QIIME 2 can determine which artifacts have a distance matrix semantic type and prevent incompatible artifacts from being used in the analysis (e.g. an artifact representing a phylogenetic tree).
 
-.. qiime1-users::
-   It is very difficult to add new analyses to QIIME 1. Essentially, the analyses available in QIIME 1 are limited to what the QIIME 1 team decided should be included in the software package. Thus, it is often a slow process to add new analyses. In the rapidly evolving field of microbiome science, with new tools being continually published, it is important to have access to the latest techniques and protocols. QIIME 2 plugins allow any developer to make these techniques available to users, removing the QIIME development team as the bottleneck in this process.
+Semantic types also help users avoid semantically incorrect analyses. For example, a feature table could contain presence/absence data (i.e., a 1 to indicate that an OTU was observed at least one time in a given sample, and a 0 to indicate than an OTU was not observed at least one time in a given sample). However, if that feature table were provided to an analysis computing a quantitative diversity metric where OTU abundances are included in the calculation (e.g., weighted UniFrac), the analysis would complete successfully, but the result would not be meaningful.
 
-Semantic type system
---------------------
+Check out the :doc:`semantic types page <semantic-types>` for more information about semantic types and what types are currently available.
 
-Every data file generated by QIIME 2 (i.e. *artifacts*) has a semantic type associated with it. This semantic type is stored in the artifact. Semantic types enable QIIME 2 interfaces to help the user find artifacts that are suitable as input to a particular analysis. For example, if an analysis expects a distance matrix as input, interfaces can filter the available artifacts to those with a distance matrix semantic type. For example, providing a phylogenetic tree to an analysis expecting a distance matrix would produce an error, so this filtering by semantic type reduces the amount of time required to locate the correct input files to use in an analysis. Semantic types also help users avoid semantically incorrect analyses. For example, a feature table could contain presence/absence data (i.e., a 1 to indicate that an OTU was observed at least one time in a given sample, and a 0 to indicate than an OTU was not observed at least one time in a given sample). However, if that feature table were provided to a function computing a quantitative diversity metric where OTU abundances are included in the calculation (e.g., weighted UniFrac), the function would complete successfully, but the result would not be meaningful.
+Plugins
+-------
 
-.. qiime1-users::
+QIIME 2 microbiome analyses are made available to users via *plugins*. To perform analyses with QIIME 2, you will install one or more plugins that provide the specific analyses you are interested in. For example, if you want to demultiplex your raw sequence data, you might use the ``q2-demux`` QIIME 2 plugin, or if you're wanting to perform alpha- or beta-diversity analyses, you could use the ``q2-diversity`` plugin.
 
-   It is difficult in QIIME 1 to identify what data files are appropriate inputs to a script. It is a common problem to supply, for example, a feature table as input to a script expecting a distance matrix. Users spend time writing a script command, which when executed, will often produce a cryptic error message. It is also possible to perform semantically incorrect analyses (i.e. analyses that execute without raising an error, but are not meaningful for the provided input). QIIME 2 semantic types solve these problems by allowing interfaces to help users find the correct data files to use as input to an analysis. This filtering occurs *before* the analysis is executed, thus saving the user time and frustration. Even if an interface doesn't provide this filtering, QIIME 2 will automatically prevent incorrect semantic types from being used when an analysis is run. Thus, users will always receive a consistent and meaningful error message at, or before, runtime.
+Plugins are software packages that can be developed by anyone. The QIIME 2 team has developed several plugins for an initial end-to-end microbiome analysis pipeline, but third-party developers are encouraged to create their own plugins to provide additional analyses. Third-party developers will define these plugins in the same way that the QIIME 2 team has defined the "official" plugins. This decentralized development of microbiome analysis functionality means that many more analyses and tools will be accessible to QIIME 2 users, including the latest techniques and protocols. Plugins also allow users to choose and customize analysis pipelines for their specific needs.
 
+Check out the :doc:`plugin availability <plugins/available>` page to see what plugins are currently available and those that are being developed.
 
-.. _Qiita: https://qiita.ucsd.edu/
+Methods and visualizers
+-----------------------
 
-.. _QIIME 2 Studio: https://github.com/qiime2/q2studio
+QIIME 2 plugins define *methods* and *visualizers* that are used to perform analyses.
 
-.. _q2cli: https://github.com/qiime2/q2cli
+A *method* accepts some combination of artifacts and parameters as input, and produces one or more artifacts (``.qza``) as output. These output artifacts could subsequently be used as input to other QIIME 2 methods or visualizers. Methods can produce intermediate or terminal outputs in a QIIME 2 analysis. For example, the ``rarefy`` method defined in the ``q2-feature-table`` plugin accepts a feature table artifact and sampling depth as input and produces a rarefied feature table artifact as output. This rarefied feature table artifact could then be used in another analysis, such as alpha diversity calculations provided by the ``alpha`` method in ``q2-diversity``.
 
-.. _Jupyter: http://jupyter.org/
+A *visualizer* is similar to a *method* in that it accepts some combination of artifacts and parameters as input. In contrast to a method, a visualizer produces exactly one *visualization* (``.qzv``) as output. Visualizations, by definition, cannot be used as input to other QIIME 2 methods or visualizers. Thus, visualizers can only produce terminal output in a QIIME 2 analysis.
+
+Next steps
+----------
+
+Now that you're familiar with the core concepts in QIIME 2, you are ready to :doc:`install QIIME 2 <install>` and work through the :doc:`tutorials <tutorials/index>`.
