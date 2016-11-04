@@ -20,7 +20,6 @@
 import os
 import sys
 
-from recommonmark.parser import CommonMarkParser
 import qiime
 
 sys.path.insert(0, os.path.abspath('.'))
@@ -54,13 +53,7 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
-
-source_suffix = ['.rst', '.md']
-# source_suffix = '.rst'
+source_suffix = '.rst'
 
 # The encoding of source files.
 #
