@@ -4,6 +4,8 @@ python:
   - "3.5"
 install:
   - pip install -r requirements.txt
+  - pip install https://github.com/qiime2/qiime2/archive/master.zip
+  - pip install flake8
 script:
   # Fail early since some targets may take awhile to complete.
   - make clean && make dummy && make preview
