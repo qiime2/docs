@@ -7,6 +7,32 @@ Make source changes in this repository as described in **Contributing to the doc
 
 Contributing source changes is a separate step from building and publishing the changes. See **Publishing** below for building and publishing the docs to the live site (typically this will be done by one of the QIIME 2 developers).
 
+## Contributing to the docs
+
+1. Install the dependencies necessary to build the docs:
+
+   ```shell
+   pip install -r requirements.txt
+   ```
+
+2. Install the QIIME 2 framework. Typically you'll want the latest development version (i.e. master branch):
+
+   ```shell
+   pip install https://github.com/qiime2/qiime2/archive/master.zip
+   ```
+
+3. Make your changes to the source RST.
+
+   When writing shell commands in the docs, use the custom ``.. command-block::`` directive. This directive formats the commands with shell syntax highlighting and will execute each command, reporting any errors (similar to doctests). You'll need the latest development versions (i.e. master branches) of the QIIME 2 packages required by the commands in the docs.
+
+   If you're writing shell commands that shouldn't be automatically executed (e.g. ``conda`` install commands, ``cd`` commands, etc.), use the ``:no-exec:`` option with the ``command-block`` directive. Check out the existing docs for examples.
+
+4. Run ``make preview`` to build the docs without running any of the ``command-block`` commands. Use this to quickly build the docs while developing them (e.g. to check correct rendering of RST).
+
+5. Run ``make linkcheck`` to make sure all URLs can be reached.
+
+6. When you're done with your changes, run ``make html`` to build the docs and run all ``command-block`` commands. This can take awhile to complete (currently 20-30 minutes). If you didn't make changes to any ``command-block`` commands, or add any new ones, you can skip this step.
+
 ## Publishing
 
 Docs are hosted on AWS S3. Perform the following steps to build and publish the docs:
