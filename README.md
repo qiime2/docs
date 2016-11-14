@@ -54,7 +54,7 @@ Docs are hosted on AWS S3. Perform the following steps to build and publish the 
 4. Upload the built docs to S3, specifying the QIIME 2 version these docs were built for. For example, if the docs were built for the QIIME 2 2.0.6 release, use the bucket prefix (i.e. subdirectory) `2.0.6`. Use ``--delete`` in case the build is replacing a previous versioned build.
 
    ```shell
-   aws s3 sync build/html s3://docs.qiime2.org/<build-version> --delete
+   aws s3 sync build/html s3://docs.qiime2.org/<build-version> --acl public-read --delete
    ```
 
 5. **Optional:** If this build should be the default version accessible from https://docs.qiime2.org, modify the HTTP redirect in ``publish-assets/index.html`` to point to this build's version.
@@ -64,7 +64,7 @@ Docs are hosted on AWS S3. Perform the following steps to build and publish the 
    i. Upload the modified ``publish-assets/index.html`` file:
 
    ```shell
-   aws s3 cp publish-assets/index.html s3://docs.qiime2.org/
+   aws s3 cp publish-assets/index.html s3://docs.qiime2.org/ --acl public-read
    ```
 
    ii. Commit the modified ``publish-assets/index.html`` file and submit a pull request.
