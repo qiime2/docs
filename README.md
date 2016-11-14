@@ -31,13 +31,16 @@ Docs are hosted on AWS S3. Perform the following steps to build and publish the 
    aws s3 sync build/html s3://docs.qiime2.org/<build-version> --delete
    ```
 
-5. If this build should be the default version accessible from https://docs.qiime2.org, modify the HTTP redirect in ``publish-assets/index.html`` to point to this build's version. **Note:** The default version should be the latest public release of QIIME 2. Development version builds can be uploaded but should not be redirected to.
+5. **Optional:** If this build should be the default version accessible from https://docs.qiime2.org, modify the HTTP redirect in ``publish-assets/index.html`` to point to this build's version.
 
-6. Upload the modified ``publish-assets/index.html`` file:
+   **Note:** The default version should be the latest public release of QIIME 2. Development version builds can be uploaded but should not be redirected to.
+
+   i. Upload the modified ``publish-assets/index.html`` file:
 
    ```shell
    aws s3 cp publish-assets/index.html s3://docs.qiime2.org/
    ```
-7. Commit the modified ``publish-assets/index.html`` file and submit a pull request.
+
+   ii. Commit the modified ``publish-assets/index.html`` file and submit a pull request.
 
 The build should now be available on the live site! :beers:
