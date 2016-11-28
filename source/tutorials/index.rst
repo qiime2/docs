@@ -8,3 +8,4 @@ Tutorials
    fmt
    88soils
    import
+   feature-classifier
