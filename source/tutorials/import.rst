@@ -29,4 +29,4 @@ We now have a QIIME 2 artifact called ``feature-table.qza`` that we can start us
 
 To see what semantic types are available in QIIME 2 and to learn more about them, see the :doc:`semantic types <../semantic-types>` section of our documentation.
 
-To learn how to import raw sequence data into QIIME 2 to begin an analysis, see :doc:`Importing Sequence Data <./import-sequence-data>`.
+To learn how to import raw sequence data into QIIME 2, see :doc:`Importing Sequence Data <./import-sequence-data>`.
