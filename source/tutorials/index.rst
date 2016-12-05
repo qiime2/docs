@@ -9,4 +9,4 @@ Tutorials
    88soils
    import
    import-sequence-data
-   filtering-feature-tables
+   table-filtering
