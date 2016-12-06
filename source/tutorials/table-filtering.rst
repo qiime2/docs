@@ -14,10 +14,10 @@ In this document we'll work with the feature table and sample metadata from the 
     curl -sL "https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv" > sample-metadata.tsv
     curl -sLO https://data.qiime2.org/2.0.6/tutorials/filtering-feature-tables/table.qza
 
-Frequency-based filtering
--------------------------
+Total-frequency-based filtering
+-------------------------------
 
-Frequency-based filtering is used to filter samples or features based on their total frequency.
+Total-frequency-based filtering is used to filter samples or features based on how frequently they are represented in the feature table.
 
 When filtering samples this can be used, for example, to filter samples whose total frequency is an outlier in the distribution of sample frequencies. In many 16S surveys, only a few (perhaps tens) of sequences will be obtained for some samples, possibly due to low biomass of the sample resulting in low DNA extraction yield. In this case, the user may want to remove samples based on their minimum total frequency (i.e., total number of sequences obtained for the sample, in this example). This can be achieved as follows (in this example, samples with a total frequency less than 1500 will be filtered).
 
@@ -29,7 +29,7 @@ This filter can be applied to the feature axis to remove low abundance features 
 .. command-block::
     qiime feature-table filter-features --i-table table.qza --o-filtered-table filtered-table --p-min-frequency 10
 
-Both of these methods can also be applied to filter based on the maximum total frequency using the ``--p-max-frequency``. The ``--p-min-frequency`` and ``--p-max-frequency`` can be combined to filter based on lower and upper limits of frequency.
+Both of these methods can also be applied to filter based on the maximum total frequency using the ``--p-max-frequency``. The ``--p-min-frequency`` and ``--p-max-frequency`` can be combined to filter based on lower and upper limits of total frequency.
 
 Contingency-based filtering
 ---------------------------
@@ -46,21 +46,21 @@ Similarly, samples that contain only a few features could be filtered from a fea
 .. command-block::
     qiime feature-table filter-samples --i-table table.qza --o-filtered-table filtered-table --p-min-features 10
 
-Both of these methods can also be applied to filter contingent on the maximum number of features or samples, using the ``--p-max-features`` and ``--p-max-samples`` parameters.
+Both of these methods can also be applied to filter contingent on the maximum number of features or samples, using the ``--p-max-features`` and ``--p-max-samples`` parameters, and these can optionally be used in combination with ``--p-min-features`` and ``--p-min-samples``.
 
-Identifier-based filtering
---------------------------
+Index-based filtering
+---------------------
 
-Identifier-based filtering is used to retain only a user-specified list of samples or features. In this case, the user will provide a tab-separated text file as input with the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``, respectively) where the first column in the file contains that identifiers that should be retained, and the first row contains headers or names for each column. Only the first column in this file will be used, so there are no requirements on subsequent columns (if any are present). As a result, sample or feature metadata files can be used with this parameter. Identifier-based filtering can be applied as follows to remove samples from a feature table.
+Index-based filtering is used to retain only a user-specified list of samples or features based on their indices (i.e., identifiers). In this case, the user will provide a tab-separated text file as input with the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``, respectively) where the first column in the file contains the indices that should be retained, and the first row contains headers or names for each column. Only the first column in this file will be used, so there are no requirements on subsequent columns (if any are present). As a result, sample or feature metadata files can be used with this parameter. Index-based filtering can be applied as follows to remove samples from a feature table.
 
-First, we'll write a header line and two sample identifiers to a new file called ``samples-to-keep.tsv``. (If you already have a tsv file containing a header line and the identifiers of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a text editor, not on the command line as is being done here.)
+First, we'll write a header line and two sample indices to a new file called ``samples-to-keep.tsv``. (If you already have a tsv file containing a header line and the indices of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a text editor, not on the command line as is being done here.)
 
 .. command-block::
-    echo Identifier > samples-to-keep.tsv
+    echo Index > samples-to-keep.tsv
     echo L1S8 >> samples-to-keep.tsv
     echo L1S105 >> samples-to-keep.tsv
 
-Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose identifiers are listed in ``samples-to-keep.tsv``.
+Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose indices are listed in ``samples-to-keep.tsv``.
 
 .. command-block::
     qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file samples-to-keep.tsv --o-filtered-table filtered-table
@@ -68,14 +68,14 @@ Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-m
 Metadata-based filtering
 ------------------------
 
-Metadata-based filtering is similar to identifier-based filtering, except that the list of identifiers to keep is determined based on metadata rather than being provided by the user directly. This is achieved using the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``, respectively) and the ``--p-where`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite where-clause syntax.
+Metadata-based filtering is similar to index-based filtering, except that the list of indices to keep is determined based on metadata rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
 
-For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``.
+For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes.
 
 .. command-block::
     qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file sample-metadata.tsv --p-where "Subject='subject-1'" --o-filtered-table filtered-table
 
-``--p-where`` expressions can be made more complex as follows. Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``.
+``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. Again, the values ``subject-1`` and ``gut`` are enclosed in single quotes.
 
 .. command-block::
     qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file sample-metadata.tsv --p-where "Subject='subject-1' AND BodySite='gut'" --o-filtered-table filtered-table
