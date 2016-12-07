@@ -41,10 +41,10 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
-    'sphinx_directives.question',
-    'sphinx_directives.qiime1',
-    'sphinx_directives.command_block',
-    'sphinx_directives.external_links'
+    'sphinx_extensions.question',
+    'sphinx_extensions.qiime1',
+    'sphinx_extensions.command_block',
+    'sphinx_extensions.external_links'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
