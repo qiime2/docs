@@ -41,7 +41,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                     self.content, [])
 
         nodes = [
-            self._get_literal_block_node(commands)
+            self._get_literal_block_node(self.content)
         ]
 
         env = self._get_env()
@@ -188,12 +188,13 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         return content
 
     def _parse_multiline_commands(self, previous, next):
-        if previous and previous[-1].endswith('\\'):
-            previous[-1].replace('\\', '')
-            previous[-1] += next
+        result = previous.copy()
+        if result and result[-1].endswith('\\'):
+            result[-1] = result[-1][:-1]
+            result[-1] += next.strip()
         else:
-            previous.append(next)
-        return previous
+            result.append(next.strip())
+        return result
 
 
 def setup(app):
