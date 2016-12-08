@@ -22,12 +22,18 @@ Total-frequency-based filtering is used to filter samples or features based on h
 When filtering samples this can be used, for example, to filter samples whose total frequency is an outlier in the distribution of sample frequencies. In many 16S surveys, only a few (perhaps tens) of sequences will be obtained for some samples, possibly due to low biomass of the sample resulting in low DNA extraction yield. In this case, the user may want to remove samples based on their minimum total frequency (i.e., total number of sequences obtained for the sample, in this example). This can be achieved as follows (in this example, samples with a total frequency less than 1500 will be filtered).
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --o-filtered-table sample-frequency-filtered-table --p-min-frequency 1500
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --p-min-frequency 1500 \
+      --o-filtered-table sample-frequency-filtered-table
 
 This filter can be applied to the feature axis to remove low abundance features from a table. For example, you can remove all features with a total abundance (summed across all samples) of less than 10 as follows.
 
 .. command-block::
-    qiime feature-table filter-features --i-table table.qza --o-filtered-table feature-frequency-filtered-table --p-min-frequency 10
+    qiime feature-table filter-features \
+      --i-table table.qza \
+      --p-min-frequency 10 \
+      --o-filtered-table feature-frequency-filtered-table
 
 Both of these methods can also be applied to filter based on the maximum total frequency using the ``--p-max-frequency``. The ``--p-min-frequency`` and ``--p-max-frequency`` can be combined to filter based on lower and upper limits of total frequency.
 
@@ -39,12 +45,18 @@ Contingency-based filtering is used to filter samples from a table contingent on
 This filtering is commonly used for filtering features that show up in only one or a few samples, based on the suspicion that these may not represent real biological diversity but rather experimental artifacts such as PCR chimeras. Features that are present in only a single sample could be filtered from a feature table as follows.
 
 .. command-block::
-    qiime feature-table filter-features --i-table table.qza --o-filtered-table sample-contingency-filtered-table --p-min-samples 2
+    qiime feature-table filter-features \
+      --i-table table.qza \
+      --p-min-samples 2 \
+      --o-filtered-table sample-contingency-filtered-table
 
 Similarly, samples that contain only a few features could be filtered from a feature table as follows.
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --o-filtered-table feature-contingency-filtered-table --p-min-features 10
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --p-min-features 10 \
+      --o-filtered-table feature-contingency-filtered-table
 
 Both of these methods can also be applied to filter contingent on the maximum number of features or samples, using the ``--p-max-features`` and ``--p-max-samples`` parameters, and these can optionally be used in combination with ``--p-min-features`` and ``--p-min-samples``.
 
@@ -63,7 +75,10 @@ First, we'll write a header line and two sample indices to a new file called ``s
 Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose indices are listed in ``samples-to-keep.tsv``.
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file samples-to-keep.tsv --o-filtered-table index-filtered-table
+    qiime feature-table filter-samples \
+     --i-table table.qza \
+     --m-sample-metadata-file samples-to-keep.tsv \
+     --o-filtered-table index-filtered-table
 
 Metadata-based filtering
 ------------------------
@@ -73,16 +88,28 @@ Metadata-based filtering is similar to index-based filtering, except that the li
 For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes.
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file sample-metadata.tsv --p-where "Subject='subject-1'" --o-filtered-table subject-1-filtered-table
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --m-sample-metadata-file sample-metadata.tsv \
+      --p-where "Subject='subject-1'" \
+      --o-filtered-table subject-1-filtered-table
 
 ``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. Again, the values ``subject-1`` and ``gut`` are enclosed in single quotes.
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file sample-metadata.tsv --p-where "Subject='subject-1' AND BodySite='gut'" --o-filtered-table subject-1-gut-filtered-table
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --m-sample-metadata-file sample-metadata.tsv \
+      --p-where "Subject='subject-1' AND BodySite='gut'" \
+      --o-filtered-table subject-1-gut-filtered-table
 
 This syntax also supports negating individual clauses of the ``--p-where`` expression (or the whole expression). Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` and whose ``BodySite`` is *not* ``gut`` in ``sample-metadata.tsv``.
 
 .. command-block::
-    qiime feature-table filter-samples --i-table table.qza --m-sample-metadata-file sample-metadata.tsv --p-where "Subject='subject-1' AND NOT BodySite='gut'" --o-filtered-table subject-1-non-gut-filtered-table
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --m-sample-metadata-file sample-metadata.tsv \
+      --p-where "Subject='subject-1' AND NOT BodySite='gut'" \
+      --o-filtered-table subject-1-non-gut-filtered-table
 
 .. note:: Currently, the most common metadata-based filtering of features is based on feature taxonomy, such as filtering all features that are annotated as being in a particular genus. This can currently be achieved using ``filter-features`` if taxonomy is provided in a feature metadata file. We are working on adding more direct support for this functionality, which will be made available in a new method of the ``q2-taxa`` plugin. You can track progress on this `here <https://github.com/qiime2/q2-taxa/issues/40>`_.

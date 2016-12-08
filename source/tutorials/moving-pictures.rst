@@ -42,7 +42,10 @@ All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which
 
 .. command-block::
 
-   qiime tools import --type RawSequences --input-path raw-sequences/ --output-path raw-sequences.qza
+   qiime tools import \
+     --type RawSequences \
+     --input-path raw-sequences/ \
+     --output-path raw-sequences.qza
 
 .. tip::
    Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation. For example, the command above created a single ``raw-sequences.qza`` file, and a corresponding precomputed file is linked above. You can view precomputed artifacts and visualizations without needing to install additional software (e.g. QIIME 2).
@@ -59,7 +62,11 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
 
 .. command-block::
 
-    qiime demux emp --i-seqs raw-sequences.qza --m-barcodes-file sample-metadata.tsv --m-barcodes-category BarcodeSequence --o-per-sample-sequences demux
+    qiime demux emp \
+      --i-seqs raw-sequences.qza \
+      --m-barcodes-file sample-metadata.tsv \
+      --m-barcodes-category BarcodeSequence \
+      --o-per-sample-sequences demux
 
 Sequence quality control
 ------------------------
@@ -73,7 +80,11 @@ The ``dada2 denoise`` method requires two parameters that are used in quality fi
 
 .. command-block::
 
-   qiime dada2 plot-qualities --i-demultiplexed-seqs demux.qza --o-visualization demux-qual-plots --p-n 10
+   qiime dada2 plot-qualities \
+     --i-demultiplexed-seqs demux.qza \
+     --p-n 10 \
+     --o-visualization demux-qual-plots
+
 
 .. note::
    All QIIME 2 visualizers (i.e., commands that take a ``--o-visualization`` parameter) will generate a ``.qzv`` file. You can view these files with ``qiime tools view``. We provide the command to view this first visualization, but for the remainder of this tutorial we'll tell you to *view the resulting visualization* after running a visualizer, which means that you should run ``qiime tools view`` on the .qzv file that was generated.
@@ -92,14 +103,22 @@ In these plots, the quality of the initial bases seems to be high, so we won't t
 
 .. command-block::
 
-   qiime dada2 denoise --i-demultiplexed-seqs demux.qza --p-trim-left 0 --p-trunc-len 100 --o-representative-sequences rep-seqs --o-table table
+   qiime dada2 denoise \
+     --i-demultiplexed-seqs demux.qza \
+     --p-trim-left 0 --p-trunc-len 100 \
+     --o-representative-sequences rep-seqs \
+     --o-table table
 
 After the ``dada2 denoise`` step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table view-seq-data`` will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
 
 .. command-block::
 
-   qiime feature-table summarize --i-table table.qza --o-visualization table
-   qiime feature-table tabulate-seqs --i-data rep-seqs.qza --o-visualization rep-seqs
+   qiime feature-table summarize \
+     --i-table table.qza \
+     --o-visualization table
+   qiime feature-table tabulate-seqs \
+     --i-data rep-seqs.qza \
+     --o-visualization rep-seqs
 
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
@@ -110,25 +129,33 @@ First, we perform a multiple sequence alignment of the sequences in our ``Featur
 
 .. command-block::
 
-   qiime alignment mafft --i-sequences rep-seqs.qza --o-alignment aligned-rep-seqs
+   qiime alignment mafft \
+     --i-sequences rep-seqs.qza \
+     --o-alignment aligned-rep-seqs
 
 Next, we mask (or filter) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
 
 .. command-block::
 
-   qiime alignment mask --i-alignment aligned-rep-seqs.qza --o-masked-alignment masked-aligned-rep-seqs
+   qiime alignment mask \
+     --i-alignment aligned-rep-seqs.qza \
+     --o-masked-alignment masked-aligned-rep-seqs
 
 Next, we'll apply FastTree to generate a phylogenetic tree from the masked alignment.
 
 .. command-block::
 
-   qiime phylogeny fasttree --i-alignment masked-aligned-rep-seqs.qza --o-tree unrooted-tree
+   qiime phylogeny fasttree \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree unrooted-tree
 
 The FastTree program creates an unrooted tree, so in the final step in this section we apply midpoint rooting to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
 
 .. command-block::
 
-   qiime phylogeny midpoint-root --i-tree unrooted-tree.qza --o-rooted-tree rooted-tree
+   qiime phylogeny midpoint-root \
+     --i-tree unrooted-tree.qza \
+     --o-rooted-tree rooted-tree
 
 Alpha and beta diversity analysis
 ---------------------------------
@@ -156,7 +183,11 @@ The only parameter that needs to be provided to this script is ``--p-counts-per-
 
 .. command-block::
 
-   qiime diversity core-metrics --i-phylogeny rooted-tree.qza --i-table table.qza --p-sampling-depth 1441 --output-dir cm1441
+   qiime diversity core-metrics \
+     --i-phylogeny rooted-tree.qza \
+     --i-table table.qza \
+     --p-sampling-depth 1441 \
+     --output-dir cm1441
 
 Here we set the ``--p-counts-per-sample`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts (on the order of tens or a couple of hundred samples) - you will typically want to exclude those from the analysis by choosing a larger value.
 
@@ -166,9 +197,15 @@ We'll first test for associations between discrete metadata categories and alpha
 
 .. command-block::
 
-   qiime diversity alpha-group-significance --i-alpha-diversity cm1441/faith_pd_vector.qza --m-metadata-file sample-metadata.tsv  --o-visualization cm1441/faith-pd-group-significance
+   qiime diversity alpha-group-significance \
+     --i-alpha-diversity cm1441/faith_pd_vector.qza \
+     --m-metadata-file sample-metadata.tsv  \
+     --o-visualization cm1441/faith-pd-group-significance
 
-   qiime diversity alpha-group-significance --i-alpha-diversity cm1441/evenness_vector.qza --m-metadata-file sample-metadata.tsv  --o-visualization cm1441/evenness-group-significance
+   qiime diversity alpha-group-significance \
+     --i-alpha-diversity cm1441/evenness_vector.qza \
+     --m-metadata-file sample-metadata.tsv  \
+     --o-visualization cm1441/evenness-group-significance
 
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
@@ -180,9 +217,15 @@ Next, we'll test for associations between alpha diversity metrics and continuous
 
 .. command-block::
 
-   qiime diversity alpha-correlation --i-alpha-diversity cm1441/faith_pd_vector.qza --m-metadata-file sample-metadata.tsv  --o-visualization cm1441/faith-pd-correlation
+   qiime diversity alpha-correlation \
+     --i-alpha-diversity cm1441/faith_pd_vector.qza \
+     --m-metadata-file sample-metadata.tsv  \
+     --o-visualization cm1441/faith-pd-correlation
 
-   qiime diversity alpha-correlation --i-alpha-diversity cm1441/evenness_vector.qza --m-metadata-file sample-metadata.tsv  --o-visualization cm1441/evenness-correlation
+   qiime diversity alpha-correlation \
+     --i-alpha-diversity cm1441/evenness_vector.qza \
+     --m-metadata-file sample-metadata.tsv  \
+     --o-visualization cm1441/evenness-correlation
 
 .. question::
    What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
@@ -191,9 +234,17 @@ Next we'll analyze sample composition in the context of discrete metadata using 
 
 .. command-block::
 
-   qiime diversity beta-group-significance --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization cm1441/unweighted-unifrac-body-site-significance
+   qiime diversity beta-group-significance \
+     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category BodySite \
+     --o-visualization cm1441/unweighted-unifrac-body-site-significance
 
-   qiime diversity beta-group-significance --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --m-metadata-category Subject --o-visualization cm1441/unweighted-unifrac-subject-group-significance
+   qiime diversity beta-group-significance \
+     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category Subject \
+     --o-visualization cm1441/unweighted-unifrac-subject-group-significance
 
 .. question::
    Are the associations between subjects and differences in microbial composition statistically significant? How about sample types? What sample types appear to be most different from each other?
@@ -202,9 +253,15 @@ Finally, we'll explore associations between the microbial composition of the sam
 
 .. command-block::
 
-   qiime diversity bioenv --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza --m-metadata-file sample-metadata.tsv --o-visualization cm1441/unweighted-unifrac-bioenv
+   qiime diversity bioenv \
+     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/unweighted-unifrac-bioenv
 
-   qiime diversity bioenv --i-distance-matrix cm1441/bray_curtis_distance_matrix.qza --m-metadata-file sample-metadata.tsv --o-visualization cm1441/bray-curtis-bioenv
+   qiime diversity bioenv \
+     --i-distance-matrix cm1441/bray_curtis_distance_matrix.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/bray-curtis-bioenv
 
 .. question::
    What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? How strong are these correlations?
@@ -213,9 +270,17 @@ Finally, ordination is a popular approach for exploring microbial community comp
 
 .. command-block::
 
-   qiime emperor plot --i-pcoa cm1441/unweighted_unifrac_pcoa_results.qza --o-visualization cm1441/unweighted-unifrac-emperor --m-metadata-file sample-metadata.tsv --p-custom-axis DaysSinceExperimentStart
+   qiime emperor plot \
+     --i-pcoa cm1441/unweighted_unifrac_pcoa_results.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --p-custom-axis DaysSinceExperimentStart \
+     --o-visualization cm1441/unweighted-unifrac-emperor
 
-   qiime emperor plot --i-pcoa cm1441/bray_curtis_pcoa_results.qza --o-visualization cm1441/bray-curtis-emperor --m-metadata-file sample-metadata.tsv --p-custom-axis DaysSinceExperimentStart
+   qiime emperor plot \
+     --i-pcoa cm1441/bray_curtis_pcoa_results.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --p-custom-axis DaysSinceExperimentStart \
+     --o-visualization cm1441/bray-curtis-emperor
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
@@ -232,9 +297,14 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
    curl -sLO https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
 
-   qiime feature-classifier classify --i-classifier gg-13-8-99-515-806-nb-classifier.qza --i-reads rep-seqs.qza --o-classification taxonomy
+   qiime feature-classifier classify \
+     --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
+     --i-reads rep-seqs.qza \
+     --o-classification taxonomy
 
-   qiime taxa tabulate --i-data taxonomy.qza --o-visualization taxonomy
+   qiime taxa tabulate \
+     --i-data taxonomy.qza \
+     --o-visualization taxonomy
 
 .. question::
     Recall that our ``rep-seqs.qzv`` artifact allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that artifact and the ``taxonomy.qzv`` artifact created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they're dissimilar, at what *taxonomic level* do they begin to differ (e.g., species, genus, family, ...)?
@@ -243,7 +313,11 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 
 .. command-block::
 
-   qiime taxa barplot --i-table table.qza --i-taxonomy taxonomy.qza --m-metadata-file sample-metadata.tsv --o-visualization taxa-bar-plots
+   qiime taxa barplot \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization taxa-bar-plots
 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
@@ -255,9 +329,15 @@ Finally, we can quantify the process of identifying taxa that are differentially
 
 .. command-block::
 
-   qiime composition add-pseudocount --i-table table.qza --o-composition-table comp-table
+   qiime composition add-pseudocount \
+     --i-table table.qza \
+     --o-composition-table comp-table
 
-   qiime composition ancom --i-table comp-table.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization ancom-BodySite
+   qiime composition ancom \
+     --i-table comp-table.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category BodySite \
+     --o-visualization ancom-BodySite
 
 .. question::
     What features differ in abundance across BodySite? What groups are they most and least abundant in? What are some the taxonomies of some of these features? (To answer that last question you'll need to refer to a visualization that we generated earlier in this tutorial.)
@@ -266,11 +346,21 @@ We're also often interested in performing a differential abundance test at a spe
 
 .. command-block::
 
-   qiime taxa collapse --i-table table.qza --i-taxonomy taxonomy.qza --p-level 2 --o-collapsed-table table-l2
+   qiime taxa collapse \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-level 2 \
+     --o-collapsed-table table-l2
 
-   qiime composition add-pseudocount --i-table table-l2.qza --o-composition-table comp-table-l2
+   qiime composition add-pseudocount \
+     --i-table table-l2.qza \
+     --o-composition-table comp-table-l2
 
-   qiime composition ancom --i-table comp-table-l2.qza --m-metadata-file sample-metadata.tsv --m-metadata-category BodySite --o-visualization l2-ancom-BodySite
+   qiime composition ancom \
+     --i-table comp-table-l2.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category BodySite \
+     --o-visualization l2-ancom-BodySite
 
 .. question::
     What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qza`` visualization that was generated above?
