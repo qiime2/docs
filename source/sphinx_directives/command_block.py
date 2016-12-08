@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import tempfile
 import urllib.parse
+import functools
 
 import docutils.nodes
 import docutils.parsers.rst
@@ -36,7 +37,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
 
     def run(self):
         self.assert_has_content()
-        commands = self.content
+        commands = functools.reduce(self._parse_multiline_commands,
+                                    self.content, [])
 
         nodes = [
             self._get_literal_block_node(commands)
@@ -184,6 +186,14 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                      download_url))
                 content.append('')
         return content
+
+    def _parse_multiline_commands(self, previous, next):
+        if previous and previous[-1].endswith('\\'):
+            previous[-1].replace('\\', '')
+            previous[-1] += next
+        else:
+            previous.append(next)
+        return previous
 
 
 def setup(app):
