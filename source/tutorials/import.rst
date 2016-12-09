@@ -17,7 +17,11 @@ Next we will use the ``qiime tools import`` command, providing a semantic type o
 
 .. command-block::
 
-   qiime tools import --input-path feature-table.biom --output-path feature-table --type "FeatureTable[Frequency]" --source-format BIOMV100Format
+   qiime tools import \
+     --input-path feature-table.biom \
+     --type "FeatureTable[Frequency]" \
+     --source-format BIOMV100Format \
+     --output-path feature-table
 
 .. note:: We didn't specify a file extension for the output file (``--output-path feature-table``). The command-line interface will automatically append the ``.qza`` file extension (if it isn't present) to output artifacts, and the ``.qzv`` file extension to visualizations.
 
@@ -25,7 +29,9 @@ We now have a QIIME 2 artifact called ``feature-table.qza`` that we can start us
 
 .. command-block::
 
-   qiime feature-table summarize --i-table feature-table.qza --o-visualization table-summary
+   qiime feature-table summarize \
+     --i-table feature-table.qza \
+     --o-visualization table-summary
 
 To see what semantic types are available in QIIME 2 and to learn more about them, see the :doc:`semantic types <../semantic-types>` section of our documentation.
 

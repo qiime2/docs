@@ -47,8 +47,14 @@ We'll begin by performing quality control on the demultiplexed sequences using `
 
 .. command-block::
 
-   qiime dada2 plot-qualities --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza --p-n 10 --o-visualization demux-qual-plots-1
-   qiime dada2 plot-qualities --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza --p-n 10 --o-visualization demux-qual-plots-2
+   qiime dada2 plot-qualities \
+     --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza \
+     --p-n 10 \
+     --o-visualization demux-qual-plots-1
+   qiime dada2 plot-qualities \
+     --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza \
+     --p-n 10 \
+     --o-visualization demux-qual-plots-2
 
 .. question::
    Based on the plots you see in ``demux-qual-plots-1.qzv`` and ``demux-qual-plots-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
@@ -57,8 +63,18 @@ Here the quality seems relatively low in the first few bases, and seems to decre
 
 .. command-block::
 
-   qiime dada2 denoise --p-trim-left 10 --p-trunc-len 130 --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza --o-representative-sequences rep-seqs-1 --o-table table-1
-   qiime dada2 denoise --p-trim-left 10 --p-trunc-len 130 --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza --o-representative-sequences rep-seqs-2 --o-table table-2
+   qiime dada2 denoise \
+     --p-trim-left 10 \
+     --p-trunc-len 130 \
+     --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza \
+     --o-representative-sequences rep-seqs-1 \
+     --o-table table-1
+   qiime dada2 denoise \
+     --p-trim-left 10 \
+     --p-trunc-len 130 \
+     --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza \
+     --o-representative-sequences rep-seqs-2 \
+     --o-table table-2
 
 Merging denoised sequence variant data
 --------------------------------------
@@ -67,14 +83,22 @@ The ``denoise`` command is the last step in this analysis that needs to be run o
 
 .. command-block::
 
-   qiime feature-table merge --i-table1 table-1.qza --i-table2 table-2.qza --o-merged-table table.qza
-   qiime feature-table merge-seq-data --i-data1 rep-seqs-1.qza --i-data2 rep-seqs-2.qza --o-merged-data rep-seqs.qza
+   qiime feature-table merge \
+     --i-table1 table-1.qza \
+     --i-table2 table-2.qza \
+     --o-merged-table table.qza
+   qiime feature-table merge-seq-data \
+     --i-data1 rep-seqs-1.qza \
+     --i-data2 rep-seqs-2.qza \
+     --o-merged-data rep-seqs.qza
 
 Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifact.
 
 .. command-block::
 
-   qiime feature-table summarize --i-table table.qza --o-visualization table
+   qiime feature-table summarize \
+     --i-table table.qza \
+     --o-visualization table
 
 .. question::
    Based on the information in ``table.qzv``, what value will you choose for the ``--p-counts-per-sample`` parameter when you run ``qiime diversity core-metrics``?
@@ -86,7 +110,9 @@ We'll also generate a summary of the merged ``FeatureData[Sequence]`` artifact. 
 
 .. command-block::
 
-   qiime feature-table tabulate-seqs --i-data rep-seqs.qza --o-visualization rep-seqs
+   qiime feature-table tabulate-seqs \
+     --i-data rep-seqs.qza \
+     --o-visualization rep-seqs
 
 Diversity analysis
 ------------------

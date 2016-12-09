@@ -29,7 +29,10 @@ Importing data
 
 .. command-block::
 
-   qiime tools import --type RawSequences --input-path raw-sequences/ --output-path raw-sequences.qza
+   qiime tools import \
+     --type RawSequences \
+     --input-path raw-sequences/ \
+     --output-path raw-sequences.qza
 
 Casava 1.8 single-end demultiplexed fastq
 -----------------------------------------
@@ -51,6 +54,10 @@ Importing data
 ~~~~~~~~~~~~~~
 
 .. command-block::
-    qiime tools import --type 'SampleData[SequencesWithQuality]' --input-path casava-18-single-end-demultiplexed --output-path demux --source-format CasavaOneEightSingleLanePerSampleDirFmt
+    qiime tools import \
+      --type 'SampleData[SequencesWithQuality]' \
+      --input-path casava-18-single-end-demultiplexed \
+      --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+      --output-path demux
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
