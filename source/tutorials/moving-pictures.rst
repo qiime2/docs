@@ -105,7 +105,8 @@ In these plots, the quality of the initial bases seems to be high, so we won't t
 
    qiime dada2 denoise \
      --i-demultiplexed-seqs demux.qza \
-     --p-trim-left 0 --p-trunc-len 100 \
+     --p-trim-left 0 \
+     --p-trunc-len 100 \
      --o-representative-sequences rep-seqs \
      --o-table table
 
