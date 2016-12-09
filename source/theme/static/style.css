@@ -11,11 +11,8 @@ h1 {
 
 #header {
   height: 125px;
+  width: 200px;
   padding: 10px;
-}
-
-#header-img {
-  content: url('logo200.png');
 }
 
 #content {
@@ -73,10 +70,7 @@ code.docutils.literal {
   #header {
     padding: 20px 0 0 100px;
     height: 200px;
-  }
-
-  #header-img {
-    content: url('logo400.png');
+    width: 100%;
   }
 
   #body {
