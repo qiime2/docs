@@ -20,7 +20,7 @@ Two elements are required for training the classifier: the aligned reference seq
 
 .. note:: We require aligned references sequences for this process so we can trim the training sequences to the region of the gene that was amplified and sequenced. Training a classifier on only this region improves performance over training on the full length gene sequence, but does mean that the resulting classifier will only be applicable to sequences that were obtained using the same primers.
 
-.. note:: The aligned sequences that are available in the Greengenes OTUs datasets sets have had very low conservation removed, which would adversely affect the performance of the classifier. If you are starting from scratch, download the unaligned reference sequences and align them yourself.
+.. note:: The aligned sequences that are available in the Greengenes OTUs datasets sets have been filtered to remove very low conservation positions, which would adversely affect the performance of the classifier. If you are starting from scratch, download the unaligned reference sequences and align them yourself.
 
 We will also download the representative sequences from the `Moving Pictures`_ tutorial to test our classifier.
 
@@ -34,20 +34,18 @@ Next we import the raw data into QIIME 2 Artifacts. Note that we will load the r
 
 .. command-block::
     
-    qiime tools import --type FeatureData[Sequence] --input-path aligned_85_otu_sequences.fasta.gz --output-path 85_otus
-    qiime tools import --type FeatureData[Taxonomy] --input-path 85_otu_taxonomy.txt --output-path ref-taxonomy
+    qiime tools import --type FeatureData[Sequence] --input-path aligned_85_otu_sequences.fasta.gz --output-path 85_otus.qza
+    qiime tools import --type FeatureData[Taxonomy] --input-path 85_otu_taxonomy.txt --output-path ref-taxonomy.qza
 
 
 Extract reference reads
 -----------------------
 
-When training a machine learning classifier it is best for the training set to resemble the unseen data as closely as possible, and this has been shown to be the case for taxonomic classification as well `(Werner et al., 2012)`_. We therefore extract reads from the reference sequences that resemble those in the sample data. We know from the `Moving Pictures`_ tutorial that the sequences we want to classify are 100-base single-end reads that were amplified with the 515F/806R primer pair, so we try to reflect that here.
-
-.. note:: If classifying paired-end reads it is necessary to extract paired-end reference sequences at this stage using ``qiime feature-classifier extract-paired-end-reads`` instead.
+It has been shown that taxonomic assignment improves when the classifier is trained on data that is trimmed to resemble the reads that it will be used to classify, at least for one Naive Bayes classifier `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequences we want to classify are 100-base single-end reads that were amplified with the 515F/806R primer pair, so we try to reflect that here.
 
 .. command-block::
 
-    qiime feature-classifier extract-reads --i-sequences 85_otus.qza --p-f-primer GTGCCAGCMGCCGCGGTAA --p-r-primer GGACTACHVGGGTWTCTAAT --p-read-length 100 --o-reads ref-seqs
+    qiime feature-classifier extract-reads --i-sequences 85_otus.qza --p-f-primer GTGCCAGCMGCCGCGGTAA --p-r-primer GGACTACHVGGGTWTCTAAT --p-read-length 100 --o-reads ref-seqs.qza
 
 
 Train the classifier
@@ -57,7 +55,7 @@ Training the classifier is now straightforward. We can now train a `Naive Bayes`
 
 .. command-block::
 
-    qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier
+    qiime feature-classifier fit-classifier-naive-bayes --i-reference-reads ref-seqs.qza --i-reference-taxonomy ref-taxonomy.qza --o-classifier classifier.qza
 
 Test the classifier
 -------------------
@@ -66,7 +64,7 @@ Finally, we verify that the classifier works by classifying the representative s
 
 .. command-block::
 
-    qiime feature-classifier classify --i-classifier classifier.qza --i-reads rep-seqs.qza --o-classification taxonomy
+    qiime feature-classifier classify --i-classifier classifier.qza --i-reads rep-seqs.qza --o-classification taxonomy.qza
 
 .. _Moving Pictures: ../moving-pictures/index.html
 .. _Naive Bayes: http://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes
