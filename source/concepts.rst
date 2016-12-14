@@ -39,7 +39,7 @@ QIIME 2 microbiome analyses are made available to users via *plugins*. To perfor
 
 Plugins are software packages that can be developed by anyone. The QIIME 2 team has developed several plugins for an initial end-to-end microbiome analysis pipeline, but third-party developers are encouraged to create their own plugins to provide additional analyses. Third-party developers will define these plugins in the same way that the QIIME 2 team has defined the "official" plugins. This decentralized development of microbiome analysis functionality means that many more analyses and tools will be accessible to QIIME 2 users, including the latest techniques and protocols. Plugins also allow users to choose and customize analysis pipelines for their specific needs.
 
-Check out the :doc:`plugin availability <plugins/available>` page to see what plugins are currently available and those that are being developed.
+Check out the :doc:`plugin availability <plugins/available/index>` page to see what plugins are currently available and the :doc:`future plugins <plugins/future>` page for those that are being developed.
 
 Methods and visualizers
 -----------------------
