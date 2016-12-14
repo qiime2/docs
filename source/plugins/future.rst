@@ -1,7 +1,7 @@
-Available plugins
-=================
+Future plugins
+==============
 
-QIIME's microbiome analysis functionality is defined and made available to users via QIIME 2 plugins. As we progress through our alpha release phase we plan to develop a mechanism for allowing users to discover what plugins are available. Our initial draft of this is the `QIIME 2 Plugins spreadsheet`_.
+Plugins planned for future releases are listed in the `QIIME 2 Plugins spreadsheet`_.
 
 The ``Status`` categories used in this spreadsheet are:
 

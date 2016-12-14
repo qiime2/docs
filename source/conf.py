@@ -44,6 +44,7 @@ extensions = [
     'sphinx_extensions.question',
     'sphinx_extensions.qiime1',
     'sphinx_extensions.command_block',
+    'sphinx_extensions.plugin_directory',
     'sphinx_extensions.external_links'
 ]
 
@@ -95,7 +96,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
+exclude_patterns = ['sphinx_extensions/plugin_directory/templates']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -192,7 +193,7 @@ html_static_path = ['_static']
 # Custom sidebar templates, maps document names to template names.
 #
 html_sidebars = {
-    "**": ['localtoc.html']
+    "**": ['globaltoc.html', 'searchbox.html']
 }
 
 # Additional templates that should be rendered to pages, maps page names to
@@ -214,7 +215,7 @@ html_sidebars = {
 
 # If true, links to the reST sources are added to the pages.
 #
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #
