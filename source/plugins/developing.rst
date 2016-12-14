@@ -65,6 +65,8 @@ To see that the plugin is discoverable by QIIME, run:
 
 You should see ``my-plugin`` listed as one of the available commands. To see the available plugin commands:
 
+.. note:: If you have never ran the command line tool before, it may take a second or so to generate the cache for tab completion. If you have ran the command line tool before, your plugin may not show up immediately as your cache may not contain it. If that does occur, simply run ``qiime dev refresh-cache``
+
 .. command-block::
    :no-exec:
 
