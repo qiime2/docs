@@ -44,7 +44,7 @@ All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which
 
    qiime tools import \
      --type RawSequences \
-     --input-path raw-sequences/ \
+     --input-path raw-sequences \
      --output-path raw-sequences.qza
 
 .. tip::
@@ -200,12 +200,12 @@ We'll first test for associations between discrete metadata categories and alpha
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
+     --m-metadata-file sample-metadata.tsv \
      --o-visualization cm1441/faith-pd-group-significance
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
+     --m-metadata-file sample-metadata.tsv \
      --o-visualization cm1441/evenness-group-significance
 
 .. question::
@@ -220,12 +220,12 @@ Next, we'll test for associations between alpha diversity metrics and continuous
 
    qiime diversity alpha-correlation \
      --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
+     --m-metadata-file sample-metadata.tsv \
      --o-visualization cm1441/faith-pd-correlation
 
    qiime diversity alpha-correlation \
      --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
+     --m-metadata-file sample-metadata.tsv \
      --o-visualization cm1441/evenness-correlation
 
 .. question::
