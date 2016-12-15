@@ -1,7 +1,7 @@
 "88 soils" tutorial
 ===================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 This tutorial is designed to be a self-guided exercise that could be run after :doc:`the moving pictures tutorial <moving-pictures>` and :doc:`the fecal microbiota transplant tutorial <fmt>` to gain more experience with QIIME 2.
 

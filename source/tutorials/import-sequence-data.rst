@@ -1,7 +1,7 @@
 Importing sequence data
 =======================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>` and have read :doc:`Importing Data <./import>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and have read :doc:`Importing Data <./import>`.
 
 To begin a QIIME 2 analysis with sequence data, for example as generated on an Illumina MiSeq instrument, it must be imported into a QIIME 2 artifact (``.qza``) file. This document illustrates how to import data in various starting formats, and will be expanded as additional relevant formats are identified. Each section below briefly describes a format of sequence data, provides commands to download example data files, and illustrates how to import data in that format.
 

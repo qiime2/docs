@@ -53,4 +53,4 @@ A *visualizer* is similar to a *method* in that it accepts some combination of a
 Next steps
 ----------
 
-Now that you're familiar with the core concepts in QIIME 2, you are ready to :doc:`install QIIME 2 <install>` and work through the :doc:`tutorials <tutorials/index>`.
+Now that you're familiar with the core concepts in QIIME 2, you are ready to :doc:`install QIIME 2 <install/index>` and work through the :doc:`tutorials <tutorials/index>`.

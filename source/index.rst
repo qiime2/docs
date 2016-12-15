@@ -19,7 +19,7 @@ Table of contents
    getting-started
    about
    concepts
-   install
+   install/index
    tutorials/index
    interfaces/index
    plugins/index
