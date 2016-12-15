@@ -25,6 +25,8 @@ Table of contents
    plugins/index
    semantic-types
    community
+   data-resources
+   supplementary-resources
    glossary
 
 .. _QIIME 1: http://qiime.org
