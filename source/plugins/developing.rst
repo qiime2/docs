@@ -65,14 +65,20 @@ To see that the plugin is discoverable by QIIME, run:
 
 You should see ``my-plugin`` listed as one of the available commands. To see the available plugin commands:
 
-.. note:: If you have never ran the command line tool before, it may take a second or so to generate the cache for tab completion. If you have ran the command line tool before, your plugin may not show up immediately as your cache may not contain it. If that does occur, simply run ``qiime dev refresh-cache``
-
 .. command-block::
    :no-exec:
 
    qiime my-plugin --help
 
 Once you are done exploring the plugin's example functionality, update it with your own. The relevant sections of the code that need to change are commented.
+
+.. note::
+
+   If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while you are developing it, you'll need to run ``qiime dev refresh-cache`` to see the latest changes to your plugin reflected in the CLI. You'll need to run this command anytime you modify your plugin's interface (e.g. add/rename/remove a command or its inputs/parameters/outputs).
+
+   Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
+
+   This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
 
 The following sections describe various plugin components, configuration, and how to define your own functionality. As you read through the following sections, it may be useful to refer back to the example functionality defined in the plugin to see how it is implemented.
 
