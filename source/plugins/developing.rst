@@ -72,6 +72,14 @@ You should see ``my-plugin`` listed as one of the available commands. To see the
 
 Once you are done exploring the plugin's example functionality, update it with your own. The relevant sections of the code that need to change are commented.
 
+.. note::
+
+   If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while you are developing it, you'll need to run ``qiime dev refresh-cache`` to see the latest changes to your plugin reflected in the CLI. You'll need to run this command anytime you modify your plugin's interface (e.g. add/rename/remove a command or its inputs/parameters/outputs).
+
+   Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
+
+   This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
+
 The following sections describe various plugin components, configuration, and how to define your own functionality. As you read through the following sections, it may be useful to refer back to the example functionality defined in the plugin to see how it is implemented.
 
 .. note:: The initialized plugin also includes some basic continuous integration configuration for `Travis-CI`_, including ``flake8`` linting/style-checking and a ``nose`` command for running unit tests (you'll need to enable Travis-CI on your repository for your tests to be run). There aren't any unit tests included in the initialized plugin; plugin developers are encouraged to add unit tests for their plugin's functionality. The initialized plugin's code is flake8-compliant.
