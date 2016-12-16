@@ -17,12 +17,12 @@ Find more information about Greengenes at http://greengenes.secondgenome.com.
 Silva (16S/18S rRNA)
 ````````````````````
 
-QIIME-compatible SILVA releases as well as the licensing information for commercial and non-commercial use are available at http://www.arb-silva.de/download/archive/qiime.
+QIIME-compatible SILVA releases, as well as the licensing information for commercial and non-commercial use, are available at http://www.arb-silva.de/download/archive/qiime.
 
 UNITE (fungal ITS)
 ``````````````````
 
-All releases, including the latest, are available for download at http://unite.ut.ee/repository.php.
+All releases are available for download at http://unite.ut.ee/repository.php.
 
 Find more information about UNITE at http://unite.ut.ee.
 
