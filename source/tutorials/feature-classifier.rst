@@ -30,7 +30,7 @@ We will also download the representative sequences from the `Moving Pictures`_ t
     curl -sLO https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
     curl -sLO https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/rep-seqs.qza
 
-Next we import the raw data into QIIME 2 Artifacts. Note that we will load the reference sequences into a ``FeatureData[Sequence]``. In the next release of QIIME 2 we will load them into a more appropriate ``FeatureData[AlignedSequence]`` Artifact.
+Next we import the raw data into QIIME 2 Artifacts. Note that we will load the aligned reference sequences into a ``FeatureData[Sequence]``. In the next release of QIIME 2 we will load them into a more appropriate ``FeatureData[AlignedSequence]`` Artifact.
 
 .. command-block::
 

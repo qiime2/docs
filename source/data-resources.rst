@@ -18,9 +18,8 @@ These classifiers were trained using scikit-learn 0.18.1, and therefore can only
 Naive Bayes classifiers trained on:
 
 - `Silva 119 99% OTUs full-length sequences <https://data.qiime2.org/2.0.6/common/silva-119-99-full-length-nb-classifier.qza>`_ (MD5: ``bb15be94fcfa2270d57e05b8630233af``)
-- `Silva 119 99% OTUs 250 base forward reads from 515F/806R region of sequences <https://data.qiime2.org/2.0.6/common/silva-119-99-515-806-nb-classifier.qza>`_ (MD5: ``d0f7f85c03fa1def6d3d98252094762f``)
 - `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2.0.6/common/gg-13-8-99-full-length-nb-classifier.qza>`_ (MD5: ``ccc41644e053f18c4aa9f6fcfe01dbc4``)
-- `Greengenes 13_8 99% OTUs 250 base forward reads from 515F/806R region of sequences <https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``4c2e010fcc44687dd3a2915a30d5d9c8``)
+- `Greengenes 13_8 99% OTUs 250-base forward reads from 515F/806R region of sequences <https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``30028663be722c040073846075abef96``)
 
 Marker gene reference databases
 -------------------------------
