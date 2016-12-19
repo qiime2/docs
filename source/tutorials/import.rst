@@ -1,7 +1,7 @@
 Importing data
 ==============
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 In order to use QIIME 2, we require input data to be stored in *artifacts* (i.e. ``.qza`` files). This is what enables distributed and automatic provenance tracking, as well as semantic type validation and transformations between data formats. This guide will demonstrate how to import data into an artifact. This will typically happen with your initial data (e.g. raw sequences obtained from a sequencing facility), but importing can be performed at any step in your analysis pipeline. For example, if a collaborator provides you with a ``.biom`` file, you can import it into an artifact to perform "downstream" statistical analyses.
 

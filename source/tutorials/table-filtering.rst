@@ -1,7 +1,7 @@
 Filtering feature tables
 ========================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 .. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py`` and ``filter_otus_from_otu_table.py``.
 

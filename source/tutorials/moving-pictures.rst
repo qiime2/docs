@@ -1,7 +1,7 @@
 "Moving Pictures" tutorial
 ==========================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 In this tutorial you'll use QIIME 2 to perform an analysis of human microbiome samples from two individuals at four body sites at five timepoints, the first of which immediately followed antibiotic usage. A study based on these samples was originally published in `Caporaso et al. (2011)`_. The data used in this tutorial were sequenced on an Illumina HiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
@@ -292,7 +292,9 @@ Finally, ordination is a popular approach for exploring microbial community comp
 Taxonomic analysis
 ------------------
 
-In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` artifact. We'll do that using a Naive Bayes classifier with the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll download and apply the pre-trained classifier here because training this classifier can be slow, but it is easy to train Naive Bayes and other classifiers on custom sequence collections using the ``q2-feature-classifier`` plugin. We'll then apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy.
+In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` artifact. We'll do that using a pre-trained Naive Bayes classifier and the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include 250 bases from the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy.
+
+.. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers. We provide some common classifiers on our :doc:`data resources page <../data-resources>`, including Silva-based 16S classifiers, as training classifiers can require a large amount of memory.
 
 .. command-block::
 

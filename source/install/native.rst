@@ -1,9 +1,9 @@
-Installing QIIME 2
-==================
+Natively installing QIIME 2
+===========================
 
 .. note:: QIIME 2 does not currently support Windows. It is something we will be working on soon, and in the meantime we recommend using a virtual machine or services such as Amazon Elastic Compute Cloud if a Unix/Mac platform is not available to you.
 
-This document describes how to install the QIIME 2 framework, a command-line interface, and some plugins used in the :doc:`tutorials <tutorials/index>`.
+This document describes how to install the QIIME 2 framework, a command-line interface, and some plugins used in the :doc:`tutorials <../tutorials/index>`.
 
 Install Miniconda
 -----------------
@@ -130,12 +130,12 @@ Let's wrap up by installing several more plugins used in the tutorials.
    conda install -c biocore fasttree
    conda install -c qiime2 q2-demux q2-alignment q2-phylogeny q2-dada2 q2-composition q2-taxa q2-feature-classifier
 
-Now that you have some plugins installed and have explored the command-line interface a bit, you're ready to analyze microbiome data! Check out the :doc:`QIIME 2 tutorials <tutorials/index>` for analyses of tutorial datasets.
+Now that you have some plugins installed and have explored the command-line interface a bit, you're ready to analyze microbiome data! Check out the :doc:`QIIME 2 tutorials <../tutorials/index>` for analyses of tutorial datasets.
 
 Working with other QIIME 2 interfaces
 -------------------------------------
 
-So far we have seen how to install QIIME 2 and explore its command-line interface. In the same way that QIIME 2 plugins can be added or removed to change the functionality of QIIME, you can also choose which interfaces to install and use for your analyses. Unlike QIIME 1, the command-line interface is only one possible interface for QIIME 2. You can explore :doc:`QIIME 2 Studio <interfaces/q2studio>`, the first graphical user interface for QIIME 2, and the :doc:`Artifact API <interfaces/artifact-api>`, an *Application Programmer Interface* that is optimized for users working in the `Jupyter Notebook`_.
+So far we have seen how to install QIIME 2 and explore its command-line interface. In the same way that QIIME 2 plugins can be added or removed to change the functionality of QIIME, you can also choose which interfaces to install and use for your analyses. Unlike QIIME 1, the command-line interface is only one possible interface for QIIME 2. You can explore :doc:`QIIME 2 Studio <../interfaces/q2studio>`, the first graphical user interface for QIIME 2, and the :doc:`Artifact API <../interfaces/artifact-api>`, an *Application Programmer Interface* that is optimized for users working in the `Jupyter Notebook`_.
 
 .. _`q2cli`: https://github.com/qiime2/q2cli
 

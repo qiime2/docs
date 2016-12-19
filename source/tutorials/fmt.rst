@@ -1,7 +1,7 @@
 Fecal microbiota transplant (FMT) study: an exercise
 ====================================================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 This document is intended to be run after :doc:`the moving pictures tutorial <moving-pictures>`. It is designed to introduce a few new ideas, and to be an exercise in applying the tools that were explored in that document.
 

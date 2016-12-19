@@ -19,12 +19,14 @@ Table of contents
    getting-started
    about
    concepts
-   install
+   install/index
    tutorials/index
    interfaces/index
    plugins/index
    semantic-types
    community
+   data-resources
+   supplementary-resources
    glossary
 
 .. _QIIME 1: http://qiime.org

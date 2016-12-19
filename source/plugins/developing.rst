@@ -19,7 +19,7 @@ These steps are covered in detail below.
 
 Writing a simple QIIME 2 plugin should be a straightforward process. For example, the `q2-emperor`_ plugin, which connects `Emperor`_ to QIIME 2, is written in only around 100 lines of code. It is a standalone plugin that defines how and which functionality in Emperor should be accessible through QIIME 2. Plugins will vary in their complexity. For example, a plugin that defines a lot of new functionality would likely be quite a bit bigger. `q2-diversity`_ is a good example of this. Unlike ``q2-emperor``, there is some specific functionality (and associated unit tests) defined in this project, and it depends on several other Python 3 compatible libraries.
 
-Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install>` to familiarize yourself with the system and to provide a means for testing your plugin.
+Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install/index>` to familiarize yourself with the system and to provide a means for testing your plugin.
 
 Initializing a plugin package
 -----------------------------

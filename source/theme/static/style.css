@@ -40,6 +40,18 @@ div.admonition.tip, div.admonition.note {
     border: 1px solid #BCE8F1;
 }
 
+div.admonition.danger {
+    color: #A94442;
+    background-color: #F2DEDE;
+    border: 1px solid #EBCCCC;
+}
+
+div.admonition.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border: 1px solid #faf2cc;
+}
+
 /* `question` directive extension */
 div.admonition.question {
     color: #3C763D;
