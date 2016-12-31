@@ -23,7 +23,7 @@ Sequence processing and diversity analyses
 
 Use the following questions to guide your analyses of the data. (Note: if you're new to QIIME 2, you should work through the :doc:`the moving pictures tutorial <moving-pictures>` and then :doc:`the fecal microbiota transplant tutorial <fmt>`, which will guide you through answering similar questions.)
 
-#. What value would you choose to pass for the ``--p-counts-per-sample``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
+#. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
 
 #. What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? Are these associations stronger with unweighted UniFrac or with Bray-Curtis? Based on what you know about these metrics, what does that difference suggest?
 
