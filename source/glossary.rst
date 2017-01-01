@@ -21,7 +21,7 @@ This document is currently a work-in-progress QIIME 2 terminology glossary.
          A combination of *actions*. This is not yet implemented.
 
    Plugin
-      A plugin provides microbiome (i.e. domain-specific) analysis functionality that is accessible to users through a variety of interfaces built around the QIIME 2 framework. Plugins can be developed and distributed by anyone. In more technical terms, a plugin is a Python 3 package that instantiates a ``qiime.plugin.Plugin`` object, and registers *actions*, *data formats*, and/or *semantic types* that become discoverable in the QIIME 2 framework.
+      A plugin provides microbiome (i.e. domain-specific) analysis functionality that is accessible to users through a variety of interfaces built around the QIIME 2 framework. Plugins can be developed and distributed by anyone. In more technical terms, a plugin is a Python 3 package that instantiates a ``qiime2.plugin.Plugin`` object, and registers *actions*, *data formats*, and/or *semantic types* that become discoverable in the QIIME 2 framework.
 
    Result
       A general term for an *artifact* or *visualization*. A *result* is produced by a *method*, *visualizer*, or *pipeline*.

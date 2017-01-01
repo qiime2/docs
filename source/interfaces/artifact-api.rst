@@ -14,7 +14,7 @@ Then, open a Python interpreter such as IPython and enter the following command.
 
 .. code-block:: python
 
-   >>> from qiime.plugins import feature_table
+   >>> from qiime2.plugins import feature_table
    ImportError: cannot import name 'feature_table'
    >>> exit
 
@@ -29,13 +29,13 @@ Open your interpreter, and you should now be able to import this plugin:
 
 .. code-block:: python
 
-   >>> from qiime.plugins import feature_table
+   >>> from qiime2.plugins import feature_table
 
 We'll now explore some of the same methods and visualizers introduced in the :doc:`Moving Pictures tutorial <../tutorials/moving-pictures>`, this time in the Python interpreter instead of the command line interface. First, we'll load a QIIME 2 ``Artifact``, in this case a feature table. We'll then pass that to the ``q2-feature-table`` plugin's ``rarefy`` method, which will return a new Artifact.
 
 .. code-block:: python
 
-   >>> from qiime import Artifact
+   >>> from qiime2 import Artifact
    >>> unrarefied_table = Artifact.load('table.qza')
    >>> rarefy_result = feature_table.methods.rarefy(table=unrarefied_table, sampling_depth=100)
    >>> rarefied_table = rarefy_result.rarefied_table
@@ -48,12 +48,12 @@ While we recommend working with QIIME 2 ``Artifacts`` directly, it is possible t
    >>> biom_table = rarefied_table.view(biom.Table)
    >>> print(biom_table.head())
    # Constructed from biom file
-   #OTU ID	K3.H	K3.Z	M2.Middle.L	K3.A	K3.R
-   New.CleanUp.ReferenceOTU0	2.0	0.0	0.0	0.0	0.0
-   New.CleanUp.ReferenceOTU1	0.0	1.0	1.0	0.0	1.0
-   New.CleanUp.ReferenceOTU3	0.0	0.0	0.0	0.0	0.0
-   New.CleanUp.ReferenceOTU7	0.0	0.0	0.0	0.0	0.0
-   New.CleanUp.ReferenceOTU9	0.0	0.0	0.0	0.0	0.0
+   #OTU ID	L1S105	L1S140	L1S208	L1S257	L1S281
+   b32621bcd86cb99e846d8f6fee7c9ab8	25.0	31.0	27.0	29.0	23.0
+   99647b51f775c8ddde8ed36a7d60dbcd	0.0	0.0	0.0	0.0	0.0
+   d599ebe277afb0dfd4ad3c2176afc50e	0.0	0.0	0.0	0.0	0.0
+   51121722488d0c3da1388d1b117cd239	0.0	0.0	0.0	0.0	0.0
+   1016319c25196d73bdb3096d86a9df2f	11.0	17.0	12.0	4.0	2.0
 
 You can also view the artifact's data as a ``pandas.DataFrame`` object:
 
@@ -62,12 +62,12 @@ You can also view the artifact's data as a ``pandas.DataFrame`` object:
    >>> import pandas as pd
    >>> df = rarefied_table.view(pd.DataFrame)
    >>> df.head()
-                New.CleanUp.ReferenceOTU0  New.CleanUp.ReferenceOTU1  \
-   K3.H                               2.0                        0.0
-   K3.Z                               0.0                        1.0
-   M2.Middle.L                        0.0                        1.0
-   K3.A                               0.0                        0.0
-   K3.R                               0.0                        1.0
+           b32621bcd86cb99e846d8f6fee7c9ab8  99647b51f775c8ddde8ed36a7d60dbcd  \
+   L1S105                              25.0                               0.0
+   L1S140                              31.0                               0.0
+   L1S208                              27.0                               0.0
+   L1S257                              29.0                               0.0
+   L1S281                              23.0                               0.0
    ...
 
 A powerful feature of QIIME 2 is that you can export different types of views from QIIME artifacts as illustrated here, then operate on the resulting data types, and import those data back into QIIME. This is useful if there are some operations that are available on the view's data type (e.g., the ``pandas.DataFrame``) that are not available through the QIIME API. An important caveat is that you will lose all artifact provenance in the process, because QIIME can't track what happens to data outside of QIIME. You can import the ``pandas.DataFrame`` back into a new QIIME artifact as follows:
@@ -80,18 +80,18 @@ The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugin
 
 .. code-block:: python
 
-   >>> from qiime.plugins import diversity
+   >>> from qiime2.plugins import diversity
    >>> alpha_result = diversity.methods.alpha(table=rarefied_table, metric='observed_otus')
    >>> alpha_diversity = alpha_result.alpha_diversity
    >>> alpha_diversity.view(pd.Series)
-   K3.H           37
-   K3.Z           49
-   M2.Middle.L    32
-   K3.A           35
-   K3.R           48
-   K3.V           46
-   K3.K           36
-   K3.B           48
+   L1S105    24
+   L1S140    19
+   L1S208    25
+   L1S257    30
+   L1S281    29
+   L1S57     23
+   L1S76     20
+   L1S8      17
    ...
    Name: observed_otus, dtype: int64
 
@@ -100,7 +100,9 @@ Finally, we can save our ``Artifacts`` as ``.qza`` files and exit the interprete
 .. code-block:: python
 
    >>> rarefied_table.save('rare.qza')
+   'rare.qza'
    >>> alpha_diversity.save('oo.qza')
+   'oo.qza'
    >>> exit
 
 Another powerful feature of QIIME 2 is that you can combine interfaces. For example, you could develop a Python script that automatically processes files for you to generate results as we just did, and then perform analysis of those files using the :doc:`command line interface <q2cli>` or the :doc:`QIIME 2 Studio <q2studio>`. For instance, you could now continue your analysis and view some results on the command line as follows:

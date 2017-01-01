@@ -11,11 +11,11 @@ import os.path
 import shutil
 
 import jinja2
-import qiime.sdk
+import qiime2.sdk
 
 
 def generate_rst(app):
-    plugins = qiime.sdk.PluginManager().plugins
+    plugins = qiime2.sdk.PluginManager().plugins
     loader = jinja2.PackageLoader('sphinx_extensions.plugin_directory',
                                   'templates')
     env = jinja2.Environment(loader=loader)
@@ -62,11 +62,14 @@ def generate_rst(app):
 
 def _get_param_specs(signature, group, no_default='Required'):
     specs = []
-    for name, (qiime_type, _) in getattr(signature, group).items():
+    for name, spec in getattr(signature, group).items():
         default = no_default
-        if name in signature.defaults:
-            default = signature.defaults[name]
-        specs.append((name, qiime_type, default))
+        if spec.has_default():
+            default = spec.default
+        description = 'No description'
+        if spec.has_description():
+            description = spec.description
+        specs.append((name, spec.qiime_type, default, description))
     return specs
 
 

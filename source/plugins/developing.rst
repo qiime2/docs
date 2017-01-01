@@ -11,7 +11,7 @@ Overview
 There are several high-level steps to creating a QIIME 2 plugin:
 
 1. A QIIME 2 plugin must define one or more Python 3 functions that will be accessible through QIIME. The plugin must be a Python 3 package that can be installed with ``setuptools``.
-2. The plugin must then instantiate a ``qiime.plugin.Plugin`` object and define some information including the name of the plugin and its URL. In the plugin package's ``setup.py`` file, this instance will be defined as an entry point.
+2. The plugin must then instantiate a ``qiime2.plugin.Plugin`` object and define some information including the name of the plugin and its URL. In the plugin package's ``setup.py`` file, this instance will be defined as an entry point.
 3. The plugin must then register its functions as QIIME 2 ``Actions``, which will be accessible to users through any of the QIIME 2 interfaces.
 4. Optionally, the plugin should be distributed through `Anaconda`_, as that will simplify its installation for QIIME 2 users (since that is the supported mechanism for installing QIIME 2).
 
@@ -119,12 +119,12 @@ Next, at least one ``index.*`` file must be written to ``output_dir`` by the fun
 
 Finally, the function cannot return anything, and its return type should be annotated as ``None``.
 
-``q2_diversity.alpha_group_significance`` is an example of a function that can be registered as a ``Visualizer``. In addition to its ``output_dir``, it takes alpha diversity results in a ``pandas.Series`` and sample metadata in a ``qiime.Metadata`` object and creates several different files (figures and tables) that are linked and/or presented in an ``index.html`` file. The signature of this function is:
+``q2_diversity.alpha_group_significance`` is an example of a function that can be registered as a ``Visualizer``. In addition to its ``output_dir``, it takes alpha diversity results in a ``pandas.Series`` and sample metadata in a ``qiime2.Metadata`` object and creates several different files (figures and tables) that are linked and/or presented in an ``index.html`` file. The signature of this function is:
 
 .. code-block:: python
 
    def alpha_group_significance(output_dir: str, alpha_diversity: pd.Series,
-                                metadata: qiime.Metadata) -> None:
+                                metadata: qiime2.Metadata) -> None:
 
 Instantiating a plugin
 ++++++++++++++++++++++
@@ -133,7 +133,7 @@ The next step is to instantiate a QIIME 2 ``Plugin`` object. This might look lik
 
 .. code-block:: python
 
-   from qiime.plugin import Plugin
+   from qiime2.plugin import Plugin
    import q2_diversity
 
    plugin = Plugin(
@@ -153,7 +153,7 @@ The ``name`` parameter is the name that users will use to access your plugin fro
 
 ``package`` should be the Python package name for your plugin.
 
-While not shown in the previous example, plugin developers can optionally provide the following parameters to ``qiime.plugin.Plugin``:
+While not shown in the previous example, plugin developers can optionally provide the following parameters to ``qiime2.plugin.Plugin``:
 
 * ``citation_text``: free text describing how users should cite the plugin and/or the underlying tools it wraps. If not provided, users are told to cite the ``website``.
 
@@ -175,7 +175,7 @@ First we'll register a ``Method`` by calling ``plugin.methods.register_function`
 
    from q2_types import (FeatureTable, Frequency, Phylogeny,
                          Rooted, DistanceMatrix)
-   from qiime.plugin import Str, Choices, Properties, Metadata
+   from qiime2.plugin import Str, Choices, Properties, Metadata
 
    import q2_diversity
    import q2_diversity._beta as beta
@@ -237,11 +237,11 @@ Finally, you need to tell QIIME where to find your instantiated ``Plugin`` objec
    setup(
        ...
        entry_points={
-           'qiime.plugins': ['q2-diversity=q2_diversity.plugin_setup:plugin']
+           'qiime2.plugins': ['q2-diversity=q2_diversity.plugin_setup:plugin']
        }
    )
 
-The relevant key in the ``entry_points`` dictionary will be ``'qiime.plugins'``, and the value will be a single element list containing a string formatted as ``<distribution-name>=<import-path>:<instance-name>``. ``<distribution-name>`` is the name of the Python package distribution (matching the value passed for ``name`` in this call to ``setup``); ``<import-path>`` is the import path for the ``Plugin`` instance you created above; and ``<instance-name>`` is the name for the ``Plugin`` instance you created above.
+The relevant key in the ``entry_points`` dictionary will be ``'qiime2.plugins'``, and the value will be a single element list containing a string formatted as ``<distribution-name>=<import-path>:<instance-name>``. ``<distribution-name>`` is the name of the Python package distribution (matching the value passed for ``name`` in this call to ``setup``); ``<import-path>`` is the import path for the ``Plugin`` instance you created above; and ``<instance-name>`` is the name for the ``Plugin`` instance you created above.
 
 Advanced plugin development
 ---------------------------
