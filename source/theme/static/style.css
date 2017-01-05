@@ -71,6 +71,10 @@ div.admonition.qiime1 {
     text-align: center;
 }
 
+form.search input[name=q]{
+    width: 100%;
+}
+
 @media screen and (min-width: 992px) {
 
   #github-banner {
