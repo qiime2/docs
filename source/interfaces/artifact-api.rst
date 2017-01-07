@@ -110,6 +110,6 @@ Another powerful feature of QIIME 2 is that you can combine interfaces. For exam
 .. command-block::
    :no-exec:
 
-   qiime diversity alpha-group-significance --i-alpha-diversity oo.qza --m-metadata-file sample-metadata.tsv  --o-visualization oo-group-significance
+   qiime diversity alpha-group-significance --i-alpha-diversity oo.qza --m-metadata-file sample-metadata.tsv  --o-visualization oo-group-significance.qzv
 
 .. _`Jupyter Notebook`: http://jupyter.org/

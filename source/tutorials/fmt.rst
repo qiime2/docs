@@ -50,11 +50,11 @@ We'll begin by performing quality control on the demultiplexed sequences using `
    qiime dada2 plot-qualities \
      --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza \
      --p-n 10 \
-     --o-visualization demux-qual-plots-1
+     --o-visualization demux-qual-plots-1.qzv
    qiime dada2 plot-qualities \
      --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza \
      --p-n 10 \
-     --o-visualization demux-qual-plots-2
+     --o-visualization demux-qual-plots-2.qzv
 
 .. question::
    Based on the plots you see in ``demux-qual-plots-1.qzv`` and ``demux-qual-plots-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
@@ -67,14 +67,14 @@ Here the quality seems relatively low in the first few bases, and seems to decre
      --p-trim-left 10 \
      --p-trunc-len 130 \
      --i-demultiplexed-seqs fmt-tutorial-demux-1-10p.qza \
-     --o-representative-sequences rep-seqs-1 \
-     --o-table table-1
+     --o-representative-sequences rep-seqs-1.qza \
+     --o-table table-1.qza
    qiime dada2 denoise \
      --p-trim-left 10 \
      --p-trunc-len 130 \
      --i-demultiplexed-seqs fmt-tutorial-demux-2-10p.qza \
-     --o-representative-sequences rep-seqs-2 \
-     --o-table table-2
+     --o-representative-sequences rep-seqs-2.qza \
+     --o-table table-2.qza
 
 Merging denoised sequence variant data
 --------------------------------------
@@ -98,7 +98,7 @@ Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifac
 
    qiime feature-table summarize \
      --i-table table.qza \
-     --o-visualization table
+     --o-visualization table.qzv
 
 .. question::
    Based on the information in ``table.qzv``, what value will you choose for the ``--p-sampling-depth`` parameter when you run ``qiime diversity core-metrics``?
@@ -112,7 +112,7 @@ We'll also generate a summary of the merged ``FeatureData[Sequence]`` artifact. 
 
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
-     --o-visualization rep-seqs
+     --o-visualization rep-seqs.qzv
 
 Diversity analysis
 ------------------

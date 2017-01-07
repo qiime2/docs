@@ -58,6 +58,6 @@ Importing data
       --type 'SampleData[SequencesWithQuality]' \
       --input-path casava-18-single-end-demultiplexed \
       --source-format CasavaOneEightSingleLanePerSampleDirFmt \
-      --output-path demux
+      --output-path demux.qza
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
