@@ -10,4 +10,4 @@ Tutorials
    import
    feature-classifier
    import-sequence-data
-   table-filtering
+   filtering
