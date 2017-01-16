@@ -23,7 +23,7 @@ Next, reinstall the ``q2-feature-table`` and ``q2-diversity`` plugins (``q2-dive
 .. command-block::
    :no-exec:
 
-   conda install -c qiime2 q2-feature-table q2-diversity
+   conda install --override-channels -c qiime2 -c defaults q2-feature-table q2-diversity
 
 Open your interpreter, and you should now be able to import this plugin:
 

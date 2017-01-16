@@ -1,9 +1,11 @@
 Natively installing QIIME 2
 ===========================
 
-.. note:: QIIME 2 does not currently support Windows. It is something we will be working on soon, and in the meantime we recommend using a virtual machine or services such as Amazon Elastic Compute Cloud if a Unix/Mac platform is not available to you.
-
 This document describes how to install the QIIME 2 framework, a command-line interface, and some plugins used in the :doc:`tutorials <../tutorials/index>`.
+
+.. note:: QIIME 2 does not currently support Windows. It is something we will be working on soon, and in the meantime we recommend using one of the :doc:`QIIME 2 virtual machines <virtual-machine>`.
+
+.. note:: Installing QIIME 2 will become easier as we transition out of the alpha release phase.
 
 Install Miniconda
 -----------------
@@ -22,9 +24,9 @@ You can choose whatever name you'd like for the environment. In this example, we
 .. command-block::
    :no-exec:
 
-   conda create -n qiime2 -c qiime2 python=3.5 qiime q2cli
+   conda create -n qiime2 --override-channels -c qiime2 -c defaults python=3.5 qiime2 q2cli
 
-``-n qiime2`` specifies the name of the environment, and ``-c qiime2`` specifies the channel to search for packages.
+.. note:: ``-n qiime2`` specifies the name of the environment, and ``--override-channels -c qiime2 -c defaults`` specifies the channels to search for packages, regardless of the channels that may exist in a `.condarc` file.
 
 Now that you have an environment, activate it using the environment's name:
 
@@ -81,8 +83,8 @@ Out of the box, installing the QIIME 2 framework and command-line interface does
 .. command-block::
    :no-exec:
 
-   conda install matplotlib==1.5.1
-   conda install -c qiime2 q2-types q2-feature-table
+   conda install --override-channels -c defaults matplotlib==1.5.1
+   conda install --override-channels -c qiime2 -c defaults q2-types q2-feature-table
 
 Now execute the ``qiime info`` command again:
 
@@ -105,7 +107,7 @@ Install the ``q2-diversity`` and ``q2-emperor`` plugins as well:
 .. command-block::
    :no-exec:
 
-   conda install -c qiime2 -c conda-forge q2-diversity q2-emperor
+   conda install --override-channels -c qiime2 -c conda-forge -c defaults q2-diversity q2-emperor
 
 You'll now have four plugins installed:
 
@@ -121,14 +123,52 @@ To see more information about an action provided by a plugin, pass ``--help`` to
 
    qiime diversity beta-phylogenetic --help
 
-Let's wrap up by installing several more plugins used in the tutorials.
+Let's wrap up by installing several more plugins used in the tutorials, along with their dependencies.
 
 .. command-block::
    :no-exec:
 
-   conda install -c bioconda -c r bioconductor-dada2 mafft
-   conda install -c biocore fasttree
-   conda install -c qiime2 q2-demux q2-alignment q2-phylogeny q2-dada2 q2-composition q2-taxa q2-feature-classifier
+   conda install --override-channels -c bioconda -c defaults mafft
+   conda install --override-channels -c biocore -c defaults fasttree
+   conda install --override-channels -c qiime2 -c defaults q2-demux q2-alignment q2-phylogeny q2-composition q2-taxa q2-feature-classifier
+
+The ``q2-dada2`` plugin requires R and the `latest version of dada2 available through Bioconductor <https://www.bioconductor.org/packages/release/bioc/html/dada2.html>`_. Installing dada2 through Bioconductor is necessary because the latest version of dada2 is not available through ``conda`` at the time of this writing. There is work being done to make the latest version of dada2 available through ``conda``. When the package is available, the installation process will become faster and easier.
+
+.. command-block::
+   :no-exec:
+
+   conda install --override-channels -c r -c defaults r
+   CDPATH= R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("dada2")'
+   conda install --override-channels -c qiime2 -c defaults q2-dada2
+
+.. tip::
+
+   If installation of dada2 using Bioconductor fails, try the following suggestions (if applicable to your computing environment):
+
+   * Per the `Bioconductor installation instructions <https://www.bioconductor.org/install/>`_, try using ``http://`` instead of ``https://`` in the Bioconductor URL that is sourced above (i.e. http://bioconductor.org/biocLite.R instead of https://bioconductor.org/biocLite.R).
+
+   * If you are using a Mac (i.e. macOS or OS X), install the Xcode Command Line Tools.
+
+   * Ensure the version of R you have installed is compatible with dada2. The `dada2 Bioconductor install guide <https://www.bioconductor.org/packages/release/bioc/html/dada2.html>`_ lists the minimum required version of R. You can see what version of R you have installed by running:
+
+     .. command-block::
+
+        R --version
+
+     If the R version is incompatible, try updating to a newer version by running:
+
+     .. command-block::
+        :no-exec:
+
+        conda update --override-channels -c r -c defaults r
+
+   * To test that dada2 installed correctly, run:
+
+     .. command-block::
+
+        R -e 'library("dada2")'
+
+     If no errors are reported, the installation was successful!
 
 Now that you have some plugins installed and have explored the command-line interface a bit, you're ready to analyze microbiome data! Check out the :doc:`QIIME 2 tutorials <../tutorials/index>` for analyses of tutorial datasets.
 

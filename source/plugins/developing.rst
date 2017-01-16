@@ -46,7 +46,7 @@ The plugin includes some example functionality that you can try out (for example
 .. command-block::
    :no-exec:
 
-   conda install -c qiime2 q2-dummy-types
+   conda install --override-channels -c qiime2 -c defaults q2-dummy-types
 
 Next, navigate to the plugin directory that was created and install the plugin in development mode:
 
