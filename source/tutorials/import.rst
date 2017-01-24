@@ -9,9 +9,9 @@ Importing can be accomplished using any of the QIIME 2 :doc:`interfaces <../inte
 
 First, let's download an example ``.biom`` file:
 
-.. command-block::
-
-   curl -sLO https://data.qiime2.org/2.0.6/tutorials/examples/feature-table.biom
+.. download::
+   :url: https://data.qiime2.org/2.0.6/tutorials/examples/feature-table.biom
+   :rename: feature-table.biom
 
 Next we will use the ``qiime tools import`` command, providing a semantic type of ``FeatureTable[Frequency]`` for the ``.biom`` file because this is a feature table of counts (i.e. frequencies):
 

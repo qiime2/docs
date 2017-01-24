@@ -20,8 +20,31 @@ import docutils.parsers.rst
 import docutils.parsers.rst.directives
 import docutils.statemachine
 import sphinx.errors
+import jinja2
 
 import qiime2
+
+
+loader = jinja2.PackageLoader('sphinx_extensions.command_block', 'templates')
+jinja_env = jinja2.Environment(loader=loader)
+
+
+class download_node(docutils.nodes.Element):
+    def __init__(self, id_, url, rename, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.id = id_
+        self.url = url
+        self.rename = rename
+
+
+def visit_download_node(self, node):
+    pass
+
+
+def depart_download_node(self, node):
+    template = jinja_env.get_template('download.html')
+    rendered = template.render(node=node)
+    self.body.append(rendered)
 
 
 def setup_working_dir(app):
@@ -40,17 +63,34 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
     has_content = True
 
     option_spec = {
-        'no-exec': docutils.parsers.rst.directives.flag
+        'no-exec': docutils.parsers.rst.directives.flag,
+        'url': docutils.parsers.rst.directives.unchanged_required,
+        'rename': docutils.parsers.rst.directives.unchanged_required,
     }
 
     def run(self):
-        self.assert_has_content()
-        commands = functools.reduce(self._parse_multiline_commands,
-                                    self.content, [])
+        command_mode = True if self.name == 'command-block' else False
+        opts = self.options
+        download_opts = [k in opts for k in ['url', 'rename']]
 
-        nodes = [
-            self._get_literal_block_node(self.content)
-        ]
+        if command_mode:
+            self.assert_has_content()
+            if any(download_opts):
+                raise self.error('command-block does not support the '
+                                 'following options: `url`, `rename`.')
+            commands = functools.reduce(self._parse_multiline_commands,
+                                        self.content, [])
+            nodes = [self._get_literal_block_node(self.content)]
+        else:
+            if self.content:
+                raise self.error('Content block not supported for the '
+                                 'download directive.')
+            if not all(download_opts):
+                raise self.error('Missing options for the download directive. '
+                                 'Please specify `url` and `rename`.')
+            commands = ['wget -O "%s" "%s"' % (opts['rename'], opts['url'])]
+            id_ = self.state.document.settings.env.new_serialno('download')
+            nodes = [download_node(id_, opts['url'], opts['rename'])]
 
         env = self._get_env()
         if not (env.config.command_block_no_exec or 'no-exec' in self.options):
@@ -60,10 +100,11 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
 
             self._execute_commands(commands, working_dir)
 
-            artifacts, visualizations = self._get_output_paths(working_dir)
-            if artifacts or visualizations:
-                nodes.append(
-                    self._get_output_links_node(artifacts, visualizations))
+            if command_mode:
+                artifacts, visualizations = self._get_output_paths(working_dir)
+                if artifacts or visualizations:
+                    nodes.append(
+                        self._get_output_links_node(artifacts, visualizations))
 
         return nodes
 
@@ -209,6 +250,9 @@ def setup(app):
     app.connect('builder-inited', setup_working_dir)
     app.connect('build-finished', teardown_working_dir)
     app.add_directive('command-block', CommandBlockDirective)
+    app.add_directive('download', CommandBlockDirective)
     app.add_config_value('command_block_no_exec', False, 'html')
+    app.add_node(download_node, html=(visit_download_node,
+                                      depart_download_node))
 
     return {'version': '0.0.1'}
