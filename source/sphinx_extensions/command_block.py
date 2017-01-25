@@ -1,3 +1,11 @@
+# ----------------------------------------------------------------------------
+# Copyright (c) 2016-2017, QIIME 2 development team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# ----------------------------------------------------------------------------
+
 import collections
 import os
 import os.path
@@ -13,7 +21,7 @@ import docutils.parsers.rst.directives
 import docutils.statemachine
 import sphinx.errors
 
-import qiime
+import qiime2
 
 
 def setup_working_dir(app):
@@ -167,7 +175,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         content = []
         if output_paths:
             # TODO it would be nice to not hardcode this.
-            url_prefix = 'https://docs.qiime2.org/%s/' % qiime.__version__
+            url_prefix = 'https://docs.qiime2.org/%s/' % qiime2.__version__
 
             # TODO it would be cool to format the artifacts/visualizations
             # as tables instead of unordered lists, but will take a little

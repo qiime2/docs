@@ -24,24 +24,6 @@ h1 {
   border-top: 1px dashed #bbb;
 }
 
-div.admonition.question {
-    color: #3C763D;
-    background-color: #DFF0D8;
-    border: 1px solid #D6E9C6;
-}
-
-div.admonition.qiime1 {
-    color: #8A6D3B;
-    background-color: #FCF8E3;
-    border: 1px solid #FAEBCC;
-}
-
-div.admonition.tip, div.admonition.note {
-    color: #3A87AD;
-    background-color: #D9EDF7;
-    border: 1px solid #BCE8F1;
-}
-
 div.footer {
     maring-top: 50px;
     font-size: 11px;
@@ -50,6 +32,47 @@ div.footer {
 code.docutils.literal {
     background-color: #f5f5f5;
     color: #333;
+}
+
+div.admonition.tip, div.admonition.note {
+    color: #3A87AD;
+    background-color: #D9EDF7;
+    border: 1px solid #BCE8F1;
+}
+
+div.admonition.danger {
+    color: #A94442;
+    background-color: #F2DEDE;
+    border: 1px solid #EBCCCC;
+}
+
+div.admonition.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border: 1px solid #faf2cc;
+}
+
+/* `question` directive extension */
+div.admonition.question {
+    color: #3C763D;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
+}
+
+/* `qiime1` directive extension */
+div.admonition.qiime1 {
+    color: #8A6D3B;
+    background-color: #FCF8E3;
+    border: 1px solid #FAEBCC;
+}
+
+/* `plugin_directory` extension */
+.action-signature th[colspan] {
+    text-align: center;
+}
+
+form.search input[name=q]{
+    width: 100%;
 }
 
 @media screen and (min-width: 992px) {

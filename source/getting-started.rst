@@ -5,7 +5,7 @@ This guide will walk you through the steps necessary to understand, install, and
 
 1. Familiarize yourself with the :doc:`core concepts <concepts>` of QIIME 2 before starting to use the system.
 
-2. :doc:`Install QIIME 2 <install>`. The installation guide will also introduce you to one of QIIME 2's interfaces, the command line interface, and will get you ready to work through the tutorials.
+2. Install QIIME 2 :doc:`natively <install/native>` or using a :doc:`virtual machine <install/virtual-machine>`. The native installation guide will also introduce you to one of QIIME 2's interfaces, the command line interface, so is worth reviewing even if you install QIIME 2 using a virtual machine.
 
 3. Work through the :doc:`tutorials <tutorials/index>` to learn how to use QIIME 2 to perform microbiome analyses. We recommend starting with the :doc:`Moving Pictures tutorial <tutorials/moving-pictures>`, followed by the :doc:`FMT study <tutorials/fmt>` and :doc:`88 Soils <tutorials/88soils>` tutorials.
 

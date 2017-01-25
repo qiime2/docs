@@ -1,7 +1,7 @@
 "Moving Pictures" tutorial
 ==========================
 
-.. note:: This guide assumes you have performed the steps in the :doc:`install guide <../install>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 In this tutorial you'll use QIIME 2 to perform an analysis of human microbiome samples from two individuals at four body sites at five timepoints, the first of which immediately followed antibiotic usage. A study based on these samples was originally published in `Caporaso et al. (2011)`_. The data used in this tutorial were sequenced on an Illumina HiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
@@ -44,7 +44,7 @@ All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which
 
    qiime tools import \
      --type RawSequences \
-     --input-path raw-sequences/ \
+     --input-path raw-sequences \
      --output-path raw-sequences.qza
 
 .. tip::
@@ -66,7 +66,7 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
       --i-seqs raw-sequences.qza \
       --m-barcodes-file sample-metadata.tsv \
       --m-barcodes-category BarcodeSequence \
-      --o-per-sample-sequences demux
+      --o-per-sample-sequences demux.qza
 
 Sequence quality control
 ------------------------
@@ -83,7 +83,7 @@ The ``dada2 denoise`` method requires two parameters that are used in quality fi
    qiime dada2 plot-qualities \
      --i-demultiplexed-seqs demux.qza \
      --p-n 10 \
-     --o-visualization demux-qual-plots
+     --o-visualization demux-qual-plots.qzv
 
 
 .. note::
@@ -107,19 +107,19 @@ In these plots, the quality of the initial bases seems to be high, so we won't t
      --i-demultiplexed-seqs demux.qza \
      --p-trim-left 0 \
      --p-trunc-len 100 \
-     --o-representative-sequences rep-seqs \
-     --o-table table
+     --o-representative-sequences rep-seqs.qza \
+     --o-table table.qza
 
-After the ``dada2 denoise`` step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table view-seq-data`` will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
+After the ``dada2 denoise`` step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table tabulate-seqs`` command will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
 
 .. command-block::
 
    qiime feature-table summarize \
      --i-table table.qza \
-     --o-visualization table
+     --o-visualization table.qzv
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
-     --o-visualization rep-seqs
+     --o-visualization rep-seqs.qzv
 
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
@@ -132,7 +132,7 @@ First, we perform a multiple sequence alignment of the sequences in our ``Featur
 
    qiime alignment mafft \
      --i-sequences rep-seqs.qza \
-     --o-alignment aligned-rep-seqs
+     --o-alignment aligned-rep-seqs.qza
 
 Next, we mask (or filter) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
 
@@ -140,7 +140,7 @@ Next, we mask (or filter) the alignment to remove positions that are highly vari
 
    qiime alignment mask \
      --i-alignment aligned-rep-seqs.qza \
-     --o-masked-alignment masked-aligned-rep-seqs
+     --o-masked-alignment masked-aligned-rep-seqs.qza
 
 Next, we'll apply FastTree to generate a phylogenetic tree from the masked alignment.
 
@@ -148,7 +148,7 @@ Next, we'll apply FastTree to generate a phylogenetic tree from the masked align
 
    qiime phylogeny fasttree \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree unrooted-tree
+     --o-tree unrooted-tree.qza
 
 The FastTree program creates an unrooted tree, so in the final step in this section we apply midpoint rooting to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
 
@@ -156,7 +156,7 @@ The FastTree program creates an unrooted tree, so in the final step in this sect
 
    qiime phylogeny midpoint-root \
      --i-tree unrooted-tree.qza \
-     --o-rooted-tree rooted-tree
+     --o-rooted-tree rooted-tree.qza
 
 Alpha and beta diversity analysis
 ---------------------------------
@@ -177,10 +177,10 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
   * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
   * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
 
-The only parameter that needs to be provided to this script is ``--p-counts-per-sample``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-counts-per-sample 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
+The only parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
 .. question::
-   View the ``table.qzv`` artifact. What value would you choose to pass for the ``--p-counts-per-sample``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
+   View the ``table.qzv`` artifact. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
 
 .. command-block::
 
@@ -190,7 +190,7 @@ The only parameter that needs to be provided to this script is ``--p-counts-per-
      --p-sampling-depth 1441 \
      --output-dir cm1441
 
-Here we set the ``--p-counts-per-sample`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts (on the order of tens or a couple of hundred samples) - you will typically want to exclude those from the analysis by choosing a larger value.
+Here we set the ``--p-sampling-depth`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts (on the order of tens or a couple of hundred samples) - you will typically want to exclude those from the analysis by choosing a larger value.
 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata. This information is present in the `sample metadata`_ file that was downloaded earlier (``sample-metadata.tsv``).
 
@@ -200,13 +200,13 @@ We'll first test for associations between discrete metadata categories and alpha
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
-     --o-visualization cm1441/faith-pd-group-significance
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/faith-pd-group-significance.qzv
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
-     --o-visualization cm1441/evenness-group-significance
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/evenness-group-significance.qzv
 
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
@@ -220,13 +220,13 @@ Next, we'll test for associations between alpha diversity metrics and continuous
 
    qiime diversity alpha-correlation \
      --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
-     --o-visualization cm1441/faith-pd-correlation
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/faith-pd-correlation.qzv
 
    qiime diversity alpha-correlation \
      --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv  \
-     --o-visualization cm1441/evenness-correlation
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization cm1441/evenness-correlation.qzv
 
 .. question::
    What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
@@ -239,16 +239,16 @@ Next we'll analyze sample composition in the context of discrete metadata using 
      --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization cm1441/unweighted-unifrac-body-site-significance
+     --o-visualization cm1441/unweighted-unifrac-body-site-significance.qzv
 
    qiime diversity beta-group-significance \
      --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category Subject \
-     --o-visualization cm1441/unweighted-unifrac-subject-group-significance
+     --o-visualization cm1441/unweighted-unifrac-subject-group-significance.qzv
 
 .. question::
-   Are the associations between subjects and differences in microbial composition statistically significant? How about sample types? What sample types appear to be most different from each other?
+   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What body sites appear to be most different from each other?
 
 Finally, we'll explore associations between the microbial composition of the samples and continuous sample metadata using bioenv (originally described in `Clarke and Ainsworth (1993)`_). This approach tests for associations of pairwise distances between sample microbial composition (a measure of beta diversity) and sample metadata (for example, the matrix of Bray-Curtis distances between samples and the matrix of absolute differences in pH between samples). A powerful feature of this method is that it explores combinations of sample metadata to see which groups of metadata differences are most strongly associated with the observed microbial differences between samples. You can apply bioenv to the unweighted UniFrac distances and Bray-Curtis distances between the samples, respectively, as follows. After running these commands, open the resulting visualizations.
 
@@ -257,12 +257,12 @@ Finally, we'll explore associations between the microbial composition of the sam
    qiime diversity bioenv \
      --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/unweighted-unifrac-bioenv
+     --o-visualization cm1441/unweighted-unifrac-bioenv.qzv
 
    qiime diversity bioenv \
      --i-distance-matrix cm1441/bray_curtis_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/bray-curtis-bioenv
+     --o-visualization cm1441/bray-curtis-bioenv.qzv
 
 .. question::
    What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? How strong are these correlations?
@@ -275,13 +275,13 @@ Finally, ordination is a popular approach for exploring microbial community comp
      --i-pcoa cm1441/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/unweighted-unifrac-emperor
+     --o-visualization cm1441/unweighted-unifrac-emperor.qzv
 
    qiime emperor plot \
      --i-pcoa cm1441/bray_curtis_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/bray-curtis-emperor
+     --o-visualization cm1441/bray-curtis-emperor.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
@@ -292,7 +292,9 @@ Finally, ordination is a popular approach for exploring microbial community comp
 Taxonomic analysis
 ------------------
 
-In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` artifact. We'll do that using a Naive Bayes classifier with the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll download and apply the pre-trained classifier here because training this classifier can be slow, but it is easy to train Naive Bayes and other classifiers on custom sequence collections using the ``q2-feature-classifier`` plugin. We'll then apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy.
+In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` artifact. We'll do that using a pre-trained Naive Bayes classifier and the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include 250 bases from the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy.
+
+.. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers. We provide some common classifiers on our :doc:`data resources page <../data-resources>`, including Silva-based 16S classifiers, as training classifiers can require a large amount of memory.
 
 .. command-block::
 
@@ -301,14 +303,14 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
    qiime feature-classifier classify \
      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
      --i-reads rep-seqs.qza \
-     --o-classification taxonomy
+     --o-classification taxonomy.qza
 
    qiime taxa tabulate \
      --i-data taxonomy.qza \
-     --o-visualization taxonomy
+     --o-visualization taxonomy.qzv
 
 .. question::
-    Recall that our ``rep-seqs.qzv`` artifact allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that artifact and the ``taxonomy.qzv`` artifact created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they're dissimilar, at what *taxonomic level* do they begin to differ (e.g., species, genus, family, ...)?
+    Recall that our ``rep-seqs.qzv`` visualization allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that visualization and the ``taxonomy.qzv`` visualization created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they're dissimilar, at what *taxonomic level* do they begin to differ (e.g., species, genus, family, ...)?
 
 Next, we can view the taxonomic composition of our samples with interactive bar plots. Generate those plots with the following command and then open the visualization.
 
@@ -318,7 +320,7 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
      --i-table table.qza \
      --i-taxonomy taxonomy.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization taxa-bar-plots
+     --o-visualization taxa-bar-plots.qzv
 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
@@ -326,19 +328,19 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 Differential abundance analysis
 -------------------------------
 
-Finally, we can quantify the process of identifying taxa that are differentially abundance (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` artifact, which is based on relative frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. We work around this by adding a pseudocount of 1 to every count in our ``FeatureTable[Frequency]`` table. We can run this on the ``BodySite`` category to determine what features differ in abundance across our sample types. This step may take about 5 minutes to complete.
+Finally, we can quantify the process of identifying taxa that are differentially abundance (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` artifact, which is based on relative frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. We work around this by adding a pseudocount of 1 to every count in our ``FeatureTable[Frequency]`` table. We can run this on the ``BodySite`` category to determine what features differ in abundance across body sites. This step may take about 5 minutes to complete.
 
 .. command-block::
 
    qiime composition add-pseudocount \
      --i-table table.qza \
-     --o-composition-table comp-table
+     --o-composition-table comp-table.qza
 
    qiime composition ancom \
      --i-table comp-table.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization ancom-BodySite
+     --o-visualization ancom-BodySite.qzv
 
 .. question::
     What features differ in abundance across BodySite? What groups are they most and least abundant in? What are some the taxonomies of some of these features? (To answer that last question you'll need to refer to a visualization that we generated earlier in this tutorial.)
@@ -351,20 +353,20 @@ We're also often interested in performing a differential abundance test at a spe
      --i-table table.qza \
      --i-taxonomy taxonomy.qza \
      --p-level 2 \
-     --o-collapsed-table table-l2
+     --o-collapsed-table table-l2.qza
 
    qiime composition add-pseudocount \
      --i-table table-l2.qza \
-     --o-composition-table comp-table-l2
+     --o-composition-table comp-table-l2.qza
 
    qiime composition ancom \
      --i-table comp-table-l2.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization l2-ancom-BodySite
+     --o-visualization l2-ancom-BodySite.qzv
 
 .. question::
-    What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qza`` visualization that was generated above?
+    What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qzv`` visualization that was generated above?
 
 .. _sample metadata: https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/edit?usp=sharing
 .. _Keemei: http://keemei.qiime.org

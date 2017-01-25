@@ -11,7 +11,7 @@ Overview
 There are several high-level steps to creating a QIIME 2 plugin:
 
 1. A QIIME 2 plugin must define one or more Python 3 functions that will be accessible through QIIME. The plugin must be a Python 3 package that can be installed with ``setuptools``.
-2. The plugin must then instantiate a ``qiime.plugin.Plugin`` object and define some information including the name of the plugin and its URL. In the plugin package's ``setup.py`` file, this instance will be defined as an entry point.
+2. The plugin must then instantiate a ``qiime2.plugin.Plugin`` object and define some information including the name of the plugin and its URL. In the plugin package's ``setup.py`` file, this instance will be defined as an entry point.
 3. The plugin must then register its functions as QIIME 2 ``Actions``, which will be accessible to users through any of the QIIME 2 interfaces.
 4. Optionally, the plugin should be distributed through `Anaconda`_, as that will simplify its installation for QIIME 2 users (since that is the supported mechanism for installing QIIME 2).
 
@@ -19,7 +19,7 @@ These steps are covered in detail below.
 
 Writing a simple QIIME 2 plugin should be a straightforward process. For example, the `q2-emperor`_ plugin, which connects `Emperor`_ to QIIME 2, is written in only around 100 lines of code. It is a standalone plugin that defines how and which functionality in Emperor should be accessible through QIIME 2. Plugins will vary in their complexity. For example, a plugin that defines a lot of new functionality would likely be quite a bit bigger. `q2-diversity`_ is a good example of this. Unlike ``q2-emperor``, there is some specific functionality (and associated unit tests) defined in this project, and it depends on several other Python 3 compatible libraries.
 
-Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install>` to familiarize yourself with the system and to provide a means for testing your plugin.
+Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install/index>` to familiarize yourself with the system and to provide a means for testing your plugin.
 
 Initializing a plugin package
 -----------------------------
@@ -46,7 +46,7 @@ The plugin includes some example functionality that you can try out (for example
 .. command-block::
    :no-exec:
 
-   conda install -c qiime2 q2-dummy-types
+   conda install --override-channels -c qiime2 -c defaults q2-dummy-types
 
 Next, navigate to the plugin directory that was created and install the plugin in development mode:
 
@@ -71,6 +71,14 @@ You should see ``my-plugin`` listed as one of the available commands. To see the
    qiime my-plugin --help
 
 Once you are done exploring the plugin's example functionality, update it with your own. The relevant sections of the code that need to change are commented.
+
+.. note::
+
+   If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while you are developing it, you'll need to run ``qiime dev refresh-cache`` to see the latest changes to your plugin reflected in the CLI. You'll need to run this command anytime you modify your plugin's interface (e.g. add/rename/remove a command or its inputs/parameters/outputs).
+
+   Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
+
+   This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
 
 The following sections describe various plugin components, configuration, and how to define your own functionality. As you read through the following sections, it may be useful to refer back to the example functionality defined in the plugin to see how it is implemented.
 
@@ -111,12 +119,12 @@ Next, at least one ``index.*`` file must be written to ``output_dir`` by the fun
 
 Finally, the function cannot return anything, and its return type should be annotated as ``None``.
 
-``q2_diversity.alpha_group_significance`` is an example of a function that can be registered as a ``Visualizer``. In addition to its ``output_dir``, it takes alpha diversity results in a ``pandas.Series`` and sample metadata in a ``qiime.Metadata`` object and creates several different files (figures and tables) that are linked and/or presented in an ``index.html`` file. The signature of this function is:
+``q2_diversity.alpha_group_significance`` is an example of a function that can be registered as a ``Visualizer``. In addition to its ``output_dir``, it takes alpha diversity results in a ``pandas.Series`` and sample metadata in a ``qiime2.Metadata`` object and creates several different files (figures and tables) that are linked and/or presented in an ``index.html`` file. The signature of this function is:
 
 .. code-block:: python
 
    def alpha_group_significance(output_dir: str, alpha_diversity: pd.Series,
-                                metadata: qiime.Metadata) -> None:
+                                metadata: qiime2.Metadata) -> None:
 
 Instantiating a plugin
 ++++++++++++++++++++++
@@ -125,7 +133,7 @@ The next step is to instantiate a QIIME 2 ``Plugin`` object. This might look lik
 
 .. code-block:: python
 
-   from qiime.plugin import Plugin
+   from qiime2.plugin import Plugin
    import q2_diversity
 
    plugin = Plugin(
@@ -145,7 +153,7 @@ The ``name`` parameter is the name that users will use to access your plugin fro
 
 ``package`` should be the Python package name for your plugin.
 
-While not shown in the previous example, plugin developers can optionally provide the following parameters to ``qiime.plugin.Plugin``:
+While not shown in the previous example, plugin developers can optionally provide the following parameters to ``qiime2.plugin.Plugin``:
 
 * ``citation_text``: free text describing how users should cite the plugin and/or the underlying tools it wraps. If not provided, users are told to cite the ``website``.
 
@@ -167,7 +175,7 @@ First we'll register a ``Method`` by calling ``plugin.methods.register_function`
 
    from q2_types import (FeatureTable, Frequency, Phylogeny,
                          Rooted, DistanceMatrix)
-   from qiime.plugin import Str, Choices, Properties, Metadata
+   from qiime2.plugin import Str, Choices, Properties, Metadata
 
    import q2_diversity
    import q2_diversity._beta as beta
@@ -229,11 +237,11 @@ Finally, you need to tell QIIME where to find your instantiated ``Plugin`` objec
    setup(
        ...
        entry_points={
-           'qiime.plugins': ['q2-diversity=q2_diversity.plugin_setup:plugin']
+           'qiime2.plugins': ['q2-diversity=q2_diversity.plugin_setup:plugin']
        }
    )
 
-The relevant key in the ``entry_points`` dictionary will be ``'qiime.plugins'``, and the value will be a single element list containing a string formatted as ``<distribution-name>=<import-path>:<instance-name>``. ``<distribution-name>`` is the name of the Python package distribution (matching the value passed for ``name`` in this call to ``setup``); ``<import-path>`` is the import path for the ``Plugin`` instance you created above; and ``<instance-name>`` is the name for the ``Plugin`` instance you created above.
+The relevant key in the ``entry_points`` dictionary will be ``'qiime2.plugins'``, and the value will be a single element list containing a string formatted as ``<distribution-name>=<import-path>:<instance-name>``. ``<distribution-name>`` is the name of the Python package distribution (matching the value passed for ``name`` in this call to ``setup``); ``<import-path>`` is the import path for the ``Plugin`` instance you created above; and ``<instance-name>`` is the name for the ``Plugin`` instance you created above.
 
 Advanced plugin development
 ---------------------------

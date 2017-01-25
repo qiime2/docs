@@ -43,8 +43,10 @@ The following semantic types are defined by, and importable from, the `q2-types`
 
 ``FeatureData[PairedEndSequence]``: Paired-end sequences (forward and reverse) associated with a feature identifier.
 
-``ReferenceFeatures[SSU]``: A collection of reference features for small subunit rRNA data. This will include aligned and unaligned sequences, taxonomic annotations, and a phylogenetic tree. (Subtypes for other types of references will be added in the future, possibly including ``ReferenceFeatures[Genome]`` for shotgun analysis, and ``ReferenceFeatures[ITS]`` for fungal ITS analysis.)
+``RawSequences``: Raw, multiplexed sequence data. See :doc:`tutorials/import-sequence-data` for details about importing this data type. **Note:** this semantic type is currently defined in `q2-demux`_, but may be moved to `q2-types`_ in the future, possibly with a different name.
 
 .. _q2-types: https://github.com/qiime2/q2-types
 
 .. _q2-dummy-types: https://github.com/qiime2/q2-dummy-types
+
+.. _q2-demux: https://github.com/qiime2/q2-demux

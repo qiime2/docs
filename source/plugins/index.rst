@@ -6,5 +6,6 @@ The following pages describe what QIIME 2 plugins are available and how to devel
 .. toctree::
    :maxdepth: 2
 
-   available
+   available/index
+   future
    developing
