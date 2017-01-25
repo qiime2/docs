@@ -34,6 +34,11 @@ code.docutils.literal {
     color: #333;
 }
 
+div.admonition a {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 div.admonition.tip, div.admonition.note {
     color: #3A87AD;
     background-color: #D9EDF7;
