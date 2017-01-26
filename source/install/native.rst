@@ -143,11 +143,18 @@ The ``q2-dada2`` plugin requires R and the `latest version of dada2 available th
 
 .. tip::
 
-   If installation of dada2 using Bioconductor fails, try the following suggestions (if applicable to your computing environment):
+   If installing dada2 via Bioconductor fails, try the following suggestions (if applicable to your computing environment):
 
    * Per the `Bioconductor installation instructions <https://www.bioconductor.org/install/>`_, try using ``http://`` instead of ``https://`` in the Bioconductor URL that is sourced above (i.e. http://bioconductor.org/biocLite.R instead of https://bioconductor.org/biocLite.R).
 
-   * If you are using a Mac (i.e. macOS or OS X), install the Xcode Command Line Tools.
+   * If you are using a Mac (i.e. macOS or OS X), install the Xcode Command Line Tools by running:
+
+     .. command-block::
+        :no-exec:
+
+        xcode-select --install
+
+     See this `Apple technical note <https://developer.apple.com/library/content/technotes/tn2339/_index.html>`_ for more details and alternate ways of obtaining the Xcode Command Line Tools.
 
    * Ensure the version of R you have installed is compatible with dada2. The `dada2 Bioconductor install guide <https://www.bioconductor.org/packages/release/bioc/html/dada2.html>`_ lists the minimum required version of R. You can see what version of R you have installed by running:
 
