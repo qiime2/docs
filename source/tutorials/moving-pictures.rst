@@ -298,7 +298,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 .. command-block::
 
-   curl -sLO https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
+   curl -sLO https://www.dropbox.com/s/84v1pxo5d0rf9hb/gg-13-8-99-515-806-nb-classifier.qza
 
    qiime feature-classifier classify \
      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
