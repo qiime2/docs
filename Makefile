@@ -3,7 +3,11 @@
 
 # You can set these variables from the command line.
 
-# Turn warnings into errors.
+# Turn warnings into errors. NOTE: do not remove this flag! Sphinx is very
+# permissive when it comes to errors, and generally will not fail when an
+# extension raises one, so this flag is mission-critical. All custom directives
+# now raise a `docutils`-based exception, which Sphinx will convert to a.
+# warning. Without this flag, that warning will never see the light of day.
 SPHINXOPTS    = -W
 SPHINXBUILD   = sphinx-build
 BUILDDIR      = build

@@ -13,7 +13,7 @@ Once you have installed ``Node.js >= 5`` you will need to download and extract t
 
 .. download::
    :url: https://codeload.github.com/qiime2/q2studio/zip/0.0.6
-   :rename: q2studio-0.0.6.zip
+   :saveas: q2studio-0.0.6.zip
 
 .. command-block::
 

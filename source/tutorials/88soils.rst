@@ -16,7 +16,7 @@ You can next download the *demultiplexed sequences* that we'll use in this analy
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/88soils/88soils-tutorial-demux-1p.qza
-   :rename: 88-soils-tutorial-demux-1p.qza
+   :saveas: 88-soils-tutorial-demux-1p.qza
 
 Sequence processing and diversity analyses
 ------------------------------------------

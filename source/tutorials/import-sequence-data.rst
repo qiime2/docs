@@ -24,11 +24,11 @@ Obtaining example data
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
-   :rename: raw-sequences/barcodes.fastq.gz
+   :saveas: raw-sequences/barcodes.fastq.gz
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
-   :rename: raw-sequences/sequences.fastq.gz
+   :saveas: raw-sequences/sequences.fastq.gz
 
 Importing data
 ~~~~~~~~~~~~~~
@@ -53,7 +53,7 @@ Obtaining example data
 
 .. download::
     :url: https://data.qiime2.org/2.0.6/tutorials/importing-sequence-data/casava-18-single-end-demultiplexed.zip
-    :rename: casava-18-single-end-demultiplexed.zip
+    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
 

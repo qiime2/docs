@@ -23,7 +23,7 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
 
 .. download::
    :url: https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv
-   :rename: sample-metadata.tsv
+   :saveas: sample-metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
 
@@ -38,11 +38,11 @@ Download the raw sequences that we'll use in this analysis. In this tutorial we'
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
-   :rename: raw-sequences/barcodes.fastq.gz
+   :saveas: raw-sequences/barcodes.fastq.gz
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
-   :rename: raw-sequences/sequences.fastq.gz
+   :saveas: raw-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these raw data files into a QIIME 2 artifact. The semantic type of this artifact is ``RawSequences``.
 
@@ -305,7 +305,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/common/gg-13-8-99-515-806-nb-classifier.qza
-   :rename: gg-13-8-99-515-806-nb-classifier.qza
+   :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
 
