@@ -76,6 +76,25 @@ div.admonition.qiime1 {
     text-align: center;
 }
 
+/* `download` extension */
+.download .white-bg {
+    background-color: #FFFFFF !important;
+}
+
+
+.download .gray-bg {
+    background-color: #F5F5F5 !important;
+}
+
+.download .tab-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 form.search input[name=q]{
     width: 100%;
 }

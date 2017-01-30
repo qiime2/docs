@@ -21,8 +21,14 @@ Obtaining example data
 .. command-block::
 
    mkdir raw-sequences
-   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz > raw-sequences/barcodes.fastq.gz
-   curl -sL https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz > raw-sequences/sequences.fastq.gz
+
+.. download::
+   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
+   :saveas: raw-sequences/barcodes.fastq.gz
+
+.. download::
+   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
+   :saveas: raw-sequences/sequences.fastq.gz
 
 Importing data
 ~~~~~~~~~~~~~~
@@ -45,9 +51,12 @@ In this format, there is one ``fastq.gz`` file for each sample in the study, and
 Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. download::
+    :url: https://data.qiime2.org/2.0.6/tutorials/importing-sequence-data/casava-18-single-end-demultiplexed.zip
+    :saveas: casava-18-single-end-demultiplexed.zip
+
 .. command-block::
 
-    curl -sLO https://data.qiime2.org/2.0.6/tutorials/importing-sequence-data/casava-18-single-end-demultiplexed.zip
     unzip -q casava-18-single-end-demultiplexed.zip
 
 Importing data

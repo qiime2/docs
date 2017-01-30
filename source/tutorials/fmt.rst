@@ -29,16 +29,19 @@ As in the Moving Pictures study, you should begin your analysis by familiarizing
 
 Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``.
 
-.. command-block::
-
-   curl -sL "https://docs.google.com/spreadsheets/d/15kqZlUrIp9FV4U7OSzeCzteuWMtbkaXgYvD_hTZZ9pw/export?gid=0&format=tsv" > sample-metadata.tsv
+.. download::
+   :url: https://docs.google.com/spreadsheets/d/15kqZlUrIp9FV4U7OSzeCzteuWMtbkaXgYvD_hTZZ9pw/export?gid=0&format=tsv
+   :saveas: sample-metadata.tsv
 
 Next, download the *demultiplexed sequences* that we'll use in this analysis. In this tutorial we'll work with a small subset (10%) of the complete sequence data so that the commands will run quickly. To learn how to start a QIIME 2 analysis from raw sequence data, see the :doc:`importing data documentation <import>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
 
-.. command-block::
+.. download::
+   :url: https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   :saveas: fmt-tutorial-demux-1-10p.qza
 
-   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
-   curl -sLO https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+.. download::
+   :url: https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   :saveas: fmt-tutorial-demux-2-10p.qza
 
 Sequence quality control
 ------------------------

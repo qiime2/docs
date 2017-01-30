@@ -9,11 +9,17 @@ This tutorial describes how to filter data in QIIME 2. The tutorial describes ho
 
 Download the data we'll use in the tutorial. This includes sample metadata, a feature table, and a distance matrix:
 
-.. command-block::
+.. download::
+    :url: https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv
+    :saveas: sample-metadata.tsv
 
-    curl -sL "https://docs.google.com/spreadsheets/d/1_3ZbqCtAYx-9BJYHoWlICkVJ4W_QGMfJRPLedt_0hws/export?gid=0&format=tsv" > sample-metadata.tsv
-    curl -sLO https://data.qiime2.org/2.0.6/tutorials/filtering-feature-tables/table.qza
-    curl -sLO https://data.qiime2.org/2017.2/tutorials/filtering/distance-matrix.qza
+.. download::
+    :url: https://data.qiime2.org/2.0.6/tutorials/filtering-feature-tables/table.qza
+    :saveas: table.qza
+
+.. download::
+    :url: https://data.qiime2.org/2017.2/tutorials/filtering/distance-matrix.qza
+    :saveas: distance-matrix.qza
 
 Filtering feature tables
 ------------------------

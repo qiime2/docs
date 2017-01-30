@@ -1,0 +1,53 @@
+<div class="download panel panel-default">
+  <div class="panel-heading white-bg">
+    Please select a download option that is most appropriate for your environment:
+  </div>
+
+  <div class="panel-body">
+    <ul class="nav nav-tabs gray-bg" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#browser-{{ node.id }}" aria-controls="browser-{{ node.id }}" role="tab" data-toggle="tab">
+          Browser
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#wget-{{ node.id }}" aria-controls="wget-{{ node.id }}" role="tab" data-toggle="tab">
+          wget
+        </a>
+      </li>
+      <li role="presentation">
+        <a href="#curl-{{ node.id }}" aria-controls="messages-{{ node.id }}" role="tab" data-toggle="tab">
+          curl
+        </a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="browser-{{ node.id }}">
+        <p>
+          <strong>Download URL:</strong> <a href="{{ node.url }}">
+            {{ node.url }}
+          </a>
+        </p>
+        <p>
+          <strong>Save as:</strong> {{ node.saveas }}
+        </p>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="wget-{{ node.id }}">
+        <div class="clearfix"></div>
+        <div class="highlight-shell">
+          <div class="highlight">
+            <pre>wget -O "{{ node.saveas }}" "{{ node.url }}"</pre>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="curl-{{ node.id }}">
+        <div class="highlight-shell">
+          <div class="highlight">
+            <pre>curl -sL "{{ node.url }}" > "{{ node.saveas }}"</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
