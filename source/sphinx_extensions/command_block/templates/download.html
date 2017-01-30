@@ -30,21 +30,21 @@
           </a>
         </p>
         <p>
-          <strong>Save as:</strong> {{ node.rename }}
+          <strong>Save as:</strong> {{ node.saveas }}
         </p>
       </div>
       <div role="tabpanel" class="tab-pane fade" id="wget-{{ node.id }}">
         <div class="clearfix"></div>
         <div class="highlight-shell">
           <div class="highlight">
-            <pre>wget -O "{{ node.rename }}" "{{ node.url }}"</pre>
+            <pre>wget -O "{{ node.saveas }}" "{{ node.url }}"</pre>
           </div>
         </div>
       </div>
       <div role="tabpanel" class="tab-pane fade" id="curl-{{ node.id }}">
         <div class="highlight-shell">
           <div class="highlight">
-            <pre>curl -sL "{{ node.url }}" > "{{ node.rename }}"</pre>
+            <pre>curl -sL "{{ node.url }}" > "{{ node.saveas }}"</pre>
           </div>
         </div>
       </div>
