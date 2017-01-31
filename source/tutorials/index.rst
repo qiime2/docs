@@ -7,7 +7,6 @@ Tutorials
    moving-pictures
    fmt
    88soils
-   import
-   feature-classifier
-   import-sequence-data
+   importing
    filtering
+   feature-classifier

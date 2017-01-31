@@ -8,7 +8,7 @@ Data files: artifacts
 
 Data produced by QIIME 2 are stored as *artifacts*. An artifact is a file containing data and metadata. The metadata describes things about the data, such as its type, format, and how it was generated (provenance). An artifact typically has the ``.qza`` file extension.
 
-Since QIIME 2 works with artifacts instead of data files (e.g. FASTA files), you can create an artifact by importing data. You can import data at any step in an analysis, though typically you will start by importing raw sequence data. QIIME 2 also has tools to export data from an artifact. See the :doc:`importing guide <tutorials/import>` for details.
+Since QIIME 2 works with artifacts instead of data files (e.g. FASTA files), you can create an artifact by importing data. You can import data at any step in an analysis, though typically you will start by importing raw sequence data. QIIME 2 also has tools to export data from an artifact. See the :doc:`importing guide <tutorials/importing>` for details.
 
 By using artifacts instead of simple data files, QIIME 2 can automatically track the type, format, and provenance of data for researchers. Using artifacts instead of data files enables researchers to focus on the analyses they want to perform, instead of the particular format the data needs to be in for an analysis.
 

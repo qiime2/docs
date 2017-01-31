@@ -24,7 +24,7 @@ Naive Bayes classifiers trained on:
 Marker gene reference databases
 -------------------------------
 
-These marker gene reference databases are formatted for use with QIIME 1 and QIIME 2. If you're using these databases with QIIME 2, you'll need to :doc:`import them into artifacts <./tutorials/import>` before using them.
+These marker gene reference databases are formatted for use with QIIME 1 and QIIME 2. If you're using these databases with QIIME 2, you'll need to :doc:`import them into artifacts <./tutorials/importing>` before using them.
 
 Greengenes (16S rRNA)
 `````````````````````

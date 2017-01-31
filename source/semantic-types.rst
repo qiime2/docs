@@ -43,7 +43,7 @@ The following semantic types are defined by, and importable from, the `q2-types`
 
 ``FeatureData[PairedEndSequence]``: Paired-end sequences (forward and reverse) associated with a feature identifier.
 
-``RawSequences``: Raw, multiplexed sequence data. See :doc:`tutorials/import-sequence-data` for details about importing this data type. **Note:** this semantic type is currently defined in `q2-demux`_, but may be moved to `q2-types`_ in the future, possibly with a different name.
+``RawSequences``: Raw, multiplexed sequence data. See :doc:`tutorials/importing` for details about importing this data type. **Note:** this semantic type is currently defined in `q2-demux`_, but may be moved to `q2-types`_ in the future, possibly with a different name.
 
 .. _q2-types: https://github.com/qiime2/q2-types
 
