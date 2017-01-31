@@ -54,6 +54,10 @@
 
       {% if render_sidebar %}
       <div id="sidebar" class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-left">
+        <div id="version-div" class="btn-group dropup">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <ul id="version-list" class="dropdown-menu dropdown-menu-right"></ul>
+        </div>
         {{ q2sidebar() }}
       </div>
       {% endif %}
@@ -117,4 +121,6 @@
     {%- endif %}
     </div>
   </div>
+  <script src="{{ pathto('_static/bootstrap-dropdown.js', 1) }}" charset="utf-8"></script>
+  <script src="{{ pathto('_static/versions.js', 1) }}" charset="utf-8"></script>
 {%- endblock %}
