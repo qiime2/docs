@@ -1,7 +1,7 @@
 Fecal microbiota transplant (FMT) study: an exercise
 ====================================================
 
-.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install guides <../install/index>`.
 
 This document is intended to be run after :doc:`the moving pictures tutorial <moving-pictures>`. It is designed to introduce a few new ideas, and to be an exercise in applying the tools that were explored in that document.
 
@@ -33,7 +33,7 @@ Alternatively, the following command will download the sample metadata as tab-se
    :url: https://docs.google.com/spreadsheets/d/15kqZlUrIp9FV4U7OSzeCzteuWMtbkaXgYvD_hTZZ9pw/export?gid=0&format=tsv
    :saveas: sample-metadata.tsv
 
-Next, download the *demultiplexed sequences* that we'll use in this analysis. In this tutorial we'll work with a small subset (10%) of the complete sequence data so that the commands will run quickly. To learn how to start a QIIME 2 analysis from raw sequence data, see the :doc:`importing data documentation <import>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
+Next, download the *demultiplexed sequences* that we'll use in this analysis. In this tutorial we'll work with a small subset (10%) of the complete sequence data so that the commands will run quickly. To learn how to start a QIIME 2 analysis from raw sequence data, see the :doc:`importing data tutorial <importing>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
