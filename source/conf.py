@@ -80,8 +80,15 @@ author = 'QIIME 2 development team'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
+# NOTE: QIIME 2's notion of "release" vs. "version" is the opposite of Sphinx.
+# We define "release" (`qiime2.__release__`) as the "train release", which can
+# consist of many "versions" (`qiime2.__version__`) that are all compatible
+# within the release. We chose to interpret "release" and "version" in this
+# manner because `__version__` in Python packages is typically the full
+# version, including patch numbers and pre/post-release tags.
+#
 # The short X.Y version.
-version = qiime2.__version__
+version = qiime2.__release__
 # The full version, including alpha/beta/rc tags.
 release = qiime2.__version__
 
