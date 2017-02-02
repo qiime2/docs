@@ -24,18 +24,22 @@ Before starting to write a plugin, you should :doc:`install QIIME 2 and some plu
 Initializing a plugin package
 -----------------------------
 
-For convenience, tools are provided to help developers initialize a QIIME 2 plugin package. An initialized plugin includes examples of functionality that can be executed out of the box (no changes to the plugin's code are required!). Once you are familiar with the example functionality provided in the plugin, you can update relevant sections of the plugin to support your own functionality. There are comments in the generated plugin code indicating relevant sections to remove or update, and this document describes each plugin component in detail below.
+For convenience, a `Cookiecutter`_  project template is provided to help developers initialize a QIIME 2 plugin package. An initialized plugin includes examples of functionality that can be executed out of the box (no changes to the plugin's code are required!). Once you are familiar with the example functionality provided in the plugin, you can update relevant sections of the plugin to support your own functionality. There are comments in the generated plugin code indicating relevant sections to remove or update, and this document describes each plugin component in detail below.
 
-.. note:: QIIME 2 does not place restrictions on how a plugin package is structured. The plugin initializer tool uses the package structure and conventions present in other QIIME 2 plugins. This package structure is simply a recommendation and a starting point for developing your own plugin; feel free to modify the initialized plugin as necessary or desired.
+.. note:: **QIIME 2 does not place restrictions on how a plugin package is structured.** The Cookiecutter template uses the package structure and conventions present in other QIIME 2 plugins. This package structure is simply a recommendation and a starting point for developing your own plugin; feel free to modify the initialized plugin as necessary or desired.
 
-The easiest way to initialize a plugin package is via :doc:`q2cli's <../interfaces/q2cli>` ``qiime dev plugin-init`` command. For example, to initialize a plugin package directory in your current working directory:
+To initialize a plugin package, install the `Cookiecutter`_ tool and use it with the template located at https://github.com/qiime2/cookiecutter-plugin-template/. Cookiecutter provides a CLI and Python API and supports a number of options and features. The following examples illustrate basic usage of Cookiecutter; please refer to the Cookiecutter documentation for additional details and installation instructions.
+
+The most important option to provide to Cookiecutter is ``-c``/``--checkout``. This is a git tag, branch, or commit to checkout from the Cookiecutter template repository. The revision that is checked out with ``--checkout`` will determine which QIIME 2 release(s) the initialized plugin is compatible with. You'll typically want to `choose a release tag <https://github.com/qiime2/cookiecutter-plugin-template/releases>`_ corresponding to the QIIME 2 version you want your plugin to be compatible with. If ``--checkout`` isn't specified, Cookiecutter will template from the latest master branch, which is not recommended.
+
+For example, to template a plugin that is compatible with the 2017.2 QIIME 2 release, choose a 2017.2 release tag from the `template repository releases <https://github.com/qiime2/cookiecutter-plugin-template/releases>`_. The latest patch number within a release is recommended.
 
 .. command-block::
    :no-exec:
 
-   qiime dev plugin-init
+   cookiecutter -c 2017.2.0 https://github.com/qiime2/cookiecutter-plugin-template
 
-Use the ``--output-dir`` option to create a plugin directory in a location other than the current working directory.
+This initializes a plugin package in your current working directory. Use ``-o``/``--output-dir`` to create a plugin package in a location other than the current working directory.
 
 After running the above command, you will be prompted to enter several pieces of information about your plugin, including the plugin name, description, author details, etc. **Defaults are provided as examples only**; you must provide the relevant information about your plugin. The prompts only gather basic information about your plugin so a functioning package can be initialized. There are other pieces of the plugin that can be manually configured (detailed below).
 
@@ -269,6 +273,8 @@ Example plugins
 .. _`Emperor`: https://github.com/biocore/emperor
 
 .. _`q2-diversity`: https://github.com/qiime2/q2-diversity
+
+.. _`Cookiecutter`: https://cookiecutter.readthedocs.io/en/latest/
 
 .. _`q2-dummy-types`: https://github.com/qiime2/q2-dummy-types
 
