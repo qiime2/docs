@@ -215,7 +215,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         content = []
         if output_paths:
             # TODO it would be nice to not hardcode this.
-            url_prefix = 'https://docs.qiime2.org/%s/' % qiime2.__version__
+            url_prefix = 'https://docs.qiime2.org/%s/' % qiime2.__release__
 
             # TODO it would be cool to format the artifacts/visualizations
             # as tables instead of unordered lists, but will take a little
