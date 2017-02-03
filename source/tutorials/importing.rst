@@ -14,28 +14,28 @@ Importing can be accomplished using any of the QIIME 2 :doc:`interfaces <../inte
 Sequence data
 -------------
 
-"EMP protocol" multiplexed fastq
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"EMP protocol" multiplexed single-end fastq
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Format description
 ******************
 
-In the "Earth Microbiome Project (EMP) protocol" format, there are two ``fastq.gz`` files, one containing sequence reads and one containing the associated barcode reads, with the sequence data still multiplexed. The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read.
+In the "Earth Microbiome Project (EMP) protocol" format for single-end reads, there are two ``fastq.gz`` files, one containing sequence reads and one containing the associated barcode reads, with the sequence data still multiplexed. The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read.
 
 Obtaining example data
 **********************
 
 .. command-block::
 
-   mkdir raw-sequences
+   mkdir emp-single-end-sequences
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
-   :saveas: raw-sequences/barcodes.fastq.gz
+   :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
    :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
-   :saveas: raw-sequences/sequences.fastq.gz
+   :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
 **************
@@ -44,8 +44,45 @@ Importing data
 
    qiime tools import \
      --type EMPSingleEndSequences \
-     --input-path raw-sequences \
-     --output-path raw-sequences.qza
+     --input-path emp-single-end-sequences \
+     --output-path emp-single-end-sequences.qza
+
+"EMP protocol" multiplexed paired-end fastq
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Format description
+******************
+
+In the "Earth Microbiome Project (EMP) protocol" format for paired-end reads, there are three ``fastq.gz`` files, one containing forward sequence reads, one containing reverse sequence reads, and one containing the associated barcode reads, with the sequence data still multiplexed. The order of the records in the three ``fastq.gz`` files defines the association between the sequences reads and barcode reads.
+
+Obtaining example data
+**********************
+
+.. command-block::
+
+   mkdir emp-paired-end-sequences
+
+.. download::
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/forward.fastq.gz
+   :saveas: emp-paired-end-sequences/forward.fastq.gz
+
+.. download::
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/reverse.fastq.gz
+   :saveas: emp-paired-end-sequences/reverse.fastq.gz
+
+.. download::
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/barcodes.fastq.gz
+   :saveas: emp-paired-end-sequences/barcodes.fastq.gz
+
+Importing data
+**************
+
+.. command-block::
+
+   qiime tools import \
+     --type EMPPairedEndSequences \
+     --input-path emp-paired-end-sequences \
+     --output-path emp-paired-end-sequences.qza
 
 Casava 1.8 single-end demultiplexed fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,7 +96,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/importing-sequence-data/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2.0.6/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -70,11 +107,42 @@ Importing data
 **************
 
 .. command-block::
+
    qiime tools import \
      --type 'SampleData[SequencesWithQuality]' \
      --input-path casava-18-single-end-demultiplexed \
      --source-format CasavaOneEightSingleLanePerSampleDirFmt \
-     --output-path demux.qza
+     --output-path demux-single-end.qza
+
+Casava 1.8 paired-end demultiplexed fastq
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Format description
+******************
+
+In this format, there are two ``fastq.gz`` file for each sample in the study, and the file name includes the sample identifier. The forward and reverse read file names for a single sample might look like ``L2S357_15_L001_R1_001.fastq.gz`` and ``L2S357_15_L001_R2_001.fastq.gz``, respectively. The underscore-separated fields in this file name are the sample identifier, the barcode sequence or a barcode identifier, the lane number, the read number, and the set number.
+
+Obtaining example data
+**********************
+
+.. download::
+   :url: https://data.qiime2.org/2017.2/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :saveas: casava-18-paired-end-demultiplexed.zip
+
+.. command-block::
+
+   unzip -q casava-18-paired-end-demultiplexed.zip
+
+Importing data
+**************
+
+.. command-block::
+   qiime tools import \
+     --type 'SampleData[PairedEndSequencesWithQuality]' \
+     --input-path casava-18-paired-end-demultiplexed \
+     --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+     --output-path demux-paired-end.qza
+
 
 Feature table data
 ------------------
