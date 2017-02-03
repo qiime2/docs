@@ -6,7 +6,7 @@ Tutorials
 
    moving-pictures
    fmt
-   88soils
+   atacama-soils
    importing
    filtering
    feature-classifier
