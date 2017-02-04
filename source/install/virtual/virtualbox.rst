@@ -1,26 +1,8 @@
-Installing QIIME 2 using Virtual Machines
-=========================================
+Installing QIIME 2 using VirtualBox
+===================================
 
-QIIME 2 "core distribution" builds are available as VirtualBox VMDK Images, Amazon Web Services (AWS) EC2 AMI Images, and Docker Images. These options can get you a working QIIME 2 installation very quickly.
-
-The core distribution builds contain the following plugins:
-
-- ``alignment``
-- ``composition``
-- ``dada2``
-- ``demux``
-- ``diversity``
-- ``emperor``
-- ``feature-classifier``
-- ``feature-table``
-- ``phylogeny``
-- ``taxa``
-- ``types``
-
-.. note:: At this stage we're unsure of what types of virtual machine builds we'll continue to release in the future. We expect that for the first half of 2017 we'll provide the three builds included here, but we may ultimately phase out the AWS and VirtualBox builds. This is because our release of these builds restricts users to a specific operating system/cloud platform/etc, so we feel that we may better serve our user community by providing cross-platform builds (e.g., Docker containers) and detailed instructions for how to work with these.
-
-VirtualBox
-----------
+.. warning::
+   The following steps require approximately 15 GB of free disk space: 2.7 GB for the ZIP file, 3.3 GB for the unzipped ZIP file contents, and 10 GB for the installed Virtual Machine (VM). Once you have installed the VM you can free up 5 GB of space by deleting the ZIP + the unzipped ZIP file contents.
 
 1. Install VirtualBox on your computer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -31,45 +13,55 @@ Please see https://VirtualBox.org for details on how to install VirtualBox on yo
 2. Download the QIIME 2 Core VirtualBox Image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.2.0``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). If you select the "Browser" option below, the file will automatically rename to the version and build number necessary.
+Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.2.0``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please select the appropriate VirtualBox download from the following list:
 
-.. download::
-   :no-exec:
-   :url: https://data.qiime2.org/distro/core/latest
-   :saveas: qiimeX_Y_Z-build_number.zip
+- `Latest`_
+- `QIIME 2 Core 2017.2.0`_
+- `QIIME 2 Core 2.0.6`_
 
 3. Unzip the file
 ~~~~~~~~~~~~~~~~~
 
-Unzip the ``qiimeX_Y_Z-build_number.zip`` file and open the directory that you chose to unzip to.
+Unzip/extract the ``qiimeX_Y_Z-build_number.zip`` file and open the directory that you chose to unzip to. Please note, some operating systems (e.g. Windows) open a read-only view of the ZIP file, which has not actually been extracted. Please follow the directions for your operating system/unarchiver tool as necessary.
 
 4. Launch VirtualBox
 ~~~~~~~~~~~~~~~~~~~~
 
 Double-click the file named ``QIIME 2 Core - X.Y.Z (build_number).ovf``.
 
-.. image:: images/vbox-install/vbox-01.jpg
+.. note::
+   The file ending with the extension ``ovf`` is a type of VirtualBox "recipe" --- it allows the QIIME 2 developers to define a set of reasonable default configuration values, rather than requiring you to manually specify RAM, CPU count, etc. The file ending with the extension ``vmdk`` is the actual virtual machine disk image. If you don't want to import using the defaults specified in the ``ovf`` you can use the ``vmdk`` file to manually import the VM --- see the `VirtualBox Docs`_ for details.
+
+.. image:: images/vbox-install-01.jpg
 
 You will be presented with an ``Appliance Settings`` import page. We have selected default settings for you that should work for most light workloads. If you are interested in changing the allocations (e.g. memory or CPUs), feel free to adjust these settings. When done, click ``Import``.
 
-.. image:: images/vbox-install/vbox-02.jpg
+.. image:: images/vbox-install-02.jpg
 
 Once the import is complete, double-click on the new Virtual Machine entry that matches the ``X.Y.Z`` & ``build_number`` version that you just imported.
 
-.. image:: images/vbox-install/vbox-03.jpg
+.. image:: images/vbox-install-03.jpg
 
 5. Launch the virtual machine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When prompted, select the user ``qiime2``, and enter the password ``qiime2``.
 
-.. image:: images/vbox-install/vbox-04.jpg
+.. image:: images/vbox-install-04.jpg
 
 Once logged in you should see a screen like this:
 
-.. image:: images/vbox-install/vbox-05.jpg
+.. image:: images/vbox-install-05.jpg
 
-Success!
+Success! To confirm that everything is working, you can open up a terminal and run the following command:
+
+.. command-block::
+
+   qiime info
+
+.. image:: images/vbox-install-06.jpg
+
+Note, the list of installed plugins (and their versions) will likely differ depending on the version of the VirtualBox virtual machine that you chose to download and install.
 
 6. Clean up
 ~~~~~~~~~~~
@@ -84,26 +76,26 @@ Optional: Shared Folders and Copy-and-Paste
 
 After clicking on the CD icon in the lower left, click on ``Run Software`` in the upper right.
 
-.. image:: images/vbox-guest/vbox-01.jpg
+.. image:: images/vbox-guest-01.jpg
 
 Enter the password (``qiime2``) when prompted.
 
-.. image:: images/vbox-guest/vbox-02.jpg
+.. image:: images/vbox-guest-02.jpg
 
-When installation is done, your screen should look like the following. Follow the prompt and press ``Return``
+When installation is done, your screen should look like the following. Follow the prompt and press ``Return``.
 
-.. image:: images/vbox-guest/vbox-03.jpg
+.. image:: images/vbox-guest-03.jpg
 
 2. Set up a shared folder
 .........................
 
 In the VirtualBox menu bar on your host computer, select ``Devices -> Shared Folders -> Shared Folders Settings`` (note, this might be slightly different on Windows or Linux systems, please check the official `VirtualBox Docs`_). Click on the green plus sign/folder on the right side of the window, you should see a new screen prompting you for info:
 
-.. image:: images/vbox-guest/vbox-04.jpg
+.. image:: images/vbox-guest-04.jpg
 
 Click on the ``Folder Path`` input, and using the file browser (by selecting the option ``Other...``), select the folder you want to share with the VM. This example uses the Desktop (e.g. ``/Users/matthew/Desktop`` on a Mac). Make sure to select ``Auto-mount`` and ``Make Permanent``, if you don't want to repeat these steps every time you launch the VM. Also note, the ``Folder Name`` option (which VirtualBox will auto-suggest a value for) is the name of the mounted folder inside of your VM.  VirtualBox will always prepend the prefix ``sf_`` to that value (``sf`` stands for ``shared folder``). So in this case, the folder name will be ``sf_Desktop``. The full path when mounted is ``/media/sf_Desktop``.
 
-.. image:: images/vbox-guest/vbox-05.jpg
+.. image:: images/vbox-guest-05.jpg
 
 Click 'OK' on both dialogs to save your changes.
 
@@ -112,34 +104,31 @@ Click 'OK' on both dialogs to save your changes.
 
 Click the gear in the upper right of the screen, then ``Shut Down...``, then ``Restart``.
 
-.. image:: images/vbox-guest/vbox-06.jpg
+.. image:: images/vbox-guest-06.jpg
 
 4. Enjoy!
 .........
 
 Once the VM has rebooted and you have logged in, you should see your shared folder in the file browser (the icon on the left bar that looks like a file cabinet):
 
-.. image:: images/vbox-guest/vbox-07.jpg
+.. image:: images/vbox-guest-07.jpg
 
 The files there are the files on the Mac's desktop! These files can also access the mounted folder via the Command Line at ``/media/sf_Desktop``:
 
-.. image:: images/vbox-guest/vbox-08.jpg
+.. image:: images/vbox-guest-08.jpg
 
-Amazon Web Services
--------------------
+Lastly, if you want to create a symbolic link to your shared folder to a more convenient location on your VM, you can run the following command:
 
-1. Set up an AWS account at https://aws.amazon.com, and log in.
-2. Set your region to "US West (Oregon)".
-3. When launching an instance, select "Community AMIs", and search for "QIIME 2 Core" (the AMI ID is `ami-c401aca4`).
-4. When prompted to set up a security group, make sure that port 22 is open.
-5. When prompted to set up an SSH keypair, choose "Proceed without a keypair".
-6. Once the machine has finished booting, you can SSH into it by running ``ssh qiime2@<PUBLIC_AWS_IP_ADDRESS>``, replacing ``<PUBLIC_AWS_IP_ADDRESS>`` with the public IP address for the machine (this will be provided by AWS). When prompted, provide the password ``qiime2``.
+.. command-block::
+   :no-exec:
 
-Docker
-------
+   ln -s /media/sf_Desktop ~/Desktop/shared
 
-1. Set up Docker on your computer (see https://docker.com for details).
-2. In a terminal with Docker activated, run ``docker pull qiime2/core:latest``.
-3. Run ``docker run -t -i -v $(pwd):/data qiime2/core qiime`` to confirm that the image was successfully fetched.
+Where ``sf_Desktop`` is the name of the shared directory from step 2 above, and ``~/Desktop/shared`` is a location of your choosing.
 
+.. image:: images/vbox-guest-09.jpg
+
+.. _`Latest`: https://data.qiime2.org/distro/core/latest
+.. _`QIIME 2 Core 2017.2.0`: https://data.qiime2.org/distro/core/2017.2.0
+.. _`QIIME 2 Core 2.0.6`: https://data.qiime2.org/distro/core/2.0.6
 .. _`VirtualBox Docs`: https://www.virtualbox.org/manual/UserManual.html

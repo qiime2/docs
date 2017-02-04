@@ -7,4 +7,4 @@ QIIME 2 can be installed natively or using virtual machines. The following pages
    :maxdepth: 2
 
    native
-   virtual-machine
+   virtual/index
