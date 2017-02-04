@@ -190,6 +190,19 @@ First we'll register a ``Method`` by calling ``plugin.methods.register_function`
                'phylogeny': Phylogeny[Rooted]},
        parameters={'metric': Str % Choices(beta.phylogenetic_metrics())},
        outputs=[('distance_matrix', DistanceMatrix % Properties('phylogenetic'))],
+       input_descriptions={
+           'table': ('The feature table containing the samples over which beta '
+                     'diversity should be computed.'),
+           'phylogeny': ('Phylogenetic tree containing tip identifiers that '
+                         'correspond to the feature identifiers in the table. '
+                         'This tree can contain tip ids that are not present in '
+                         'the table, but all feature ids in the table must be '
+                         'present in this tree.')
+       },
+       parameter_descriptions={
+           'metric': 'The beta diversity metric to be computed.'
+       },
+       output_descriptions={'distance_matrix': 'The resulting distance matrix.'},
        name='Beta diversity (phylogenetic)',
        description=("Computes a user-specified phylogenetic beta diversity metric"
                     " for all pairs of samples in a feature table.")
@@ -205,6 +218,12 @@ The values being provided are:
 
 ``outputs``: A list of tuples indicating each output name and its semantic type.
 
+``input_descriptions``: A dictionary containing input artifact names and their corresponding descriptions. This information is used by interfaces to instruct users how to use each specific input artifact.
+
+``parameter_descriptions``: A dictionary containing parameter names and their corresponding descriptions. This information is used by interfaces to instruct users how to use each specific input parameter. You should not include any default parameter values in these descriptions, as these will generally be added automatically by an interface.
+
+``output_descriptions``: A dictionary containing output artifact names and their corresponding descriptions. This information is used by interfaces to inform users what each specific output artifact will be.
+
 ``name``: A human-readable name for the ``Method``. This may be presented to users in interfaces.
 
 ``description``: A human-readable description of the ``Method``. This may be presented to users in interfaces.
@@ -216,7 +235,7 @@ Registering ``Visualizers`` is the same as registering ``Methods``, with two exc
 
 First, you call ``plugin.visualizers.register_function`` to register a ``Visualizer``.
 
-Next, you do not provide ``outputs`` when making this call, as ``Visualizers``, by definition, do not return anything (they only write to ``output_dir``). Since ``output_dir`` is a required parameter, you do not include this in the ``parameters`` list (it would be the same for every ``Visualizer`` that was ever registered, so it is added automatically).
+Next, you do not provide ``outputs`` or ``output_descriptions`` when making this call, as ``Visualizers``, by definition, only return a single visualization. Since the visualization output path is a required parameter, you do not include this in an ``outputs`` list (it would be the same for every ``Visualizer`` that was ever registered, so it is added automatically).
 
 Registering ``q2_diversity.alpha_group_significance`` as a ``Visualizer`` looks like the following:
 
@@ -226,6 +245,12 @@ Registering ``q2_diversity.alpha_group_significance`` as a ``Visualizer`` looks 
        function=q2_diversity.alpha_group_significance,
        inputs={'alpha_diversity': SampleData[AlphaDiversity]},
        parameters={'metadata': Metadata},
+       input_descriptions={
+           'alpha_diversity': 'Vector of alpha diversity values by sample.'
+       },
+       parameter_descriptions={
+           'metadata': 'The sample metadata.'
+       },
        name='Alpha diversity comparisons',
        description=("Visually and statistically compare groups of alpha diversity"
                     " values.")
