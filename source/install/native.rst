@@ -3,7 +3,7 @@ Natively installing QIIME 2
 
 This document describes how to install the QIIME 2 framework, a command-line interface, and some plugins used in the :doc:`tutorials <../tutorials/index>`.
 
-.. note:: QIIME 2 does not currently support Windows. It is something we will be working on soon, and in the meantime we recommend using one of the :doc:`QIIME 2 virtual machines <virtual-machine>`.
+.. note:: QIIME 2 does not currently support Windows. It is something we will be working on soon, and in the meantime we recommend using one of the :doc:`QIIME 2 virtual machines <virtual/index>`.
 
 .. note:: Installing QIIME 2 will become easier as we transition out of the alpha release phase.
 
