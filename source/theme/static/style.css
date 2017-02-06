@@ -24,8 +24,19 @@ h1 {
   border-top: 1px dashed #bbb;
 }
 
+#version-div {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
+}
+
+#version-div label {
+  padding-right: 10px;
+}
+
 div.footer {
-    padding: 25px 0;
+    padding: 25px 0 100px 0;
     font-size: 11px;
 }
 
@@ -148,6 +159,7 @@ form.search input[name=q]{
   div.footer {
     float: right;
     font-size: 14px;
+    padding: 25px 0;
   }
 
 }

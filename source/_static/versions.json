@@ -1,0 +1,14 @@
+{
+  "2017.2.0.dev0": {
+    "name": "Latest (2017.2.0.dev0)",
+    "deprecated": false
+  },
+  "2.0.6": {
+    "name": "2.0.6",
+    "deprecated": true
+  },
+  "2.0.5": {
+    "name": "2.0.5",
+    "deprecated": true
+  }
+}
