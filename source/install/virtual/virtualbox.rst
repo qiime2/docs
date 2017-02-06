@@ -13,10 +13,9 @@ Please see https://VirtualBox.org for details on how to install VirtualBox on yo
 2. Download the QIIME 2 Core VirtualBox Image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.2.0``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please select the appropriate VirtualBox download from the following list:
+Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.2``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please select the appropriate VirtualBox download from the following list:
 
-- `Latest`_
-- `QIIME 2 Core 2017.2.0`_
+- `QIIME 2 Core 2017.2 (Latest)`_
 - `QIIME 2 Core 2.0.6`_
 
 3. Unzip the file
@@ -128,7 +127,6 @@ Where ``sf_Desktop`` is the name of the shared directory from step 2 above, and 
 
 .. image:: images/vbox-guest-09.jpg
 
-.. _`Latest`: https://data.qiime2.org/distro/core/latest
-.. _`QIIME 2 Core 2017.2.0`: https://data.qiime2.org/distro/core/2017.2.0
+.. _`QIIME 2 Core 2017.2 (Latest)`: https://data.qiime2.org/distro/core/2017.2
 .. _`QIIME 2 Core 2.0.6`: https://data.qiime2.org/distro/core/2.0.6
 .. _`VirtualBox Docs`: https://www.virtualbox.org/manual/UserManual.html
