@@ -30,11 +30,11 @@ Obtaining example data
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
@@ -63,15 +63,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/forward.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/atacama/emp-paired-end-sequences-1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/atacama/emp-paired-end-sequences-1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/atacama/emp-paired-end-sequences-1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -96,7 +96,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/{version}/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -126,7 +126,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/{version}/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -159,7 +159,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/examples/feature-table.biom
+   :url: https://data.qiime2.org/{version}/tutorials/examples/feature-table.biom
    :saveas: feature-table.biom
 
 Importing data
@@ -185,7 +185,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/feature-table-v210.biom
+   :url: https://data.qiime2.org/{version}/tutorials/importing/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
