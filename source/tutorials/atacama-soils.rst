@@ -47,17 +47,17 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/forward.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/reverse.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/barcodes.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Paired-end read analysis commands
