@@ -71,12 +71,16 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         command_mode = True if self.name == 'command-block' else False
         opts = self.options
         download_opts = [k in opts for k in ['url', 'saveas']]
+        env = self._get_env()
+        version = env.config['version']
 
         if command_mode:
             self.assert_has_content()
             if any(download_opts):
                 raise self.error('command-block does not support the '
                                  'following options: `url`, `saveas`.')
+            for i, c in enumerate(self.content):
+                self.content[i] = c.format(version=version)
             commands = functools.reduce(self._parse_multiline_commands,
                                         self.content, [])
             nodes = [self._get_literal_block_node(self.content)]
@@ -87,11 +91,12 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
             if not all(download_opts):
                 raise self.error('Missing options for the download directive. '
                                  'Please specify `url` and `saveas`.')
+            for k in ['saveas', 'url']:
+                opts[k] = opts[k].format(version=version)
             commands = ['wget -O "%s" "%s"' % (opts['saveas'], opts['url'])]
             id_ = self.state.document.settings.env.new_serialno('download')
             nodes = [download_node(id_, opts['url'], opts['saveas'])]
 
-        env = self._get_env()
         if not (env.config.command_block_no_exec or 'no-exec' in self.options):
             working_dir = os.path.join(env.app.command_block_working_dir.name,
                                        env.docname)

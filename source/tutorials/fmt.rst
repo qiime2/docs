@@ -36,11 +36,11 @@ Alternatively, the following command will download the sample metadata as tab-se
 Next, download the *demultiplexed sequences* that we'll use in this analysis. In this tutorial we'll work with a small subset (10%) of the complete sequence data so that the commands will run quickly. To learn how to start a QIIME 2 analysis from raw sequence data, see the :doc:`importing data tutorial <importing>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   :url: https://data.qiime2.org/{version}/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
    :saveas: fmt-tutorial-demux-1-10p.qza
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   :url: https://data.qiime2.org/{version}/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
    :saveas: fmt-tutorial-demux-2-10p.qza
 
 Sequence quality control

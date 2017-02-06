@@ -37,11 +37,11 @@ Download the raw sequences that we'll use in this analysis. In this tutorial we'
    mkdir raw-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/moving-pictures/raw-sequences/barcodes.fastq.gz
    :saveas: raw-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/{version}/tutorials/moving-pictures/raw-sequences/sequences.fastq.gz
    :saveas: raw-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these raw data files into a QIIME 2 artifact. The semantic type of this artifact is ``RawSequences``.

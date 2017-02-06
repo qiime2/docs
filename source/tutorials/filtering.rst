@@ -14,11 +14,11 @@ Download the data we'll use in the tutorial. This includes sample metadata, a fe
     :saveas: sample-metadata.tsv
 
 .. download::
-    :url: https://data.qiime2.org/2.0.6/tutorials/filtering-feature-tables/table.qza
+    :url: https://data.qiime2.org/{version}/tutorials/filtering-feature-tables/table.qza
     :saveas: table.qza
 
 .. download::
-    :url: https://data.qiime2.org/2017.2/tutorials/filtering/distance-matrix.qza
+    :url: https://data.qiime2.org/{version}/tutorials/filtering/distance-matrix.qza
     :saveas: distance-matrix.qza
 
 Filtering feature tables

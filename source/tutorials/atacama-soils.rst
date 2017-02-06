@@ -33,7 +33,7 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/common/silva-119-99-full-length-nb-classifier.qza
+   :url: https://data.qiime2.org/{version}/common/silva-119-99-full-length-nb-classifier.qza
    :saveas: silva-119-99-full-length-nb-classifier.qza
 
 Analysis commands
