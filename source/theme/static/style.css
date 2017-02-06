@@ -20,12 +20,16 @@ h1 {
 }
 
 #sidebar {
-  padding: 15px 0;
+  padding: 15px 10px;
   border-top: 1px dashed #bbb;
 }
 
+#version-div .btn {
+  font-size: 12px;
+}
+
 div.footer {
-    padding: 25px 0;
+    padding: 25px 0 100px 0;
     font-size: 11px;
 }
 
@@ -113,22 +117,19 @@ form.search input[name=q]{
     font-size: 14px;
   }
 
-  #sidebar ul {
-    padding: inherit;
+  #sidebar > ul {
+    padding-left: 15px;
     font-size: 12px;
   }
 
-  #sidebar ul li ul {
+  #sidebar > ul li ul {
     padding-left: 10px;
-  }
-
-  #sidebar ul li ul li {
-    padding: 5px 0;
   }
 
   div.footer {
     float: right;
     font-size: 14px;
+    padding: 25px 0;
   }
 
 }
