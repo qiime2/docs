@@ -68,11 +68,14 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
 
 .. command-block::
 
-    qiime demux emp \
+    qiime demux emp-single \
       --i-seqs raw-sequences.qza \
       --m-barcodes-file sample-metadata.tsv \
       --m-barcodes-category BarcodeSequence \
       --o-per-sample-sequences demux.qza
+    qiime demux summarize \
+      --i-data demux.qza \
+      --o-visualization demux.qzv
 
 Sequence quality control
 ------------------------
@@ -109,7 +112,7 @@ In these plots, the quality of the initial bases seems to be high, so we won't t
 
 .. command-block::
 
-   qiime dada2 denoise \
+   qiime dada2 denoise-single \
      --i-demultiplexed-seqs demux.qza \
      --p-trim-left 0 \
      --p-trunc-len 100 \
@@ -122,7 +125,8 @@ After the ``dada2 denoise`` step completes, you'll want to explore the resulting
 
    qiime feature-table summarize \
      --i-table table.qza \
-     --o-visualization table.qzv
+     --o-visualization table.qzv \
+     --m-sample-metadata-file sample-metadata.tsv
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
