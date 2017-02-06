@@ -1,11 +1,11 @@
 "Atacama soil microbiome" tutorial
 ==================================
 
-.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
 
-This tutorial is designed to be a self-guided exercise that could be run after :doc:`the moving pictures tutorial <moving-pictures>` to gain more experience with QIIME 2. The data in this tutorial is paired-end Illumina MiSeq data, so this tutorial is also useful for learning how to work with paired-end data in QIIME 2.
+This tutorial is designed to serve two purposes. First, it illustrates the initial processing steps of paired-end read analysis, up to the point where the analysis steps are identical to single-end read analysis. This includes the importing, demultiplexing, and denoising steps, and results in a feature table and the associated feature sequences. Second, this is intended to be a self-guided exercise that could be run after :doc:`the moving pictures tutorial <moving-pictures>` to gain more experience with QIIME 2. For this exercise, we provide some questions that can be used to guide your analysis, but do not provide commands that will allow you to address each. Instead, you should apply the commands that you learned in :doc:`the moving pictures tutorial <moving-pictures>`.
 
-In this tutorial you'll use QIIME 2 to perform an analysis of soil samples from the Atacama Desert in northern Chile...
+In this tutorial you'll use QIIME 2 to perform an analysis of soil samples from the Atacama Desert in northern Chile. The Atacama Desert is one of the most arid locations on Earth, with some areas receiving less than a millimeter of rain per decade. Despite this extreme aridity, there are microbes living in the soil. The soil microbiomes profiled in this study follow two east-west transects, *Baquedano* and *Yungay*, across which average soil relative humidity is positively correlated with elevation (higher elevations are less arid and thus have higher average soil relative humidity). Along these transects, pits were dug at each site and soil samples were collected from three depths in each pit.
 
 Download data files
 -------------------
@@ -16,28 +16,54 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
    :url: https://docs.google.com/spreadsheets/d/1xMP1EjKZDrzdKLnQr7LGVAY35ongxrreT28k0EACtfg/export?gid=0&format=tsv
    :saveas: sample-metadata.tsv
 
+
+Next, you'll download the multiplexed reads. You will download three ``fastq.gz`` files, corresponding to the forward, reverse, and barcode (i.e., index) reads. These files contain a subset of the reads in the full data set generated for this study, which allows for the following commands to be run relatively quickly. If you are only planning to run through the commands presented here to get experience with the first steps of paired-end read analysis, you can use the 1% subsample data set so that the commands will run quickly. If you're planning to work through the questions presented at the end of this document to gain more experience with QIIME analysis and data interpretation, you should use the 10% subsample data set so that the analysis results will be supported by more sequence data.
+
+1% subsample data
+~~~~~~~~~~~~~~~~~
+
 .. command-block::
 
    mkdir emp-paired-end-sequences
 
 .. download::
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/forward.fastq.gz
+   :saveas: emp-paired-end-sequences/forward.fastq.gz
+
+.. download::
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/reverse.fastq.gz
+   :saveas: emp-paired-end-sequences/reverse.fastq.gz
+
+.. download::
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/barcodes.fastq.gz
+   :saveas: emp-paired-end-sequences/barcodes.fastq.gz
+
+10% subsample data
+~~~~~~~~~~~~~~~~~~
+
+.. command-block::
+
+   mkdir emp-paired-end-sequences
+
+.. download::
+   :no-exec:
    :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
+   :no-exec:
    :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
+   :no-exec:
    :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
-.. download::
-   :url: https://data.qiime2.org/2.0.6/common/silva-119-99-full-length-nb-classifier.qza
-   :saveas: silva-119-99-full-length-nb-classifier.qza
+Paired-end read analysis commands
+---------------------------------
 
-Analysis commands
------------------
+To analyze these data, the sequences that you just downloaded must first be imported into an artifact of type ``EMPPairedEndSequences``.
 
 .. command-block::
 
@@ -45,6 +71,10 @@ Analysis commands
       --type EMPPairedEndSequences \
       --input-path emp-paired-end-sequences \
       --output-path emp-paired-end-sequences.qza
+
+You next can demultiplex the sequence reads. This requires the sample metadata file, and you must indicate which column in that file contains the per-sample barcodes. In this case, that column name is ``BarcodeSequence``. In this data set, the barcode reads are the reverse complement of those included in the sample metadata file, so we additionally include the ``--p-rev-comp-mapping-barcodes`` parameter. After demultiplexing, we can generate and view a summary of how many sequences were obtained per sample.
+
+.. command-block::
 
    qiime demux emp-paired \
      --m-barcodes-file sample-metadata.tsv \
@@ -55,7 +85,17 @@ Analysis commands
 
    qiime demux summarize \
      --i-data demux.qza \
-     --o-visualization demux.qzv \
+     --o-visualization demux.qzv
+
+After demultiplexing reads, we'll look at the sequence quality based on ten randomly selected samples, and then denoise the data. When you view the quality plots, note that in contrast to the corresponding plots in :doc:`the moving pictures tutorial <moving-pictures>`, there are now two plots per sample. The plot on the left presents the quality scores for the forward reads, and the plot on the right presents the quality scores for the reverse reads. We'll use these plots to determine what trimming parameters we want to use for denoising with DADA2, and then denoise the reads using ``dada2 denoise-paired``.
+
+In this example we have 150-base forward and reverse reads. Since we need the reads to be long enough to overlap when joining paired ends, the first ten bases of the forward and reverse reads are being trimmed, but no trimming is being applied to the ends of the sequences to avoid reducing the read length by too much. In this example, the same values are being provided for ``--p-trim-left-f`` and ``--p-trim-left-f`` and for ``--p-trunc-len-f`` and ``--p-trunc-len-r``, but that is not a requirement.
+
+.. command-block::
+
+   qiime dada2 plot-qualities \
+     --i-demultiplexed-seqs demux.qza \
+     --o-visualization demux-qualities.qzv \
      --p-n 10
 
    qiime dada2 denoise-paired \
@@ -65,111 +105,14 @@ Analysis commands
      --p-trim-left-f 10 \
      --p-trim-left-r 10 \
      --p-trunc-len-f 150 \
-     --p-trunc-len-r 150 \
-     --p-n-threads 0 \
-     --p-n-reads-learn 100000
+     --p-trunc-len-r 150
 
-   qiime feature-table summarize \
-     --i-table table.qza \
-     --o-visualization table.qzv
+At this stage, you will have artifacts containing the feature table and corresponding feature sequences. From this point, analysis of paired-end read data progresses in the same way as analysis of single-end read data. You can therefore continue your analyses of these data following the steps that you ran in :doc:`the moving pictures tutorial <moving-pictures>`.
 
-   qiime feature-table tabulate-seqs \
-     --i-data rep-seqs.qza \
-     --o-visualization rep-seqs.qzv
+Questions to guide data analysis
+--------------------------------
 
-   qiime alignment mafft \
-     --i-sequences rep-seqs.qza \
-     --o-alignment aligned-rep-seqs.qza
-
-   qiime alignment mask \
-     --i-alignment aligned-rep-seqs.qza \
-     --o-masked-alignment masked-aligned-rep-seqs.qza
-
-   qiime phylogeny fasttree \
-     --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree unrooted-tree.qza
-
-   qiime phylogeny midpoint-root \
-     --i-tree unrooted-tree.qza \
-     --o-rooted-tree rooted-tree.qza
-
-   qiime diversity core-metrics \
-     --i-phylogeny rooted-tree.qza \
-     --i-table table.qza \
-     --p-sampling-depth 2026 \
-     --output-dir cm2026
-
-   qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm2026/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/faith-pd-group-significance.qzv
-
-   qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm2026/observed_otus_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/observed-otus-group-significance.qzv
-
-   qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm2026/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/evenness-group-significance.qzv
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm2026/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/faith-pd-correlation.qzv
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm2026/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/evenness-correlation.qzv
-
-   qiime emperor plot \
-     --i-pcoa cm2026/unweighted_unifrac_pcoa_results.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/unweighted-unifrac-emperor.qzv
-
-   qiime diversity bioenv \
-     --i-distance-matrix cm2026/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm2026/unweighted-unifrac-bioenv.qzv
-
-   qiime feature-classifier classify \
-     --i-classifier silva-119-99-full-length-nb-classifier.qza \
-     --i-reads rep-seqs.qza \
-     --o-classification taxonomy.qza
-
-   qiime taxa tabulate \
-     --i-data taxonomy.qza \
-     --o-visualization taxonomy.qzv
-
-   qiime taxa barplot \
-     --i-table table.qza \
-     --i-taxonomy taxonomy.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization taxa-bar-plots.qzv
-
-   qiime taxa collapse \
-     --i-table table.qza \
-     --i-taxonomy taxonomy.qza \
-     --p-level 2 \
-     --o-collapsed-table table-l2.qza
-
-   qiime composition add-pseudocount \
-     --i-table table-l2.qza \
-     --o-composition-table comp-table-l2.qza
-
-   qiime composition ancom \
-     --i-table comp-table-l2.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Vegetation \
-     --o-visualization l2-ancom-Vegetation.qzv
-
-Sequence processing and diversity analyses
-------------------------------------------
-
-Use the following questions to guide your analyses of the data.
+Use the following questions to guide your further analyses of these data data.
 
 #. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
 
@@ -179,10 +122,13 @@ Use the following questions to guide your analyses of the data.
 
 #. What discrete sample metadata categories are most strongly associated with the differences in microbial community richness or evenness? Are these differences statistically significant?
 
-#. What differences do you observe between the unweighted UniFrac and Bray-Curtis PCoA plots?
-
 #. In taxonomic composition bar plots, sort the samples by their average soil relative humidity, and visualize them at the phylum level. What are the dominant phyla in these samples? Which phyla increase and which decrease with increasing average soil relative humidity?
 
 #. What phyla differ in abundance across vegetated and unvegetated sites?
+
+Acknowledgements
+----------------
+
+The data used in this tutorial is presented in: *Arid Soil Microbiome: Significant Impacts of Increasing Aridity. Neilson, Califf, Cardona, Copeland, van Treuren, Josephson, Knight, Gilbert, Quade, Caporaso, and Maier. mSystems (under review).*
 
 .. _sample metadata: https://docs.google.com/spreadsheets/d/1xMP1EjKZDrzdKLnQr7LGVAY35ongxrreT28k0EACtfg/edit?usp=sharing
