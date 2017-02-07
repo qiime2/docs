@@ -13,6 +13,7 @@ Obtain the data
 Start by creating a directory to work in.
 
 .. command-block::
+   :no-exec:
 
    mkdir qiime2-atacama-tutorial
    cd qiime2-atacama-tutorial

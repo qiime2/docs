@@ -3,7 +3,7 @@ Filtering data
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-This tutorial describes how to filter feature tables and distance matrices in QIIME 2, and will be exanded as more filtering functionality becomes available.
+This tutorial describes how to filter feature tables and distance matrices in QIIME 2, and will be expanded as more filtering functionality becomes available.
 
 .. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py``, ``filter_otus_from_otu_table.py``, and ``filter_distance_matrix.py``.
 
@@ -13,6 +13,8 @@ Obtain the data
 First, create a directory to work in and change to that directory.
 
 .. command-block::
+   :no-exec:
+
    mkdir qiime2-filtering-tutorial
    cd qiime2-filtering-tutorial
 

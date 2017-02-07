@@ -14,6 +14,7 @@ Importing can be accomplished using any of the QIIME 2 :doc:`interfaces <../inte
 You may want to begin by creating a directory to work in.
 
 .. command-block::
+   :no-exec:
 
    mkdir qiime2-importing-tutorial
    cd qiime2-importing-tutorial
