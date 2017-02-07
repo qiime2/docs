@@ -3,13 +3,20 @@ Importing data
 
 .. note:: This tutorial assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-In order to use QIIME 2, we require input data to be stored in *artifacts* (i.e. ``.qza`` files). This is what enables distributed and automatic provenance tracking, as well as semantic type validation and transformations between data formats (see the :doc:`core concepts <../concepts>` page for more details about artifacts). This tutorial demonstrates how to import various data formats into artifacts for use with QIIME 2.
+In order to use QIIME 2, your input data must be stored in *QIIME 2 artifacts* (i.e. ``.qza`` files). This is what enables distributed and automatic provenance tracking, as well as semantic type validation and transformations between data formats (see the :doc:`core concepts <../concepts>` page for more details about QIIME 2 artifacts). This tutorial demonstrates how to import various data formats into QIIME 2 artifacts for use with QIIME 2.
 
-.. note:: This tutorial does not describe all data formats that are currently supported in QIIME 2. It is a work-in-progress that describes some of the most commonly used data formats available in QIIME 2. We are also actively working on supporting additional data formats. If you need to import data in a format that is not covered here, please post to the `QIIME 2 Forum`_ for help.
+.. note:: This tutorial does not describe all data formats that are currently supported in QIIME 2. It is a work-in-progress that describes some of the most commonly used data formats that are available. We are also actively working on supporting additional data formats. If you need to import data in a format that is not covered here, please post to the `QIIME 2 Forum`_ for help.
 
-Importing will typically happen with your initial data (e.g. raw sequences obtained from a sequencing facility), but importing can be performed at any step in your analysis pipeline. For example, if a collaborator provides you with a ``.biom`` file, you can import it into an artifact to perform "downstream" statistical analyses that operate on a feature table.
+Importing will typically happen with your initial data (e.g. sequences obtained from a sequencing facility), but importing can be performed at any step in your analysis pipeline. For example, if a collaborator provides you with a ``.biom`` file, you can import it into a QIIME 2 artifact to perform "downstream" statistical analyses that operate on a feature table.
 
-Importing can be accomplished using any of the QIIME 2 :doc:`interfaces <../interfaces/index>`. This tutorial will focus on using the QIIME 2 command-line interface (``q2cli``) to import data. Each section below briefly describes a data format, provides commands to download example data, and illustrates how to import the data into an artifact.
+Importing can be accomplished using any of the QIIME 2 :doc:`interfaces <../interfaces/index>`. This tutorial will focus on using the QIIME 2 command-line interface (``q2cli``) to import data. Each section below briefly describes a data format, provides commands to download example data, and illustrates how to import the data into a QIIME 2 artifact.
+
+You may want to begin by creating a directory to work in.
+
+.. command-block::
+
+   mkdir qiime2-importing-tutorial
+   cd qiime2-importing-tutorial
 
 Sequence data
 -------------
@@ -63,15 +70,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/forward.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/reverse.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama/emp-paired-end-sequences-1p/barcodes.fastq.gz
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -96,7 +103,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -126,7 +133,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -159,8 +166,8 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2.0.6/tutorials/examples/feature-table.biom
-   :saveas: feature-table.biom
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/examples/2017.2/feature-table-v100.biom
+   :saveas: feature-table-v100.biom
 
 Importing data
 **************
@@ -168,10 +175,10 @@ Importing data
 .. command-block::
 
    qiime tools import \
-     --input-path feature-table.biom \
+     --input-path feature-table-v100.biom \
      --type "FeatureTable[Frequency]" \
      --source-format BIOMV100Format \
-     --output-path feature-table.qza
+     --output-path feature-table-1.qza
 
 BIOM v2.1.0
 ~~~~~~~~~~~
@@ -185,7 +192,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/feature-table-v210.biom
+   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/examples/2017.2/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
@@ -197,7 +204,7 @@ Importing data
      --input-path feature-table-v210.biom \
      --type "FeatureTable[Frequency]" \
      --source-format BIOMV210Format \
-     --output-path feature-table-v210.qza
+     --output-path feature-table-2.qza
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
 
