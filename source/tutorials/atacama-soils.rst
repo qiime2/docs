@@ -7,8 +7,15 @@ This tutorial is designed to serve two purposes. First, it illustrates the initi
 
 In this tutorial you'll use QIIME 2 to perform an analysis of soil samples from the Atacama Desert in northern Chile. The Atacama Desert is one of the most arid locations on Earth, with some areas receiving less than a millimeter of rain per decade. Despite this extreme aridity, there are microbes living in the soil. The soil microbiomes profiled in this study follow two east-west transects, *Baquedano* and *Yungay*, across which average soil relative humidity is positively correlated with elevation (higher elevations are less arid and thus have higher average soil relative humidity). Along these transects, pits were dug at each site and soil samples were collected from three depths in each pit.
 
-Download data files
--------------------
+Obtain the data
+---------------
+
+Start by creating a directory to work in.
+
+.. command-block::
+
+   mkdir qiime2-atacama-tutorial
+   cd qiime2-atacama-tutorial
 
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
@@ -96,7 +103,7 @@ In this example we have 150-base forward and reverse reads. Since we need the re
    qiime dada2 plot-qualities \
      --i-demultiplexed-seqs demux.qza \
      --o-visualization demux-qualities.qzv \
-     --p-n 10
+     --p-n 5
 
    qiime dada2 denoise-paired \
      --i-demultiplexed-seqs demux.qza \
@@ -107,7 +114,20 @@ In this example we have 150-base forward and reverse reads. Since we need the re
      --p-trunc-len-f 150 \
      --p-trunc-len-r 150
 
-At this stage, you will have artifacts containing the feature table and corresponding feature sequences. From this point, analysis of paired-end read data progresses in the same way as analysis of single-end read data. You can therefore continue your analyses of these data following the steps that you ran in :doc:`the moving pictures tutorial <moving-pictures>`.
+At this stage, you will have artifacts containing the feature table and corresponding feature sequences. You can generated summaries of those as follows.
+
+.. command-block::
+
+   qiime feature-table summarize \
+     --i-table table.qza \
+     --o-visualization table.qzv \
+     --m-sample-metadata-file sample-metadata.tsv
+
+   qiime feature-table tabulate-seqs \
+     --i-data rep-seqs.qza \
+     --o-visualization rep-seqs.qzv
+
+From this point, analysis of paired-end read data progresses in the same way as analysis of single-end read data. You can therefore continue your analyses of these data following the steps that you ran in :doc:`the moving pictures tutorial <moving-pictures>`.
 
 Questions to guide data analysis
 --------------------------------
