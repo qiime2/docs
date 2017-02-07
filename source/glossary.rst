@@ -9,7 +9,7 @@ This document is currently a work-in-progress QIIME 2 terminology glossary.
       A general term for a *method* or *visualizer*.
 
    Artifact
-      Data that can be used as input to a QIIME *method* or *visualizer*, or that can be generated as output from a QIIME *method*. Artifacts typically have the file extension ``.qza``.
+      Data that can be used as input to a QIIME *method* or *visualizer*, or that can be generated as output from a QIIME *method*. Artifacts typically have the extension ``.qza`` when written to file.
 
    Method
       An *action* that takes some combination of *artifacts* and *parameters* as input, and produces one or more *artifacts* as output. These output *artifacts* could subsequently be used as input to other QIIME 2 *methods* or *visualizers*. *Methods* can produce intermediate or terminal outputs in a QIIME analysis.
@@ -27,7 +27,7 @@ This document is currently a work-in-progress QIIME 2 terminology glossary.
       A general term for an *artifact* or *visualization*. A *result* is produced by a *method*, *visualizer*, or *pipeline*.
 
    Visualization
-         Data that can be generated as output from a QIIME *visualizer*. Visualizations typically have the file extension ``.qzv``.
+         Data that can be generated as output from a QIIME *visualizer*. Visualizations typically have the extension ``.qzv`` when written to file.
 
    Visualizer
       An *action* that takes some combination of *artifacts* and *parameters* as input, and produces exactly one *visualization* as output. Output *visualizations*, by definition, cannot be used as input to other QIIME 2 *methods* or *visualizers*. *Visualizers* can only produce terminal output in a QIIME analysis.
