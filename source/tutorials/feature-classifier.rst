@@ -8,10 +8,10 @@ This tutorial will demonstrate how to train ``q2-feature-classifier`` for a part
 We will download and create several files, so first create a working directory.
 
 .. command-block::
-    :no-exec:
+   :no-exec:
 
-    mkdir training-feature-classifiers
-    cd training-feature-classifiers
+   mkdir training-feature-classifiers
+   cd training-feature-classifiers
 
 Obtaining and importing reference data sets
 -------------------------------------------
@@ -21,70 +21,74 @@ Two elements are required for training the classifier: the reference sequences a
 We will also download the representative sequences from the `Moving Pictures`_ tutorial to test our classifier.
 
 .. download::
-    :url: https://www.dropbox.com/s/h52ku5bg4aikqdt/85_otus.fasta
-    :saveas: 85_otus.fasta
+   :url: https://www.dropbox.com/s/h52ku5bg4aikqdt/85_otus.fasta
+   :saveas: 85_otus.fasta
 
 .. download::
-    :url: https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
-    :saveas: 85_otu_taxonomy.txt
+   :url: https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
+   :saveas: 85_otu_taxonomy.txt
 
 .. download::
-    :url: https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/rep-seqs.qza
-    :saveas: rep-seqs.qza
+   :url: https://data.qiime2.org/2.0.6/tutorials/training-feature-classifiers/rep-seqs.qza
+   :saveas: rep-seqs.qza
 
-Next we import the raw data into QIIME 2 Artifacts.
+Next we import these data into QIIME 2 Artifacts.
 
 .. command-block::
 
-    qiime tools import \
-      --type FeatureData[Sequence] \
-      --input-path 85_otus.fasta \
-      --output-path 85_otus.qza
+   qiime tools import \
+     --type FeatureData[Sequence] \
+     --input-path 85_otus.fasta \
+     --output-path 85_otus.qza
 
-    qiime tools import \
-      --type FeatureData[Taxonomy] \
-      --input-path 85_otu_taxonomy.txt \
-      --output-path ref-taxonomy.qza
+   qiime tools import \
+     --type FeatureData[Taxonomy] \
+     --input-path 85_otu_taxonomy.txt \
+     --output-path ref-taxonomy.qza
 
 
 Extract reference reads
 -----------------------
 
-It has been shown that taxonomic assignment improves when the classifier is trained on data that is trimmed to resemble the reads that it will be used to classify, at least for one Naive Bayes classifier `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequences we want to classify are 100-base single-end reads that were amplified with the 515F/806R primer pair, so we try to reflect that here.
+It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequence reads that we're trying to classify are 100-base single-end reads that were amplified with the 515F/806R primer pair. We optimize for that here by extracting reads from the reference database based on matches to this primer pair, and then slicing the result to 100 bases.
 
 .. command-block::
 
-    qiime feature-classifier extract-reads \
-      --i-sequences 85_otus.qza \
-      --p-f-primer GTGCCAGCMGCCGCGGTAA \
-      --p-r-primer GGACTACHVGGGTWTCTAAT \
-      --p-length 100 \
-      --o-reads ref-seqs.qza
+   qiime feature-classifier extract-reads \
+     --i-sequences 85_otus.qza \
+     --p-f-primer GTGCCAGCMGCCGCGGTAA \
+     --p-r-primer GGACTACHVGGGTWTCTAAT \
+     --p-length 100 \
+     --o-reads ref-seqs.qza
 
 
 Train the classifier
 --------------------
 
-Training the classifier is now straightforward. We can now train a `Naive Bayes`_ classifier as follows, using the reference reads that we just created and the reference taxonomy:
+We can now train a `Naive Bayes`_ classifier as follows, using the reference reads and taxonomy that we just created.
 
 .. command-block::
 
-    qiime feature-classifier fit-classifier-naive-bayes \
-      --i-reference-reads ref-seqs.qza \
-      --i-reference-taxonomy ref-taxonomy.qza \
-      --o-classifier classifier.qza
+   qiime feature-classifier fit-classifier-naive-bayes \
+     --i-reference-reads ref-seqs.qza \
+     --i-reference-taxonomy ref-taxonomy.qza \
+     --o-classifier classifier.qza
 
 Test the classifier
 -------------------
 
-Finally, we verify that the classifier works by classifying the representative sequences from the `Moving Pictures`_ tutorial. More extensive information on this step is available in that tutorial.
+Finally, we verify that the classifier works by classifying the representative sequences from the `Moving Pictures`_ tutorial and visualizing the resulting taxonomic assignments.
 
 .. command-block::
 
-    qiime feature-classifier classify \
-      --i-classifier classifier.qza \
-      --i-reads rep-seqs.qza \
-      --o-classification taxonomy.qza
+   qiime feature-classifier classify \
+     --i-classifier classifier.qza \
+     --i-reads rep-seqs.qza \
+     --o-classification taxonomy.qza
+
+   qiime taxa tabulate \
+     --i-data taxonomy.qza \
+     --o-visualization taxonomy.qzv
 
 .. _Moving Pictures: ../moving-pictures/index.html
 .. _Naive Bayes: http://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes
