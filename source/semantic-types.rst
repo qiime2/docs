@@ -21,7 +21,7 @@ Unless otherwise noted the following semantic types are defined by, and importab
 
 ``FeatureTable[PresenceAbsence]``: a feature table (e.g., samples by OTUs) where each value indicates whether an OTU is present or absent in the corresponding sample.
 
-``FeatureTable[Composition]``: A feature table (e.g., samples by OTUs) where each value indicates the relative abundance of an OTU in the corresponding sample such that the values for each sample will sum to 1.0, and there are no frequencies equal to zero.
+``FeatureTable[Composition]``: A feature table (e.g., samples by OTUs) where each value indicates the frequency of an OTU in the corresponding sample, and all frequencies are greater than zero.
 
 ``Phylogeny[Rooted]``: A rooted phylogenetic tree.
 
