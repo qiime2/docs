@@ -3,9 +3,18 @@ Filtering data
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-This tutorial describes how to filter data in QIIME 2. The tutorial describes how to filter feature tables and distance matrices, and will be expanded in the future to describe other ways of filtering data in QIIME 2.
+This tutorial describes how to filter feature tables and distance matrices in QIIME 2, and will be exanded as more filtering functionality becomes available.
 
 .. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py``, ``filter_otus_from_otu_table.py``, and ``filter_distance_matrix.py``.
+
+Obtain the data
+---------------
+
+First, create a directory to work in and change to that directory.
+
+.. command-block::
+   mkdir qiime2-filtering-tutorial
+   cd qiime2-filtering-tutorial
 
 Download the data we'll use in the tutorial. This includes sample metadata, a feature table, and a distance matrix:
 
@@ -53,7 +62,7 @@ Contingency-based filtering
 
 Contingency-based filtering is used to filter samples from a table contingent on the number of features they contain, or to filter features from a table contingent on the number of samples they're observed in.
 
-This filtering is commonly used for filtering features that show up in only one or a few samples, based on the suspicion that these may not represent real biological diversity but rather experimental artifacts such as PCR chimeras. Features that are present in only a single sample could be filtered from a feature table as follows.
+This filtering is commonly used for filtering features that show up in only one or a few samples, based on the suspicion that these may not represent real biological diversity but rather PCR or sequencing errors (such as PCR chimeras). Features that are present in only a single sample could be filtered from a feature table as follows.
 
 .. command-block::
     qiime feature-table filter-features \
