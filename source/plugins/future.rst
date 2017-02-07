@@ -5,7 +5,7 @@ Plugins planned for future releases are listed in the `QIIME 2 Plugins spreadshe
 
 The ``Status`` categories used in this spreadsheet are:
 
-* ``Released`` : The plugin is currently installable with ``conda install -c qiime2 <plugin-name>``.
+* ``Released`` : The plugin is currently available.
 * ``Pre-release development`` : The plugin is currently under active development. See the *Estimated release date* for when this plugin is expected to be moved to ``Release`` status.
 * ``Planning`` : The plugin is in the planning stage. Development has not officially started, but it is expected to start soon. Someone has already committed to working on this plugin. There may be ``Unmet dependencies`` that are blocking its transition to ``Pre-release development``.
 * ``Needs developer`` : The plugin is in the early planning phase. It represents functionality that is needed or wanted, but no one has yet committed to working on this plugin. There may be ``Unmet dependencies`` that are blocking its transition to ``Planning`` or ``Pre-release development``.
