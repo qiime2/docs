@@ -53,8 +53,8 @@ VirtualBox
     .. command-block::
        :no-exec:
 
-       sudo conda update conda
-       sudo conda install --file https://data.qiime2.org/distro/core/qiime2-2017.2-conda-linux-64.txt
+       sudo env "PATH=$PATH" conda update conda
+       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.2-conda-linux-64.txt
 
 Docker
     In a terminal run the following command:
@@ -70,5 +70,5 @@ Amazon AWS
     .. command-block::
        :no-exec:
 
-       sudo conda update conda
-       sudo conda install --file https://data.qiime2.org/distro/core/qiime2-2017.2-conda-linux-64.txt
+       sudo env "PATH=$PATH" conda update conda
+       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.2-conda-linux-64.txt
