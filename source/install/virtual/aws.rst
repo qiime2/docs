@@ -14,7 +14,7 @@ Set your region to "US West (Oregon)".
 3. Launch an instance
 ---------------------
 
-When launching an instance, select "Community AMIs", and search for "QIIME 2 Core 2017.2" (the AMI ID is `FOO`).
+When launching an instance, select "Community AMIs", and search for "QIIME 2 Core 2017.2" (the AMI ID is `ami-781b9e18`).
 
 4. Configure
 ------------
