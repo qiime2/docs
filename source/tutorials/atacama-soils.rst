@@ -21,7 +21,7 @@ Start by creating a directory to work in.
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://docs.google.com/spreadsheets/d/1xMP1EjKZDrzdKLnQr7LGVAY35ongxrreT28k0EACtfg/export?gid=0&format=tsv
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 
@@ -35,15 +35,15 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 10% subsample data
@@ -55,17 +55,17 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/forward.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://dl.dropboxusercontent.com/u/2868868/data/qiime2/tutorials/importing-sequence-data/2017.2/emp-paired-end-sequences/atacama-10p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Paired-end read analysis commands
@@ -152,4 +152,4 @@ Acknowledgements
 
 The data used in this tutorial is presented in: *Arid Soil Microbiome: Significant Impacts of Increasing Aridity. Neilson, Califf, Cardona, Copeland, van Treuren, Josephson, Knight, Gilbert, Quade, Caporaso, and Maier. mSystems (under review).*
 
-.. _sample metadata: https://docs.google.com/spreadsheets/d/1xMP1EjKZDrzdKLnQr7LGVAY35ongxrreT28k0EACtfg/edit?usp=sharing
+.. _sample metadata: https://data.qiime2.org/2017.2/tutorials/atacama-soils/sample_metadata
