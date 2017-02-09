@@ -1,12 +1,12 @@
-Upgrading QIIME 2 Core distribution
-===================================
+Upgrading QIIME 2
+=================
 
-Existing QIIME 2 Core distribution installations can be either upgraded (i.e. installing a newer release of QIIME 2) or updated (i.e. patch updates within a given release of QIIME 2). Please see the section below that most closely matches your existing QIIME 2 installation.
+Existing :ref:`QIIME 2 Core distribution <core-distribution>` installations can be either upgraded (i.e. installing a newer release of QIIME 2) or updated (i.e. patch updates within a given release of QIIME 2). Please see the section below that most closely matches your existing QIIME 2 installation.
 
 .. _upgrading:
 
-Upgrading QIIME 2 Core 2017.2
------------------------------
+Upgrading to QIIME 2 Core 2017.2
+--------------------------------
 
 Native Installation
     Please see the :doc:`native install doc <install/native>` for instructions on how to create a new QIIME 2 Core 2017.2 ``conda`` environment.
