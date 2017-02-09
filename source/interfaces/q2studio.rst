@@ -13,12 +13,12 @@ Once you have installed ``Node.js >= 5`` you will need to download and extract t
 
 .. download::
    :url: https://codeload.github.com/qiime2/q2studio/zip/2017.2.0
-   :saveas: q2studio-2017.2.zip
+   :saveas: q2studio-2017.2.0.zip
 
 .. command-block::
 
-   unzip q2studio-2017.2.zip && rm q2studio-2017.2.zip
-   cd q2studio-2017.2
+   unzip q2studio-2017.2.0.zip && rm q2studio-2017.2.0.zip
+   cd q2studio-2017.2.0
 
 Next we need to install it (both as a Python package, and as a Node.js package):
 
