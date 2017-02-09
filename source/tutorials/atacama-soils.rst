@@ -50,6 +50,7 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
 ~~~~~~~~~~~~~~~~~~
 
 .. command-block::
+   :no-exec:
 
    mkdir emp-paired-end-sequences
 
