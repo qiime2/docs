@@ -13,7 +13,7 @@ Taxonomy classifiers for use with q2-feature-classifier
 
       conda install --override-channels -c defaults scikit-learn=0.18.1
 
-.. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers (for example, from the marker gene reference databases below). We provided some common classifiers as this step can require a large amount of memory. For example, the Silva classifier linked here required approximately 30 GB of RAM to train.
+.. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers (for example, from the marker gene reference databases below).
 
 Naive Bayes classifiers trained on:
 
