@@ -20,6 +20,7 @@ import docutils.parsers.rst
 import docutils.parsers.rst.directives
 import docutils.statemachine
 import jinja2
+import sphinx
 
 import qiime2
 
@@ -75,18 +76,22 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         if command_mode:
             self.assert_has_content()
             if any(download_opts):
-                raise self.error('command-block does not support the '
-                                 'following options: `url`, `saveas`.')
+                raise sphinx.errors.ExtensionError('command-block does not '
+                                                   'support the following '
+                                                   'options: `url`, `saveas`.')
             commands = functools.reduce(self._parse_multiline_commands,
                                         self.content, [])
             nodes = [self._get_literal_block_node(self.content)]
         else:
             if self.content:
-                raise self.error('Content block not supported for the '
-                                 'download directive.')
+                raise sphinx.errors.ExtensionError('Content block not '
+                                                   'supported for the '
+                                                   'download directive.')
             if not all(download_opts):
-                raise self.error('Missing options for the download directive. '
-                                 'Please specify `url` and `saveas`.')
+                raise sphinx.errors.ExtensionError('Missing options for the '
+                                                   'download directive. '
+                                                   'Please specify `url` and '
+                                                   '`saveas`.')
             commands = ['wget -O "%s" "%s"' % (opts['saveas'], opts['url'])]
             id_ = self.state.document.settings.env.new_serialno('download')
             nodes = [download_node(id_, opts['url'], opts['saveas'])]
@@ -132,8 +137,9 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                            shell=True,
                                            universal_newlines=True)
             except OSError as e:
-                raise self.error("Unable to execute command %r: %s"
-                                 % (command, e))
+                raise sphinx.errors.ExtensionError("Unable to execute "
+                                                   "command %r: %s" %
+                                                   (command, e))
 
             if comp_proc.returncode != 0:
                 msg = (
@@ -143,7 +149,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                     (command, comp_proc.returncode, comp_proc.stdout,
                      comp_proc.stderr)
                 )
-                raise self.error(msg)
+                raise sphinx.errors.ExtensionError(msg)
 
     def _get_output_paths(self, working_dir):
         env = self._get_env()
@@ -175,7 +181,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                 "overwriting is not supported by the `%s` "
                                 "directive." % (file_relpath, self.name)
                             )
-                            raise self.error(msg)
+                            raise sphinx.errors.ExtensionError(msg)
                     else:
                         shutil.copyfile(src_filepath, dest_filepath)
 
