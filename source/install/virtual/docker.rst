@@ -4,7 +4,7 @@ Installing QIIME 2 using Docker
 1. Set up Docker
 ----------------
 
-See https://docker.com for details.
+See https://www.docker.com for details.
 
 2. Download QIIME 2 Image
 -------------------------

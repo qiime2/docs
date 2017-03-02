@@ -92,4 +92,4 @@ Next steps
 
 Now that you have the Core distribution installed, check out the :doc:`q2cli docs <../interfaces/q2cli>` to get familiar with the QIIME 2 command-line interface (it is used extensively in the :doc:`tutorials <../tutorials/index>`). After that, try out the :doc:`QIIME 2 tutorials <../tutorials/index>` for examples of using QIIME 2 to analyze microbiome datasets. You might also try installing other QIIME 2 :doc:`interfaces <../interfaces/index>`.
 
-.. _`Miniconda`: http://conda.pydata.org/miniconda.html
+.. _`Miniconda`: https://conda.io/miniconda.html

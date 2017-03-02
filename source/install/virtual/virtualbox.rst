@@ -7,7 +7,7 @@ Installing QIIME 2 using VirtualBox
 1. Install VirtualBox on your computer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please see https://VirtualBox.org for details on how to install VirtualBox on your computer. Please note, some computers require activating a BIOS setting to enable virtualization --- please consult your hardware documentation to determine if you need to do this, and how.
+Please see https://www.virtualbox.org for details on how to install VirtualBox on your computer. Please note, some computers require activating a BIOS setting to enable virtualization --- please consult your hardware documentation to determine if you need to do this, and how.
 
 
 2. Download the QIIME 2 Core VirtualBox Image
