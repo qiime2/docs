@@ -40,21 +40,21 @@ Find more information about Greengenes at http://greengenes.secondgenome.com.
 Silva (16S/18S rRNA)
 ````````````````````
 
-QIIME-compatible SILVA releases, as well as the licensing information for commercial and non-commercial use, are available at http://www.arb-silva.de/download/archive/qiime.
+QIIME-compatible SILVA releases, as well as the licensing information for commercial and non-commercial use, are available at https://www.arb-silva.de/download/archive/qiime.
 
 UNITE (fungal ITS)
 ``````````````````
 
-All releases are available for download at http://unite.ut.ee/repository.php.
+All releases are available for download at https://unite.ut.ee/repository.php.
 
-Find more information about UNITE at http://unite.ut.ee.
+Find more information about UNITE at https://unite.ut.ee.
 
 Microbiome bioinformatics benchmarking
 --------------------------------------
 
-Many microbiome bioinformatics benchmarking studies use *mock communities* (artificial communities constructed by pooling isolated microorganisms together in known abundances). For example, see `Bokulich et al., (2013) <http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3531572/>`_ and `Caporaso et al., (2011) <http://www.pnas.org/content/108/Supplement_1/4516.full>`_. Public mock community data can be downloaded from `mockrobiota <http://caporaso-lab.github.io/mockrobiota/>`_, which is described in `Bokulich et al., (2016) <http://msystems.asm.org/content/1/5/e00062-16>`_.
+Many microbiome bioinformatics benchmarking studies use *mock communities* (artificial communities constructed by pooling isolated microorganisms together in known abundances). For example, see `Bokulich et al., (2013) <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3531572/>`_ and `Caporaso et al., (2011) <http://www.pnas.org/content/108/Supplement_1/4516.full>`_. Public mock community data can be downloaded from `mockrobiota <http://mockrobiota.caporasolab.us>`_, which is described in `Bokulich et al., (2016) <http://msystems.asm.org/content/1/5/e00062-16>`_.
 
 Public microbiome data
 ----------------------
 
-`Qiita <http://qiita.microbio.me>`_ provides access to many public microbiome datasets. If you're looking for microbiome data for testing or for meta-analyses, Qiita is a good place to start.
+`Qiita <https://qiita.ucsd.edu/>`_ provides access to many public microbiome datasets. If you're looking for microbiome data for testing or for meta-analyses, Qiita is a good place to start.
