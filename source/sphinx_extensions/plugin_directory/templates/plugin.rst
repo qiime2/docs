@@ -6,6 +6,10 @@
    <table class="table plugin-info">
      <tbody>
        <tr>
+         <th scope="row">Description</th>
+         <td>{{ plugin.description|urlize }}</td>
+       </tr>
+       <tr>
          <th scope="row">Version</th>
          <td>{{ plugin.version }}</td>
        </tr>
