@@ -7,5 +7,6 @@ QIIME 2 microbiome analysis functionality is made available to users via plugins
    :maxdepth: 3
 
    {% for name, _ in plugins|dictsort %}
-   {{ name }}/index
+   {{ name }}: {{ _.short_description }} <{{ name }}/index>
    {% endfor %}
+
