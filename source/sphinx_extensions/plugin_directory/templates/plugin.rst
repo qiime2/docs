@@ -7,7 +7,11 @@
      <tbody>
        <tr>
          <th scope="row">Description</th>
-         <td>{{ plugin.description|urlize }}</td>
+         <td>
+         	{% for line in plugin.description.splitlines() %}
+         	{{ line|urlize }}<br/>
+         	{% endfor %}
+         </td>
        </tr>
        <tr>
          <th scope="row">Version</th>
