@@ -6,6 +6,14 @@
    <table class="table plugin-info">
      <tbody>
        <tr>
+         <th scope="row">Description</th>
+         <td>
+         	{% for line in plugin.description.splitlines() %}
+         	{{ line|urlize }}<br/>
+         	{% endfor %}
+         </td>
+       </tr>
+       <tr>
          <th scope="row">Version</th>
          <td>{{ plugin.version }}</td>
        </tr>
