@@ -19,8 +19,8 @@ You may want to begin by creating a directory to work in.
    mkdir qiime2-importing-tutorial
    cd qiime2-importing-tutorial
 
-Sequence data
--------------
+Sequence data with sequence quality information
+-----------------------------------------------
 
 "EMP protocol" multiplexed single-end fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,8 +207,87 @@ Importing data
      --source-format BIOMV210Format \
      --output-path feature-table-2.qza
 
+Per-feature unaligned sequence data (i.e., representative sequences)
+--------------------------------------------------------------------
+
+Format description
+~~~~~~~~~~~~~~~~~~
+
+Unaligned sequence data is imported from a fasta formatted file containing DNA sequences that are not aligned (i.e., do not contain `-` or `.` characters). The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio fasta format description`_ for more information about the fasta format.
+
+Obtaining example data
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. download::
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/sequences.fna
+   :saveas: sequences.fna
+
+Importing data
+~~~~~~~~~~~~~~
+
+.. command-block::
+
+   qiime tools import \
+     --input-path sequences.fna \
+     --output-path sequences.qza \
+     --type FeatureData[Sequence]
+
+Per-feature aligned sequence data (i.e., aligned representative sequences)
+--------------------------------------------------------------------------
+
+Format description
+~~~~~~~~~~~~~~~~~~
+
+Aligned sequence data is imported from a fasta formatted file containing DNA sequences that are aligned to one another. All aligned sequences must be exactly the same length. The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio fasta format description`_ for more information about the fasta format.
+
+Obtaining example data
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. download::
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/aligned-sequences.fna
+   :saveas: aligned-sequences.fna
+
+Importing data
+~~~~~~~~~~~~~~
+
+.. command-block::
+
+   qiime tools import \
+     --input-path aligned-sequences.fna \
+     --output-path aligned-sequences.qza \
+     --type FeatureData[AlignedSequence]
+
+Phylogenetic trees (unrooted)
+-----------------------------
+
+Format description
+~~~~~~~~~~~~~~~~~~
+
+Phylogenetic trees are imported from newick formatted files. See the `scikit-bio newick format description`_ for more information about the newick format.
+
+Obtaining example data
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. download::
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/unrooted-tree.tre
+   :saveas: unrooted-tree.tre
+
+Importing data
+~~~~~~~~~~~~~~
+
+.. command-block::
+
+   qiime tools import \
+     --input-path unrooted-tree.tre \
+     --output-path unrooted-tree.qza \
+     --type Phylogeny[Unrooted]
+
 .. _QIIME 2 Forum: https://forum.qiime2.org
 
 .. _BIOM v1.0.0 format specification: http://biom-format.org/documentation/format_versions/biom-1.0.html
 
 .. _BIOM v2.1.0 format specification: http://biom-format.org/documentation/format_versions/biom-2.1.html
+
+.. _scikit-bio fasta format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format
+
+.. _scikit-bio newick format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html
