@@ -30,6 +30,8 @@ Next we need to install it (both as a Python package, and as a Node.js package):
 
 Finally we will be able to launch the interface with:
 
+.. note:: Before being able to successfully run the following command, you must make sure that your QIIME 2 ``conda`` environment is activated. Failing to activate your environment prior to starting QIIME 2 Studio will cause issues and most likely crash the application.
+
 .. command-block::
    :no-exec:
 
