@@ -98,7 +98,7 @@ You next can demultiplex the sequence reads. This requires the sample metadata f
 
 After demultiplexing reads, we'll look at the sequence quality based on ten randomly selected samples, and then denoise the data. When you view the quality plots, note that in contrast to the corresponding plots in :doc:`the moving pictures tutorial <moving-pictures>`, there are now two plots per sample. The plot on the left presents the quality scores for the forward reads, and the plot on the right presents the quality scores for the reverse reads. We'll use these plots to determine what trimming parameters we want to use for denoising with DADA2, and then denoise the reads using ``dada2 denoise-paired``.
 
-In this example we have 150-base forward and reverse reads. Since we need the reads to be long enough to overlap when joining paired ends, the first ten bases of the forward and reverse reads are being trimmed, but no trimming is being applied to the ends of the sequences to avoid reducing the read length by too much. In this example, the same values are being provided for ``--p-trim-left-f`` and ``--p-trim-left-f`` and for ``--p-trunc-len-f`` and ``--p-trunc-len-r``, but that is not a requirement.
+In this example we have 150-base forward and reverse reads. Since we need the reads to be long enough to overlap when joining paired ends, the first thirteen bases of the forward and reverse reads are being trimmed, but no trimming is being applied to the ends of the sequences to avoid reducing the read length by too much. In this example, the same values are being provided for ``--p-trim-left-f`` and ``--p-trim-left-r`` and for ``--p-trunc-len-f`` and ``--p-trunc-len-r``, but that is not a requirement.
 
 .. command-block::
 
@@ -111,8 +111,8 @@ In this example we have 150-base forward and reverse reads. Since we need the re
      --i-demultiplexed-seqs demux.qza \
      --o-table table \
      --o-representative-sequences rep-seqs \
-     --p-trim-left-f 10 \
-     --p-trim-left-r 10 \
+     --p-trim-left-f 13 \
+     --p-trim-left-r 13 \
      --p-trunc-len-f 150 \
      --p-trunc-len-r 150
 
