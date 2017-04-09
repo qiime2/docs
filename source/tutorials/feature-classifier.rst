@@ -81,7 +81,7 @@ Finally, we verify that the classifier works by classifying the representative s
 
 .. command-block::
 
-   qiime feature-classifier classify \
+   qiime feature-classifier classify-sklearn \
      --i-classifier classifier.qza \
      --i-reads rep-seqs.qza \
      --o-classification taxonomy.qza
