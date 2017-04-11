@@ -315,7 +315,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 .. command-block::
 
-   qiime feature-classifier classify \
+   qiime feature-classifier classify-sklearn \
      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
      --i-reads rep-seqs.qza \
      --o-classification taxonomy.qza
