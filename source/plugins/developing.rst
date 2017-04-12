@@ -21,77 +21,10 @@ Writing a simple QIIME 2 plugin should be a straightforward process. For example
 
 Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install/index>` to familiarize yourself with the system and to provide a means for testing your plugin.
 
-Initializing a plugin package
------------------------------
-
-For convenience, a `Cookiecutter`_  project template is provided to help developers initialize a QIIME 2 plugin package. An initialized plugin includes examples of functionality that can be executed out of the box (no changes to the plugin's code are required!). Once you are familiar with the example functionality provided in the plugin, you can update relevant sections of the plugin to support your own functionality. There are comments in the generated plugin code indicating relevant sections to remove or update, and this document describes each plugin component in detail below.
-
-.. note:: **QIIME 2 does not place restrictions on how a plugin package is structured.** The Cookiecutter template uses the package structure and conventions present in other QIIME 2 plugins. This package structure is simply a recommendation and a starting point for developing your own plugin; feel free to modify the initialized plugin as necessary or desired.
-
-To initialize a plugin package, install the `Cookiecutter`_ tool and use it with the template located at https://github.com/qiime2/cookiecutter-plugin-template/. Cookiecutter provides a CLI and Python API and supports a number of options and features. The following examples illustrate basic usage of Cookiecutter; please refer to the Cookiecutter documentation for additional details and installation instructions.
-
-The most important option to provide to Cookiecutter is ``-c``/``--checkout``. This is a git tag, branch, or commit to checkout from the Cookiecutter template repository. The revision that is checked out with ``--checkout`` will determine which QIIME 2 release(s) the initialized plugin is compatible with. You'll typically want to `choose a release tag <https://github.com/qiime2/cookiecutter-plugin-template/releases>`_ corresponding to the QIIME 2 version you want your plugin to be compatible with. If ``--checkout`` isn't specified, Cookiecutter will template from the latest master branch, which is not recommended.
-
-For example, to template a plugin that is compatible with the 2017.2 QIIME 2 release, choose a 2017.2 release tag from the `template repository releases <https://github.com/qiime2/cookiecutter-plugin-template/releases>`_. The latest patch number within a release is recommended.
-
-.. command-block::
-   :no-exec:
-
-   cookiecutter -c 2017.2.0 https://github.com/qiime2/cookiecutter-plugin-template
-
-This initializes a plugin package in your current working directory. Use ``-o``/``--output-dir`` to create a plugin package in a location other than the current working directory.
-
-After running the above command, you will be prompted to enter several pieces of information about your plugin, including the plugin name, description, author details, etc. **Defaults are provided as examples only**; you must provide the relevant information about your plugin. The prompts only gather basic information about your plugin so a functioning package can be initialized. There are other pieces of the plugin that can be manually configured (detailed below).
-
-Assuming all default values were used in response to the above command's prompts, you should see that a ``q2-my-plugin`` directory was created in your current working directory. This directory contains the initialized plugin package based on the information you provided.
-
-The plugin includes some example functionality that you can try out (for example, using ``q2cli``). If you intend to use the plugin's example functionality, install `q2-dummy-types`_, which provides the semantic types used by the plugin:
-
-.. command-block::
-   :no-exec:
-
-   conda install --override-channels -c qiime2 -c defaults q2-dummy-types
-
-Next, navigate to the plugin directory that was created and install the plugin in development mode:
-
-.. command-block::
-   :no-exec:
-
-   cd q2-my-plugin
-   pip install -e .
-
-To see that the plugin is discoverable by QIIME, run:
-
-.. command-block::
-   :no-exec:
-
-   qiime
-
-You should see ``my-plugin`` listed as one of the available commands. To see the available plugin commands:
-
-.. command-block::
-   :no-exec:
-
-   qiime my-plugin --help
-
-Once you are done exploring the plugin's example functionality, update it with your own. The relevant sections of the code that need to change are commented.
-
-.. note::
-
-   If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while you are developing it, you'll need to run ``qiime dev refresh-cache`` to see the latest changes to your plugin reflected in the CLI. You'll need to run this command anytime you modify your plugin's interface (e.g. add/rename/remove a command or its inputs/parameters/outputs).
-
-   Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
-
-   This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
-
-The following sections describe various plugin components, configuration, and how to define your own functionality. As you read through the following sections, it may be useful to refer back to the example functionality defined in the plugin to see how it is implemented.
-
-.. note:: The initialized plugin also includes some basic continuous integration configuration for `Travis-CI`_, including ``flake8`` linting/style-checking and a ``nose`` command for running unit tests (you'll need to enable Travis-CI on your repository for your tests to be run). There aren't any unit tests included in the initialized plugin; plugin developers are encouraged to add unit tests for their plugin's functionality. The initialized plugin's code is flake8-compliant.
-
 Plugin components
 -----------------
 
-The following discussion will refer to the `q2-diversity`_ plugin as an example. This plugin will serve as a reference as you define your own QIIME 2 plugins, in addition to the initialized plugin you created above.
+The following discussion will refer to the `q2-diversity`_ plugin as an example. This plugin can serve as a reference as you define your own QIIME 2 plugins.
 
 Define functionality
 ++++++++++++++++++++
@@ -143,7 +76,8 @@ The next step is to instantiate a QIIME 2 ``Plugin`` object. This might look lik
    plugin = Plugin(
        name='diversity',
        version=q2_diversity.__version__,
-       website='https://github.com/qiime2/q2-diversity',
+       website='https://qiime2.org',
+       user_support_text='https://forum.qiime2.org',
        package='q2_diversity'
    )
 
@@ -153,7 +87,7 @@ The ``name`` parameter is the name that users will use to access your plugin fro
 
 ``version`` should be the version number of your package (the same that is used in its ``setup.py``).
 
-``website`` should be the page where you'd like end users to refer for more information about your package.
+``website`` should be the page where you'd like end users to refer for more information about your package. Since ``q2-diversity`` doesn't have its own website, we're including the QIIME 2 website here.
 
 ``package`` should be the Python package name for your plugin.
 
@@ -161,7 +95,7 @@ While not shown in the previous example, plugin developers can optionally provid
 
 * ``citation_text``: free text describing how users should cite the plugin and/or the underlying tools it wraps. If not provided, users are told to cite the ``website``.
 
-* ``user_support_text``: free text describing how users should get help with the plugin (e.g. issue tracker, StackOverflow tag, mailing list, etc.). If not provided, users are referred to the ``website`` for support.
+* ``user_support_text``: free text describing how users should get help with the plugin (e.g. issue tracker, StackOverflow tag, mailing list, etc.). If not provided, users are referred to the ``website`` for support. ``q2-diversity`` is supported on the QIIME 2 Forum, so we include that URL here. We encourage plugin developers to support their plugins on the QIIME 2 Forum, so you can include that URL as the ``user_support_text`` for your plugin. If you do that, you should get in the habit of monitoring the QIIME 2 Forum for technical support questions.
 
 The ``Plugin`` object can live anywhere in your project, but by convention it will be in a file called ``plugin_setup.py``. For an example, see ``q2_diversity/plugin_setup.py``.
 
@@ -278,7 +212,7 @@ Advanced plugin development
 Defining semantic types, data layouts, and view readers/writers
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-This section is currently stubbed and will be completed during the alpha release phase. For examples of plugins that define semantic types, data layouts, and view readers/writers, see `q2-dummy-types`_ and `q2-types`_. ``q2-dummy-types`` provides simple examples with heavily-commented code, and ``q2-types`` provides more complex types for bioinformatics/microbiome analyses.
+This section is currently stubbed and will be completed during the alpha release phase. In the meantime, if you have questions about these advanced plugin development topics, feel free to get in touch with us on `Slack`_. For an example of a plugin that define semantic types, data layouts, and view readers/writers, see `q2-types`_.
 
 Example plugins
 ---------------
@@ -286,8 +220,6 @@ Example plugins
 * `q2-emperor`_: This is a simple plugin that is defined as a stand-alone package. It provides QIIME 2 access to functionality defined in `Emperor`_.
 
 * `q2-diversity`_: This is a more complex plugin, where the plugin is defined in the same package as the functionality that it's providing access to.
-
-* `q2-dummy-types`_: This is a simple plugin defining dummy QIIME 2 types to serve as examples for plugin developers creating their own semantic types.
 
 * `q2-types`_: This is a more complex plugin defining real-world QIIME 2 types for bioinformatics/microbiome analyses.
 
@@ -299,12 +231,10 @@ Example plugins
 
 .. _`q2-diversity`: https://github.com/qiime2/q2-diversity
 
-.. _`Cookiecutter`: https://cookiecutter.readthedocs.io/en/latest/
-
-.. _`q2-dummy-types`: https://github.com/qiime2/q2-dummy-types
-
 .. _`Travis-CI`: https://travis-ci.org/
 
 .. _`mypy`: http://mypy-lang.org/
 
 .. _`q2-types`: https://github.com/qiime2/q2-types
+
+.. _`Slack`: https://slack.qiime2.org
