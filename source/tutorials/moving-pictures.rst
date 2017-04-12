@@ -226,22 +226,7 @@ We'll first test for associations between discrete metadata categories and alpha
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
 
-Next, we'll test for associations between alpha diversity metrics and continuous sample metadata (such as pH or elevation). We can do this running the following two commands, which will support analysis of Faith's Phylogenetic Diversity metric and evenness in the context of our continuous metadata. Run these commands and view the resulting QIIME 2 artifacts.
-
-.. command-block::
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/faith-pd-correlation.qzv
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/evenness-correlation.qzv
-
-.. question::
-   What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
+In this data set, no continuous sample metadata categories (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
 Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., skin or gut), are more similar to each other then they are to samples from a different group. This command can be slow to run since it is based on permutation tests, so unlike the previous commands we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
 
@@ -262,22 +247,7 @@ Next we'll analyze sample composition in the context of discrete metadata using 
 .. question::
    Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What body sites appear to be most different from each other?
 
-Finally, we'll explore associations between the microbial composition of the samples and continuous sample metadata using ``bioenv`` (originally described in `Clarke and Ainsworth (1993)`_). This approach tests for associations of pairwise distances between sample microbial composition (a measure of beta diversity) and sample metadata (for example, the matrix of Bray-Curtis distances between samples and the matrix of absolute differences in pH between samples). A powerful feature of this method is that it explores combinations of sample metadata to see which groups of metadata differences are most strongly associated with the observed microbial differences between samples. You can apply ``bioenv`` to the unweighted UniFrac distances and Bray-Curtis distances between the samples, respectively, as follows. After running these commands, open the resulting visualizations.
-
-.. command-block::
-
-   qiime diversity bioenv \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/unweighted-unifrac-bioenv.qzv
-
-   qiime diversity bioenv \
-     --i-distance-matrix cm1441/bray_curtis_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/bray-curtis-bioenv.qzv
-
-.. question::
-   What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? How strong are these correlations?
+Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` commands.
 
 Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. PCoA is run as part of the ``core-metrics`` command, so we can generate these plots for unweighted UniFrac and Bray-Curtis as follows. The ``--p-custom-axis`` parameter that we pass here is very useful for exploring temporal data. The resulting plot will contain axes for principal coordinate 1 (labelled ``0``), principal coordinate 2 (labelled ``1``), and days since the experiment start. This is useful for exploring how the samples change over time.
 
