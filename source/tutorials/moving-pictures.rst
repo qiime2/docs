@@ -228,7 +228,7 @@ We'll first test for associations between discrete metadata categories and alpha
 
 In this data set, no continuous sample metadata categories (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
-Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., skin or gut), are more similar to each other then they are to samples from a different group. This command can be slow to run since it is based on permutation tests, so unlike the previous commands we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
+Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., gut), are more similar to each other then they are to samples from the other groups (e.g., tongue, left palm, and right palm). If you call this command with the ``--p-pairwise`` parameter, as we'll do here, it will also perform pairwise tests that will allow you to determine which specific pairs of groups (e.g., tongue and gut) differ from one another, if any. This command can be slow to run, especially when passing ``--p-pairwise``, since it is based on permutation tests. So, unlike the previous commands, we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
 
 .. command-block::
 
@@ -236,16 +236,18 @@ Next we'll analyze sample composition in the context of discrete metadata using 
      --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization cm1441/unweighted-unifrac-body-site-significance.qzv
+     --o-visualization cm1441/unweighted-unifrac-body-site-significance.qzv \
+     --p-pairwise
 
    qiime diversity beta-group-significance \
      --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category Subject \
-     --o-visualization cm1441/unweighted-unifrac-subject-group-significance.qzv
+     --o-visualization cm1441/unweighted-unifrac-subject-group-significance.qzv \
+     --p-pairwise
 
 .. question::
-   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What body sites appear to be most different from each other?
+   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What specific pairs of body sites are significantly different from each other?
 
 Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` commands.
 
