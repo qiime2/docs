@@ -10,5 +10,6 @@ Tutorials
    fmt
    atacama-soils
    importing
+   exporting
    filtering
    feature-classifier
