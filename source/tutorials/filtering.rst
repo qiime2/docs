@@ -120,7 +120,16 @@ For example, filtering the table to contain only samples from subject 1 is perfo
       --p-where "Subject='subject-1'" \
       --o-filtered-table subject-1-filtered-table.qza
 
-``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. Again, the values ``subject-1`` and ``gut`` are enclosed in single quotes.
+If there are multiple values that should be retained from a single metadata category, the ``IN`` clause can be used to specify those values. For example, the following command can be used to retain all skin samples. Again, the values ``left palm`` and ``right palm`` are enclosed in single quotes.
+
+.. command-block::
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --m-sample-metadata-file sample-metadata.tsv \
+      --p-where "BodySite IN ('left palm', 'right palm')" \
+      --o-filtered-table skin-filtered-table.qza
+
+``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. With the ``AND`` keyword, both of the expressions being evaluated must be true for a sample to be retained.
 
 .. command-block::
     qiime feature-table filter-samples \
@@ -128,6 +137,15 @@ For example, filtering the table to contain only samples from subject 1 is perfo
       --m-sample-metadata-file sample-metadata.tsv \
       --p-where "Subject='subject-1' AND BodySite='gut'" \
       --o-filtered-table subject-1-gut-filtered-table.qza
+
+The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifies that either of the expressions can be true for a sample to be retained. For lack of a more relevant application to the example data being used here, the ``OR`` keyword in this example is applied to retain samples all of the samples where ``BodySite`` is ``gut`` *or* ``ReportedAntibioticUsage`` is ``Yes`` in ``sample-metadata.tsv``.
+
+.. command-block::
+    qiime feature-table filter-samples \
+      --i-table table.qza \
+      --m-sample-metadata-file sample-metadata.tsv \
+      --p-where "BodySite='gut' OR ReportedAntibioticUsage='Yes'" \
+      --o-filtered-table gut-abx-positive-filtered-table.qza
 
 This syntax also supports negating individual clauses of the ``--p-where`` expression (or the whole expression). Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` and whose ``BodySite`` is *not* ``gut`` in ``sample-metadata.tsv``.
 
