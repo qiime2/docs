@@ -245,17 +245,21 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
 The only parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
 .. question::
-   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
+   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics`` command?
 
 .. command-block::
 
    qiime diversity core-metrics \
      --i-phylogeny rooted-tree.qza \
      --i-table table.qza \
-     --p-sampling-depth 1441 \
-     --output-dir cm1441
+     --p-sampling-depth 1080 \
+     --output-dir core-metrics-results
 
-Here we set the ``--p-sampling-depth`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts. You will typically want to exclude those from the analysis by choosing a larger value.
+Here we set the ``--p-sampling-depth`` parameter to 1080. This value was chosen based on the number of sequences in the ``L3S360`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics`` analyses and anything that uses these results.
+
+.. note:: The sampling depth of 1080 was chosen based on the DADA2 feature table summary. If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth. Apply the logic from the previous paragraph to help you choose an even sampling depth.
+
+.. note:: In many Illumina runs you'll observe a few samples that have very low sequence counts. You will typically want to exclude those from the analysis by choosing a larger value for the sampling depth at this stage.
 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata. This information is present in the `sample metadata`_ file that was downloaded earlier.
 
@@ -264,14 +268,14 @@ We'll first test for associations between discrete metadata categories and alpha
 .. command-block::
 
    qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm1441/faith_pd_vector.qza \
+     --i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/faith-pd-group-significance.qzv
+     --o-visualization core-metrics-results/faith-pd-group-significance.qzv
 
    qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm1441/evenness_vector.qza \
+     --i-alpha-diversity core-metrics-results/evenness_vector.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/evenness-group-significance.qzv
+     --o-visualization core-metrics-results/evenness-group-significance.qzv
 
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
@@ -286,17 +290,17 @@ Next we'll analyze sample composition in the context of discrete metadata using 
 .. command-block::
 
    qiime diversity beta-group-significance \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization cm1441/unweighted-unifrac-body-site-significance.qzv \
+     --o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
      --p-pairwise
 
    qiime diversity beta-group-significance \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category Subject \
-     --o-visualization cm1441/unweighted-unifrac-subject-group-significance.qzv \
+     --o-visualization core-metrics-results/unweighted-unifrac-subject-group-significance.qzv \
      --p-pairwise
 
 .. question::
@@ -309,16 +313,16 @@ Finally, ordination is a popular approach for exploring microbial community comp
 .. command-block::
 
    qiime emperor plot \
-     --i-pcoa cm1441/unweighted_unifrac_pcoa_results.qza \
+     --i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/unweighted-unifrac-emperor.qzv
+     --o-visualization core-metrics-results/unweighted-unifrac-emperor.qzv
 
    qiime emperor plot \
-     --i-pcoa cm1441/bray_curtis_pcoa_results.qza \
+     --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/bray-curtis-emperor.qzv
+     --o-visualization core-metrics-results/bray-curtis-emperor.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
