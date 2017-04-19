@@ -21,10 +21,21 @@ Writing a simple QIIME 2 plugin should be a straightforward process. For example
 
 Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install/index>` to familiarize yourself with the system and to provide a means for testing your plugin.
 
+Plugin testing
+--------------
+
+Many of the QIIME 2 plugins, including `q2-emperor`_ and `q2-diversity`_, have continuous integration (CI) configuration for `Travis-CI`_ in their software repositories. This allows for automated testing any time a change to the plugin code is committed on GitHub if Travis-CI is enabled on the plugin's software repository. Plugin CI testing generally includes ``flake8`` linting/style-checking and a ``nose`` or ``py.test`` command for running unit tests.
+
+Plugin developers are encouraged to add unit tests for their plugin's functionality, and to perform style checking with ``flake8``. Unit tests are an important part of determining if your software is working as expected, which will give you and your users confidence in the plugin. Adhering to a style convention, and checking that style with a tool like ``flake8``, is very helpful for others who want to understand your code, including users who want an in depth understanding of the functionality and potential open source software contributors.
+
+`Wilson et al. (2014)`_ present a good discussion of software testing and related topics that is very helpful for scientists who are beginning to develop and distribute software.
+
 Plugin components
 -----------------
 
 The following discussion will refer to the `q2-diversity`_ plugin as an example. This plugin can serve as a reference as you define your own QIIME 2 plugins.
+
+.. note:: **QIIME 2 does not place restrictions on how a plugin package is structured.** The `q2-diversity`_ plugin is however a good representative of the conventions present in many of the initial QIIME 2 plugins. This package structure is simply a recommendation and a starting point for developing your own plugin; feel free to deviate from this structure as necessary or desired.
 
 Define functionality
 ++++++++++++++++++++
@@ -206,6 +217,15 @@ Finally, you need to tell QIIME where to find your instantiated ``Plugin`` objec
 
 The relevant key in the ``entry_points`` dictionary will be ``'qiime2.plugins'``, and the value will be a single element list containing a string formatted as ``<distribution-name>=<import-path>:<instance-name>``. ``<distribution-name>`` is the name of the Python package distribution (matching the value passed for ``name`` in this call to ``setup``); ``<import-path>`` is the import path for the ``Plugin`` instance you created above; and ``<instance-name>`` is the name for the ``Plugin`` instance you created above.
 
+Testing your plugin with q2cli during development
+-------------------------------------------------
+
+If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while you are developing it, you'll need to run ``qiime dev refresh-cache`` to see the latest changes to your plugin reflected in the command line interface (CLI). You'll need to run this command anytime you modify your plugin's interface (e.g. add/rename/remove a command or its inputs/parameters/outputs, and edit any of the plugin/action/input/parameter/output descriptions).
+
+Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
+
+This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
+
 Advanced plugin development
 ---------------------------
 
@@ -238,3 +258,5 @@ Example plugins
 .. _`q2-types`: https://github.com/qiime2/q2-types
 
 .. _`Slack`: https://slack.qiime2.org
+
+.. _`Wilson et al. (2014)`: http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745

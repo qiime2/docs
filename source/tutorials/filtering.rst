@@ -129,7 +129,7 @@ If there are multiple values that should be retained from a single metadata cate
       --p-where "BodySite IN ('left palm', 'right palm')" \
       --o-filtered-table skin-filtered-table.qza
 
-``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. With the ``AND`` keyword, both of the expressions being evaluated must be true for a sample to be retained.
+``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. With the ``AND`` keyword, both of the expressions being evaluated must be true for a sample to be retained. This means that samples whose ``BodySite`` is ``gut`` but whose ``Subject`` is ``subject-2`` would not be in the resulting table. Similarly, samples whose ``Subject`` is ``subject-1`` but whose ``BodySite`` is *not* ``gut`` would not be in the resulting table.
 
 .. command-block::
     qiime feature-table filter-samples \
@@ -138,7 +138,7 @@ If there are multiple values that should be retained from a single metadata cate
       --p-where "Subject='subject-1' AND BodySite='gut'" \
       --o-filtered-table subject-1-gut-filtered-table.qza
 
-The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifies that either of the expressions can be true for a sample to be retained. For lack of a more relevant application to the example data being used here, the ``OR`` keyword in this example is applied to retain samples all of the samples where ``BodySite`` is ``gut`` *or* ``ReportedAntibioticUsage`` is ``Yes`` in ``sample-metadata.tsv``.
+The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifies that either of the expressions can be true for a sample to be retained. For lack of a more relevant application to the example data being used here, the ``OR`` keyword in this example is applied to retain all of the samples where ``BodySite`` is ``gut`` *or* ``ReportedAntibioticUsage`` is ``Yes`` in ``sample-metadata.tsv``. In contrast to ``AND``, this means that samples whose ``BodySite`` is ``gut`` but whose ``ReportedAntibioticUsage`` is ``No`` would be in the resulting table. Similarly, samples whose ``ReportedAntibioticUsage`` is ``Yes`` but whose ``BodySite`` is *not* ``gut`` would also be in the resulting table.
 
 .. command-block::
     qiime feature-table filter-samples \

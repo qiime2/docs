@@ -100,11 +100,21 @@ Format description
 
 In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.
 
-The manifest file is a comma-separated (i.e., ``.csv``) text file lines where the first field on each line is the sample identifier, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``.
+The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
 
 For single-end reads, there must be exactly one line per sample id corresponding to either the forward or reverse reads. For paired-end reads there must be exactly two lines per sample id, corresponding to the forward and the reverse reads. The direction field on each line can only contain the text ``forward`` or ``reverse``.
 
-The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``).
+The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for two samples.
+
+::
+
+  sample-id,absolute-filepath,direction
+  # Lines starting with '#' are ignored and can be used to create
+  # "comments" or even "comment out" entries
+  sample-1,$PWD/some/filepath/sample1_R1.fastq.gz,forward
+  sample-2,$PWD/some/filepath/sample2_R1.fastq.gz,forward
+  sample-1,$PWD/some/filepath/sample1_R2.fastq.gz,reverse
+  sample-2,$PWD/some/filepath/sample2_R2.fastq.gz,reverse
 
 There are four variants of this format which are defined in the following sections.
 
@@ -133,19 +143,19 @@ Obtaining example data
 Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33`` and ``PairedEndFastqManifestPhred64``.
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/se-33.zip
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/se-33.zip
    :saveas: se-33.zip
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/se-33-manifest
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/se-33-manifest
    :saveas: se-33-manifest
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/pe-64.zip
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/pe-64.zip
    :saveas: pe-64.zip
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing/pe-64-manifest
+   :url: https://data.qiime2.org/2017.3/tutorials/importing/pe-64-manifest
    :saveas: pe-64-manifest
 
 .. command-block::

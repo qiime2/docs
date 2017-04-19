@@ -92,16 +92,19 @@ After demultiplexing, it's useful to generate a summary of the demultiplexing re
 
    Alternatively, you can view QIIME 2 artifacts and visualizations at `view.qiime2.org <https://view.qiime2.org>`__ by uploading files or providing URLs. There are also precomputed results that can be viewed or downloaded after each step in the tutorial. These can be used if you're reading the tutorial, but not running the commands yourself.
 
-Sequence quality control
-------------------------
+Sequence quality control and feature table construction
+-------------------------------------------------------
 
 QIIME 2 plugins are available for several quality control methods, including `DADA2`_, `Deblur`_, and `basic quality-score-based filtering`_. In this tutorial we present this step using `DADA2`_ and `Deblur`_. These steps are interchangeable, so you can use whichever of these you prefer. The result of both of these methods will be a ``FeatureTable[Frequency]`` QIIME 2 artifact, which contains counts (frequencies) of each unique sequence in each sample in the dataset, and a ``FeatureData[Sequence]`` QIIME 2 artifact, which maps feature identifiers in the ``FeatureTable`` to the sequences they represent.
+
+.. note::
+   As you work through one or both of the options in this section, you'll create artifacts with filenames that are specific to the method that you're running (e.g., the feature table that you generate with ``dada2 denoise-single`` will be called ``table-dada2.qza``). After creating these artifacts you'll rename the artifacts from one of the two options to more generic filenames (e.g., ``table.qza``). This process of creating a specific name for an artifact and then renaming it is only done to allow you to choose which of the two options you'd like to use for this step, and then complete the tutorial without paying attention to that choice again. It's important to note that in this step, or any step in QIIME 2, the filenames that you're giving to artifacts or visualizations are not important.
 
 .. qiime1-users::
    The ``FeatureTable[Frequency]`` QIIME 2 artifact is the equivalent of the QIIME 1 OTU or BIOM table, and the ``FeatureData[Sequence]`` QIIME 2 artifact is the equivalent of the QIIME 1 *representative sequences* file. Because the "OTUs" resulting from `DADA2`_ and `Deblur`_ are created by grouping unique sequences, these are the equivalent of 100% OTUs from QIIME 1, and are generally referred to as *sequence variants*. In QIIME 2, these OTUs are higher resolution than the QIIME 1 default of 97% OTUs, and they're higher quality since these quality control steps are better than those implemented in QIIME 1. This should therefore result in more accurate estimates of diversity and taxonomic composition of samples than was achieved with QIIME 1.
 
-Sequence quality control option 1: DADA2
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 1: DADA2
+~~~~~~~~~~~~~~~
 
 `DADA2`_ is a pipeline for detecting and correcting (where possible) Illumina amplicon sequence data. As implemented in the ``q2-dada2`` plugin, this quality control process will additionally filter any phiX reads (commonly present in marker gene Illumina sequence data) that are identified in the sequencing data, and will filter chimeric sequences.
 
@@ -128,8 +131,8 @@ If you'd like to continue the tutorial using this FeatureTable (opposed to the D
    mv rep-seqs-dada2.qza rep-seqs.qza
    mv table-dada2.qza table.qza
 
-Sequence quality control option 2: Deblur
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 2: Deblur
+~~~~~~~~~~~~~~~~
 
 `Deblur`_ uses sequence error profiles to associate erroneous sequence reads with the true biological sequence from which they are derived, resulting in high quality sequence variant data. This is applied in two steps. First, an initial quality filtering process based on quality scores is applied. This method is an implementation of the quality filtering approach described by `Bokulich et al. (2013)`_.
 
