@@ -64,14 +64,7 @@ You can test your installation by activating your QIIME 2 environment and runnin
 
    qiime --help
 
-The ``q2-dada2`` plugin, which is part of the QIIME 2 core distribution, relies on the ``dada2`` R package so it is a good idea to test that that was also installed correctly. To test that ``dada2`` installed correctly, run:
-
-.. command-block::
-   :no-exec:
-
-   R -e 'library("dada2")'
-
-If no errors are reported when running these commands, the installation was successful!
+If no errors are reported when running this command, the installation was successful!
 
 Next steps
 ----------

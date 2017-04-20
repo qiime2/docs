@@ -21,15 +21,6 @@ Writing a simple QIIME 2 plugin should be a straightforward process. For example
 
 Before starting to write a plugin, you should :doc:`install QIIME 2 and some plugins <../install/index>` to familiarize yourself with the system and to provide a means for testing your plugin.
 
-Plugin testing
---------------
-
-Many of the QIIME 2 plugins, including `q2-emperor`_ and `q2-diversity`_, have continuous integration (CI) configuration for `Travis-CI`_ in their software repositories. This allows for automated testing any time a change to the plugin code is committed on GitHub if Travis-CI is enabled on the plugin's software repository. Plugin CI testing generally includes ``flake8`` linting/style-checking and a ``nose`` or ``py.test`` command for running unit tests.
-
-Plugin developers are encouraged to add unit tests for their plugin's functionality, and to perform style checking with ``flake8``. Unit tests are an important part of determining if your software is working as expected, which will give you and your users confidence in the plugin. Adhering to a style convention, and checking that style with a tool like ``flake8``, is very helpful for others who want to understand your code, including users who want an in depth understanding of the functionality and potential open source software contributors.
-
-`Wilson et al. (2014)`_ present a good discussion of software testing and related topics that is very helpful for scientists who are beginning to develop and distribute software.
-
 Plugin components
 -----------------
 
@@ -40,7 +31,7 @@ The following discussion will refer to the `q2-diversity`_ plugin as an example.
 Define functionality
 ++++++++++++++++++++
 
-QIIME 2 users will access your functionality as QIIME 2 ``Actions``. These ``Actions`` can be either ``Methods`` and/or ``Visualizers``. A ``Method`` is an operation that takes some combination of ``Artifacts`` and ``Parameters`` as input, and produces one or more ``Artifacts`` as output. These output ``Artifacts`` could subsequently be used as input to other QIIME 2 ``Methods`` or ``Visualizers``. A ``Visualizer`` is an operation that takes some combination of ``Artifacts`` and ``Parameters`` as input, and produces exactly one ``Visualization`` as output. Output ``Visualizations``, by definition, cannot be used as input to other QIIME 2 ``Methods`` or ``Visualizers``. ``Methods`` therefore can produce intermediate or terminal output in a QIIME analysis, while ``Visualizers`` can only create terminal output.
+QIIME 2 users will access your functionality as QIIME 2 ``Actions``. These ``Actions`` can be either ``Methods`` or ``Visualizers``. A ``Method`` is an operation that takes some combination of ``Artifacts`` and ``Parameters`` as input, and produces one or more ``Artifacts`` as output. These output ``Artifacts`` could subsequently be used as input to other QIIME 2 ``Methods`` or ``Visualizers``. A ``Visualizer`` is an operation that takes some combination of ``Artifacts`` and ``Parameters`` as input, and produces exactly one ``Visualization`` as output. Output ``Visualizations``, by definition, cannot be used as input to other QIIME 2 ``Methods`` or ``Visualizers``. ``Methods`` therefore can produce intermediate or terminal output in a QIIME analysis, while ``Visualizers`` can only create terminal output.
 
 This section will describe how to define Python 3 functions that can be converted to QIIME 2 ``Methods`` or ``Visualizers``. These functions can be defined anywhere in your project; QIIME doesn't put restrictions on how your plugin package is structured.
 
@@ -225,6 +216,15 @@ If you are testing your plugin with ``q2cli`` (i.e. the ``qiime`` command) while
 Another option is to set the environment variable ``Q2CLIDEV=1`` so that the cache is refreshed every time a command is run. This will slow down the CLI while developing because refreshing the cache is slow. However, the CLI is much faster when a user installs release versions of QIIME 2 and plugins, so this slowdown should only be apparent when *developing* a plugin.
 
 This manual refreshing of the ``q2cli`` cache is necessary because it can't detect when changes are made to a plugin's code while under development (the plugin's version remains the same across code edits). This manual refreshing of the cache should only be necessary while developing a plugin; when users install QIIME 2 and your released plugin (i.e. no longer in development), the cache will automatically be updated when necessary.
+
+Plugin testing
+--------------
+
+Many of the QIIME 2 plugins, including `q2-emperor`_ and `q2-diversity`_, have continuous integration (CI) configuration for `Travis-CI`_ in their software repositories. This allows for automated testing any time a change to the plugin code is committed on GitHub if Travis-CI is enabled on the plugin's software repository. Plugin CI testing generally includes ``flake8`` linting/style-checking and a ``nose`` or ``py.test`` command for running unit tests.
+
+Plugin developers are encouraged to add unit tests for their plugin's functionality, and to perform style checking with ``flake8``. Unit tests are an important part of determining if your software is working as expected, which will give you and your users confidence in the plugin. Adhering to a style convention, and checking that style with a tool like ``flake8``, is very helpful for others who want to understand your code, including users who want an in depth understanding of the functionality and potential open source software contributors.
+
+`Wilson et al. (2014)`_ present a good discussion of software testing and related topics that is very helpful for scientists who are beginning to develop and distribute software.
 
 Advanced plugin development
 ---------------------------
