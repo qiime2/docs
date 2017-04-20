@@ -143,15 +143,15 @@ Option 2: Deblur
     --o-filtered-sequences demux-filtered.qza \
     --o-filter-stats demux-filter-stats.qza
 
-.. note:: In the `Deblur`_ paper, the authors recommended using different quality-filtering parameters than what `they currently recommend after additional analysis <https://qiita.ucsd.edu/static/doc/html/deblur_quality.html>`_. The parameters used here are based on those more recent recommendations.
+.. note:: In the `Deblur`_ paper, the authors used different quality-filtering parameters than what `they currently recommend after additional analysis <https://qiita.ucsd.edu/static/doc/html/deblur_quality.html>`_. The parameters used here are based on those more recent recommendations.
 
-Next, the deblur workflow is applied using the ``qiime deblur denoise-16S`` method. This method requires one parameter that is used in quality filtering, ``--p-trim-length n`` which truncates the sequences at position ``n``. In general, the developers recommend setting this value to the length of the sequence reads. One situation where you might deviate from that recommendation is when performing a meta-analysis across multiple sequencing runs. In this type of meta-analysis, it is critical that the read lengths be the same for all of the sequencing runs being compared to avoid introducing a study specific bias. Since the sequence reads in this data set are 152 bases long, we'll pass ``--p-trim-length 152``. This next command may take up to 10 minutes to run.
+Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` method. This method requires one parameter that is used in quality filtering, ``--p-trim-length n`` which truncates the sequences at position ``n``. In general, the Deblur developers recommend setting this value to a length where the median quality score begins to drop too low. On these data, the quality plots (prior to quality filtering) suggest a reasonable choice is in the 115 to 130 sequence position range. This is a subjective assessment. One situation where you might deviate from that recommendation is when performing a meta-analysis across multiple sequencing runs. In this type of meta-analysis, it is critical that the read lengths be the same for all of the sequencing runs being compared to avoid introducing a study-specific bias. Since we already using a trim length of 120 for ``qiime dada2 denoise-single``, and since 120 is reasonable given the quality plots, we'll pass ``--p-trim-length 120``. This next command may take up to 10 minutes to run.
 
 .. command-block::
 
    qiime deblur denoise-16S \
      --i-demultiplexed-seqs demux-filtered.qza \
-     --p-trim-length 152 \
+     --p-trim-length 120 \
      --o-representative-sequences rep-seqs-deblur.qza \
      --o-table table-deblur.qza \
      --o-stats deblur-stats.qza
