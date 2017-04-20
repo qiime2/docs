@@ -19,12 +19,14 @@ The QIIME 2 Core 2017.2 distribution includes the QIIME 2 framework, ``q2cli`` (
 - ``q2-alignment``
 - ``q2-composition``
 - ``q2-dada2``
+- ``q2-deblur``
 - ``q2-demux``
 - ``q2-diversity``
 - ``q2-emperor``
 - ``q2-feature-classifier``
 - ``q2-feature-table``
 - ``q2-phylogeny``
+- ``q2-quality-filter``
 - ``q2-taxa``
 - ``q2-types``
 

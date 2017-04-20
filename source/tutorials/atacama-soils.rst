@@ -138,9 +138,9 @@ Use the following questions to guide your further analyses of these data data.
 
 #. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
 
-#. What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? Are these associations stronger with unweighted UniFrac or with Bray-Curtis? Based on what you know about these metrics, what does that difference suggest?
+#. What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? Are these associations stronger with unweighted UniFrac or with Bray-Curtis? Based on what you know about these metrics, what does that difference suggest? For exploring associations between continuous metadata and sample composition, the commands ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` will be useful. These were not covered in the Moving Pictures tutorial, but you can learn about them by running them with the ``--help`` parameter.
 
-#. What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
+#. What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples? For exploring associations between continuous metadata and richness or evenness, the command ``qiime diversity alpha-correlation`` will be useful. This was not covered in the Moving Pictures tutorial, but you can learn about it by running it with the ``--help`` parameter.
 
 #. What discrete sample metadata categories are most strongly associated with the differences in microbial community richness or evenness? Are these differences statistically significant?
 

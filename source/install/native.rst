@@ -54,38 +54,17 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 
 To deactivate an environment, run ``source deactivate``.
 
-Install dada2
--------------
+Test your installation
+----------------------
 
-If you plan to use the ``q2-dada2`` plugin that's included in the Core distribution, you will need to install the `latest version of dada2 through Bioconductor <https://www.bioconductor.org/packages/release/bioc/html/dada2.html>`_. Installing dada2 through Bioconductor is necessary because the latest version of dada2 is not available through ``conda`` at the time of this writing. There is work being done to make the latest version of dada2 available through ``conda``. When the ``conda`` package is available, these installation steps will no longer be necessary.
+You can test your installation by activating your QIIME 2 environment and running:
 
 .. command-block::
    :no-exec:
 
-   CDPATH= R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("dada2")'
+   qiime --help
 
-.. tip::
-
-   If installing dada2 via Bioconductor fails, try the following suggestions:
-
-   * Per the `Bioconductor installation instructions <https://www.bioconductor.org/install/>`_, try using ``http://`` instead of ``https://`` in the Bioconductor URL that is sourced above.
-
-   * If you are using a Mac (i.e. macOS or OS X), install the Xcode Command Line Tools by running:
-
-     .. command-block::
-        :no-exec:
-
-        xcode-select --install
-
-     See this `Apple technical note <https://developer.apple.com/library/content/technotes/tn2339/_index.html>`_ for more details and alternate ways of obtaining the Xcode Command Line Tools.
-
-   * To test that dada2 installed correctly, run:
-
-     .. command-block::
-
-        R -e 'library("dada2")'
-
-     If no errors are reported, the installation was successful!
+If no errors are reported when running this command, the installation was successful!
 
 Next steps
 ----------

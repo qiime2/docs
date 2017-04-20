@@ -58,15 +58,13 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
 .. tip::
    Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation. For example, the command above created a single ``emp-single-end-sequences.qza`` file, and a corresponding precomputed file is linked above. You can view precomputed QIIME 2 artifacts and visualizations without needing to install additional software (e.g. QIIME 2).
 
-
-
 .. qiime1-users::
    In QIIME 1, we generally suggested performing demultiplexing through QIIME (e.g., with ``split_libraries.py`` or ``split_libraries_fastq.py``) as this step also performed quality control of sequences. We now separate the demultiplexing and quality control steps, so you can begin QIIME 2 with either multiplexed sequences (as we're doing here) or demultiplexed sequences.
 
 Demultiplexing sequences
 ------------------------
 
-To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads) and then generate a summary of the demultiplexing results. The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences.
+To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads). The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences.
 
 .. command-block::
 
@@ -75,27 +73,14 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
       --m-barcodes-file sample-metadata.tsv \
       --m-barcodes-category BarcodeSequence \
       --o-per-sample-sequences demux.qza
-    qiime demux summarize \
-      --i-data demux.qza \
-      --o-visualization demux.qzv
 
-Sequence quality control
-------------------------
-
-We'll next perform quality control on the demultiplexed sequences using `DADA2`_. DADA2 is a pipeline for detecting and correcting (where possible) Illumina amplicon sequence data. As implemented in the ``q2-dada2`` plugin, this quality control process will additionally filter any phiX reads (commonly present in marker gene Illumina sequence data) that are identified in the sequencing data, and will filter chimeric sequences. The result of this step will be a ``FeatureTable[Frequency]`` QIIME 2 artifact, which contains counts (frequencies) of each unique sequence in each sample in the dataset, and a ``FeatureData[Sequence]`` QIIME 2 artifact, which maps feature identifiers in the ``FeatureTable`` to the sequences they represent.
-
-.. qiime1-users::
-   The ``FeatureTable[Frequency]`` QIIME 2 artifact is the equivalent of the QIIME 1 OTU or BIOM table, and the ``FeatureData[Sequence]`` QIIME 2 artifact is the equivalent of the QIIME 1 *representative sequences* file. Because the "OTUs" resulting from DADA2 are creating by grouping unique sequences, these are the equivalent of 100% OTUs from QIIME 1. In DADA2, these 100% OTUs are referred to as *denoised sequence variants*. In QIIME 2, these OTUs are higher resolution than the QIIME 1 default of 97% OTUs, and they're higher quality due to the DADA2 denoising process. This should therefore result in more accurate estimates of diversity and taxonomic composition of samples than was achieved with QIIME 1.
-
-The ``dada2 denoise-single`` method requires two parameters that are used in quality filtering: ``--p-trim-left m``, which trims off the first ``m`` bases of each sequence, and ``--p-trunc-len n`` which truncates each sequence at position ``n``. This allows the user to remove low quality regions of the sequences. To determine what values to pass for these two parameters, you should first run the ``dada2 plot-qualities`` visualizer, which will generate plots of the quality scores by position for a randomly selected set of samples. In the following command, we'll generate a quality plot using 10 randomly selected samples (specified by passing ``--p-n 10``).
+After demultiplexing, it's useful to generate a summary of the demultiplexing results. This allows you to determine how many sequences were obtained per sample, and also to get a summary of the distribution of sequence qualities at each position in your sequence data.
 
 .. command-block::
 
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs demux.qza \
-     --p-n 10 \
-     --o-visualization demux-qual-plots.qzv
-
+    qiime demux summarize \
+      --i-data demux.qza \
+      --o-visualization demux.qzv
 
 .. note::
    All QIIME 2 visualizers (i.e., commands that take a ``--o-visualization`` parameter) will generate a ``.qzv`` file. You can view these files with ``qiime tools view``. We provide the command to view this first visualization, but for the remainder of this tutorial we'll tell you to *view the resulting visualization* after running a visualizer, which means that you should run ``qiime tools view`` on the .qzv file that was generated.
@@ -103,25 +88,88 @@ The ``dada2 denoise-single`` method requires two parameters that are used in qua
    .. command-block::
       :no-exec:
 
-      qiime tools view demux-qual-plots.qzv
+      qiime tools view demux.qzv
 
-   Alternatively, you can view QIIME 2 artifacts and visualizations at `view.qiime2.org <https://view.qiime2.org>`__ by uploading files or providing URLs. There are also precomputed results linked above that can be viewed or downloaded.
+   Alternatively, you can view QIIME 2 artifacts and visualizations at `view.qiime2.org <https://view.qiime2.org>`__ by uploading files or providing URLs. There are also precomputed results that can be viewed or downloaded after each step in the tutorial. These can be used if you're reading the tutorial, but not running the commands yourself.
+
+Sequence quality control and feature table construction
+-------------------------------------------------------
+
+QIIME 2 plugins are available for several quality control methods, including `DADA2`_, `Deblur`_, and `basic quality-score-based filtering`_. In this tutorial we present this step using `DADA2`_ and `Deblur`_. These steps are interchangeable, so you can use whichever of these you prefer. The result of both of these methods will be a ``FeatureTable[Frequency]`` QIIME 2 artifact, which contains counts (frequencies) of each unique sequence in each sample in the dataset, and a ``FeatureData[Sequence]`` QIIME 2 artifact, which maps feature identifiers in the ``FeatureTable`` to the sequences they represent.
+
+.. note::
+   As you work through one or both of the options in this section, you'll create artifacts with filenames that are specific to the method that you're running (e.g., the feature table that you generate with ``dada2 denoise-single`` will be called ``table-dada2.qza``). After creating these artifacts you'll rename the artifacts from one of the two options to more generic filenames (e.g., ``table.qza``). This process of creating a specific name for an artifact and then renaming it is only done to allow you to choose which of the two options you'd like to use for this step, and then complete the tutorial without paying attention to that choice again. It's important to note that in this step, or any step in QIIME 2, the filenames that you're giving to artifacts or visualizations are not important.
+
+.. qiime1-users::
+   The ``FeatureTable[Frequency]`` QIIME 2 artifact is the equivalent of the QIIME 1 OTU or BIOM table, and the ``FeatureData[Sequence]`` QIIME 2 artifact is the equivalent of the QIIME 1 *representative sequences* file. Because the "OTUs" resulting from `DADA2`_ and `Deblur`_ are created by grouping unique sequences, these are the equivalent of 100% OTUs from QIIME 1, and are generally referred to as *sequence variants*. In QIIME 2, these OTUs are higher resolution than the QIIME 1 default of 97% OTUs, and they're higher quality since these quality control steps are better than those implemented in QIIME 1. This should therefore result in more accurate estimates of diversity and taxonomic composition of samples than was achieved with QIIME 1.
+
+Option 1: DADA2
+~~~~~~~~~~~~~~~
+
+`DADA2`_ is a pipeline for detecting and correcting (where possible) Illumina amplicon sequence data. As implemented in the ``q2-dada2`` plugin, this quality control process will additionally filter any phiX reads (commonly present in marker gene Illumina sequence data) that are identified in the sequencing data, and will filter chimeric sequences.
+
+The ``dada2 denoise-single`` method requires two parameters that are used in quality filtering: ``--p-trim-left m``, which trims off the first ``m`` bases of each sequence, and ``--p-trunc-len n`` which truncates each sequence at position ``n``. This allows the user to remove low quality regions of the sequences. To determine what values to pass for these two parameters, you should review the *Interactive Quality Plot* tab in the ``demux.qzv`` file that was generated by ``qiime demux summarize`` above.
 
 .. question::
-   Based on the plots you see in ``demux-qual-plots.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case?
+   Based on the plots you see in ``demux.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case?
 
-In these plots, the quality of the initial bases seems to be high, so we won't trim any bases from the beginning of the sequences. The quality seems to drop off around position 100, so we'll truncate our sequences at 100 bases. This next command may take up to 10 minutes to run, and is the slowest step in this tutorial.
+In the ``demux.qzv`` quality plots, we see that the quality of the initial bases seems to be high, so we won't trim any bases from the beginning of the sequences. The quality seems to drop off around position 120, so we'll truncate our sequences at 120 bases. This next command may take up to 10 minutes to run, and is the slowest step in this tutorial.
 
 .. command-block::
 
    qiime dada2 denoise-single \
      --i-demultiplexed-seqs demux.qza \
      --p-trim-left 0 \
-     --p-trunc-len 100 \
-     --o-representative-sequences rep-seqs.qza \
-     --o-table table.qza
+     --p-trunc-len 120 \
+     --o-representative-sequences rep-seqs-dada2.qza \
+     --o-table table-dada2.qza
 
-After the ``dada2 denoise-single`` step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table tabulate-seqs`` command will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
+If you'd like to continue the tutorial using this FeatureTable (opposed to the Deblur feature table generated in *Option 2*), run the following commands.
+
+.. command-block::
+
+   mv rep-seqs-dada2.qza rep-seqs.qza
+   mv table-dada2.qza table.qza
+
+Option 2: Deblur
+~~~~~~~~~~~~~~~~
+
+`Deblur`_ uses sequence error profiles to associate erroneous sequence reads with the true biological sequence from which they are derived, resulting in high quality sequence variant data. This is applied in two steps. First, an initial quality filtering process based on quality scores is applied. This method is an implementation of the quality filtering approach described by `Bokulich et al. (2013)`_.
+
+.. command-block::
+
+   qiime quality-filter q-score \
+    --i-demux demux.qza \
+    --o-filtered-sequences demux-filtered.qza \
+    --o-filter-stats demux-filter-stats.qza
+
+.. note:: In the `Deblur`_ paper, the authors used different quality-filtering parameters than what `they currently recommend after additional analysis <https://qiita.ucsd.edu/static/doc/html/deblur_quality.html>`_. The parameters used here are based on those more recent recommendations.
+
+Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` method. This method requires one parameter that is used in quality filtering, ``--p-trim-length n`` which truncates the sequences at position ``n``. In general, the Deblur developers recommend setting this value to a length where the median quality score begins to drop too low. On these data, the quality plots (prior to quality filtering) suggest a reasonable choice is in the 115 to 130 sequence position range. This is a subjective assessment. One situation where you might deviate from that recommendation is when performing a meta-analysis across multiple sequencing runs. In this type of meta-analysis, it is critical that the read lengths be the same for all of the sequencing runs being compared to avoid introducing a study-specific bias. Since we already using a trim length of 120 for ``qiime dada2 denoise-single``, and since 120 is reasonable given the quality plots, we'll pass ``--p-trim-length 120``. This next command may take up to 10 minutes to run.
+
+.. command-block::
+
+   qiime deblur denoise-16S \
+     --i-demultiplexed-seqs demux-filtered.qza \
+     --p-trim-length 120 \
+     --o-representative-sequences rep-seqs-deblur.qza \
+     --o-table table-deblur.qza \
+     --o-stats deblur-stats.qza
+
+.. note:: The two commands used in this section generate QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime quality-filter visualize-stats`` and ``qiime deblur visualize-stats``, respectively.
+
+If you'd like to continue the tutorial using this FeatureTable (opposed to the DADA2 feature table generated in *Option 1*), run the following commands.
+
+.. command-block::
+   :no-exec:
+
+   mv rep-seqs-deblur.qza rep-seqs.qza
+   mv table-deblur.qza table.qza
+
+FeatureTable and FeatureData summaries
+--------------------------------------
+
+After the quality filtering step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table tabulate-seqs`` command will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
 
 .. command-block::
 
@@ -192,17 +240,21 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
 The only parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
 .. question::
-   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
+   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics`` command?
 
 .. command-block::
 
    qiime diversity core-metrics \
      --i-phylogeny rooted-tree.qza \
      --i-table table.qza \
-     --p-sampling-depth 1441 \
-     --output-dir cm1441
+     --p-sampling-depth 1080 \
+     --output-dir core-metrics-results
 
-Here we set the ``--p-sampling-depth`` parameter to 1441. This value was chosen here because it's nearly the same number of sequences as the next few samples, and because it is the lowest value it will allow us to retain all of our samples. In many Illumina runs however you'll observe a few samples that have much lower sequence counts. You will typically want to exclude those from the analysis by choosing a larger value.
+Here we set the ``--p-sampling-depth`` parameter to 1080. This value was chosen based on the number of sequences in the ``L3S360`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics`` analyses and anything that uses these results.
+
+.. note:: The sampling depth of 1080 was chosen based on the DADA2 feature table summary. If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth. Apply the logic from the previous paragraph to help you choose an even sampling depth.
+
+.. note:: In many Illumina runs you'll observe a few samples that have very low sequence counts. You will typically want to exclude those from the analysis by choosing a larger value for the sampling depth at this stage.
 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata. This information is present in the `sample metadata`_ file that was downloaded earlier.
 
@@ -211,14 +263,14 @@ We'll first test for associations between discrete metadata categories and alpha
 .. command-block::
 
    qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm1441/faith_pd_vector.qza \
+     --i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/faith-pd-group-significance.qzv
+     --o-visualization core-metrics-results/faith-pd-group-significance.qzv
 
    qiime diversity alpha-group-significance \
-     --i-alpha-diversity cm1441/evenness_vector.qza \
+     --i-alpha-diversity core-metrics-results/evenness_vector.qza \
      --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/evenness-group-significance.qzv
+     --o-visualization core-metrics-results/evenness-group-significance.qzv
 
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
@@ -226,74 +278,46 @@ We'll first test for associations between discrete metadata categories and alpha
 .. question::
    What discrete sample metadata categories are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
 
-Next, we'll test for associations between alpha diversity metrics and continuous sample metadata (such as pH or elevation). We can do this running the following two commands, which will support analysis of Faith's Phylogenetic Diversity metric and evenness in the context of our continuous metadata. Run these commands and view the resulting QIIME 2 artifacts.
+In this data set, no continuous sample metadata categories (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
-.. command-block::
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm1441/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/faith-pd-correlation.qzv
-
-   qiime diversity alpha-correlation \
-     --i-alpha-diversity cm1441/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/evenness-correlation.qzv
-
-.. question::
-   What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
-
-Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., skin or gut), are more similar to each other then they are to samples from a different group. This command can be slow to run since it is based on permutation tests, so unlike the previous commands we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
+Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., gut), are more similar to each other then they are to samples from the other groups (e.g., tongue, left palm, and right palm). If you call this command with the ``--p-pairwise`` parameter, as we'll do here, it will also perform pairwise tests that will allow you to determine which specific pairs of groups (e.g., tongue and gut) differ from one another, if any. This command can be slow to run, especially when passing ``--p-pairwise``, since it is based on permutation tests. So, unlike the previous commands, we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
 
 .. command-block::
 
    qiime diversity beta-group-significance \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category BodySite \
-     --o-visualization cm1441/unweighted-unifrac-body-site-significance.qzv
+     --o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
+     --p-pairwise
 
    qiime diversity beta-group-significance \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-category Subject \
-     --o-visualization cm1441/unweighted-unifrac-subject-group-significance.qzv
+     --o-visualization core-metrics-results/unweighted-unifrac-subject-group-significance.qzv \
+     --p-pairwise
 
 .. question::
-   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What body sites appear to be most different from each other?
+   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What specific pairs of body sites are significantly different from each other?
 
-Finally, we'll explore associations between the microbial composition of the samples and continuous sample metadata using ``bioenv`` (originally described in `Clarke and Ainsworth (1993)`_). This approach tests for associations of pairwise distances between sample microbial composition (a measure of beta diversity) and sample metadata (for example, the matrix of Bray-Curtis distances between samples and the matrix of absolute differences in pH between samples). A powerful feature of this method is that it explores combinations of sample metadata to see which groups of metadata differences are most strongly associated with the observed microbial differences between samples. You can apply ``bioenv`` to the unweighted UniFrac distances and Bray-Curtis distances between the samples, respectively, as follows. After running these commands, open the resulting visualizations.
-
-.. command-block::
-
-   qiime diversity bioenv \
-     --i-distance-matrix cm1441/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/unweighted-unifrac-bioenv.qzv
-
-   qiime diversity bioenv \
-     --i-distance-matrix cm1441/bray_curtis_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization cm1441/bray-curtis-bioenv.qzv
-
-.. question::
-   What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? How strong are these correlations?
+Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` commands.
 
 Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. PCoA is run as part of the ``core-metrics`` command, so we can generate these plots for unweighted UniFrac and Bray-Curtis as follows. The ``--p-custom-axis`` parameter that we pass here is very useful for exploring temporal data. The resulting plot will contain axes for principal coordinate 1 (labelled ``0``), principal coordinate 2 (labelled ``1``), and days since the experiment start. This is useful for exploring how the samples change over time.
 
 .. command-block::
 
    qiime emperor plot \
-     --i-pcoa cm1441/unweighted_unifrac_pcoa_results.qza \
+     --i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/unweighted-unifrac-emperor.qzv
+     --o-visualization core-metrics-results/unweighted-unifrac-emperor.qzv
 
    qiime emperor plot \
-     --i-pcoa cm1441/bray_curtis_pcoa_results.qza \
+     --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization cm1441/bray-curtis-emperor.qzv
+     --o-visualization core-metrics-results/bray-curtis-emperor.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
@@ -395,3 +419,6 @@ We're also often interested in performing a differential abundance test at a spe
 .. _Emperor: http://emperor.microbio.me
 .. _Bergmann et al. (2011): https://www.ncbi.nlm.nih.gov/pubmed/22267877
 .. _Mandal et al. (2015): https://www.ncbi.nlm.nih.gov/pubmed/26028277
+.. _Deblur: http://msystems.asm.org/content/2/2/e00191-16
+.. _basic quality-score-based filtering: http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
+.. _Bokulich et al. (2013): http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
