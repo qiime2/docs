@@ -15,11 +15,6 @@
           wget
         </a>
       </li>
-      <li role="presentation">
-        <a href="#curl-{{ node.id }}" aria-controls="messages-{{ node.id }}" role="tab" data-toggle="tab">
-          curl
-        </a>
-      </li>
     </ul>
 
     <div class="tab-content">
@@ -38,13 +33,6 @@
         <div class="highlight-shell">
           <div class="highlight">
             <pre>wget -O "{{ node.saveas }}" "{{ node.url }}"</pre>
-          </div>
-        </div>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="curl-{{ node.id }}">
-        <div class="highlight-shell">
-          <div class="highlight">
-            <pre>curl -sL "{{ node.url }}" > "{{ node.saveas }}"</pre>
           </div>
         </div>
       </div>
