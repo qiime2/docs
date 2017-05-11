@@ -102,11 +102,6 @@ In this example we have 150-base forward and reverse reads. Since we need the re
 
 .. command-block::
 
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs demux.qza \
-     --o-visualization demux-qualities.qzv \
-     --p-n 5
-
    qiime dada2 denoise-paired \
      --i-demultiplexed-seqs demux.qza \
      --o-table table \
