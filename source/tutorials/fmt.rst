@@ -64,30 +64,28 @@ We'll begin by performing quality control on the demultiplexed sequences using `
 
 .. command-block::
 
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs fmt-tutorial-demux-1.qza \
-     --p-n 10 \
-     --o-visualization demux-qual-plots-1.qzv
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs fmt-tutorial-demux-2.qza \
-     --p-n 10 \
-     --o-visualization demux-qual-plots-2.qzv
+   qiime demux summarize \
+     --i-data fmt-tutorial-demux-1.qza \
+     --o-visualization demux-summary-1.qzv
+   qiime demux summarize \
+     --i-data fmt-tutorial-demux-2.qza \
+     --o-visualization demux-summary-2.qzv
 
 .. question::
-   Based on the plots you see in ``demux-qual-plots-1.qzv`` and ``demux-qual-plots-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
+   Based on the plots you see in ``demux-summary-1.qzv`` and ``demux-summary-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
 
-Here the quality seems relatively low in the first few bases, and then seems to stay relatively high through the end of the reads. We'll therefore trim the first 10 bases from each sequence and truncate the sequences at 150 bases. Since the reads are 150 bases long, this results in no truncation of the sequences.
+Here the quality seems relatively low in the first few bases, and then seems to stay relatively high through the end of the reads. We'll therefore trim the first 13 bases from each sequence and truncate the sequences at 150 bases. Since the reads are 151 bases long, this results in very little truncation of the sequences.
 
 .. command-block::
 
    qiime dada2 denoise-single \
-     --p-trim-left 10 \
+     --p-trim-left 13 \
      --p-trunc-len 150 \
      --i-demultiplexed-seqs fmt-tutorial-demux-1.qza \
      --o-representative-sequences rep-seqs-1.qza \
      --o-table table-1.qza
    qiime dada2 denoise-single \
-     --p-trim-left 10 \
+     --p-trim-left 13 \
      --p-trunc-len 150 \
      --i-demultiplexed-seqs fmt-tutorial-demux-2.qza \
      --o-representative-sequences rep-seqs-2.qza \
