@@ -74,7 +74,7 @@ Optional: Shared Folders and Copy-and-Paste
 1. Install Guest Additions
 ..........................
 
-Guest Additions are already installed in the virtual machine, but if you need to reinstall them, you can perform the following steps.
+**Guest Additions are already installed in the virtual machine, but if you need to reinstall them, you can perform the following steps.**
 
 After clicking on the CD icon in the lower left, click on ``Run Software`` in the upper right.
 
