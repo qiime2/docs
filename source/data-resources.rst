@@ -6,7 +6,7 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 .. danger:: Pre-trained classifiers that can be used with ``q2-feature-classifier`` currently present a security risk. If using a pre-trained classifier such as the ones provided here, you should trust the person who trained the classifier and the person who provided you with the qza file. This security risk will be addressed in a future version of ``q2-feature-classifier``.
 
-.. warning:: These classifiers were trained using scikit-learn 0.18.1, and therefore can only be used with scikit-learn 0.18.1. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2.0.6 virtual machine, scikit-learn 0.18.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
+.. warning:: These classifiers were trained using scikit-learn 0.18.1, and therefore can only be used with scikit-learn 0.18.1. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2017.4 virtual machine, scikit-learn 0.18.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
 
    .. command-block::
       :no-exec:
