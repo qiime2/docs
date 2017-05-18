@@ -169,7 +169,7 @@ A distance matrix can be filtered based on indices. For example, to filter a dis
 .. command-block::
    qiime diversity filter-distance-matrix \
      --i-distance-matrix distance-matrix.qza \
-     --m-sample-metadata-file samples-to-keep.tsv \
+     --m-metadata-file samples-to-keep.tsv \
      --o-filtered-distance-matrix index-filtered-distance-matrix.qza
 
 A distance matrix can also be filtered based on sample metadata. For example, to filter a distance matrix to retain only samples from subject 2:
@@ -177,6 +177,6 @@ A distance matrix can also be filtered based on sample metadata. For example, to
 .. command-block::
    qiime diversity filter-distance-matrix \
      --i-distance-matrix distance-matrix.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "Subject='subject-2'" \
      --o-filtered-distance-matrix subject-2-filtered-distance-matrix.qza
