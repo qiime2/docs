@@ -21,15 +21,15 @@ Two elements are required for training the classifier: the reference sequences a
 We will also download the representative sequences from the `Moving Pictures`_ tutorial to test our classifier.
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/training-feature-classifiers/85_otus.fasta
+   :url: https://data.qiime2.org/2017.4/tutorials/training-feature-classifiers/85_otus.fasta
    :saveas: 85_otus.fasta
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
+   :url: https://data.qiime2.org/2017.4/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
    :saveas: 85_otu_taxonomy.txt
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/training-feature-classifiers/rep-seqs.qza
+   :url: https://data.qiime2.org/2017.4/tutorials/training-feature-classifiers/rep-seqs.qza
    :saveas: rep-seqs.qza
 
 Next we import these data into QIIME 2 Artifacts.

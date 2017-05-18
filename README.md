@@ -15,11 +15,7 @@ Contributing source changes is a separate step from building and publishing the 
    pip install -r requirements.txt
    ```
 
-2. Install the QIIME 2 framework. Typically you'll want the latest development version (i.e. master branch):
-
-   ```shell
-   pip install https://github.com/qiime2/qiime2/archive/master.zip
-   ```
+2. Install the QIIME 2 framework. Typically you'll want the latest development version (i.e. master branch). You can find the [latest builds for your operating system here](https://github.com/qiime2/environment-files/tree/master/latest/staging). Make sure you get the raw link for your OS (e.g. `linux-64` or `osx-64`) then you can use `conda install --file <URL>` to install.
 
 3. Make your changes to the source RST.
 

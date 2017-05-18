@@ -21,7 +21,7 @@ Start by creating a directory to work in.
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 
@@ -35,15 +35,15 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 10% subsample data
@@ -56,17 +56,17 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/forward.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/10p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Paired-end read analysis commands
@@ -102,11 +102,6 @@ In this example we have 150-base forward and reverse reads. Since we need the re
 
 .. command-block::
 
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs demux.qza \
-     --o-visualization demux-qualities.qzv \
-     --p-n 5
-
    qiime dada2 denoise-paired \
      --i-demultiplexed-seqs demux.qza \
      --o-table table \
@@ -123,7 +118,7 @@ At this stage, you will have artifacts containing the feature table and correspo
    qiime feature-table summarize \
      --i-table table.qza \
      --o-visualization table.qzv \
-     --m-sample-metadata-file sample-metadata.tsv
+     --m-metadata-file sample-metadata.tsv
 
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
@@ -138,9 +133,9 @@ Use the following questions to guide your further analyses of these data data.
 
 #. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? Approximately how many total sequences will you be analyzing in the ``core-metrics`` command?
 
-#. What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? Are these associations stronger with unweighted UniFrac or with Bray-Curtis? Based on what you know about these metrics, what does that difference suggest?
+#. What sample metadata or combinations of sample metadata are most strongly associated with the differences in microbial composition of the samples? Are these associations stronger with unweighted UniFrac or with Bray-Curtis? Based on what you know about these metrics, what does that difference suggest? For exploring associations between continuous metadata and sample composition, the commands ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` will be useful. These were not covered in the Moving Pictures tutorial, but you can learn about them by running them with the ``--help`` parameter.
 
-#. What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples?
+#. What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples? For exploring associations between continuous metadata and richness or evenness, the command ``qiime diversity alpha-correlation`` will be useful. This was not covered in the Moving Pictures tutorial, but you can learn about it by running it with the ``--help`` parameter.
 
 #. What discrete sample metadata categories are most strongly associated with the differences in microbial community richness or evenness? Are these differences statistically significant?
 
@@ -153,4 +148,4 @@ Acknowledgements
 
 The data used in this tutorial is presented in: *Arid Soil Microbiome: Significant Impacts of Increasing Aridity. Neilson, Califf, Cardona, Copeland, van Treuren, Josephson, Knight, Gilbert, Quade, Caporaso, and Maier. mSystems (under review).*
 
-.. _sample metadata: https://data.qiime2.org/2017.2/tutorials/atacama-soils/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2017.4/tutorials/atacama-soils/sample_metadata

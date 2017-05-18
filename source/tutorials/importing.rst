@@ -38,11 +38,11 @@ Obtaining example data
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
@@ -71,15 +71,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2017.4/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -91,6 +91,98 @@ Importing data
      --type EMPPairedEndSequences \
      --input-path emp-paired-end-sequences \
      --output-path emp-paired-end-sequences.qza
+
+"Fastq manifest" formats
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Format description
+******************
+
+In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.
+
+The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
+
+For single-end reads, there must be exactly one line per sample id corresponding to either the forward or reverse reads. For paired-end reads there must be exactly two lines per sample id, corresponding to the forward and the reverse reads. The direction field on each line can only contain the text ``forward`` or ``reverse``.
+
+The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for two samples.
+
+::
+
+  sample-id,absolute-filepath,direction
+  # Lines starting with '#' are ignored and can be used to create
+  # "comments" or even "comment out" entries
+  sample-1,$PWD/some/filepath/sample1_R1.fastq.gz,forward
+  sample-2,$PWD/some/filepath/sample2_R1.fastq.gz,forward
+  sample-1,$PWD/some/filepath/sample1_R2.fastq.gz,reverse
+  sample-2,$PWD/some/filepath/sample2_R2.fastq.gz,reverse
+
+There are four variants of this format which are defined in the following sections.
+
+SingleEndFastqManifestPhred33
+`````````````````````````````
+In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` files is 33.
+
+SingleEndFastqManifestPhred64
+`````````````````````````````
+
+In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
+
+PairedEndFastqManifestPhred33
+`````````````````````````````
+
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` files is 33.
+
+PairedEndFastqManifestPhred64
+`````````````````````````````
+
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
+
+Obtaining example data
+**********************
+
+Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33`` and ``PairedEndFastqManifestPhred64``.
+
+.. download::
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/se-33.zip
+   :saveas: se-33.zip
+
+.. download::
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/se-33-manifest
+   :saveas: se-33-manifest
+
+.. download::
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/pe-64.zip
+   :saveas: pe-64.zip
+
+.. download::
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/pe-64-manifest
+   :saveas: pe-64-manifest
+
+.. command-block::
+
+   unzip -q se-33.zip
+   unzip -q pe-64.zip
+
+
+Importing Data
+**************
+
+.. command-block::
+
+   qiime tools import \
+     --type SampleData[SequencesWithQuality] \
+     --input-path se-33-manifest \
+     --output-path single-end-demux.qza \
+     --source-format SingleEndFastqManifestPhred33
+
+.. command-block::
+
+   qiime tools import \
+     --type SampleData[PairedEndSequencesWithQuality] \
+     --input-path pe-64-manifest \
+     --output-path paired-end-demux.qza \
+     --source-format PairedEndFastqManifestPhred64
+
 
 Casava 1.8 single-end demultiplexed fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -104,7 +196,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing-sequence-data/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -134,7 +226,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing-sequence-data/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -167,7 +259,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing-sequence-data/feature-table-v100.biom
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/feature-table-v100.biom
    :saveas: feature-table-v100.biom
 
 Importing data
@@ -193,7 +285,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/importing-sequence-data/feature-table-v210.biom
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
@@ -219,7 +311,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2017.3/tutorials/importing/sequences.fna
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/sequences.fna
    :saveas: sequences.fna
 
 Importing data
@@ -244,7 +336,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2017.3/tutorials/importing/aligned-sequences.fna
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/aligned-sequences.fna
    :saveas: aligned-sequences.fna
 
 Importing data
@@ -269,7 +361,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2017.3/tutorials/importing/unrooted-tree.tre
+   :url: https://data.qiime2.org/2017.4/tutorials/importing/unrooted-tree.tre
    :saveas: unrooted-tree.tre
 
 Importing data
@@ -291,3 +383,7 @@ Importing data
 .. _scikit-bio fasta format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format
 
 .. _scikit-bio newick format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html
+
+.. _absolute filepaths: https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths
+
+.. _PHRED offset: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants

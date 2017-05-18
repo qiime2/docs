@@ -13,9 +13,10 @@ Please see https://www.virtualbox.org for details on how to install VirtualBox o
 2. Download the QIIME 2 Core VirtualBox Image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.2``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please select the appropriate VirtualBox download from the following list:
+Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2017.4``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please select the appropriate VirtualBox download from the following list:
 
-- `QIIME 2 Core 2017.2 (Latest)`_
+- `QIIME 2 Core 2017.4 (Latest)`_
+- `QIIME 2 Core 2017.2`_
 - `QIIME 2 Core 2.0.6`_
 
 3. Unzip the file
@@ -73,7 +74,12 @@ Optional: Shared Folders and Copy-and-Paste
 1. Install Guest Additions
 ..........................
 
-After clicking on the CD icon in the lower left, click on ``Run Software`` in the upper right.
+.. note::
+  **Optional**: Guest Additions are already installed in the virtual machine, but if you need to reinstall (or update) them, you can perform the following steps.
+
+Attach the Guest Additions DVD by following the instructions outlined in the `VirtualBox Guest Additions Docs`_.
+
+Once inserted, the Guest Additions DVD should automatically launch (if not, double-click the DVD and click the 'Run Software' button in the upper right:
 
 .. image:: images/vbox-guest-01.jpg
 
@@ -127,6 +133,8 @@ Where ``sf_Desktop`` is the name of the shared directory from step 2 above, and 
 
 .. image:: images/vbox-guest-09.jpg
 
-.. _`QIIME 2 Core 2017.2 (Latest)`: https://data.qiime2.org/distro/core/2017.2
+.. _`QIIME 2 Core 2017.4 (Latest)`: https://data.qiime2.org/distro/core/2017.4
+.. _`QIIME 2 Core 2017.2`: https://data.qiime2.org/distro/core/2017.2
 .. _`QIIME 2 Core 2.0.6`: https://data.qiime2.org/distro/core/2.0.6
 .. _`VirtualBox Docs`: https://www.virtualbox.org/manual/UserManual.html
+.. _`VirtualBox Guest Additions Docs`: https://www.virtualbox.org/manual/ch04.html#mountingadditionsiso

@@ -25,7 +25,7 @@ Create a directory to work in called ``qiime2-fmt-tutorial`` and change to that 
 As in the Moving Pictures study, you should begin your analysis by familiarizing yourself with the sample metadata. You can again access the `sample metadata`_ as a Google Spreadsheet. Notice that there are three tabs in this spreadsheet. This first tab (called sample-metadata) contains all of the clinical metadata.
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/fmt/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.4/tutorials/fmt/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 Next, download the *demultiplexed sequences* that we'll use in this analysis. To learn how to start a QIIME 2 analysis from fastq-formatted sequence data, see the :doc:`importing data tutorial <importing>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
@@ -38,23 +38,23 @@ In this tutorial we'll work with a small subsample of the complete sequence data
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2017.2/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   :url: https://data.qiime2.org/2017.4/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
    :saveas: fmt-tutorial-demux-1.qza
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2017.2/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   :url: https://data.qiime2.org/2017.4/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
    :saveas: fmt-tutorial-demux-2.qza
 
 1% subsample data
 ~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/fmt/fmt-tutorial-demux-1-1p.qza
+   :url: https://data.qiime2.org/2017.4/tutorials/fmt/fmt-tutorial-demux-1-1p.qza
    :saveas: fmt-tutorial-demux-1.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.2/tutorials/fmt/fmt-tutorial-demux-2-1p.qza
+   :url: https://data.qiime2.org/2017.4/tutorials/fmt/fmt-tutorial-demux-2-1p.qza
    :saveas: fmt-tutorial-demux-2.qza
 
 Sequence quality control
@@ -64,30 +64,28 @@ We'll begin by performing quality control on the demultiplexed sequences using `
 
 .. command-block::
 
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs fmt-tutorial-demux-1.qza \
-     --p-n 10 \
-     --o-visualization demux-qual-plots-1.qzv
-   qiime dada2 plot-qualities \
-     --i-demultiplexed-seqs fmt-tutorial-demux-2.qza \
-     --p-n 10 \
-     --o-visualization demux-qual-plots-2.qzv
+   qiime demux summarize \
+     --i-data fmt-tutorial-demux-1.qza \
+     --o-visualization demux-summary-1.qzv
+   qiime demux summarize \
+     --i-data fmt-tutorial-demux-2.qza \
+     --o-visualization demux-summary-2.qzv
 
 .. question::
-   Based on the plots you see in ``demux-qual-plots-1.qzv`` and ``demux-qual-plots-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
+   Based on the plots you see in ``demux-summary-1.qzv`` and ``demux-summary-2.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case? How does these plots compare to those generated in the :doc:`the moving pictures tutorial <moving-pictures>`?
 
-Here the quality seems relatively low in the first few bases, and then seems to stay relatively high through the end of the reads. We'll therefore trim the first 10 bases from each sequence and truncate the sequences at 150 bases. Since the reads are 150 bases long, this results in no truncation of the sequences.
+Here the quality seems relatively low in the first few bases, and then seems to stay relatively high through the end of the reads. We'll therefore trim the first 13 bases from each sequence and truncate the sequences at 150 bases. Since the reads are 151 bases long, this results in very little truncation of the sequences.
 
 .. command-block::
 
    qiime dada2 denoise-single \
-     --p-trim-left 10 \
+     --p-trim-left 13 \
      --p-trunc-len 150 \
      --i-demultiplexed-seqs fmt-tutorial-demux-1.qza \
      --o-representative-sequences rep-seqs-1.qza \
      --o-table table-1.qza
    qiime dada2 denoise-single \
-     --p-trim-left 10 \
+     --p-trim-left 13 \
      --p-trunc-len 150 \
      --i-demultiplexed-seqs fmt-tutorial-demux-2.qza \
      --o-representative-sequences rep-seqs-2.qza \
@@ -116,7 +114,7 @@ Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifac
    qiime feature-table summarize \
      --i-table table.qza \
      --o-visualization table.qzv \
-     --m-sample-metadata-file sample-metadata.tsv
+     --m-metadata-file sample-metadata.tsv
 
 .. question::
    Based on the information in ``table.qzv``, what value will you choose for the ``--p-sampling-depth`` parameter when you run ``qiime diversity core-metrics``?
@@ -169,5 +167,5 @@ Acknowledgements
 The data in this tutorial was initially presented in: Microbiota Transfer Therapy alters gut ecosystem and improves gastrointestinal and autism symptoms: an open-label study. Dae-Wook Kang, James B. Adams, Ann C. Gregory, Thomas Borody, Lauren Chittick, Alessio Fasano, Alexander Khoruts, Elizabeth Geis, Juan Maldonado, Sharon McDonough-Means, Elena L. Pollard, Simon Roux, Michael J. Sadowsky, Karen Schwarzberg Lipson, Matthew B. Sullivan, J. Gregory Caporaso and Rosa Krajmalnik-Brown. Microbiome (2017) 5:10. DOI: 10.1186/s40168-016-0225-7.
 
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
-.. _sample metadata: https://data.qiime2.org/2017.2/tutorials/fmt/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2017.4/tutorials/fmt/sample_metadata
 .. _Fecal Microbiome Transplant study: http://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-016-0225-7
