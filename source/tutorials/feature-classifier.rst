@@ -58,7 +58,7 @@ It has been shown that taxonomic classification accuracy improves when a Naive B
      --i-sequences 85_otus.qza \
      --p-f-primer GTGCCAGCMGCCGCGGTAA \
      --p-r-primer GGACTACHVGGGTWTCTAAT \
-     --p-length 100 \
+     --p-trunc-len 100 \
      --o-reads ref-seqs.qza
 
 
