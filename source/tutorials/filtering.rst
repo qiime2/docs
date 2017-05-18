@@ -87,7 +87,7 @@ Both of these methods can also be applied to filter contingent on the maximum nu
 Index-based filtering
 ~~~~~~~~~~~~~~~~~~~~~
 
-Index-based filtering is used to retain only a user-specified list of samples or features based on their indices (i.e., identifiers). In this case, the user will provide a tab-separated text file as input with the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``, respectively) where the first column in the file contains the indices that should be retained, and the first row contains headers or names for each column. Only the first column in this file will be used, so there are no requirements on subsequent columns (if any are present). As a result, sample or feature metadata files can be used with this parameter. Index-based filtering can be applied as follows to remove samples from a feature table.
+Index-based filtering is used to retain only a user-specified list of samples or features based on their indices (i.e., identifiers). In this case, the user will provide a tab-separated text file as input with the ``--m-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``) where the first column in the file contains the indices that should be retained, and the first row contains headers or names for each column. Only the first column in this file will be used, so there are no requirements on subsequent columns (if any are present). As a result, sample or feature metadata files can be used with this parameter. Index-based filtering can be applied as follows to remove samples from a feature table.
 
 First, we'll write a header line and two sample indices to a new file called ``samples-to-keep.tsv``. (If you already have a tsv file containing a header line and the indices of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a text editor, not on the command line as is being done here.)
 
@@ -96,12 +96,12 @@ First, we'll write a header line and two sample indices to a new file called ``s
    echo L1S8 >> samples-to-keep.tsv
    echo L1S105 >> samples-to-keep.tsv
 
-Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose indices are listed in ``samples-to-keep.tsv``.
+Then, we'll call the ``filter-samples`` method with the parameter ``--m-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose indices are listed in ``samples-to-keep.tsv``.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file samples-to-keep.tsv \
+     --m-metadata-file samples-to-keep.tsv \
      --o-filtered-table index-filtered-table.qza
 
 .. _metadata-based-filtering:
@@ -109,14 +109,14 @@ Then, we'll call the ``filter-samples`` method with the parameter ``--m-sample-m
 Metadata-based filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Metadata-based filtering is similar to index-based filtering, except that the list of indices to keep is determined based on metadata rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-sample-metadata-file`` or ``--m-feature-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
+Metadata-based filtering is similar to index-based filtering, except that the list of indices to keep is determined based on metadata rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
 
 For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "Subject='subject-1'" \
      --o-filtered-table subject-1-filtered-table.qza
 
@@ -125,7 +125,7 @@ If there are multiple values that should be retained from a single metadata cate
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "BodySite IN ('left palm', 'right palm')" \
      --o-filtered-table skin-filtered-table.qza
 
@@ -134,7 +134,7 @@ If there are multiple values that should be retained from a single metadata cate
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "Subject='subject-1' AND BodySite='gut'" \
      --o-filtered-table subject-1-gut-filtered-table.qza
 
@@ -143,7 +143,7 @@ The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifie
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "BodySite='gut' OR ReportedAntibioticUsage='Yes'" \
      --o-filtered-table gut-abx-positive-filtered-table.qza
 
@@ -152,7 +152,7 @@ This syntax also supports negating individual clauses of the ``--p-where`` expre
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample-metadata.tsv \
      --p-where "Subject='subject-1' AND NOT BodySite='gut'" \
      --o-filtered-table subject-1-non-gut-filtered-table.qza
 
