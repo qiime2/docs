@@ -114,7 +114,7 @@ Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifac
    qiime feature-table summarize \
      --i-table table.qza \
      --o-visualization table.qzv \
-     --m-metadata-file sample-metadata.tsv
+     --m-sample-metadata-file sample-metadata.tsv
 
 .. question::
    Based on the information in ``table.qzv``, what value will you choose for the ``--p-sampling-depth`` parameter when you run ``qiime diversity core-metrics``?
