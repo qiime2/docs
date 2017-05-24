@@ -148,7 +148,7 @@ Below are some specific questions to answer about this data, grouped into a few 
 
 #. Microbiota engraftment.
 
-   a. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of unweighted UniFrac distances? (Hint: See the note above about ``qiime emperor plot``. The *color* and *visibility* tabs are also very important in this Emperor plot.)
+   a. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of unweighted UniFrac distances? (Hint: Try plotting the data with Emperor. Pay close attention to the *color* tab and *visibility* menu.)
    #. At approximately what week in the study do microbiome samples in individuals who receive treatment appear most similar to FMT donors in terms of Bray-Curtis distances?
    #. Is this pattern stronger based on unweighted UniFrac or Bray-Curtis distance? Based on how you know about these metrics, what does this suggest to you about what is changing in the microbiome with fecal microbiota transplant? Use the Jaccard and weighted UniFrac distance Emperor plots to help you refine this idea.
 
