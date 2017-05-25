@@ -49,7 +49,7 @@ Unless otherwise noted the following semantic types are defined by, and importab
 
 ``EMPPairedEndSequences``: Multiplexed paired-end read sequence data that has been generated according to the `Earth Microbiome Project sequencing protocol <http://www.earthmicrobiome.org/protocols-and-standards/>`_. See :doc:`tutorials/importing` for details about importing this data type. This type is currently defined in the `q2-demux`_ plugin, but in the future will likely be moved to ``q2-types``.
 
-``TaxonomicClassifier``: A trained machine-learning based classifier that can be used for performing taxonomic assignment on sequences. This type is defined in the `q2-feature-classifier`_ plugin.
+``TaxonomicClassifier``: A trained classifier that can be used for performing taxonomic assignment on sequences. This type is defined in the `q2-feature-classifier`_ plugin.
 
 .. _q2-types: https://github.com/qiime2/q2-types
 
