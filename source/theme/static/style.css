@@ -10,7 +10,6 @@ h1 {
 }
 
 #header {
-  height: 125px;
   width: 200px;
   padding: 10px;
 }
@@ -119,8 +118,7 @@ form.search input[name=q]{
   }
 
   #header {
-    padding: 20px 0 0 100px;
-    height: 200px;
+    padding: 20px 0 10px 124px;
     width: 100%;
   }
 
