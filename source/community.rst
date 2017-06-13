@@ -18,13 +18,6 @@ Requesting features, reporting bugs, providing feedback
 
 If there is specific functionality you'd like to see in QIIME 2, you notice a bug, or want to leave feedback, please post to the QIIME 2 `issue tracker`_. We appreciate all feedback as we strive to make QIIME 2 a useful and accessible tool for microbiome analyses.
 
-Slack team (developers)
------------------------
-
-The QIIME 2 developers use Slack for instant message discussion of development topics. If you're working on plugin or interface development and need help, you should join our `Slack team`_ and get in touch on the ``#developers`` channel at https://qiime2.slack.com. This will be more reliable than emailing one of the developers directly.
-
 .. _`@qiime2`: https://twitter.com/qiime2
 
 .. _`issue tracker`: https://github.com/qiime2/qiime2/issues
-
-.. _`Slack team`: http://qiime2-slackin.qiime.org

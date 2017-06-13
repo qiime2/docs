@@ -232,7 +232,7 @@ Advanced plugin development
 Defining semantic types, data layouts, and view readers/writers
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-This section is currently stubbed and will be completed during the alpha release phase. In the meantime, if you have questions about these advanced plugin development topics, feel free to get in touch with us on `Slack`_. For an example of a plugin that define semantic types, data layouts, and view readers/writers, see `q2-types`_.
+This section is currently stubbed and will be completed during the alpha release phase. In the meantime, if you have questions about these advanced plugin development topics, feel free to get in touch with us on the `forum`_. For an example of a plugin that define semantic types, data layouts, and view readers/writers, see `q2-types`_.
 
 Example plugins
 ---------------
@@ -257,6 +257,6 @@ Example plugins
 
 .. _`q2-types`: https://github.com/qiime2/q2-types
 
-.. _`Slack`: https://slack.qiime2.org
+.. _`forum`: https://forum.qiime2.org
 
 .. _`Wilson et al. (2014)`: http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745
