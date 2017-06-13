@@ -25,6 +25,7 @@ The QIIME 2 Core 2017.5 distribution includes the QIIME 2 framework, ``q2cli`` (
 - ``q2-emperor``
 - ``q2-feature-classifier``
 - ``q2-feature-table``
+- ``q2-metadata``
 - ``q2-phylogeny``
 - ``q2-quality-filter``
 - ``q2-taxa``
