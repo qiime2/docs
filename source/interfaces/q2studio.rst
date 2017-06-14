@@ -5,7 +5,7 @@ QIIME 2 Studio (q2studio)
 
 QIIME 2 Studio (``q2studio``) is a graphical user interface for QIIME 2. This document will show you how to install and use QIIME 2 Studio as a desktop application.
 
-.. note:: QIIME 2 Studio currently requires a source installation. In the future, we will provide a package distribution/installer which will greatly simplify the installation process presented here.
+.. note:: QIIME 2 Studio currently requires a source installation. In the future, we will provide a package distribution/installer which will greatly simplify the installation process presented here. An experimental build of QIIME 2 Studio is available as a pre-installed package in the :doc:`VirtualBox image <../install/virtual/virtualbox>`.
 
 This interface requires that your system has `Node.js`_. We currently require version 5 or later; you can find `installation instructions here <https://nodejs.org/en/download/current/>`__. This dependency will be unnecessary in the future.
 
