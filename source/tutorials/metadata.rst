@@ -34,9 +34,8 @@ Sample (and feature) metadata mapping files can be validated using Keemei_, whic
 
 To get started with understanding sample metadata mapping files, first download an example TSV file:
 
-.. TODO: Update this link
 .. download::
-   :url: https://data.qiime2.org/2017.5/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.6/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 This file can be opened and edited in a text editor, Google Sheets, or Keemei_. You can also generate a QIIME 2 visualization of metadata mapping files as follows:
@@ -56,9 +55,8 @@ As eluded to above, QIIME 2 also supports the notion of viewing some artifacts a
 
 To get started with understanding artifacts as metadata, first download an example artifact:
 
-.. TODO: update this link
 .. download::
-   :url: https://docs.qiime2.org/2017.5/data/tutorials/moving-pictures/core-metrics-results/faith_pd_vector.qza
+   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/core-metrics-results/faith_pd_vector.qza
    :saveas: faith_pd_vector.qza
 
 To view this artifact as metadata, simply pass it in to any method or visualizer that expects to see metadata (e.g. ``metadata tabulate`` or ``emperor plot``):
@@ -89,9 +87,8 @@ Merging is based on the identifiers specified in the first column of each metada
 
 Metadata merging is supported anywhere that metadata is accepted in QIIME 2. For example, it might be interesting to color an Emperor plot based on the study metadata, or the sample alpha diversities. This can be accomplished by providing both the sample metadata mapping file *and* the ``SampleData[AlphaDiversity]`` artifact:
 
-.. TODO: update this link
 .. download::
-   :url: https://docs.qiime2.org/2017.5/data/tutorials/moving-pictures/core-metrics-results/unweighted_unifrac_pcoa_results.qza
+   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/core-metrics-results/unweighted_unifrac_pcoa_results.qza
    :saveas: unweighted_unifrac_pcoa_results.qza
 
 .. command-block::
@@ -111,14 +108,12 @@ As noted above, metadata can exist for either axis of a ``FeatureTable``: the sa
 
 To get started with feature metadata, first download the example files:
 
-.. TODO: update this link
 .. download::
-   :url: https://docs.qiime2.org/2017.5/data/tutorials/moving-pictures/rep-seqs.qza
+   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/rep-seqs.qza
    :saveas: rep-seqs.qza
 
-.. TODO: update this link
 .. download::
-   :url: https://docs.qiime2.org/2017.5/data/tutorials/moving-pictures/taxonomy.qza
+   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/taxonomy.qza
    :saveas: taxonomy.qza
 
 Next, merge the two metadata files, and ``tabulate`` them:
@@ -142,5 +137,5 @@ Finally, there are export options available in the visualizations produced from 
 .. LINKS:
 .. _Keemei: http://http://keemei.qiime.org/
 .. _`That work in QIIME 1`: http://qiime.org/documentation/file_formats.html#metadata-mapping-files
-.. _`evenness vector`: https://docs.qiime2.org/2017.5/data/tutorials/moving-pictures/core-metrics-results/evenness_vector.qza
-.. _provenance: https://docs.qiime2.org/2017.5/concepts
+.. _`evenness vector`: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/core-metrics-results/evenness_vector.qza
+.. _provenance: https://docs.qiime2.org/2017.6/concepts
