@@ -56,7 +56,7 @@ As eluded to above, QIIME 2 also supports the notion of viewing some artifacts a
 To get started with understanding artifacts as metadata, first download an example artifact:
 
 .. download::
-   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/core-metrics-results/faith_pd_vector.qza
+   :url: https://data.qiime2.org/2017.6/tutorials/metadata/faith_pd_vector.qza
    :saveas: faith_pd_vector.qza
 
 To view this artifact as metadata, simply pass it in to any method or visualizer that expects to see metadata (e.g. ``metadata tabulate`` or ``emperor plot``):
@@ -93,7 +93,7 @@ The resulting metadata after the merge will contain the intersection of the iden
 Metadata merging is supported anywhere that metadata is accepted in QIIME 2. For example, it might be interesting to color an Emperor plot based on the study metadata, or the sample alpha diversities. This can be accomplished by providing both the sample metadata mapping file *and* the ``SampleData[AlphaDiversity]`` artifact:
 
 .. download::
-   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/core-metrics-results/unweighted_unifrac_pcoa_results.qza
+   :url: https://data.qiime2.org/2017.6/tutorials/metadata/unweighted_unifrac_pcoa_results.qza
    :saveas: unweighted_unifrac_pcoa_results.qza
 
 .. command-block::
@@ -114,11 +114,11 @@ Metadata in QIIME 2 can be applied to sample or features --- so far we have only
 To get started with feature metadata, first download the example files:
 
 .. download::
-   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/rep-seqs.qza
+   :url: https://data.qiime2.org/2017.6/tutorials/metadata/rep-seqs.qza
    :saveas: rep-seqs.qza
 
 .. download::
-   :url: https://docs.qiime2.org/2017.6/data/tutorials/moving-pictures/taxonomy.qza
+   :url: https://data.qiime2.org/2017.6/tutorials/metadata/taxonomy.qza
    :saveas: taxonomy.qza
 
 We have downloaded a ``FeatureData[Sequence]`` file (``rep-seqs.qza``) and a ``FeatureData[Taxonomy]`` file (``taxonomy.qza``). We can merge (and ``tabulate``) these files to associate the representative sequences with their taxonomic annotations:
