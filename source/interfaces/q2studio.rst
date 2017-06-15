@@ -12,13 +12,13 @@ This interface requires that your system has `Node.js`_. We currently require ve
 Once you have installed ``Node.js >= 5`` you will need to download and extract the interface's source:
 
 .. download::
-   :url: https://codeload.github.com/qiime2/q2studio/zip/2017.5.0
-   :saveas: q2studio-2017.5.0.zip
+   :url: https://codeload.github.com/qiime2/q2studio/zip/2017.6.0
+   :saveas: q2studio-2017.6.0.zip
 
 .. command-block::
 
-   unzip q2studio-2017.5.0.zip && rm q2studio-2017.5.0.zip
-   cd q2studio-2017.5.0
+   unzip q2studio-2017.6.0.zip && rm q2studio-2017.6.0.zip
+   cd q2studio-2017.6.0
 
 Next we need to install it (both as a Python package, and as a Node.js package):
 
