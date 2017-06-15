@@ -11,5 +11,6 @@ Tutorials
    atacama-soils
    importing
    exporting
+   metadata
    filtering
    feature-classifier

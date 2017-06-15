@@ -27,6 +27,8 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
 
+.. tip:: To learn more about metadata, check out :doc:`the metadata tutorial <metadata>`.
+
 Obtaining and importing data
 ----------------------------
 
