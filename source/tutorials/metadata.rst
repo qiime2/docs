@@ -42,11 +42,11 @@ This file can be opened and edited in a text editor, Google Sheets, or Keemei_. 
 
 .. command-block::
    qiime metadata tabulate \
-     --m-input-file sample-metadata.tsv
+     --m-input-file sample-metadata.tsv \
      --o-visualization tabulated-sample-metadata.qzv
 
 .. question::
-   Based on the table in ``tabulated-sample-metadata.qzv``, how many samples are associated with Subject 1? How many samples are associated with the ``gut`` body site? Hint: use the search box and/or the column sorting options to assist with this query.
+   Based on the table in ``tabulated-sample-metadata.qzv``, how many samples are associated with ``subject 1``? How many samples are associated with the ``gut`` body site? Hint: use the search box and/or the column sorting options to assist with this query.
 
 Metadata from a QIIME 2 artifact
 --------------------------------
@@ -63,8 +63,8 @@ To view this artifact as metadata, simply pass it in to any method or visualizer
 
 .. command-block::
    qiime metadata tabulate \
-     --m-input-file faith_pd_vector.qza
-     --o-visualization tabulated-faith-pd-md.qzv
+     --m-input-file faith_pd_vector.qza \
+     --o-visualization tabulated-faith-pd-metadata.qzv
 
 .. question::
    What is the largest value of Faith's PD? What is the smallest? Hint: use the column sorting functions to assist with this query.
@@ -76,9 +76,9 @@ Because metadata can come from many different sources, QIIME 2 supports metadata
 
 .. command-block::
    qiime metadata tabulate \
-     --m-input-file sample-metadata.tsv
-     --m-input-file faith_pd_vector.qza
-     --o-visualization tabulated-combined-md.qzv
+     --m-input-file sample-metadata.tsv \
+     --m-input-file faith_pd_vector.qza \
+     --o-visualization tabulated-combined-metadata.qzv
 
 Merging is based on the identifiers specified in the first column of each metadata file (i.e. sample IDs or feature IDs). The resulting metadata after the merge will contain the intersection of the identifiers across all of the specified files. Merging does not modify any of the input files.
 
@@ -120,11 +120,11 @@ Next, merge the two metadata files, and ``tabulate`` them:
 
 .. command-block::
    qiime metadata tabulate \
-     --m-input-file rep-seqs.qza
-     --m-input-file taxonomy.qza
+     --m-input-file rep-seqs.qza \
+     --m-input-file taxonomy.qza \
      --o-visualization tabulated-feature-metadata.qzv
 
-The resulting table shows the joined metadata files with a column of the the feature IDs, a column of the representative sequences, and finally a column of the taxonomic assignments .
+The resulting table shows the joined metadata files with a column of the the feature IDs, a column of the representative sequences, a column of the taxonomic assignments, and lastly, a column of the assignment confidence.
 
 .. question::
    Are all QZA files metadata? Are all metadata files QZAs?
