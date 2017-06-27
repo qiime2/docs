@@ -21,8 +21,7 @@ Metadata from a text file
 Metadata is typically defined in a sample (or feature; more on that below) metadata mapping file. The QIIME 2 development team hasn't adopted a standard set of criteria for the sample metadata mapping file, but at present the following minimum requirements are enforced:
 
 - The file must be a tab-separated text file
-- Comment lines (e.g. lines that begin with ``#``) are ignored
-- The first non-comment line of the file is used as the column labels
+- Comment lines (e.g. lines that begin with ``#``) are **not supported** and will be treated as data rows
 - The column label values must be unique (i.e. no duplicate values)
 - There must be at least one line of data following the column label line
 - The first column in the table is the "identifier" column (either sample ID or feature ID, depending on the axis)
