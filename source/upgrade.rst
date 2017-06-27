@@ -64,8 +64,8 @@ Docker
 
        docker pull qiime2/core:2017.6
 
-Amazon AWS
-    If you did not create your AWS instance using one of the :doc:`official QIIME 2 AMIs <install/virtual/aws>`, you should refer  to the Linux (Native Installation) upgrading instructions.
+Amazon AWS (Official QIIME 2 Image)
+    If you did not create your AWS instance using one of the :doc:`official QIIME 2 AMIs <install/virtual/aws>`, you should refer to the Linux (Native Installation) upgrading instructions above.
     Otherwise, in a shell on the remote AWS machine, run the following command:
 
     .. command-block::
