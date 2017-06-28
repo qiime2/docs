@@ -170,7 +170,7 @@ Importing Data
 .. command-block::
 
    qiime tools import \
-     --type SampleData[SequencesWithQuality] \
+     --type 'SampleData[SequencesWithQuality]' \
      --input-path se-33-manifest \
      --output-path single-end-demux.qza \
      --source-format SingleEndFastqManifestPhred33
@@ -178,7 +178,7 @@ Importing Data
 .. command-block::
 
    qiime tools import \
-     --type SampleData[PairedEndSequencesWithQuality] \
+     --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path pe-64-manifest \
      --output-path paired-end-demux.qza \
      --source-format PairedEndFastqManifestPhred64
@@ -269,7 +269,7 @@ Importing data
 
    qiime tools import \
      --input-path feature-table-v100.biom \
-     --type "FeatureTable[Frequency]" \
+     --type 'FeatureTable[Frequency]' \
      --source-format BIOMV100Format \
      --output-path feature-table-1.qza
 
@@ -295,7 +295,7 @@ Importing data
 
    qiime tools import \
      --input-path feature-table-v210.biom \
-     --type "FeatureTable[Frequency]" \
+     --type 'FeatureTable[Frequency]' \
      --source-format BIOMV210Format \
      --output-path feature-table-2.qza
 
@@ -322,7 +322,7 @@ Importing data
    qiime tools import \
      --input-path sequences.fna \
      --output-path sequences.qza \
-     --type FeatureData[Sequence]
+     --type 'FeatureData[Sequence]'
 
 Per-feature aligned sequence data (i.e., aligned representative sequences)
 --------------------------------------------------------------------------
@@ -347,7 +347,7 @@ Importing data
    qiime tools import \
      --input-path aligned-sequences.fna \
      --output-path aligned-sequences.qza \
-     --type FeatureData[AlignedSequence]
+     --type 'FeatureData[AlignedSequence]'
 
 Phylogenetic trees (unrooted)
 -----------------------------
@@ -372,7 +372,7 @@ Importing data
    qiime tools import \
      --input-path unrooted-tree.tre \
      --output-path unrooted-tree.qza \
-     --type Phylogeny[Unrooted]
+     --type 'Phylogeny[Unrooted]'
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
 

@@ -37,12 +37,12 @@ Next we import these data into QIIME 2 Artifacts. Since the Greengenes reference
 .. command-block::
 
    qiime tools import \
-     --type FeatureData[Sequence] \
+     --type 'FeatureData[Sequence]' \
      --input-path 85_otus.fasta \
      --output-path 85_otus.qza
 
    qiime tools import \
-     --type FeatureData[Taxonomy] \
+     --type 'FeatureData[Taxonomy]' \
      --source-format HeaderlessTSVTaxonomyFormat \
      --input-path 85_otu_taxonomy.txt \
      --output-path ref-taxonomy.qza
