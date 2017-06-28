@@ -98,7 +98,7 @@ Importing data
 Format description
 ******************
 
-In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` or ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` or ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.  
+In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` / ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.  
 
 The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
 
@@ -128,22 +128,22 @@ There are four variants of this format which are defined in the following sectio
 
 SingleEndFastqManifestPhred33
 `````````````````````````````
-In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` or ``fastq`` files is 33.
+In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
 
 SingleEndFastqManifestPhred64
 `````````````````````````````
 
-In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` or ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
+In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
 
 PairedEndFastqManifestPhred33
 `````````````````````````````
 
-In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` or ``fastq`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` or ``fastq`` files is 33.
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
 
 PairedEndFastqManifestPhred64
 `````````````````````````````
 
-In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` or ``fastq`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` or ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample id. As a result, each sample id is represented twice in this file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
 
 Obtaining example data
 **********************
