@@ -249,12 +249,12 @@ The only parameter that needs to be provided to this script is ``--p-sampling-de
    qiime diversity core-metrics \
      --i-phylogeny rooted-tree.qza \
      --i-table table.qza \
-     --p-sampling-depth 1080 \
+     --p-sampling-depth 1109 \
      --output-dir core-metrics-results
 
-Here we set the ``--p-sampling-depth`` parameter to 1080. This value was chosen based on the number of sequences in the ``L3S360`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics`` analyses and anything that uses these results.
+Here we set the ``--p-sampling-depth`` parameter to 1109. This value was chosen based on the number of sequences in the ``L3S341`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics`` analyses and anything that uses these results.
 
-.. note:: The sampling depth of 1080 was chosen based on the DADA2 feature table summary. If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth. Apply the logic from the previous paragraph to help you choose an even sampling depth.
+.. note:: The sampling depth of 1109 was chosen based on the DADA2 feature table summary. If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth. Apply the logic from the previous paragraph to help you choose an even sampling depth.
 
 .. note:: In many Illumina runs you'll observe a few samples that have very low sequence counts. You will typically want to exclude those from the analysis by choosing a larger value for the sampling depth at this stage.
 
