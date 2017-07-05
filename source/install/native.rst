@@ -22,23 +22,39 @@ Install QIIME 2 within a ``conda`` environment
 
 Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2017.6 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2017.6`` to indicate what QIIME 2 release is installed (i.e. ``2017.6``).
 
-The installation process differs slightly across platforms. Please choose the installation instructions that are appropriate for your platform.
 
-macOS/OS X (64-bit)
-~~~~~~~~~~~~~~~~~~~
+.. raw:: html
 
-.. command-block::
-   :no-exec:
+   <style>
+      .tab-content {
+         border-left: 1px solid #ddd;
+         border-right: 1px solid #ddd;
+         border-bottom: 1px solid #ddd;
+         padding: 10px;
+      }
+      .nav-tabs {
+         margin-bottom: 0;
+      }
+   </style>
+   <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
+      <li><a data-toggle="tab" href="#macOS">macOS/OS X (64-bit)</a></li>
+      <li><a data-toggle="tab" href="#linux">Linux (64-bit)</a></li>
+   </ul>
+   <div class="tab-content">
+      <div id="instructions" class="tab-pane fade in active">
+         <p>The installation process differs slightly across platforms. From the above tabs, please choose the installation instructions that are appropriate for your platform.</p>
+      </div>
+      <div id="macOS" class="tab-pane fade">
+         <p>In a terminal run the following command:</p>
+         <pre><code>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt</code></pre>
+      </div>
+      <div id="linux" class="tab-pane fade">
+         <p>In a terminal run the following command:</p>
+         <pre><code>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt</code></pre>
+      </div>
+   </div>
 
-   conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt
-
-Linux (64-bit)
-~~~~~~~~~~~~~~
-
-.. command-block::
-   :no-exec:
-
-   conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt
 
 .. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform.
 
