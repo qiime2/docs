@@ -7,6 +7,15 @@ QIIME 2 Studio (``q2studio``) is a graphical user interface for QIIME 2. This do
 
 .. note:: QIIME 2 Studio currently requires a source installation. In the future, we will provide a package distribution/installer which will greatly simplify the installation process presented here. An experimental build of QIIME 2 Studio is available as a pre-installed package in the :doc:`VirtualBox image <../install/virtual/virtualbox>`.
 
+Launching QIIME 2 Studio requires an active ``conda`` environment with QIIME 2 installed in it. Failure to activate a compatible ``conda`` environment will likely produce errors, and possibly cause the application to crash. If you have not activated your ``conda`` environment already, please do so now:
+
+.. command-block::
+   :no-exec:
+
+   source activate qiime2-2017.6
+
+Please note, your ``conda`` environment might have a name other than ``qiime2-2017.6``, if you or your system administrator provided one during :doc:`installation of QIIME 2<../install/index>`.
+
 This interface requires that your system has `Node.js`_. We currently require version 5 or later; you can find `installation instructions here <https://nodejs.org/en/download/current/>`__. This dependency will be unnecessary in the future.
 
 Once you have installed ``Node.js >= 5`` you will need to download and extract the interface's source:
@@ -29,8 +38,6 @@ Next we need to install it (both as a Python package, and as a Node.js package):
    npm install && npm run build
 
 Finally we will be able to launch the interface with:
-
-.. note:: Before being able to successfully run the following command, you must make sure that your QIIME 2 ``conda`` environment is activated. Failing to activate your environment prior to starting QIIME 2 Studio will cause issues and most likely crash the application.
 
 .. command-block::
    :no-exec:
