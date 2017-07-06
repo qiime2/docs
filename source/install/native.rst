@@ -24,34 +24,23 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
 
 
 .. raw:: html
-
-   <style>
-      .tab-content {
-         border-left: 1px solid #ddd;
-         border-right: 1px solid #ddd;
-         border-bottom: 1px solid #ddd;
-         padding: 10px;
-      }
-      .nav-tabs {
-         margin-bottom: 0;
-      }
-   </style>
-   <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-      <li><a data-toggle="tab" href="#macOS">macOS/OS X (64-bit)</a></li>
-      <li><a data-toggle="tab" href="#linux">Linux (64-bit)</a></li>
-   </ul>
-   <div class="tab-content">
-      <div id="instructions" class="tab-pane fade in active">
-         <p>The installation process differs slightly across platforms. From the above tabs, please choose the installation instructions that are appropriate for your platform.</p>
-      </div>
-      <div id="macOS" class="tab-pane fade">
-         <p>In a terminal run the following command:</p>
-         <pre><code>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt</code></pre>
-      </div>
-      <div id="linux" class="tab-pane fade">
-         <p>In a terminal run the following command:</p>
-         <pre><code>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt</code></pre>
+   
+   <div class="tabbed panel panel-default">
+      <ul class="nav nav-tabs">
+         <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#macOS">macOS/OS X (64-bit)</a></li>
+         <li><a data-toggle="tab" href="#linux">Linux (64-bit)</a></li>
+      </ul>
+      <div class="tab-content">
+         <div id="instructions" class="tab-pane fade in active">
+            <p>From the above tabs, please choose the installation instructions that are appropriate for your platform.</p>
+         </div>
+         <div id="macOS" class="tab-pane fade">
+            <pre>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt</pre>
+         </div>
+         <div id="linux" class="tab-pane fade">
+            <pre>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt</pre>
+         </div>
       </div>
    </div>
 
