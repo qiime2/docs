@@ -25,7 +25,7 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
 
 .. raw:: html
    
-   <div class="tabbed panel panel-default">
+   <div class="tabbed">
       <ul class="nav nav-tabs">
          <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
          <li><a data-toggle="tab" href="#macOS">macOS/OS X (64-bit)</a></li>
