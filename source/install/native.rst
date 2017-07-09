@@ -24,7 +24,7 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
 
 
 .. raw:: html
-   
+
    <div class="tabbed">
       <ul class="nav nav-tabs">
          <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
@@ -33,7 +33,9 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
       </ul>
       <div class="tab-content">
          <div id="instructions" class="tab-pane fade in active">
-            <p>From the above tabs, please choose the installation instructions that are appropriate for your platform.</p>
+            <p class="alert alert-warning" style="margin-bottom: 10px;">
+              From the above tabs, please choose the installation instructions that are appropriate for your platform.
+            </p>
          </div>
          <div id="macOS" class="tab-pane fade">
             <pre>conda create -n qiime2-2017.6 --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt</pre>
