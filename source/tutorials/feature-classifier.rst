@@ -87,8 +87,8 @@ Finally, we verify that the classifier works by classifying the representative s
      --i-reads rep-seqs.qza \
      --o-classification taxonomy.qza
 
-   qiime taxa tabulate \
-     --i-data taxonomy.qza \
+   qiime metadata tabulate \
+     --m-input-file taxonomy.qza \
      --o-visualization taxonomy.qzv
 
 .. _Moving Pictures: ../moving-pictures/index.html
