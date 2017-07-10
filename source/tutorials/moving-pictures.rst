@@ -346,8 +346,8 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
      --i-reads rep-seqs.qza \
      --o-classification taxonomy.qza
 
-   qiime taxa tabulate \
-     --i-data taxonomy.qza \
+   qiime metadata tabulate \
+     --m-input-file taxonomy.qza \
      --o-visualization taxonomy.qzv
 
 .. question::
