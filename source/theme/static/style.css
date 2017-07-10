@@ -79,17 +79,16 @@ div.admonition.qiime1 {
     text-align: center;
 }
 
-/* `download` extension */
-.download .white-bg {
+/* `tabbed` content */
+.tabbed .white-bg {
     background-color: #FFFFFF !important;
 }
 
-
-.download .gray-bg {
+.tabbed .gray-bg {
     background-color: #F5F5F5 !important;
 }
 
-.download .tab-content {
+.tabbed .tab-content {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
