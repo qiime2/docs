@@ -370,6 +370,7 @@ Differential abundance analysis
 -------------------------------
 
 Finally, we can quantify the process of identifying taxa that are differentially abundant (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to add-pseudocount (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact. We can then run ANCOM on the ``BodySite`` category to determine what features differ in abundance across body sites. This step may take about 5 minutes to complete.
+
 .. command-block::
 
    qiime composition add-pseudocount \
