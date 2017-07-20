@@ -5,9 +5,27 @@ Metadata in QIIME 2
 
 Metadata provides the key to gaining biological insight from your raw data. In QIIME 2, sample metadata includes technical details, such as the DNA barcodes that were used for each sample, or descriptions of the samples, such as which subject, time point and body site each sample came from in a human microbiome time series. Feature metadata is often a feature annotation, such as the taxonomy assigned to a sequence variant. Sample and feature metadata are used by many methods and visualizers in QIIME 2.
 
-.. qiime1-users:: In QIIME 1, metadata (also known as the *metadata mapping file*) was a user-defined TSV file that contained these study-specific fields. QIIME 2 expands upon this idea, allowing users to provide their own study metadata via a TSV file or by viewing QIIME 2 artifacts as metadata. Examples of both are presented in the following sections. Begin by creating a directory to conduct the work in:
+.. qiime1-users:: In QIIME 1, metadata (also known as the *metadata mapping file*) was a user-defined TSV file that contained these study-specific fields. QIIME 2 expands upon this idea, allowing users to provide their own study metadata via a TSV file or by viewing QIIME 2 artifacts as metadata. Examples of both are presented in the following sections.
 
-Begin by creating a directory to conduct the work in:
+Metadata from a text file
+-------------------------
+
+Metadata is typically defined in a *sample* (or *feature*; more on that below) *metadata mapping file*. The QIIME 2 development team hasn't adopted a standard set of criteria for the sample metadata mapping file, but at present the following minimum requirements are enforced:
+
+- The file must be a tab-separated text file (TSV).
+- Comment lines (i.e. lines that begin with ``#``) may appear anywhere in the file and are ignored.
+- Blank lines (i.e. empty or whitespace-only lines) may appear anywhere in the file and are ignored.
+- The first non-comment, non-blank line of the file is used as the header (i.e. column labels). See note below if you're using a QIIME 1 mapping file.
+- The column labels must be unique (i.e. no duplicate values) and cannot contain certain special characters (e.g. ``/``, ``\``, ``*``, ``?``, etc.).
+- There must be at least one line of data in addition to the header.
+- The first column in the table is the "identifier" column (either sample ID or feature ID, depending on the axis).
+- All of the values in the first column must be unique (i.e. no duplicate values) and cannot contain certain special characters (e.g. ``/``, ``\``, ``*``, ``?``, etc.).
+
+Sample (and feature) metadata mapping files can be validated using Keemei_, which will help identify issues while creating these files. Select *Add-ons > Keemei > Validate QIIME 2 mapping file*.
+
+.. qiime1-users:: Generally speaking, sample/feature metadata mapping files `that work in QIIME 1`_ should work in QIIME 2. If the first line in the metadata file starts with ``#SampleID``, that line will be treated as the header, even though it is a comment line. This exception to the comment line rule described above is necessary to be backwards-compatible with QIIME 1 mapping files. Besides treating the first line as the header, all other rules described above apply to QIIME 1 mapping files, including ignoring comments and blank lines that appear elsewhere in the file.
+
+To get started with understanding sample metadata mapping files, download an example TSV file:
 
 .. command-block::
    :no-exec:
@@ -15,29 +33,13 @@ Begin by creating a directory to conduct the work in:
    mkdir qiime2-metadata-tutorial
    cd qiime2-metadata-tutorial
 
-Metadata from a text file
--------------------------
-
-Metadata is typically defined in a sample (or feature; more on that below) metadata mapping file. The QIIME 2 development team hasn't adopted a standard set of criteria for the sample metadata mapping file, but at present the following minimum requirements are enforced:
-
-- The file must be a tab-separated text file
-- Comment lines (e.g. lines that begin with ``#``) are **not supported** and will be treated as data rows
-- The column label values must be unique (i.e. no duplicate values)
-- There must be at least one line of data following the column label line
-- The first column in the table is the "identifier" column (either sample ID or feature ID, depending on the axis)
-- All of the values in the first column must be unique (i.e. no duplicate values)
-
-Sample (and feature) metadata mapping files can be validated using Keemei_, which will help identify issues while creating these files.
-
-.. qiime1-users:: Generally speaking, sample/feature metadata mapping files `that work in QIIME 1`_ should work in QIIME 2.
-
-To get started with understanding sample metadata mapping files, first download an example TSV file:
-
 .. download::
    :url: https://data.qiime2.org/2017.6/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 Since this is a TSV file, it can be opened and edited in a variety of applications, including text editors, Microsoft Excel, and Google Sheets (e.g. if you plan to validate your metadata with Keemei_).
+
+QIIME 2 also provides a visualizer for viewing metadata in an interactive table:
 
 .. command-block::
    qiime metadata tabulate \
