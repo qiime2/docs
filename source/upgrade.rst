@@ -5,24 +5,24 @@ Existing :ref:`QIIME 2 Core distribution <core-distribution>` installations can 
 
 .. _upgrading:
 
-Upgrading to QIIME 2 Core 2017.6
+Upgrading to QIIME 2 Core 2017.7
 --------------------------------
 
 Native Installation
-    Please see the :doc:`native install doc <install/native>` for instructions on how to create a new QIIME 2 Core 2017.6 ``conda`` environment.
+    Please see the :doc:`native install doc <install/native>` for instructions on how to create a new QIIME 2 Core 2017.7 ``conda`` environment.
 
 VirtualBox
-    Please see the :doc:`VirtualBox install doc <install/virtual/virtualbox>` for instructions on how to download and set up a new QIIME 2 Core 2017.6 VirtualBox virtual machine.
+    Please see the :doc:`VirtualBox install doc <install/virtual/virtualbox>` for instructions on how to download and set up a new QIIME 2 Core 2017.7 VirtualBox virtual machine.
 
 Docker
-    Please see the :doc:`Docker install doc <install/virtual/docker>` for instructions on how to download and set up a new QIIME 2 Core 2017.6 Docker container.
+    Please see the :doc:`Docker install doc <install/virtual/docker>` for instructions on how to download and set up a new QIIME 2 Core 2017.7 Docker container.
 
 Amazon AWS
-    Please see the :doc:`Amazon AWS install doc <install/virtual/aws>` for instructions on how to set up a new QIIME 2 Core 2017.6 AWS instance.
+    Please see the :doc:`Amazon AWS install doc <install/virtual/aws>` for instructions on how to set up a new QIIME 2 Core 2017.7 AWS instance.
 
 .. _updating:
 
-Updating QIIME 2 Core 2017.6
+Updating QIIME 2 Core 2017.7
 ----------------------------
 
 macOS/OS X (Native Installation)
@@ -33,8 +33,8 @@ macOS/OS X (Native Installation)
 
        conda update conda
        # If you named your conda environment something else when you initially installed QIIME 2, use that name here.
-       source activate qiime2-2017.6
-       conda install --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-osx-64.txt
+       source activate qiime2-2017.7
+       conda install --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-osx-64.txt
 
 Linux (Native Installation)
     In a terminal run the following commands:
@@ -44,8 +44,8 @@ Linux (Native Installation)
 
        conda update conda
        # If you named your conda environment something else when you initially installed QIIME 2, use that name here.
-       source activate qiime2-2017.6
-       conda install --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt
+       source activate qiime2-2017.7
+       conda install --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-linux-64.txt
 
 VirtualBox
     In a terminal on the virtual machine, run the following command:
@@ -54,7 +54,7 @@ VirtualBox
        :no-exec:
 
        sudo env "PATH=$PATH" conda update conda
-       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt
+       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-linux-64.txt
 
 Docker
     In a terminal run the following command:
@@ -62,7 +62,7 @@ Docker
     .. command-block::
        :no-exec:
 
-       docker pull qiime2/core:2017.6
+       docker pull qiime2/core:2017.7
 
 Amazon AWS (Official QIIME 2 Image)
     If you did not create your AWS instance using one of the :doc:`official QIIME 2 AMIs <install/virtual/aws>`, you should refer to the Linux (Native Installation) upgrading instructions above.
@@ -72,4 +72,4 @@ Amazon AWS (Official QIIME 2 Image)
        :no-exec:
 
        sudo env "PATH=$PATH" conda update conda
-       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.6-conda-linux-64.txt
+       sudo env "PATH=$PATH" conda install --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-linux-64.txt

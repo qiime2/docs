@@ -12,22 +12,22 @@ Launching QIIME 2 Studio requires an active ``conda`` environment with QIIME 2 i
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2017.6
+   source activate qiime2-2017.7
 
-Please note, your ``conda`` environment might have a name other than ``qiime2-2017.6``, if you or your system administrator provided one during :doc:`installation of QIIME 2<../install/index>`.
+Please note, your ``conda`` environment might have a name other than ``qiime2-2017.7``, if you or your system administrator provided one during :doc:`installation of QIIME 2<../install/index>`.
 
 This interface requires that your system has `Node.js`_. We currently require version 5 or later; you can find `installation instructions here <https://nodejs.org/en/download/current/>`__. This dependency will be unnecessary in the future.
 
 Once you have installed ``Node.js >= 5`` you will need to download and extract the interface's source:
 
 .. download::
-   :url: https://codeload.github.com/qiime2/q2studio/zip/2017.6.0
-   :saveas: q2studio-2017.6.0.zip
+   :url: https://codeload.github.com/qiime2/q2studio/zip/2017.7.0
+   :saveas: q2studio-2017.7.0.zip
 
 .. command-block::
 
-   unzip q2studio-2017.6.0.zip && rm q2studio-2017.6.0.zip
-   cd q2studio-2017.6.0
+   unzip q2studio-2017.7.0.zip && rm q2studio-2017.7.0.zip
+   cd q2studio-2017.7.0
 
 Next we need to install it (both as a Python package, and as a Node.js package):
 

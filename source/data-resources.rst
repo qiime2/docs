@@ -6,7 +6,7 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 .. danger:: Pre-trained classifiers that can be used with ``q2-feature-classifier`` currently present a security risk. If using a pre-trained classifier such as the ones provided here, you should trust the person who trained the classifier and the person who provided you with the qza file. This security risk will be addressed in a future version of ``q2-feature-classifier``.
 
-.. warning:: These classifiers were trained using scikit-learn 0.18.1, and therefore can only be used with scikit-learn 0.18.1. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2017.6 virtual machine, scikit-learn 0.18.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
+.. warning:: These classifiers were trained using scikit-learn 0.18.1, and therefore can only be used with scikit-learn 0.18.1. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2017.7 virtual machine, scikit-learn 0.18.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
 
    .. command-block::
       :no-exec:
@@ -17,10 +17,10 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-- `Silva 119 99% OTUs full-length sequences <https://data.qiime2.org/2017.6/common/silva-119-99-nb-classifier.qza>`_ (MD5: ``3d55075e74d430420e914598d4af5c19``)
-- `Silva 119 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2017.6/common/silva-119-99-515-806-nb-classifier.qza>`_ (MD5: ``cb3b35791cb03b38dbe9403b31b128da``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2017.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``b0596617ff0f51947f2d48d2200d367a``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2017.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``97abcec1cfb5812f4f9aa002d5992024``)
+- `Silva 119 99% OTUs full-length sequences <https://data.qiime2.org/2017.7/common/silva-119-99-nb-classifier.qza>`_ (MD5: ``1f594af234b693f8bc6d4ca3f3b655d3``)
+- `Silva 119 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2017.7/common/silva-119-99-515-806-nb-classifier.qza>`_ (MD5: ``7e1efd787afa57d90d3c634eddd8d4dd``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2017.7/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``db5e7157b520d6069d56a0c11d995e15``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2017.7/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``5725427470d60535d64e5ed70b21df14``)
 
 Marker gene reference databases
 -------------------------------
