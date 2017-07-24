@@ -366,49 +366,6 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
-Differential abundance analysis
--------------------------------
-
-Finally, we can quantify the process of identifying taxa that are differentially abundant (or present in different abundances) across sample groups. We do that using ANCOM (`Mandal et al. (2015)`_), which is implemented in the ``q2-composition`` plugin. ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to add-pseudocount (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact. We can then run ANCOM on the ``BodySite`` category to determine what features differ in abundance across body sites. This step may take about 5 minutes to complete.
-
-.. command-block::
-
-   qiime composition add-pseudocount \
-     --i-table table.qza \
-     --o-composition-table comp-table.qza
-
-   qiime composition ancom \
-     --i-table comp-table.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category BodySite \
-     --o-visualization ancom-BodySite.qzv
-
-.. question::
-    What features differ in abundance across BodySite? What groups are they most and least abundant in? What are the taxonomies of some of these features? (To answer that last question you'll need to refer to a visualization that we generated earlier in this tutorial.)
-
-We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps.
-
-.. command-block::
-
-   qiime taxa collapse \
-     --i-table table.qza \
-     --i-taxonomy taxonomy.qza \
-     --p-level 2 \
-     --o-collapsed-table table-l2.qza
-
-   qiime composition add-pseudocount \
-     --i-table table-l2.qza \
-     --o-composition-table comp-table-l2.qza
-
-   qiime composition ancom \
-     --i-table comp-table-l2.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category BodySite \
-     --o-visualization l2-ancom-BodySite.qzv
-
-.. question::
-    What phyla differ in abundance across BodySite? How does this align with what you observed in the ``taxa-bar-plots.qzv`` visualization that was generated above?
-
 .. _sample metadata: https://data.qiime2.org/2017.7/tutorials/moving-pictures/sample_metadata
 .. _Keemei: http://keemei.qiime.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
