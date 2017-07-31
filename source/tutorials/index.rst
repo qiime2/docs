@@ -14,3 +14,4 @@ Tutorials
    metadata
    filtering
    feature-classifier
+   sample-classifier
