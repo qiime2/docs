@@ -16,7 +16,7 @@ We will download and create several files, so first create a working directory.
 Predicting categorical sample data
 ----------------------------------
 
-Supervised learning classifiers predict categorical sample data as a function of feature composition. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `moving pictures tutorial data`_ to train a classifier that predicts the body site from which a sample was collected. Download the feature table and sample metadata with the following links:
+Supervised learning classifiers predict the categorical metadata classes of unlabled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `moving pictures tutorial data`_ to train a classifier that predicts the body site from which a sample was collected. Download the feature table and sample metadata with the following links:
 
 .. download::
    :url: https://data.qiime2.org/2017.7/tutorials/moving-pictures/sample_metadata.tsv
@@ -26,7 +26,7 @@ Supervised learning classifiers predict categorical sample data as a function of
    :url: https://docs.qiime2.org/2017.7/data/tutorials/moving-pictures/table.qza
    :saveas: moving-pictures-table.qza
 
-Next, we will attempt to predict from which body site each sample originates as a function of sequence variant composition.
+Next, we will attempt to predict which body site each sample originated from based on its microbial composition.
 
 .. command-block::
 
@@ -51,6 +51,8 @@ If ``--p-optimize-feature-selection`` is enabled, the visualization will also di
 .. question::
    What happens when feature optimization is disabled with the option ``--p-no-optimize-feature-selection``? How does this impact classification accuracy?
 
+K-fold cross-validation is performed during automatic feature selection and parameter optimization steps. Five-fold cross-validation is performed by default, and this value can be adjusted using the ``--p-cv`` parameter. A separate portion of samples is removed from the data set prior to model training and optimization, and used as a test set to determine model accuracy. The fraction of test samples to remove is adjusted with the ``--p-test-size`` parameter.
+
 .. question::
    Try to figure out what the ``--p-parameter-tuning`` parameter does. What happens when it is disabled with the option ``--p-no-parameter-tuning``? How does this impact classification accuracy?
 
@@ -67,7 +69,7 @@ If ``--p-optimize-feature-selection`` is enabled, the visualization will also di
 Predicting continuous sample data
 ---------------------------------
 
-Supervised learning regressors predict continuous sample data as a function of feature composition. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `Atacama soils tutorial data`_ to train a regressor to predict the percent relative humidity in a soil sample. Download the feature table and sample metadata with the following links:
+Supervised learning regressors predict continuous metadata values of unlabled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `Atacama soils tutorial data`_ to train a regressor to predict the percent relative humidity in a soil sample. Download the feature table and sample metadata with the following links:
 
 .. download::
    :url: https://data.qiime2.org/2017.7/tutorials/atacama-soils/sample_metadata.tsv
@@ -77,7 +79,7 @@ Supervised learning regressors predict continuous sample data as a function of f
    :url: https://docs.qiime2.org/2017.7/data/tutorials/atacama-soils/table.qza
    :saveas: atacama-soils-table.qza
 
-Next, we will attempt to predict soil relative humidity as a function of sequence variant composition.
+Next, we will attempt to predict soil relative humidity as a function of microbial composition.
 
 .. command-block::
 
@@ -91,7 +93,7 @@ Next, we will attempt to predict soil relative humidity as a function of sequenc
     --p-estimator RandomForestRegressor \
     --p-n-estimators 100
 
-The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
+The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
 
 .. question::
    What other metadata can we predict with ``regress-samples``? Take a look at the metadata categories in the ``sample-metadata`` and try some other values. Not all metadata can be easily learned by the regressor! 
