@@ -366,6 +366,9 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
+.. note::
+   The ``barplot`` visualizer used here provides a visual representation of the taxonomic composition of your samples, but does not provide statistics telling you which features differ in abundance across samples or groups of samples. Approaches for quantifying taxonomic differences fall into the category of differential abundance testing. Differential abundance testing in microbiome analysis is an active area of research. There are two QIIME 2 plugins that can be used for this: `q2-gneiss`_ and `q2-composition`_. You can find a `draft tutorial for q2-gneiss here`_, and a `draft tutorial for q2-composition here`_.
+
 .. _sample metadata: https://data.qiime2.org/2017.7/tutorials/moving-pictures/sample_metadata
 .. _Keemei: http://keemei.qiime.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
@@ -381,3 +384,7 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. _Deblur: http://msystems.asm.org/content/2/2/e00191-16
 .. _basic quality-score-based filtering: http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
 .. _Bokulich et al. (2013): http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
+.. _q2-gneiss: https://docs.qiime2.org/2017.7/plugins/available/gneiss/
+.. _q2-composition: https://docs.qiime2.org/2017.7/plugins/available/composition/
+.. _draft tutorial for q2-gneiss here: https://forum.qiime2.org/t/balances-tutorial/913
+.. _draft tutorial for q2-composition here: https://forum.qiime2.org/t/ancom-tutorial-moving-pictures-of-the-human-microbiome-dataset/921
