@@ -17,6 +17,7 @@ QIIME 2 Core 2017.7 distribution
 The QIIME 2 Core 2017.7 distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-alignment``
+- ``q2-composition``
 - ``q2-dada2``
 - ``q2-deblur``
 - ``q2-demux``
