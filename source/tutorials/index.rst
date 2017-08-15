@@ -16,3 +16,4 @@ Tutorials
    filtering
    feature-classifier
    sample-classifier
+   longitudinal
