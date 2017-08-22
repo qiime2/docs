@@ -11,6 +11,7 @@
 SPHINXOPTS    = -W
 SPHINXBUILD   = sphinx-build
 BUILDDIR      = build
+DEBUG         =
 
 # Internal variables.
 ALLSPHINXOPTS = -d $(BUILDDIR)/doctrees $(SPHINXOPTS) source
@@ -21,6 +22,7 @@ help:
 	@echo "  clean      to remove previous builds"
 	@echo "  html       to build production-ready docs"
 	@echo "  preview    to build a preview of the docs without running any commands (DO NOT DEPLOY PREVIEW BUILDS)"
+	@echo "  preview DEBUG=relative/path-no-ext                                     (runs commands for that page)"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  dummy      to check syntax errors of document sources"
 
@@ -43,7 +45,7 @@ html: clean
 
 .PHONY: preview
 preview: clean
-	$(SPHINXBUILD) -b dirhtml -D command_block_no_exec=1 $(ALLSPHINXOPTS) $(BUILDDIR)/preview
+	$(SPHINXBUILD) -b dirhtml -D command_block_no_exec=1 -D debug_page=$(DEBUG) $(ALLSPHINXOPTS) $(BUILDDIR)/preview
 	@echo
 	@echo "Preview build finished. The HTML pages are in $(BUILDDIR)/preview. DO NOT DEPLOY THIS PREVIEW BUILD."
 	@echo
