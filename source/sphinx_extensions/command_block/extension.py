@@ -97,7 +97,9 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
             nodes = [download_node(id_, opts['url'], opts['saveas'])]
 
         env = self._get_env()
-        if not (env.config.command_block_no_exec or 'no-exec' in self.options):
+        if not ((env.config.command_block_no_exec
+                 and env.config.debug_page != env.docname) or
+                'no-exec' in self.options):
             working_dir = os.path.join(env.app.command_block_working_dir.name,
                                        env.docname)
             os.makedirs(working_dir, exist_ok=True)
@@ -257,6 +259,7 @@ def setup(app):
     app.add_directive('command-block', CommandBlockDirective)
     app.add_directive('download', CommandBlockDirective)
     app.add_config_value('command_block_no_exec', False, 'html')
+    app.add_config_value('debug_page', '', 'html')
     app.add_node(download_node, html=(visit_download_node,
                                       depart_download_node))
 
