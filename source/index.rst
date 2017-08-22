@@ -20,7 +20,6 @@ Table of contents
    about
    concepts
    install/index
-   upgrade
    tutorials/index
    interfaces/index
    plugins/index
