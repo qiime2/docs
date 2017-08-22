@@ -92,3 +92,4 @@ ENV/
 .*.swp
 
 .DS_Store
+source/plugins/available/
