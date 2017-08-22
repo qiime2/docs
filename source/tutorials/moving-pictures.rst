@@ -366,8 +366,69 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
+
+Differential abundance with ANCOM
+---------------------------------
+
+ANCOM can be applied to identify features that are differentially abundant (or present in different abundances) across sample groups. As with any bioinformatics method, you should be aware of the assumptions and limitations of ANCOM before using it. We recommend reviewing the `ANCOM paper`_ before using this method.
+
 .. note::
-   The ``barplot`` visualizer used here provides a visual representation of the taxonomic composition of your samples, but does not provide statistics telling you which features differ in abundance across samples or groups of samples. Approaches for statistically quantifying taxonomic differences fall into the category of differential abundance testing. Differential abundance testing in microbiome analysis is an active area of research. There are two QIIME 2 plugins that can be used for this: `q2-gneiss`_ and `q2-composition`_. You can find a `draft tutorial for q2-gneiss here`_, and a `draft tutorial for q2-composition here`_.
+   Differential abundance testing in microbiome analysis is an active area of research. There are two QIIME 2 plugins that can be used for this: ``q2-gneiss`` and ``q2-composition``. This section uses ``q2-composition``, but there is :doc:`another tutorial which uses gneiss <gneiss>` on a different dataset if you are interested in learning more.
+
+ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few (less than about 25%) of the features are changing between groups. If you expect than more features are changing between your groups, you should not use ANCOM as it will be more error-prone (an increase in both Type I and Type II errors is possible). Because we expect a lot of features to change in abundance across body sites, in this tutorial we'll filter our full feature table to only contain gut samples. We'll then apply ANCOM to determine which, if any, sequence variants and genera are differentially abundant across the gut samples of our two subjects.
+
+We'll start by creating a feature table that contains only the gut samples. (To learn more about filtering, see the :doc:`Filtering Data <filtering>` tutorial.)
+
+.. command-block::
+
+   qiime feature-table filter-samples \
+     --i-table table.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --p-where "BodySite='gut'" \
+     --o-filtered-table gut-table.qza
+
+ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to ``add-pseudocount`` (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact.
+
+We can then run ANCOM on the ``Subject`` category to determine what features differ in abundance across the gut samples of the two subjects.
+
+.. command-block::
+
+   qiime composition add-pseudocount \
+     --i-table gut-table.qza \
+     --o-composition-table comp-gut-table.qza
+
+   qiime composition ancom \
+     --i-table comp-gut-table.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category Subject \
+     --o-visualization ancom-Subject.qzv
+
+.. question::
+   What sequence variants differ in abundance across Subject? What subject is each most and least abundant in? What are the taxonomies of some of these sequence variants? (To answer that last question you'll need to refer to another visualization that was generated in this tutorial.)
+
+We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps. We collapse our feature table at the genus level (i.e., level 6 of the Greengenes taxonomy).
+
+.. command-block::
+
+   qiime taxa collapse \
+     --i-table gut-table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-level 6 \
+     --o-collapsed-table gut-table-l6.qza
+
+   qiime composition add-pseudocount \
+     --i-table gut-table-l6.qza \
+     --o-composition-table comp-gut-table-l6.qza
+
+   qiime composition ancom \
+     --i-table comp-gut-table-l6.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-category Subject \
+     --o-visualization l6-ancom-Subject.qzv
+
+.. question::
+   What genera differ in abundance across Subject? What subject is each most and least abundant in?
+
 
 .. _sample metadata: https://data.qiime2.org/2017.7/tutorials/moving-pictures/sample_metadata
 .. _Keemei: http://keemei.qiime.org
@@ -384,7 +445,4 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. _Deblur: http://msystems.asm.org/content/2/2/e00191-16
 .. _basic quality-score-based filtering: http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
 .. _Bokulich et al. (2013): http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
-.. _q2-gneiss: https://docs.qiime2.org/2017.7/plugins/available/gneiss/
-.. _q2-composition: https://docs.qiime2.org/2017.7/plugins/available/composition/
-.. _draft tutorial for q2-gneiss here: https://forum.qiime2.org/t/balances-tutorial/913
-.. _draft tutorial for q2-composition here: https://forum.qiime2.org/t/ancom-tutorial-moving-pictures-of-the-human-microbiome-dataset/921
+.. _ANCOM paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
