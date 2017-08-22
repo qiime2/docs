@@ -47,7 +47,8 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
    </div>
 
 
-.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform.
+.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2017.7`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
+
 
 Activate the ``conda`` environment
 ----------------------------------
