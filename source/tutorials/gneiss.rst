@@ -19,7 +19,7 @@ Rather than focusing on individual taxa, we can focus on the log ratios, since t
 
 .. image:: images/gneiss-balances.jpg
 
-On the right, we define a tree, where each of the tips corresponds to a taxon and their corresponding proportions.  The internal nodes define the log ratio between the taxa underneath.  On the left, we have the same tree, but one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and green taxa.  By looking at balances instead proportions, we can control for the variance by restricting observations to only focus on the taxa within the balance.
+On the left, we define a tree, where each of the tips corresponds to a taxon and their corresponding proportions.  The internal nodes define the log ratio between the taxa underneath.  On the right, we have the same tree, but one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and green taxa.  By looking at balances instead proportions, we can control for the variance by restricting observations to only focus on the taxa within the balance.
 
 The outstanding question here is, how do we construct a tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are two main ways that this can be done
 
@@ -87,7 +87,7 @@ Where :math:`x` and :math:`y` represent the proportions of two microbes across a
      --i-table composition.qza \
      --o-clustering hierarchy.qza
 
-Now that we have a tree that defines our partitions, we can perform the ilr transform.  Note that the ilr transform just computes the log ratios between groups; in this case we will be computing log ratios between groups of anti-correlated features.
+Now that we have a tree that defines our partitions, we can perform the ILR transform.  Note that the ILR transform just computes the log ratios between groups; in this case we will be computing log ratios between groups of anti-correlated features.
 
 .. command-block::
 
