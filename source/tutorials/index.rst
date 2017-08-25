@@ -9,6 +9,7 @@ Tutorials
    moving-pictures
    fmt
    atacama-soils
+   gneiss
    importing
    exporting
    metadata
