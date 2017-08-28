@@ -52,15 +52,15 @@ The datasets required for this tutorial can be found below (to learn how these w
 
 
 .. download::
-   :url: https://forum-qiime2-org.s3-us-west-2.amazonaws.com/original/1X/bf8a54bc13cb9439e7954ece2418fbc6eca96a2f.txt
+   :url: https://data.qiime2.org/2017.8/tutorials/gneiss/sample-metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. download::
-   :url: https://forum-qiime2-org.s3-us-west-2.amazonaws.com/original/1X/95b1df91e3c119ca598e6d98038a20d6e2ee1a84.qza
+   :url: https://data.qiime2.org/2017.8/tutorials/gneiss/table.qza
    :saveas: table.qza
 
 .. download::
-   :url: https://forum-qiime2-org.s3-us-west-2.amazonaws.com/original/1X/c09782e3f38f4f4116996f44b52b8e76e0084104.qza
+   :url: https://data.qiime2.org/2017.8/tutorials/gneiss/taxa.qza
    :saveas: taxa.qza
 
 
