@@ -14,10 +14,4 @@ QIIME 2 is a complete redesign and rewrite of the `QIIME 1`_ microbiome analysis
 
 QIIME 2 currently supports an initial end-to-end microbiome analysis pipeline. New functionality will regularly become available through QIIME 2 plugins. You can view a list of plugins that are currently available on the QIIME 2 :doc:`plugin availability <plugins/available/index>` page. The :doc:`future plugins <plugins/future>` page lists plugins that are being developed.
 
-To see where we're headed with QIIME 2, take a look at Greg Caporaso's `American Gut blog post`_ (15 April 2016) and `SciPy 2016 presentation`_ (15 July 2016).
-
 .. _QIIME 1: http://qiime.org
-
-.. _`American Gut blog post`: http://americangut.org/qiime-2-will-revolutionize-microbiome-bioinformatics/
-
-.. _`SciPy 2016 presentation`: https://www.youtube.com/watch?v=tLtGg21Yu9Q
