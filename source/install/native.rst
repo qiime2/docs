@@ -20,7 +20,7 @@ After installing Miniconda and opening a new terminal, make sure you're running 
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
-Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2017.7 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2017.7`` to indicate what QIIME 2 release is installed (i.e. ``2017.7``).
+Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2017.8 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2017.8`` to indicate what QIIME 2 release is installed (i.e. ``2017.8``).
 
 
 .. raw:: html
@@ -38,16 +38,16 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>conda create -n qiime2-2017.7 --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-osx-64.txt</pre>
+            <pre>conda create -n qiime2-2017.8 --file https://data.qiime2.org/distro/core/qiime2-2017.8-conda-osx-64.txt</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>conda create -n qiime2-2017.7 --file https://data.qiime2.org/distro/core/qiime2-2017.7-conda-linux-64.txt</pre>
+            <pre>conda create -n qiime2-2017.8 --file https://data.qiime2.org/distro/core/qiime2-2017.8-conda-linux-64.txt</pre>
          </div>
       </div>
    </div>
 
 
-.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2017.7`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
+.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2017.8`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
 
 
 Activate the ``conda`` environment
@@ -58,7 +58,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2017.7
+   source activate qiime2-2017.8
 
 To deactivate an environment, run ``source deactivate``.
 
