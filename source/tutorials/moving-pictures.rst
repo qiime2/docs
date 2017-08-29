@@ -367,15 +367,15 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
 
-Differential abundance with ANCOM
----------------------------------
+Differential abundance testing with ANCOM
+-----------------------------------------
 
-ANCOM can be applied to identify features that are differentially abundant (or present in different abundances) across sample groups. As with any bioinformatics method, you should be aware of the assumptions and limitations of ANCOM before using it. We recommend reviewing the `ANCOM paper`_ before using this method.
+ANCOM can be applied to identify features that are differentially abundant (i.e. present in different abundances) across sample groups. As with any bioinformatics method, you should be aware of the assumptions and limitations of ANCOM before using it. We recommend reviewing the `ANCOM paper`_ before using this method.
 
 .. note::
    Differential abundance testing in microbiome analysis is an active area of research. There are two QIIME 2 plugins that can be used for this: ``q2-gneiss`` and ``q2-composition``. This section uses ``q2-composition``, but there is :doc:`another tutorial which uses gneiss <gneiss>` on a different dataset if you are interested in learning more.
 
-ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few (less than about 25%) of the features are changing between groups. If you expect than more features are changing between your groups, you should not use ANCOM as it will be more error-prone (an increase in both Type I and Type II errors is possible). Because we expect a lot of features to change in abundance across body sites, in this tutorial we'll filter our full feature table to only contain gut samples. We'll then apply ANCOM to determine which, if any, sequence variants and genera are differentially abundant across the gut samples of our two subjects.
+ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few (less than about 25%) of the features are changing between groups. If you expect that more features are changing between your groups, you should not use ANCOM as it will be more error-prone (an increase in both Type I and Type II errors is possible). Because we expect a lot of features to change in abundance across body sites, in this tutorial we'll filter our full feature table to only contain gut samples. We'll then apply ANCOM to determine which, if any, sequence variants and genera are differentially abundant across the gut samples of our two subjects.
 
 We'll start by creating a feature table that contains only the gut samples. (To learn more about filtering, see the :doc:`Filtering Data <filtering>` tutorial.)
 
@@ -389,13 +389,15 @@ We'll start by creating a feature table that contains only the gut samples. (To 
 
 ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to ``add-pseudocount`` (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact.
 
-We can then run ANCOM on the ``Subject`` category to determine what features differ in abundance across the gut samples of the two subjects.
-
 .. command-block::
 
    qiime composition add-pseudocount \
      --i-table gut-table.qza \
      --o-composition-table comp-gut-table.qza
+
+We can then run ANCOM on the ``Subject`` category to determine what features differ in abundance across the gut samples of the two subjects.
+
+.. command-block::
 
    qiime composition ancom \
      --i-table comp-gut-table.qza \
@@ -404,9 +406,9 @@ We can then run ANCOM on the ``Subject`` category to determine what features dif
      --o-visualization ancom-Subject.qzv
 
 .. question::
-   What sequence variants differ in abundance across Subject? What subject is each most and least abundant in? What are the taxonomies of some of these sequence variants? (To answer that last question you'll need to refer to another visualization that was generated in this tutorial.)
+   Which sequence variants differ in abundance across Subject? In which subject is each sequence variant more abundant? What are the taxonomies of some of these sequence variants? (To answer the last question you'll need to refer to another visualization that was generated in this tutorial.)
 
-We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps. We collapse our feature table at the genus level (i.e., level 6 of the Greengenes taxonomy).
+We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps. In this tutorial, we collapse our feature table at the genus level (i.e. level 6 of the Greengenes taxonomy).
 
 .. command-block::
 
@@ -427,7 +429,7 @@ We're also often interested in performing a differential abundance test at a spe
      --o-visualization l6-ancom-Subject.qzv
 
 .. question::
-   What genera differ in abundance across Subject? What subject is each most and least abundant in?
+   Which genera differ in abundance across Subject? In which subject is each genus more abundant?
 
 
 .. _sample metadata: https://data.qiime2.org/2017.8/tutorials/moving-pictures/sample_metadata
