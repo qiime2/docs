@@ -42,16 +42,16 @@ This visualizer currently supports comparison of feature abundance (e.g., microb
 .. command-block::
 
    qiime longitudinal pairwise-differences \
-    --m-metadata-file moving-pictures-sample-metadata.tsv \
-    --m-metadata-file observed_otus_vector.qza \
-    --p-metric observed_otus \
-    --p-group-column BodySite \
-    --p-state-column Month \
-    --p-state-1 1 \
-    --p-state-2 10 \
-    --p-individual-id-column Subject \
-    --o-visualization pairwise-differences \
-    --p-replicate-handling random
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-metadata-file observed_otus_vector.qza \
+     --p-metric observed_otus \
+     --p-group-column BodySite \
+     --p-state-column Month \
+     --p-state-1 1 \
+     --p-state-2 10 \
+     --p-individual-id-column Subject \
+     --p-replicate-handling random \
+     --o-visualization pairwise-differences.qzv
 
 
 Pairwise distance comparisons
@@ -62,15 +62,15 @@ The ``pairwise-distances`` visualizer also assesses changes between paired sampl
 .. command-block::
 
    qiime longitudinal pairwise-distances \
-    --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
-    --m-metadata-file moving-pictures-sample-metadata.tsv \
-    --p-group-column BodySite \
-    --p-state-column Month \
-    --p-state-1 1 \
-    --p-state-2 10 \
-    --p-individual-id-column Subject \
-    --o-visualization pairwise-distances \
-    --p-replicate-handling random
+     --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --p-group-column BodySite \
+     --p-state-column Month \
+     --p-state-1 1 \
+     --p-state-2 10 \
+     --p-individual-id-column Subject \
+     --p-replicate-handling random \
+     --o-visualization pairwise-distances.qzv
 
 
 Linear mixed effect models
@@ -81,13 +81,13 @@ Linear mixed effects (LME) models test the relationship between a single respons
 .. command-block::
 
    qiime longitudinal linear-mixed-effects \
-    --m-metadata-file moving-pictures-sample-metadata.tsv \
-    --m-metadata-file observed_otus_vector.qza \
-    --p-metric observed_otus \
-    --p-group-categories BodySite,ReportedAntibioticUsage \
-    --p-state-column Month \
-    --p-individual-id-column Subject \
-    --o-visualization linear-mixed-effects
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-metadata-file observed_otus_vector.qza \
+     --p-metric observed_otus \
+     --p-group-categories BodySite,ReportedAntibioticUsage \
+     --p-state-column Month \
+     --p-individual-id-column Subject \
+     --o-visualization linear-mixed-effects.qzv
 
 The visualizer produced by this command contains several results. First, the input parameters are shown at the top of the visualization for convenience (e.g., when flipping through multiple visualizations it is useful to have a summary). Scatter plots categorized by each "group column" are shown, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group. Next, the "model summary" shows some descriptive information about the LME model that was trained. This just shows descriptive information about the "groups"; in this case, groups will be individuals (as set by the ``--p-individual-id-column``). The main results to examine will be the "model results" at the bottom of the visualization. These results summarize the effects of each fixed effect (and their interactions) on the dependent variable (shannon diversity). This table shows parameter estimates, estimate standard errors, Wald Z test statistics, P values (P>|z|), and 95% confidence intervals upper and lower bounds for each parameter. We see in this table that shannon diversity is significantly impacted by month of life and by diet, as well as several interacting factors. More information about LME models and the interpretation of these data can be found on the `statsmodels LME description page`_, which provides a number of useful technical references for further reading.
 
