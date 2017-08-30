@@ -19,11 +19,11 @@ Predicting categorical sample data
 Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`moving pictures tutorial data <moving-pictures>` to train a classifier that predicts the body site from which a sample was collected. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.9/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: moving-pictures-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/sample-classifier/moving-pictures-table.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/sample-classifier/moving-pictures-table.qza
    :saveas: moving-pictures-table.qza
 
 Next, we will attempt to predict which body site each sample originated from based on its microbial composition.
@@ -72,11 +72,11 @@ Predicting continuous (i.e., numerical) sample data
 Supervised learning regressors predict continuous metadata values of unlabeled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`Atacama soils tutorial data <atacama-soils>` to train a regressor to predict the percent relative humidity in a soil sample. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/atacama-soils/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.9/tutorials/atacama-soils/sample_metadata.tsv
    :saveas: atacama-soils-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/sample-classifier/atacama-table.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/sample-classifier/atacama-table.qza
    :saveas: atacama-soils-table.qza
 
 Next, we will attempt to predict soil relative humidity as a function of microbial composition.

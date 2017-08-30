@@ -21,15 +21,15 @@ First, create a directory to work in and change to that directory.
 Download the data we'll use in the tutorial. This includes sample metadata, a feature table, and a distance matrix:
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.9/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/filtering/table.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/filtering/table.qza
    :saveas: table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/filtering/distance-matrix.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/filtering/distance-matrix.qza
    :saveas: distance-matrix.qza
 
 Filtering feature tables

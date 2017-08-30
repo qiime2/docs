@@ -16,19 +16,19 @@ In the examples below, we will use the :doc:`moving pictures tutorial data <movi
    cd longitudinal-tutorial
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2017.9/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: moving-pictures-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/longitudinal/table.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/table.qza
    :saveas: moving-pictures-table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/longitudinal/observed_otus_vector.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/observed_otus_vector.qza
    :saveas: observed_otus_vector.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.8/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
    :saveas: unweighted_unifrac_distance_matrix.qza
 
 
