@@ -20,10 +20,6 @@ In the examples below, we use data from the `ECAM study`_, a longitudinal study 
    :saveas: ecam-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_maturity.qza
-   :saveas: ecam-table.qza
-
-.. download::
    :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_shannon.qza
    :saveas: shannon.qza
 
