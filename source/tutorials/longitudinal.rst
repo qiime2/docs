@@ -53,21 +53,6 @@ This visualizer currently supports comparison of feature abundance (e.g., microb
      --p-replicate-handling random \
      --o-visualization pairwise-differences.qzv
 
-We can also use this method to measure changes in the abundances of specific features of interest. In this example, we test whether the abundance of genus Bacteroides changed significantly between 6 and 18 months of life in vaginally born and Cesarean-delivered infants, and whether the magnitude of change differed between these groups. Note that `pairwise-differences` accepts a feature table as optional input to extract taxon abundance data.
-
-.. command-block::
-
-   qiime longitudinal pairwise-differences \
-     --i-table ecam-table.qza \
-     --m-metadata-file ecam-sample-metadata.tsv \
-     --p-metric 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__' \
-     --p-group-column delivery \
-     --p-state-column month \
-     --p-state-1 6 \
-     --p-state-2 18 \
-     --p-individual-id-column studyid \
-     --p-replicate-handling random \
-     --o-visualization taxa-differences.qzv
 
 
 Pairwise distance comparisons
@@ -92,7 +77,7 @@ The ``pairwise-distances`` visualizer also assesses changes between paired sampl
 Linear mixed effect models
 --------------------------
 
-Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric "state_column" (e.g., Time) and one or more comma-separated group_categories (which may be categorical or numeric) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state caregory and each group column. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
+Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric "state_column" (e.g., Time) and one or more comma-separated group_categories (which may be categorical or numeric) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state caregory and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
 
 .. command-block::
 
@@ -111,7 +96,8 @@ The visualizer produced by this command contains several results. First, the inp
 Volatility analysis
 -------------------
 
-Volatility analysis is a method for assessing how volatile a dependent variable is over time (or a gradient) in one or more groups. Whereas LME tests how different factors (e.g., treatment, subject characteristics) impact the trajectory of change in a dependent variable across time (or a gradient), `volatility` examines how variance changes over time (or a gradient), and compares variances between groups at each state, between baseline and each state, and between groups across all states globally. Any metadata (including alpha and beta diversity artifacts) or `FeatureTable[RelativeFrequency]` feature can be used as the dependent variable ("metric"). *Note that volatility analysis currently works best for comparing groups that are sampled fairly evenly at each state in the dataset. Datasets that contain groups sampled at different states are not supported, and users should either filter out those samples or "bin" them with other groups prior to using this visualizer.*
+Volatility analysis is a method for assessing how volatile a dependent variable is over time (or a gradient) in one or more groups. Whereas LME tests how different factors (e.g., treatment, subject characteristics) impact the trajectory of change in a dependent variable across time (or a gradient), `volatility` examines how variance changes over time (or a gradient), and compares variances between groups at each state, between baseline and each state, and between groups across all states globally. Any metadata (including alpha and beta diversity artifacts) or `FeatureTable[RelativeFrequency]` feature can be used as the dependent variable ("metric").
+.. note:: Volatility analysis currently works best for comparing groups that are sampled fairly evenly at each state in the dataset. Datasets that contain groups sampled at different states are not supported, and users should either filter out those samples or "bin" them with other groups prior to using this visualizer.
 
 Here we examine how variance in Shannon diversity changes across time in the ECAM cohort.
 
