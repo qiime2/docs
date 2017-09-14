@@ -76,7 +76,7 @@ Supervised learning regressors predict continuous metadata values of unlabeled s
    :saveas: ecam-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam-table-maturity.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 Next, we will train a regressor to predict an infant's age based on its microbiota composition.
@@ -117,7 +117,7 @@ Here we will compare microbial maturity between vaginally born and cesarean-deli
    qiime sample-classifier maturity-index \
      --i-table ecam-table.qza \
      --m-metadata-file ecam-metadata.tsv \
-     --m-metadata-category month \
+     --p-category month \
      --p-group-by delivery \
      --p-control Vaginal \
      --p-test-size 0.4 \
