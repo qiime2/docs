@@ -76,7 +76,7 @@ Supervised learning regressors predict continuous metadata values of unlabeled s
    :saveas: ecam-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_taxa.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam-table-maturity.qza
    :saveas: ecam-table.qza
 
 Next, we will train a regressor to predict an infant's age based on its microbiota composition.
