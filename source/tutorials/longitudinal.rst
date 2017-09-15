@@ -102,7 +102,7 @@ Here we examine how variance in Shannon diversity changes across time in the ECA
      --m-metadata-file ecam-sample-metadata.tsv \
      --m-metadata-file shannon.qza \
      --p-metric shannon \
-     --p-group-categories delivery \
+     --p-group-column delivery \
      --p-state-column month \
      --p-individual-id-column studyid \
      --o-visualization volatility.qzv
@@ -110,7 +110,7 @@ Here we examine how variance in Shannon diversity changes across time in the ECA
 
 The resulting visualization contains some basic results. First, the "Volatility test parameters" summarizes some key parameters, as well as global mean and standard deviation — these are measured across all samples, regardless of which group they are in.
 
-Second, control charts display the mean value of "metric" at each "state". The first plot shown contains all samples, categorized by group (as defined by `group-column`); the following plots show each individual group, in order to show their individual control characteristics as described in the rest of this paragraph. The mean for all samples in each plot is shown as a black line. The "control limits", 3 standard deviations above and below the mean, are shown as dashed lines. The "warning limits", 2 standard deviations above and below the mean, are shown as dotted lines. The idea behind this plot is to show how a variable is changing over time (or a gradient) in relation to the mean. Large departures from the mean values can cross the warning/control limits, indicating a major disruption at that state; for example, antibiotic use or other disturbances impacting diversity could be tracked with these plots.
+Second, control charts display the mean value of "metric" at each "state". The first plot shown contains all samples, categorized by group (as defined by ``group-column``); the following plots show each individual group, in order to show their individual control characteristics as described in the rest of this paragraph. The mean for all samples in each plot is shown as a black line. The "control limits", 3 standard deviations above and below the mean, are shown as dashed lines. The "warning limits", 2 standard deviations above and below the mean, are shown as dotted lines. The idea behind this plot is to show how a variable is changing over time (or a gradient) in relation to the mean. Large departures from the mean values can cross the warning/control limits, indicating a major disruption at that state; for example, antibiotic use or other disturbances impacting diversity could be tracked with these plots.
 
 This visualizer currently only generates control charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
 
