@@ -3,7 +3,7 @@ Predicting sample metadata values with q2-sample-classifier
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
 
-This tutorial will demonstrate how to use ``q2-sample-classifier`` to predict sample metadata values. Supervised learning methods predict sample data (e.g., metadata values) as a function of other sample data (e.g., microbiota composition). The predicted targets may be discrete sample classes (for classification problems) or continuous values (for regression problems). Any other data may be used as predictive features, but for the purposes of q2-sample-classifier this will most commonly be microbial sequence variant, operational taxonomic unit (OTU), or taxonomic composition. However, any features contained in a feature table may be used — for non-microbial data, just `convert your observation tables to biom format`_ and :doc:`import the feature table data into qiime2 <importing>`.
+This tutorial will demonstrate how to use ``q2-sample-classifier`` to predict sample metadata values. Supervised learning methods predict sample data (e.g., metadata values) as a function of other sample data (e.g., microbiota composition). The predicted targets may be discrete sample classes (for classification problems) or continuous values (for regression problems). Any other data may be used as predictive features, but for the purposes of q2-sample-classifier this will most commonly be microbial sequence variant, operational taxonomic unit (OTU), or taxonomic composition data. However, any features contained in a feature table may be used — for non-microbial data, just `convert your observation tables to biom format`_ and :doc:`import the feature table data into qiime2 <importing>`.
 
 We will download and create several files, so first create a working directory.
 
@@ -69,31 +69,31 @@ K-fold cross-validation is performed during automatic feature selection and para
 Predicting continuous (i.e., numerical) sample data
 ---------------------------------------------------
 
-Supervised learning regressors predict continuous metadata values of unlabeled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`Atacama soils tutorial data <atacama-soils>` to train a regressor to predict the percent relative humidity in a soil sample. Download the feature table and sample metadata with the following links:
+Supervised learning regressors predict continuous metadata values of unlabeled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `ECAM study`_, a longitudinal cohort study of microbiome development in U.S. infants. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2017.9/tutorials/atacama-soils/sample_metadata.tsv
-   :saveas: atacama-soils-sample-metadata.tsv
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/sample_metadata.tsv
+   :saveas: ecam-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2017.9/tutorials/sample-classifier/atacama-table.qza
-   :saveas: atacama-soils-table.qza
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_maturity.qza
+   :saveas: ecam-table.qza
 
-Next, we will attempt to predict soil relative humidity as a function of microbial composition.
+Next, we will train a regressor to predict an infant's age based on its microbiota composition.
 
 .. command-block::
 
    qiime sample-classifier regress-samples \
-     --i-table atacama-soils-table.qza \
-     --m-metadata-file atacama-soils-sample-metadata.tsv \
-     --m-metadata-category PercentRelativeHumiditySoil_100 \
+     --i-table ecam-table.qza \
+     --m-metadata-file ecam-metadata.tsv \
+     --m-metadata-category month \
      --p-optimize-feature-selection \
      --p-parameter-tuning \
      --p-estimator RandomForestRegressor \
      --p-n-estimators 100 \
-     --o-visualization atacama-soils-PercentRelativeHumiditySoil_100.qzv
+     --o-visualization ecam-month.qzv
 
-The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
+The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this, model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
 
 .. question::
    What other metadata can we predict with ``regress-samples``? Take a look at the metadata categories in the ``sample-metadata`` and try some other values. Not all metadata can be easily learned by the regressor! 
@@ -102,5 +102,35 @@ The visualization produced by this command presents classification accuracy resu
    Many different regressors can be trained via the ``--p-estimator`` parameter in ``regress-samples``. Try some of the other regressors. How do these methods compare?
 
 
+"Maturity Index" prediction
+---------------------------
+
+.. note:: This analysis currently works best for comparing groups that are sampled fairly evenly across time (the category used for regression). Datasets that contain groups sampled sporadically at different times are not supported, and users should either filter out those samples or “bin” them with other groups prior to using this visualizer.
+.. note:: This analysis will only work on data sets with a large sample size, particularly in the "control" group, and with sufficient biological replication at each time point.
+
+This method calculates a "microbial maturity" index from a regression model trained on feature data to predict a given continuous metadata category, e.g., to predict a subject's age as a function of microbiota composition. This method is different from standard supervised regression because it quantifies the relative rate of change over time in two or more groups. The model is trained on a subset of control group samples, then predicts the category value for all samples. This visualization computes maturity index z-scores (MAZ) to compare relative "maturity" between each group, as described in `Sathish et al. 2014`_. This method was designed to predict between-group differences in intestinal microbiome development by age, so ``category`` should typically be a measure of time. Other types of continuous metadata gradients might be testable, as long as two or more different "treatment" groups are being compared *with a large number of biological replicates* in the "control" group and treatment groups are sampled at the same "states" (time or position on gradient) for comparison. However, we do not necessarily recommend *or offer technical support* for unusual approaches.
+
+Here we will compare microbial maturity between vaginally born and cesarean-delivered infants as a function of age in the ECAM dataset.
+
+.. command-block::
+
+   qiime sample-classifier maturity-index \
+     --i-table ecam-table.qza \
+     --m-metadata-file ecam-metadata.tsv \
+     --p-category month \
+     --p-group-by delivery \
+     --p-control Vaginal \
+     --p-test-size 0.4 \
+     --o-visualization maturity.qzv
+
+The visualizer produces a linear regression plot of predicted vs. expected values on the control test samples (as described above for regression models). Predicted vs. expected values are also shown for all samples in both control and test sets.
+
+MAZ scores are calculated based on these predictions, statistically compared across each value "bin" (e.g., month of life) using ANOVA and paired t-tests, and shown as boxplots of MAZ distributions for each group in each value "bin". A link within the visualizers allows download of the MAZ scores for each sample, facilitating customized follow-up testing, e.g., in R, or use as metadata, e.g., for constructing PCoA plots. Want to take this analysis to the next level? Download the raw MAZ scores from within the visualization and feed these scores into :doc:`linear mixed effects models <longitudinal>`
+
+The average abundances of features used for training maturity models are viewed as heatmaps within the visualization. Feature abundance is averaged across all samples within each value bin (e.g., month of life) and within each individual sample group (e.g., vaginal controls vs. cesarean), demonstrating how different patterns of feature abundance (e.g., trajectories of development in the case of age or time-based models) may affect model predictions and MAZ scores.
+
+
 
 .. _convert your observation tables to biom format: http://biom-format.org/documentation/biom_conversion.html
+.. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
+.. _Sathish et al. 2014: https://doi.org/10.1038/nature13421
