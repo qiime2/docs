@@ -3,7 +3,7 @@ Performing longitudinal and paired sample comparisons with q2-longitudinal
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-This tutorial will demonstrate the various features of ``q2-longitudinal``, a plugin that supports statistical and visual comparisons of longitudinal study designs and paired samples, to determine if/how samples change between observational "states". "States" will most commonly be related to time or an environmental gradient, and for paired analyses (`pairwise-distances` and `pairwise-differences`) the sample pairs should typically consist of the same individual subject observed at two different time points. For example, patients in a clinical study whose stool samples are collected before and after receiving treatment.
+This tutorial will demonstrate the various features of ``q2-longitudinal``, a plugin that supports statistical and visual comparisons of longitudinal study designs and paired samples, to determine if/how samples change between observational "states". "States" will most commonly be related to time or an environmental gradient, and for paired analyses (``pairwise-distances`` and ``pairwise-differences``) the sample pairs should typically consist of the same individual subject observed at two different time points. For example, patients in a clinical study whose stool samples are collected before and after receiving treatment.
 
 "States" can also commonly be methodological, in which case sample pairs will usually be the same individual at the same time with two different methods. For example, q2-longitudinal could compare the effects of different collection methods, storage methods, DNA extraction methods, or any bioinformatic processing steps on the feature composition of individual samples.
 
@@ -92,7 +92,7 @@ The visualizer produced by this command contains several results. First, the inp
 Volatility analysis
 -------------------
 
-Volatility analysis is a method for generating control charts to assess how volatile a dependent variable is over time (or a gradient) in one or more groups. Any metadata (including alpha and beta diversity artifacts) or `FeatureTable[RelativeFrequency]` feature can be used as the dependent variable ("metric").
+Volatility analysis is a method for generating control charts to assess how volatile a dependent variable is over time (or a gradient) in one or more groups. Any metadata (including alpha and beta diversity artifacts) or ``FeatureTable[RelativeFrequency]`` feature can be used as the dependent variable ("metric").
 
 Here we examine how variance in Shannon diversity changes across time in the ECAM cohort.
 
