@@ -33,5 +33,6 @@ The QIIME 2 Core 2017.9 distribution includes the QIIME 2 framework, ``q2cli`` (
 - ``q2-sample-classifier``
 - ``q2-taxa``
 - ``q2-types``
+- ``q2-vsearch``
 
 .. note:: The QIIME 2 Core 2017.9 distribution includes plugins and interfaces that are developed, maintained, tested, and distributed by the QIIME 2 development team. The Core distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation. Other types of distributions may be made available in the future in addition to Core.
