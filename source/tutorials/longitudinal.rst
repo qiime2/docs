@@ -117,13 +117,13 @@ This visualizer currently only generates control charts, which are a useful **qu
 
 Non-parametric microbial interdependence test (NMIT)
 ----------------------------------------------------
-Within microbial communities, microbial populations do not exist in isolation but instead form complex ecological interaction webs. Whether these interdependence networks display the same temporal characteristics within subjects from the same group may indicate divergent temporal trajectories. NMIT evaluates how interdependencies of features (e.g., microbial taxa, sequence variants, or OTUs) within a community might differ over time between sample groups. NMIT performs a nonparametric microbial interdependence test to determine longitudinal sample similarity as a function of temporal microbial composition. For each subject, NMIT computes pairwise correlations between each pair of features. Between-subject distances are then computed based on a distance norm between each subject's microbial interdependence correlation matrix. For more details and citation, please see `Zhang et al., 2015`_.
+Within microbial communities, microbial populations do not exist in isolation but instead form complex ecological interaction webs. Whether these interdependence networks display the same temporal characteristics within subjects from the same group may indicate divergent temporal trajectories. NMIT evaluates how interdependencies of features (e.g., microbial taxa, sequence variants, or OTUs) within a community might differ over time between sample groups. NMIT performs a nonparametric microbial interdependence test to determine longitudinal sample similarity as a function of temporal microbial composition. For each subject, NMIT computes pairwise correlations between each pair of features. Between-subject distances are then computed based on a distance norm between each subject's microbial interdependence correlation matrix. For more details and citation, please see `Zhang et al., 2017`_.
 
 .. note:: NMIT, as with most longitudinal methods, largely depends on the quality of the input data. This method will only work for longitudinal data (i.e., the same subjects are sampled repeatedly over time). To make the method robust, we suggest a minimum of 5-6 samples (time points) per subject, but the more the merrier. NMIT does not require that samples are collected at identical time points (and hence is robust to missing samples) but this may impact data quality if highly undersampled subjects are included, or if subjects' sampling times do not overlap in biologically meaningful ways. It is up to the users to ensure that their data are high quality and the methods are used in a biologically relevant fashion.
 
 .. note:: NMIT can take a long time to run; the following command takes around an hour to run. Just download the results file displayed below and skip ahead if you want to see how NMIT data are used downstream in QIIME2.
 
-First let's download a feature table to test.
+First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
 .. download::
    :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_taxa.qza
@@ -171,4 +171,4 @@ So there it is. We can use PERMANOVA test or other distance-based statistical te
 
 .. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
 .. _statsmodels LME description page: http://www.statsmodels.org/dev/mixed_linear.html
-.. _Zhang et al., 2015: https://doi.org/10.1002/gepi.22065
+.. _Zhang et al., 2017: https://doi.org/10.1002/gepi.22065
