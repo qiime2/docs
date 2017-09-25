@@ -121,7 +121,7 @@ Within microbial communities, microbial populations do not exist in isolation bu
 
 .. note:: NMIT, as with most longitudinal methods, largely depends on the quality of the input data. This method will only work for longitudinal data (i.e., the same subjects are sampled repeatedly over time). To make the method robust, we suggest a minimum of 5-6 samples (time points) per subject, but the more the merrier. NMIT does not require that samples are collected at identical time points (and hence is robust to missing samples) but this may impact data quality if highly undersampled subjects are included, or if subjects' sampling times do not overlap in biologically meaningful ways. It is up to the users to ensure that their data are high quality and the methods are used in a biologically relevant fashion.
 
-.. note:: NMIT can take a long time to run; the following command takes around an hour to run. Just download the results file displayed below and skip ahead if you want to see how NMIT data are used downstream in QIIME2.
+.. note:: NMIT can take a long time to run on very large feature tables. Removing low-abundance features and collapsing feature tables on taxonomy (e.g., to genus level) will improve runtime.
 
 First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
@@ -137,7 +137,8 @@ Now we are ready run NMIT. The output of this command is a distance matrix that 
      --i-table ecam-table-taxa.qza \
      --m-metadata-file ecam_map_maturity.txt \
      --p-individual-id-column studyid \
-     --o-distance-matrix nmit-dm.qza
+     --o-distance-matrix nmit-dm.qza \
+     --p-corr-method pearson
 
 
 Now let's put that distance matrix to work. First we will perform PERMANOVA tests to evaluate whether between-group distances are larger than within-group distance.
