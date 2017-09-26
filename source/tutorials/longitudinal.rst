@@ -135,21 +135,21 @@ Now we are ready run NMIT. The output of this command is a distance matrix that 
 
    qiime longitudinal nmit \
      --i-table ecam-table-taxa.qza \
-     --m-metadata-file ecam_map_maturity.txt \
+     --m-metadata-file ecam-sample-metadata.tsv \
      --p-individual-id-column studyid \
-     --o-distance-matrix nmit-dm.qza \
-     --p-corr-method pearson
+     --p-corr-method pearson \
+     --o-distance-matrix nmit-dm.qza
 
 
 Now let's put that distance matrix to work. First we will perform PERMANOVA tests to evaluate whether between-group distances are larger than within-group distance.
 
-.. note:: NMIT computes between-subject distances across all time points, so each subject (as defined the ``--p-individual-id-column`` parameter used above) gets compressed into a single "sample" representing that subject's longitudinal microbial interdependence. This new "sample" will be labeled with the ``SampleID`` of one of the subjects with a matching ``individual-id``; this is done for the convenience of passing this distance matrix to downstream steps without needing to generate a new sample metadata file but it means that you must **pay attention**. **For significance testing and visualization, only use group categories that are uniform across each ``individual-id``. DO NOT ATTEMPT TO USE METADATA CATEGORIES THAT VARY OVER TIME OR BAD THINGS WILL HAPPEN.** For example, in the tutorial metadata a patient is labeled ``antiexposedall==y`` only after antibiotics have been used; this is a category that you should not use, as it varies over time. Now have fun and be responsible.
+.. note:: NMIT computes between-subject distances across all time points, so each subject (as defined the ``--p-individual-id-column`` parameter used above) gets compressed into a single "sample" representing that subject's longitudinal microbial interdependence. This new "sample" will be labeled with the ``SampleID`` of one of the subjects with a matching ``individual-id``; this is done for the convenience of passing this distance matrix to downstream steps without needing to generate a new sample metadata file but it means that you must **pay attention**. **For significance testing and visualization, only use group categories that are uniform across each** ``individual-id``. **DO NOT ATTEMPT TO USE METADATA CATEGORIES THAT VARY OVER TIME OR BAD THINGS WILL HAPPEN.** For example, in the tutorial metadata a patient is labeled ``antiexposedall==y`` only after antibiotics have been used; this is a category that you should not use, as it varies over time. Now have fun and be responsible.
 
 .. command-block::
 
    qiime diversity beta-group-significance \
      --i-distance-matrix nmit-dm.qza \
-     --m-metadata-file ecam_map_maturity.txt \
+     --m-metadata-file ecam-sample-metadata.tsv \
      --m-metadata-category delivery \
      --o-visualization nmit.qzv
 
@@ -165,7 +165,7 @@ Finally, we can compute principal coordinates and use Emperor to visualize simil
 
    qiime emperor plot \
      --i-pcoa nmit-pc.qza \
-     --m-metadata-file ecam_map_maturity.txt \
+     --m-metadata-file ecam-sample-metadata.tsv \
      --o-visualization nmit-emperor.qzv
 
 So there it is. We can use PERMANOVA test or other distance-based statistical tests to determine whether groups exhibit different longitudinal microbial interdependence relationships, and PCoA/emperor to visualize the relationships among groups of subjects. **Don't forget the caveats mentioned above about using and interpreting NMIT**. Now be safe and have fun.
