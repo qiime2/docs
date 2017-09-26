@@ -117,7 +117,7 @@ Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifac
      --m-sample-metadata-file sample-metadata.tsv
 
 .. question::
-   Based on the information in ``table.qzv``, what value will you choose for the ``--p-sampling-depth`` parameter when you run ``qiime diversity core-metrics``?
+   Based on the information in ``table.qzv``, what value will you choose for the ``--p-sampling-depth`` parameter when you run ``qiime diversity core-metrics-phylogenetic``?
 
 .. question::
    Generate summaries of the tables for the individual runs of ``qiime dada2 denoise-single``. How many features were defined in the first run? How many features were defined in the second run? How do these numbers compare to total number of features after merging?
