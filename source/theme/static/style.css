@@ -74,11 +74,6 @@ div.admonition.qiime1 {
     border: 1px solid #FAEBCC;
 }
 
-/* `plugin_directory` extension */
-.action-signature th[colspan] {
-    text-align: center;
-}
-
 /* `tabbed` content */
 .tabbed .white-bg {
     background-color: #FFFFFF !important;

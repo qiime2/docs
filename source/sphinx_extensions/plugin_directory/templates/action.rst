@@ -1,48 +1,21 @@
 {{ title }}
 {{ '=' * title|length }}
 
-{{ action.description }}
-
 .. raw:: html
 
-   <table class="table action-signature">
-     {% for group, specs in (('Inputs', input_specs),
-                             ('Parameters', parameter_specs),
-                             ('Outputs', output_specs)) %}
-     <thead>
-       <tr>
-         <th colspan="4">{{ group }}</th>
-       </tr>
-       {% if specs %}
-       <tr>
-         <th>Name</th>
-         <th>Type</th>
-         <th>Default</th>
-         <th>Description</th>
-       </tr>
-       {% else %}
-       <tr>
-         <th colspan="4" class="text-muted">N/A</th>
-       </tr>
-       {% endif %}
-     </thead>
-     <tbody>
-       {% for spec in specs %}
-       <tr>
-         {% for content in spec[:3] %}
-         <td>
-           <code class="docutils literal">
-             <span class="pre">{{ content }}</span>
-           </code>
-         </td>
-         {% endfor %}
-         <td>
-           {% for line in spec[3].splitlines() %}
-           {{ line|urlize }}<br/>
-           {% endfor %}
-         </td>
-       </tr>
-       {% endfor %}
-     </tbody>
-     {% endfor %}
-   </table>
+   <div class="tabbed">
+      <ul class="nav nav-tabs">
+         <li class="active"><a data-toggle="tab" href="#cli">Command line interface</a></li>
+         <li><a data-toggle="tab" href="#api">Artifact API</a></li>
+      </ul>
+      <div class="tab-content">
+         <div id="cli" class="tab-pane fade in active">
+            <pre>
+{{ cli_help }}   </pre>
+         </div>
+         <div id="api" class="tab-pane fade">
+            <pre>
+{{ api_help }}   </pre>
+         </div>
+      </div>
+   </div>
