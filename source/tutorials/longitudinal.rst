@@ -114,5 +114,62 @@ Second, control charts display the mean value of "metric" at each "state". The f
 
 This visualizer currently only generates control charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
 
+
+Non-parametric microbial interdependence test (NMIT)
+----------------------------------------------------
+Within microbial communities, microbial populations do not exist in isolation but instead form complex ecological interaction webs. Whether these interdependence networks display the same temporal characteristics within subjects from the same group may indicate divergent temporal trajectories. NMIT evaluates how interdependencies of features (e.g., microbial taxa, sequence variants, or OTUs) within a community might differ over time between sample groups. NMIT performs a nonparametric microbial interdependence test to determine longitudinal sample similarity as a function of temporal microbial composition. For each subject, NMIT computes pairwise correlations between each pair of features. Between-subject distances are then computed based on a distance norm between each subject's microbial interdependence correlation matrix. For more details and citation, please see `Zhang et al., 2017`_.
+
+.. note:: NMIT, as with most longitudinal methods, largely depends on the quality of the input data. This method will only work for longitudinal data (i.e., the same subjects are sampled repeatedly over time). To make the method robust, we suggest a minimum of 5-6 samples (time points) per subject, but the more the merrier. NMIT does not require that samples are collected at identical time points (and hence is robust to missing samples) but this may impact data quality if highly undersampled subjects are included, or if subjects' sampling times do not overlap in biologically meaningful ways. It is up to the users to ensure that their data are high quality and the methods are used in a biologically relevant fashion.
+
+.. note:: NMIT can take a long time to run on very large feature tables. Removing low-abundance features and collapsing feature tables on taxonomy (e.g., to genus level) will improve runtime.
+
+First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
+
+.. download::
+   :url: https://data.qiime2.org/2017.9/tutorials/longitudinal/ecam_table_taxa.qza
+   :saveas: ecam-table-taxa.qza
+
+Now we are ready run NMIT. The output of this command is a distance matrix that we can pass to other QIIME2 commands for significance testing and visualization.
+
+.. command-block::
+
+   qiime longitudinal nmit \
+     --i-table ecam-table-taxa.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --p-individual-id-column studyid \
+     --p-corr-method pearson \
+     --o-distance-matrix nmit-dm.qza
+
+
+Now let's put that distance matrix to work. First we will perform PERMANOVA tests to evaluate whether between-group distances are larger than within-group distance.
+
+.. note:: NMIT computes between-subject distances across all time points, so each subject (as defined the ``--p-individual-id-column`` parameter used above) gets compressed into a single "sample" representing that subject's longitudinal microbial interdependence. This new "sample" will be labeled with the ``SampleID`` of one of the subjects with a matching ``individual-id``; this is done for the convenience of passing this distance matrix to downstream steps without needing to generate a new sample metadata file but it means that you must **pay attention**. **For significance testing and visualization, only use group categories that are uniform across each** ``individual-id``. **DO NOT ATTEMPT TO USE METADATA CATEGORIES THAT VARY OVER TIME OR BAD THINGS WILL HAPPEN.** For example, in the tutorial metadata a patient is labeled ``antiexposedall==y`` only after antibiotics have been used; this is a category that you should not use, as it varies over time. Now have fun and be responsible.
+
+.. command-block::
+
+   qiime diversity beta-group-significance \
+     --i-distance-matrix nmit-dm.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --m-metadata-category delivery \
+     --o-visualization nmit.qzv
+
+Finally, we can compute principal coordinates and use Emperor to visualize similarities among **subjects** (not individual samples; see the note above). 
+
+.. command-block::
+
+   qiime diversity pcoa \
+     --i-distance-matrix nmit-dm.qza \
+     --o-pcoa nmit-pc.qza
+
+.. command-block::
+
+   qiime emperor plot \
+     --i-pcoa nmit-pc.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --o-visualization nmit-emperor.qzv
+
+So there it is. We can use PERMANOVA test or other distance-based statistical tests to determine whether groups exhibit different longitudinal microbial interdependence relationships, and PCoA/emperor to visualize the relationships among groups of subjects. **Don't forget the caveats mentioned above about using and interpreting NMIT**. Now be safe and have fun.
+
 .. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
 .. _statsmodels LME description page: http://www.statsmodels.org/dev/mixed_linear.html
+.. _Zhang et al., 2017: https://doi.org/10.1002/gepi.22065
