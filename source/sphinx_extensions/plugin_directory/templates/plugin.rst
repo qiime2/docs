@@ -1,5 +1,5 @@
-{{ plugin.name }}
-{{ '=' * plugin.name|length }}
+{{ title }}
+{{ '=' * title|length }}
 
 .. raw:: html
 
@@ -8,9 +8,9 @@
        <tr>
          <th scope="row">Description</th>
          <td>
-         	{% for line in plugin.description.splitlines() %}
-         	{{ line|urlize }}<br/>
-         	{% endfor %}
+           {% for line in plugin.description.splitlines() %}
+           {{ line|urlize }}<br/>
+           {% endfor %}
          </td>
        </tr>
        <tr>
@@ -48,7 +48,7 @@ Methods
    :maxdepth: 1
 
    {% for id, _ in plugin.methods|dictsort %}
-   {{ id }}
+   {{ id.replace('_', '-') }}
    {% endfor %}
 {% else %}
 This plugin does not have any methods.
@@ -62,7 +62,7 @@ Visualizers
    :maxdepth: 1
 
    {% for id, _ in plugin.visualizers|dictsort %}
-   {{ id }}
+   {{ id.replace('_', '-') }}
    {% endfor %}
 {% else %}
 This plugin does not have any visualizers.
