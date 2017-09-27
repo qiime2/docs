@@ -67,9 +67,9 @@ def generate_rst(app):
                                       stdout=subprocess.PIPE,
                                       stderr=subprocess.STDOUT)
                 cli_help = textwrap.indent(proc.stdout.decode('utf-8'),
-                                           directive_indent)
+                                           directive_indent).strip()
                 api_help = textwrap.indent(action.__call__.__doc__,
-                                           directive_indent)
+                                           directive_indent).strip()
 
                 template = env.get_template('action.rst')
                 rendered = template.render(title=title, cli_help=cli_help,
