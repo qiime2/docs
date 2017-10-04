@@ -12,7 +12,7 @@ QIIME 2 can be installed natively or using virtual machines. The following pages
 .. _core-distribution:
 
 QIIME 2 Core 2017.10 distribution
---------------------------------
+---------------------------------
 
 The QIIME 2 Core 2017.10 distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
