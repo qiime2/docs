@@ -133,10 +133,7 @@ We'll also generate a summary of the merged ``FeatureData[Sequence]`` artifact. 
 Diversity analysis
 ------------------
 
-Now that you have ``FeatureTable[Frequency]`` and ``FeatureData[Sequence]`` objects, you're ready to begin exploring the composition of these samples in the context of their metadata. Refer to :doc:`the moving pictures tutorial <moving-pictures>` to derive the specific commands that you'll run.
-
-.. note::
-   One limitation in QIIME 2 as of this writing is a lack of paired tests (those are available in QIIME 1 - see ``identify_paired_differences.py``). Some of the questions that we would want to answer for this study, such as do all individuals who receive treatment experience the same change (either an increase or decrease) in community richness before and after treatment, require these types of tests. These are planned for addition to QIIME 2 in the near future, and we will update this tutorial at that time.
+Now that you have ``FeatureTable[Frequency]`` and ``FeatureData[Sequence]`` objects, you're ready to begin exploring the composition of these samples in the context of their metadata. Refer to :doc:`the moving pictures tutorial <moving-pictures>` to derive the specific commands that you'll run. Several questions concern longitudinal changes in the microbiome of individuals; review the actions described in the :doc:`q2-longitudinal tutorial <longitudinal>` to learn about methods for longitudinal analysis that are supported in QIIME 2.
 
 Below are some specific questions to answer about this data, grouped into a few categories. Try to collect at least one specific result to support your answer to each question.
 
@@ -145,6 +142,8 @@ Below are some specific questions to answer about this data, grouped into a few 
    a. Do samples differ in composition by subject-id (i.e., across individual)?
    #. Do samples differ in richness by subject-id?
    #. Do samples differ in evenness by subject-id?
+   #. Do richness, evenness, composition, and UniFrac distance change in individuals between baseline and the end of the study? Does this differ between individuals receiving FMT and control subjects? (Hint: try the paired difference/distance methods described in the :doc:`q2-longitudinal tutorial <longitudinal>`.)
+   #. Do richness, evenness, composition, and UniFrac distance change over time and in relation to FMT treatment and other subject metadata? Are these metrics more variable over time in treatment or control groups? (Hint: these questions concern longitudinal measurements.)
 
 #. Microbiota engraftment.
 
