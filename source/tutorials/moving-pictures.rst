@@ -156,6 +156,7 @@ Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` meth
      --p-trim-length 120 \
      --o-representative-sequences rep-seqs-deblur.qza \
      --o-table table-deblur.qza \
+     --p-sample-stats \
      --o-stats deblur-stats.qza
 
 .. note:: The two commands used in this section generate QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime quality-filter visualize-stats`` and ``qiime deblur visualize-stats``, respectively.
