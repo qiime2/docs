@@ -29,6 +29,7 @@ The QIIME 2 Core 2017.10 distribution includes the QIIME 2 framework, ``q2cli`` 
 - ``q2-longitudinal``
 - ``q2-metadata``
 - ``q2-phylogeny``
+- ``q2-quality-control``
 - ``q2-quality-filter``
 - ``q2-sample-classifier``
 - ``q2-taxa``
