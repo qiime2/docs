@@ -115,6 +115,50 @@ Second, control charts display the mean value of "metric" at each "state". The f
 This visualizer currently only generates control charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
 
 
+First differencing to track rate of change
+------------------------------------------
+Another way to view time series data is by assessing how the rate of change differs over time. We can do this through calculating first differences, which is the magnitude of change between successive time points. If :math:`Y_\text{t}` is the value of metric :math:`Y` at time :math:`t`, the first difference at time :math:`t`, :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{t-1}`. This transformation is performed in the ``first-differences`` method in ``q2-longitudinal``.
+
+.. command-block::
+
+   qiime longitudinal first-differences \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --m-metadata-file shannon.qza \
+     --p-state-column month \
+     --p-metric shannon \
+     --o-first-differences shannon-first-differences \
+     --p-individual-id-column studyid \
+     --p-replicate-handling random
+
+This outputs a ``SampleData[FirstDifferences]`` artifact, which can then be viewed, e.g., with the ``volatility`` visualizer or analyzed with ``linear-mixed-effects`` or other methods.
+
+A similar method is ``first-distances``, which instead identifies the beta diversity distances between successive samples from the same subject. The pairwise distance between all samples can already be calculated by the ``beta`` or ``core-metrics`` methods in ``q2-diversity``, so this method simply identifies the distances between successive samples collected from the same subject and outputs this series of values as metadata that can be consumed by other methods.
+
+.. command-block::
+
+   qiime longitudinal first-distances \
+     --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --p-state-column month \
+     --o-first-distances first-distances \
+     --p-individual-id-column studyid \
+     --p-replicate-handling random
+
+This output can be used in the same way as the output of ``first-differences``. The output of ``first-distances`` is particularly empowering, though, because it allows us to analyze longitudinal changes in beta diversity using actions that cannot operate directly on a distance matrix, such as ``linear-mixed-effects``.
+
+.. command-block::
+
+   qiime longitudinal linear-mixed-effects \
+     --m-metadata-file first-distances.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --p-metric Distance \
+     --p-state-column month \
+     --p-individual-id-column studyid \
+     --o-visualization distance-first-differences-LME \
+     --p-group-categories delivery,diet
+
+
+
 Non-parametric microbial interdependence test (NMIT)
 ----------------------------------------------------
 Within microbial communities, microbial populations do not exist in isolation but instead form complex ecological interaction webs. Whether these interdependence networks display the same temporal characteristics within subjects from the same group may indicate divergent temporal trajectories. NMIT evaluates how interdependencies of features (e.g., microbial taxa, sequence variants, or OTUs) within a community might differ over time between sample groups. NMIT performs a nonparametric microbial interdependence test to determine longitudinal sample similarity as a function of temporal microbial composition. For each subject, NMIT computes pairwise correlations between each pair of features. Between-subject distances are then computed based on a distance norm between each subject's microbial interdependence correlation matrix. For more details and citation, please see `Zhang et al., 2017`_.
