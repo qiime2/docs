@@ -15,5 +15,6 @@ Tutorials
    metadata
    filtering
    feature-classifier
+   quality-control
    sample-classifier
    longitudinal
