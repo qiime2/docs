@@ -152,7 +152,7 @@ Specifically we'll plot a boxplot and identify taxa that could be explaining the
 .. command-block::
 
    qiime gneiss balance-taxonomy \
-     --i-balances balances.qza \
+     --i-table composition.qza \
      --i-tree hierarchy.qza \
      --i-taxonomy taxa.qza \
      --p-taxa-level 2 \
