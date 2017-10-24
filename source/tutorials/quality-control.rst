@@ -53,6 +53,7 @@ Now that you have split your sequences into groups of sequences that hit/miss th
    qiime feature-table filter-features \
      --i-table query-table.qza \
      --m-metadata-file hits.qza \
-     --o-filtered-table hits-filtered-table.qza
+     --o-filtered-table no-hits-filtered-table.qza \
+     --p-exclude-ids
 
 Enjoy.
