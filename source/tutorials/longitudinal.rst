@@ -126,7 +126,7 @@ Another way to view time series data is by assessing how the rate of change diff
      --m-metadata-file shannon.qza \
      --p-state-column month \
      --p-metric shannon \
-     --o-first-differences shannon-first-differences \
+     --o-first-differences shannon-first-differences.qza \
      --p-individual-id-column studyid \
      --p-replicate-handling random
 
@@ -140,7 +140,7 @@ A similar method is ``first-distances``, which instead identifies the beta diver
      --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file ecam-sample-metadata.tsv \
      --p-state-column month \
-     --o-first-distances first-distances \
+     --o-first-distances first-distances.qza \
      --p-individual-id-column studyid \
      --p-replicate-handling random
 
@@ -154,7 +154,7 @@ This output can be used in the same way as the output of ``first-differences``. 
      --p-metric Distance \
      --p-state-column month \
      --p-individual-id-column studyid \
-     --o-visualization distance-first-differences-LME \
+     --o-visualization first-distances-LME.qzv \
      --p-group-categories delivery,diet
 
 
