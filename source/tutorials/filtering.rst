@@ -5,7 +5,7 @@ Filtering data
 
 This tutorial describes how to filter feature tables and distance matrices in QIIME 2, and will be expanded as more filtering functionality becomes available.
 
-.. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py``, ``filter_otus_from_otu_table.py``, and ``filter_distance_matrix.py``.
+.. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py``, ``filter_otus_from_otu_table.py``, ``filter_taxa_from_otu_table.py``, and ``filter_distance_matrix.py``.
 
 Obtain the data
 ---------------
@@ -32,9 +32,13 @@ Download the data we'll use in the tutorial. This includes sample metadata, a fe
    :url: https://data.qiime2.org/2017.10/tutorials/filtering/distance-matrix.qza
    :saveas: distance-matrix.qza
 
+.. download::
+   :url: https://data.qiime2.org/2017.10/tutorials/filtering/taxonomy.qza
+   :saveas: taxonomy.qza
+
 Filtering feature tables
 ------------------------
-In this section of the tutorial we'll see how to filter (i.e., remove) samples and features from a feature table. Feature tables have two axes: the sample axis and the feature axis. The filtering operations described in this tutorial are all applicable to the sample axis and the feature axis using the ``filter-samples`` and ``filter-features`` methods, respectively. Both of these methods are implemented in the ``q2-feature-table`` plugin.
+In this section of the tutorial we'll see how to filter (i.e., remove) samples and features from a feature table. Feature tables have two axes: the sample axis and the feature axis. The filtering operations described in this tutorial are generally applicable to the sample axis and the feature axis using the ``filter-samples`` and ``filter-features`` methods, respectively. Both of these methods are implemented in the ``q2-feature-table`` plugin. Taxonomy-based filtering can also be applied to filter features from a feature table using the ``filter-table`` method in the ``q2-taxa`` plugin.
 
 Total-frequency-based filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +160,45 @@ This syntax also supports negating individual clauses of the ``--p-where`` expre
      --p-where "Subject='subject-1' AND NOT BodySite='gut'" \
      --o-filtered-table subject-1-non-gut-filtered-table.qza
 
-.. note:: Currently, the most common metadata-based filtering of features is based on feature taxonomy, such as filtering all features that are annotated as being in a particular genus. This can currently be achieved using ``filter-features`` if taxonomy is provided in a feature metadata file. We are working on adding more direct support for this functionality, which will be made available in a new method of the ``q2-taxa`` plugin. You can track progress on this `here <https://github.com/qiime2/q2-taxa/issues/40>`_.
+Taxonomy-based filtering
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. command-block::
+   qiime taxa filter-table \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-exclude mitochondria \
+     --o-filtered-table table-no-mitochondria.qza
+
+.. command-block::
+   qiime taxa filter-table \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-exclude mitochondria,chloroplast \
+     --o-filtered-table table-no-mitochondria-no-chloroplasts.qza
+
+.. command-block::
+   qiime taxa filter-table \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-include p__ \
+     --o-filtered-table table-with-phyla.qza
+
+.. command-block::
+   qiime taxa filter-table \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-include p__ \
+     --p-exclude mitochondria,chloroplast \
+     --o-filtered-table table-with-phyla-no-mitochondria-no-chloroplasts.qza
+
+.. command-block::
+   qiime taxa filter-table \
+     --i-table table.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-mode exact \
+     --p-exclude "k__Bacteria; p__Proteobacteria; c__Alphaproteobacteria; o__Rickettsiales; f__mitochondria" \
+     --o-filtered-table table-no-mitochondria-exact.qza
 
 Filtering distance matrices
 ---------------------------
