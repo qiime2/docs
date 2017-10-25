@@ -338,6 +338,33 @@ Finally, ordination is a popular approach for exploring microbial community comp
 .. question::
     What differences do you observe between the unweighted UniFrac and Bray-Curtis PCoA plots?
 
+Alpha rarefaction plotting
+--------------------------
+
+In this section we'll explore alpha diversity as a function of sampling depth using the ``qiime diversity alpha-rarefaction`` visualizer. This visualizer computes one or more alpha diversity metrics at multiple sampling depths, in steps between 1 (optionally controlled with ``--p-min-depth``) and the value provided as ``--p-max-depth``. At each sampling depth step, 10 rarefied tables will be generated, and the diversity metrics will be computed for all samples in the tables. The number of iterations (rarefied tables computed at each sampling depth) can be controlled with ``--p-iterations``. Average diversity values will be plotted for each sample at each even sampling depth, and samples can be grouped based on metadata in the resulting visualization if sample metadata is provided with the ``--m-metadata-file`` parameter.
+
+.. command-block::
+
+   qiime diversity alpha-rarefaction \
+     --i-table table.qza \
+     --i-phylogeny rooted-tree.qza \
+     --p-max-depth 4000 \
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization alpha-rarefaction.qzv
+
+The visualization will have two plots. The top plot is an alpha rarefaction plot, and is primarily used to determine if the richness of the samples has been fully observed or sequenced. If the lines in the plot appear to "level out" (i.e., approach a slope of zero) at some sampling depth along the x-axis, that suggests that collecting additional sequences beyond that sampling depth would not be likely to result in the observation of additional features. If the lines in a plot don't level out, this may be because the richness of the samples hasn't been fully observed yet (because too few sequences were collected), or it could be an indicator that a lot of sequencing error remains in the data (which is being mistaken for novel diversity).
+
+The bottom plot in this visualization is important when grouping samples by metadata. It illustrates the number of samples that remain in each group when the feature table is rarefied to each sampling depth. If a given sampling depth ``d`` is larger than the total frequency of a sample ``s`` (i.e., the number of sequences that were obtained for sample ``s``), it is not possible to compute the diversity metric for sample ``s`` at sampling depth ``d``. If many of the samples in a group have lower total frequencies than ``d``, the average diversity presented for that group at ``d`` in the top plot will be unreliable because it will have been computed on relatively few samples. When grouping samples by metadata, it is therefore essential to look at the bottom plot to ensure that the data presented in the top plot is reliable.
+
+.. note::
+    The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
+
+.. question::
+    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
+
+.. question::
+    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
+
 Taxonomic analysis
 ------------------
 
