@@ -40,30 +40,38 @@
      </tbody>
    </table>
 
+{% if plugin.pipelines %}
+Pipelines
+---------
+
+.. toctree::
+   :maxdepth: 1
+
+   {% for id, _ in plugin.pipelines|dictsort %}
+   {{ id.replace('_', '-') }}
+   {% endfor %}
+{% endif %}
+
+{% if plugin.methods %}
 Methods
 -------
 
-{% if plugin.methods %}
 .. toctree::
    :maxdepth: 1
 
    {% for id, _ in plugin.methods|dictsort %}
    {{ id.replace('_', '-') }}
    {% endfor %}
-{% else %}
-This plugin does not have any methods.
 {% endif %}
 
+{% if plugin.visualizers %}
 Visualizers
 -----------
 
-{% if plugin.visualizers %}
 .. toctree::
    :maxdepth: 1
 
    {% for id, _ in plugin.visualizers|dictsort %}
    {{ id.replace('_', '-') }}
    {% endfor %}
-{% else %}
-This plugin does not have any visualizers.
 {% endif %}
