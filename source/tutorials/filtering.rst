@@ -185,7 +185,7 @@ Removing features that match more than one search term is achieved by providing 
      --p-exclude mitochondria,chloroplast \
      --o-filtered-table table-no-mitochondria-no-chloroplast.qza
 
-Filtering a table to retain only specific features is achieved using the ``--p-include`` parameter. For example, ``--p-include`` can be used to retain only features that were at least annotated to the phylum level. In the Greengenes taxonomy (which was used to generate the ``FeatureTable[Taxonomy]`` being provided here), all phylum annotations begin with the text ``p__``. We can therefore use ``p__`` as a ``--p-include`` include term here to retain only features that contain any phylum-level annotation. In practice, this filter might be useful for filtering features that are unlikely to be taxonomically informative about your samples.
+Filtering a table to retain only specific features is achieved using the ``--p-include`` parameter. For example, ``--p-include`` can be used to retain only features that were at least annotated to the phylum level. In the Greengenes taxonomy (which was used to generate the ``FeatureTable[Taxonomy]`` being provided here), all phylum annotations begin with the text ``p__``. If a feature wasn't assigned to a phylum (i.e., it contained at most a kingdom/domain annotation) it shouldn't contain the text ``p__``. We can therefore use ``p__`` as a ``--p-include`` include term here to retain only features that contain a phylum-level annotation. In practice, this filter might be useful for filtering features that are unlikely to be taxonomically informative about your samples.
 
 .. command-block::
    qiime taxa filter-table \
@@ -204,7 +204,7 @@ The ``--p-include`` and ``--p-exclude`` parameters can be combined. The followin
      --p-exclude mitochondria,chloroplast \
      --o-filtered-table table-with-phyla-no-mitochondria-no-chloroplast.qza
 
-By default, the term(s) provided for ``--p-include`` or ``--p-exclude`` match if they are contained in a taxonomic annotation. If you'd like your terms to match only if they are the complete taxonomic annotation, that can be achieved by passing ``--p-mode exact`` (to indicate the search should require an exact match). When searching with ``-p-mode exact`` (the default), search terms are case sensitive, so the search term ``mitochondria`` would not return the same results as the search term ``Mitochondria``.
+By default, the term(s) provided for ``--p-include`` or ``--p-exclude`` match if they are contained in a taxonomic annotation. If you'd like your terms to match only if they are the complete taxonomic annotation, that can be achieved by passing ``--p-mode exact`` (to indicate the search should require an exact match). When searching with ``-p-mode exact``, search terms are case sensitive, so the search term ``mitochondria`` would not return the same results as the search term ``Mitochondria``.
 
 Removing mitochondrial sequences with an exact match could be achieved as follows. (In the Greengenes taxonomy, there are sometimes genus and species annotations associated with mitochondria annotations, so this command may not remove all features annotated as mitochondria.)
 
