@@ -234,7 +234,7 @@ The FastTree program creates an unrooted tree, so in the final step in this sect
 Alpha and beta diversity analysis
 ---------------------------------
 
-QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, which supports computing alpha and beta diversity metrics, applying related statistical tests, and generating interactive visualizations. We'll first apply the ``core-metrics-phylogenetic`` method, which rarefies a ``FeatureTable[Frequency]`` to a user-specified depth, and then computes a series of alpha and beta diversity metrics. The metrics computed by default are:
+QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, which supports computing alpha and beta diversity metrics, applying related statistical tests, and generating interactive visualizations. We'll first apply the ``core-metrics-phylogenetic`` method, which rarefies a ``FeatureTable[Frequency]`` to a user-specified depth, computes several alpha and beta diversity metrics, and generates principle coordinates analysis (PCoA) plots using Emperor for each of the beta diversity metrics. The metrics computed by default are:
 
 * Alpha diversity
 
@@ -250,7 +250,7 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
   * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
   * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
 
-The only parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
+An important parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
 .. question::
    View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics-phylogenetic`` command?
@@ -261,6 +261,7 @@ The only parameter that needs to be provided to this script is ``--p-sampling-de
      --i-phylogeny rooted-tree.qza \
      --i-table table.qza \
      --p-sampling-depth 1109 \
+     --m-metadata-file sample-metadata.tsv \
      --output-dir core-metrics-results
 
 Here we set the ``--p-sampling-depth`` parameter to 1109. This value was chosen based on the number of sequences in the ``L3S341`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics-phylogenetic`` analyses and anything that uses these results.
@@ -316,7 +317,7 @@ Next we'll analyze sample composition in the context of discrete metadata using 
 
 Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime diversity beta-correlation`` and ``qiime diversity bioenv`` commands.
 
-Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. PCoA is run as part of the ``core-metrics-phylogenetic`` command, so we can generate these plots for unweighted UniFrac and Bray-Curtis as follows. The ``--p-custom-axis`` parameter that we pass here is very useful for exploring temporal data. The resulting plot will contain axes for principal coordinate 1, principal coordinate 2, and days since the experiment start. This is useful for exploring how the samples change over time.
+Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. While our ``core-metrics-phylogenetic`` command did already generate some Emperor plots, we want to pass an optional parameter, ``--p-custom-axis``, which is very useful for exploring time series data. The PCoA results that were used in ``core-metrics-phylogeny`` are also available, making it easy to generate new visualizations with Emperor. We will generate Emperor plots for unweighted UniFrac and Bray-Curtis so that the resulting plot will contain axes for principal coordinate 1, principal coordinate 2, and days since the experiment start. We will use that last axis to explore how these samples changed over time.
 
 .. command-block::
 
@@ -324,13 +325,13 @@ Finally, ordination is a popular approach for exploring microbial community comp
      --i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization core-metrics-results/unweighted-unifrac-emperor.qzv
+     --o-visualization core-metrics-results/unweighted-unifrac-emperor-DaysSinceExperimentStart.qzv
 
    qiime emperor plot \
      --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axis DaysSinceExperimentStart \
-     --o-visualization core-metrics-results/bray-curtis-emperor.qzv
+     --o-visualization core-metrics-results/bray-curtis-emperor-DaysSinceExperimentStart.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
