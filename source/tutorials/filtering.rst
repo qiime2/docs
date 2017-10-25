@@ -3,7 +3,7 @@ Filtering data
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-This tutorial describes how to filter feature tables and distance matrices in QIIME 2, and will be expanded as more filtering functionality becomes available.
+This tutorial describes how to filter feature tables, sequences, and distance matrices in QIIME 2, and will be expanded as more filtering functionality becomes available.
 
 .. qiime1-users:: The methods described in this tutorial mirror the functionality in ``filter_samples_from_otu_table.py``, ``filter_otus_from_otu_table.py``, ``filter_taxa_from_otu_table.py``, and ``filter_distance_matrix.py``.
 
@@ -35,6 +35,10 @@ Download the data we'll use in the tutorial. This includes sample metadata, a fe
 .. download::
    :url: https://data.qiime2.org/2017.10/tutorials/filtering/taxonomy.qza
    :saveas: taxonomy.qza
+
+.. download::
+   :url: https://data.qiime2.org/2017.10/tutorials/filtering/sequences.qza
+   :saveas: sequences.qza
 
 Filtering feature tables
 ------------------------
@@ -160,8 +164,12 @@ This syntax also supports negating individual clauses of the ``--p-where`` expre
      --p-where "Subject='subject-1' AND NOT BodySite='gut'" \
      --o-filtered-table subject-1-non-gut-filtered-table.qza
 
-Taxonomy-based filtering
-~~~~~~~~~~~~~~~~~~~~~~~~
+Taxonomy-based filtering of tables and sequences
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Taxonomy-based filtering is a very common type of feature-metadata-based filtering, so the ``q2-taxa`` plugin provides the ``filter-table`` method to simplify this process. Filtering can be applied to retain only specific taxa using ``--p-include`` and/or to remove specific taxa using ``--p-exclude``.
+
+Removing a feature if its taxonomic annotation contains some specific text is achieved with the ``--p-exclude`` parameter. For example, ``--p-exclude`` is used here to remove all features annotated as ``mitochondria`` from a table.
 
 .. command-block::
    qiime taxa filter-table \
@@ -170,12 +178,16 @@ Taxonomy-based filtering
      --p-exclude mitochondria \
      --o-filtered-table table-no-mitochondria.qza
 
+Removing features that match more than one search term is achieved by providing the search terms in a comma-separated list. The following command will remove all features that contain either ``mitochondria`` or ``Chloroplast`` in their taxonomic annotation.
+
 .. command-block::
    qiime taxa filter-table \
      --i-table table.qza \
      --i-taxonomy taxonomy.qza \
-     --p-exclude mitochondria,chloroplast \
+     --p-exclude mitochondria,Chloroplast \
      --o-filtered-table table-no-mitochondria-no-chloroplasts.qza
+
+Filtering a table to retain only specific features is achieved using the ``--p-include`` parameter. For example, ``--p-include`` can be used to retain only features that were at least annotated to the phylum level. In the Greengenes taxonomy (which was used to generate the ``FeatureTable[Taxonomy]`` being provided here), all phylum annotations begin with the text ``p__``. We can therefore use ``p__`` as a ``--p-include`` include term here to retain only features that contain any phylum-level annotation.
 
 .. command-block::
    qiime taxa filter-table \
@@ -184,13 +196,17 @@ Taxonomy-based filtering
      --p-include p__ \
      --o-filtered-table table-with-phyla.qza
 
+The ``--p-include`` and ``--p-exclude`` parameters can be combined. The following command will retain all features that contain a phylum-level annotation, but exclude all features that contain either ``mitochondria`` or ``Chloroplast`` in their taxonomic annotation.
+
 .. command-block::
    qiime taxa filter-table \
      --i-table table.qza \
      --i-taxonomy taxonomy.qza \
      --p-include p__ \
-     --p-exclude mitochondria,chloroplast \
+     --p-exclude mitochondria,Chloroplast \
      --o-filtered-table table-with-phyla-no-mitochondria-no-chloroplasts.qza
+
+By default, the term(s) provided for ``--p-include`` or ``--p-exclude`` match if they are contained in a taxonomic annotation. If you'd like your terms to match only if they are the complete taxonomic annotation, that can be achieved by passing ``--p-mode exact`` (to indicate the search should require an exact match). Removing mitochondrial sequences with an exact match could be achieved as follows. (In the Greengenes taxonomy, there are sometimes genus and species annotations associated with mitochondria annotations, so this command may not remove all features annotated as mitochondria.)
 
 .. command-block::
    qiime taxa filter-table \
@@ -199,6 +215,21 @@ Taxonomy-based filtering
      --p-mode exact \
      --p-exclude "k__Bacteria; p__Proteobacteria; c__Alphaproteobacteria; o__Rickettsiales; f__mitochondria" \
      --o-filtered-table table-no-mitochondria-exact.qza
+
+Taxonomy-based filtering of tables can also be achieved using ``qiime feature-table filter-features`` with the ``--p-where`` parameter. If your filtering query is more complex than those supported through ``qiime taxa filter-table``, you should use ``qiime feature-table filter-features``.
+
+Filtering sequences
+-------------------
+
+The ``q2-taxa`` plugin provides a method, ``filter-seqs``, for filtering ``FeatureData[Sequence]`` based on a feature's taxonomic annotation. The functionality is very similar to that provided in ``qiime taxa filter-table``, so you should refer to the ``qiime taxa filter-table`` examples above to learn more about taxonomy-based filtering. Briefly, ``filter-seqs`` can be applied as follows to retain all features that contain a phylum-level annotation, but exclude all features that contain either ``mitochondria`` or ``Chloroplast`` in their taxonomic annotation.
+
+.. command-block::
+   qiime taxa filter-seqs \
+     --i-sequences sequences.qza \
+     --i-taxonomy taxonomy.qza \
+     --p-include p__ \
+     --p-exclude mitochondria,Chloroplast \
+     --o-filtered-sequences sequences-with-phyla-no-mitochondria-no-chloroplasts.qza
 
 Filtering distance matrices
 ---------------------------
