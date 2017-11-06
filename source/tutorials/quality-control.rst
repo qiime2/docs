@@ -21,15 +21,15 @@ The ``exclude-seqs`` method aligns a set of query sequences contained in a ``Fea
 Let's download some example data and get started.
 
 .. download::
-   :url: https://data.qiime2.org/2017.10/tutorials/quality-control/query-seqs.qza
+   :url: https://data.qiime2.org/2017.11/tutorials/quality-control/query-seqs.qza
    :saveas: query-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.10/tutorials/quality-control/reference-seqs.qza
+   :url: https://data.qiime2.org/2017.11/tutorials/quality-control/reference-seqs.qza
    :saveas: reference-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2017.10/tutorials/quality-control/query-table.qza
+   :url: https://data.qiime2.org/2017.11/tutorials/quality-control/query-table.qza
    :saveas: query-table.qza
 
 Next, we will separate a small set of query sequences into those that hit/do not hit a set of reference sequences.
