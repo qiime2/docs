@@ -7,6 +7,8 @@ This tutorial will demonstrate the various features of ``q2-longitudinal``, a pl
 
 "States" can also commonly be methodological, in which case sample pairs will usually be the same individual at the same time with two different methods. For example, q2-longitudinal could compare the effects of different collection methods, storage methods, DNA extraction methods, or any bioinformatic processing steps on the feature composition of individual samples.
 
+.. note:: Many of the actions in q2-longitudinal take a ``metric`` value as input, which is usually a column name in a metadata file or a metadata-transformable artifact (including alpha diversity vectors, PCoA results, and many other QIIME 2 artifacts), or a feature ID in a feature table. The names of valid ``metric`` values in metadata files and metadata-transformable artifacts can be checked with the :doc:`metadata tabulate <metadata>` command. Valid feature names (to use as ``metric`` values associated with a feature table) can be checked with the ``feature-data summarize`` command.
+
 In the examples below, we use data from the `ECAM study`_, a longitudinal study of infants' and mothers' microbiota from birth through 2 years of life. First let's create a new directory and download the relevant tutorial data.
 
 .. command-block::
@@ -48,7 +50,6 @@ This visualizer currently supports comparison of feature abundance (e.g., microb
      --p-individual-id-column studyid \
      --p-replicate-handling random \
      --o-visualization pairwise-differences.qzv
-
 
 
 Pairwise distance comparisons
