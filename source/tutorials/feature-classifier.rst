@@ -51,7 +51,7 @@ Next we import these data into QIIME 2 Artifacts. Since the Greengenes reference
 Extract reference reads
 -----------------------
 
-It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequence reads that we're trying to classify are 100-base single-end reads that were amplified with the 515F/806R primer pair. We optimize for that here by extracting reads from the reference database based on matches to this primer pair, and then slicing the result to 100 bases.
+It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequence reads that we're trying to classify are 120-base single-end reads that were amplified with the 515F/806R primer pair. We optimize for that here by extracting reads from the reference database based on matches to this primer pair, and then slicing the result to 120 bases.
 
 .. command-block::
 
@@ -59,7 +59,7 @@ It has been shown that taxonomic classification accuracy improves when a Naive B
      --i-sequences 85_otus.qza \
      --p-f-primer GTGCCAGCMGCCGCGGTAA \
      --p-r-primer GGACTACHVGGGTWTCTAAT \
-     --p-trunc-len 100 \
+     --p-trunc-len 120 \
      --o-reads ref-seqs.qza
 
 
