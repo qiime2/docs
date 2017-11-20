@@ -1,15 +1,9 @@
 Future plugins
 ==============
 
-Plugins planned for future releases are listed in the `QIIME 2 Plugins spreadsheet`_.
+Plugins planned for future releases and non-core plugins are discussed in the `QIIME 2 Forum`_. If you have questions about the availability of QIIME 2 methods, actions, pipelines, or plugins, please post your questions there. If you are working on a plugin that is not part of the QIIME 2 core distribution, but you'd like to inform QIIME 2 users about it, you should post a topic to the `Community Plugins category`_ on the forum.
 
-The ``Status`` categories used in this spreadsheet are:
+If you're looking for documentation on how to develop a plugin, see :doc:`this guide <developing>`.
 
-* ``Released`` : The plugin is currently available.
-* ``Pre-release development`` : The plugin is currently under active development. See the *Estimated release date* for when this plugin is expected to be moved to ``Release`` status.
-* ``Planning`` : The plugin is in the planning stage. Development has not officially started, but it is expected to start soon. Someone has already committed to working on this plugin. There may be ``Unmet dependencies`` that are blocking its transition to ``Pre-release development``.
-* ``Needs developer`` : The plugin is in the early planning phase. It represents functionality that is needed or wanted, but no one has yet committed to working on this plugin. There may be ``Unmet dependencies`` that are blocking its transition to ``Planning`` or ``Pre-release development``.
-
-If you'd like to develop a QIIME 2 plugin, :doc:`get in touch <../community>` to request edit access to the spreadsheet. If you're looking for documentation on how to develop a plugin, see :doc:`this guide <developing>`.
-
-.. _QIIME 2 Plugins spreadsheet: https://docs.google.com/spreadsheets/d/1KdgbooDDuh_aE-aCGlVLNgMCli513wU9E5_PgpL6tbY/pubhtml?gid=0&single=true
+.. _QIIME 2 Forum: https://forum.qiime2.org
+.. _Community Plugins category: https://forum.qiime2.org/c/community-plugins
