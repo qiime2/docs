@@ -6,7 +6,7 @@ There are several ways to get in touch with the QIIME 2 community and stay up-to
 QIIME 2 Forum
 -------------
 
-Visit the `QIIME 2 forum` for QIIME 2 support and to talk with other users and developers about all things related to QIIME 2.
+Visit the `QIIME 2 forum`_ for QIIME 2 support and to talk with other users and developers about all things related to QIIME 2.
 
 Staying updated
 ---------------
