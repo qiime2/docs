@@ -70,9 +70,9 @@ Enjoy.
 
 Evaluating quality of samples with known composition
 ----------------------------------------------------
-`Mock communities`_ consist of known microbial strains that are intentionally mixed at defined proportions, such that the composition of the sample is known. Mock communities are useful for benchmarking bioinformatics methods, e.g., to determine how well a given method or pipeline estimates the expected composition. Many investigators also include mock communities or other samples with known compositions on sequencing runs to determine run quality and method optimization on a per-run basis. The q2-quality-control plugin contains two actions to assess mock community accuracy in each of these use cases. `evaluate_composition` assesses the accuracy with which the expected taxonomic composition (or other feature composition) is reconstructed. `evaluate_seqs` assesses the similarity of observed sequences to expected sequences, e.g., to determine the accuracy of denoising or OTU picking methods, and is described in the next section.
+`Mock communities`_ consist of known microbial strains that are intentionally mixed at defined proportions, such that the composition of the sample is known. Mock communities are useful for benchmarking bioinformatics methods, e.g., to determine how well a given method or pipeline estimates the expected composition. Many investigators also include mock communities or other samples with known compositions on sequencing runs to determine run quality and method optimization on a per-run basis. The q2-quality-control plugin contains two actions to assess mock community accuracy in each of these use cases. ``evaluate_composition`` assesses the accuracy with which the expected taxonomic composition (or other feature composition) is reconstructed. ``evaluate_seqs`` assesses the similarity of observed sequences to expected sequences, e.g., to determine the accuracy of denoising or OTU picking methods, and is described in the next section.
 
-`evaluate_composition` compares the feature composition of pairs of observed and expected samples containing the same sample ID in two separate feature tables. Typically, feature composition will consist of taxonomy classifications or other semicolon-delimited feature annotations. Let's give it a spin.
+``evaluate_composition`` compares the feature composition of pairs of observed and expected samples containing the same sample ID in two separate feature tables. Typically, feature composition will consist of taxonomy classifications or other semicolon-delimited feature annotations. Let's give it a spin.
 
 .. command-block::
 
@@ -86,7 +86,7 @@ Taxon accuracy rate, taxon detection rate, and linear regression scores between 
 
 Evaluating sequence quality
 ---------------------------
-`evaluate_seqs` aligns a set of query (e.g., observed) sequences against a set of reference (e.g., expected) sequences to evaluate the quality of alignment. The intended use is to align observed sequences against expected sequences (e.g., from a mock community) to determine the frequency of mismatches between observed sequences and the most similar expected sequences, e.g., as a measure of sequencing/method errors. However, any sequences may be provided as input to generate a report on pairwise alignment quality against a set of reference sequences. 
+``evaluate_seqs`` aligns a set of query (e.g., observed) sequences against a set of reference (e.g., expected) sequences to evaluate the quality of alignment. The intended use is to align observed sequences against expected sequences (e.g., from a mock community) to determine the frequency of mismatches between observed sequences and the most similar expected sequences, e.g., as a measure of sequencing/method errors. However, any sequences may be provided as input to generate a report on pairwise alignment quality against a set of reference sequences. 
 
 .. command-block::
 
