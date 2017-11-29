@@ -89,7 +89,7 @@ Linear mixed effects (LME) models test the relationship between a single respons
 
 The visualizer produced by this command contains several results. First, the input parameters are shown at the top of the visualization for convenience (e.g., when flipping through multiple visualizations it is useful to have a summary). Next, the "model summary" shows some descriptive information about the LME model that was trained. This just shows descriptive information about the "groups"; in this case, groups will be individuals (as set by the ``--p-individual-id-column``). The main results to examine will be the "model results" below the "model summary". These results summarize the effects of each fixed effect (and their interactions) on the dependent variable (shannon diversity). This table shows parameter estimates, estimate standard errors, z scores, P values (P>|z|), and 95% confidence interval upper and lower bounds for each parameter. We see in this table that shannon diversity is significantly impacted by month of life and by diet, as well as several interacting factors. More information about LME models and the interpretation of these data can be found on the `statsmodels LME description page`_, which provides a number of useful technical references for further reading.
 
-Finally, scatter plots categorized by each "group column" are shown at the bottom of the visualization, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group. 
+Finally, scatter plots categorized by each "group column" are shown at the bottom of the visualization, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group.
 
 
 Volatility analysis
@@ -176,7 +176,7 @@ The ``first-differences`` and ``first-distances`` methods both have an optional 
      --p-state-column month \
      --o-first-distances first-distances.qza \
      --p-individual-id-column studyid \
-     --p-replicate-handling random
+     --p-replicate-handling random \
      --p-baseline 0
 
 .. note:: **Fun fact!** We can also use the ``first-distances`` method to track longitudinal change in the proportion of features that are shared between an individual’s samples. This can be performed by calculating pairwise Jaccard distance (proportion of features that are not shared) between each pair of samples and using this as input to ``first-distances``. This is particularly useful for pairing with the ``baseline`` parameter, e.g., to determine how unique features are lost/gained over the course of an experiment.
@@ -220,7 +220,7 @@ Now let's put that distance matrix to work. First we will perform PERMANOVA test
      --m-metadata-category delivery \
      --o-visualization nmit.qzv
 
-Finally, we can compute principal coordinates and use Emperor to visualize similarities among **subjects** (not individual samples; see the note above). 
+Finally, we can compute principal coordinates and use Emperor to visualize similarities among **subjects** (not individual samples; see the note above).
 
 .. command-block::
 
