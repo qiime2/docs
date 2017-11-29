@@ -74,7 +74,7 @@ The ``pairwise-distances`` visualizer also assesses changes between paired sampl
 Linear mixed effect models
 --------------------------
 
-Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric "state_column" (e.g., Time) and one or more comma-separated group_categories (which may be categorical or numeric) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state caregory and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
+Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric ``state-column`` (e.g., Time) and one or more comma-separated ``group-categories`` (which may be categorical or numeric; these are the fixed effects) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state caregory and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. A comma-separated list of random effects can also be input to this action; a random intercept for each individual is included by default, but another common random effect that users may wish to use is a random slope for each individual, which can be set by using the ``state-column`` value as input to the ``random-effects`` parameter. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
 
 .. command-block::
 
@@ -87,7 +87,9 @@ Linear mixed effects (LME) models test the relationship between a single respons
      --p-individual-id-column studyid \
      --o-visualization linear-mixed-effects.qzv
 
-The visualizer produced by this command contains several results. First, the input parameters are shown at the top of the visualization for convenience (e.g., when flipping through multiple visualizations it is useful to have a summary). Scatter plots categorized by each "group column" are shown, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group. Next, the "model summary" shows some descriptive information about the LME model that was trained. This just shows descriptive information about the "groups"; in this case, groups will be individuals (as set by the ``--p-individual-id-column``). The main results to examine will be the "model results" at the bottom of the visualization. These results summarize the effects of each fixed effect (and their interactions) on the dependent variable (shannon diversity). This table shows parameter estimates, estimate standard errors, Wald Z test statistics, P values (P>|z|), and 95% confidence intervals upper and lower bounds for each parameter. We see in this table that shannon diversity is significantly impacted by month of life and by diet, as well as several interacting factors. More information about LME models and the interpretation of these data can be found on the `statsmodels LME description page`_, which provides a number of useful technical references for further reading.
+The visualizer produced by this command contains several results. First, the input parameters are shown at the top of the visualization for convenience (e.g., when flipping through multiple visualizations it is useful to have a summary). Next, the "model summary" shows some descriptive information about the LME model that was trained. This just shows descriptive information about the "groups"; in this case, groups will be individuals (as set by the ``--p-individual-id-column``). The main results to examine will be the "model results" below the "model summary". These results summarize the effects of each fixed effect (and their interactions) on the dependent variable (shannon diversity). This table shows parameter estimates, estimate standard errors, z scores, P values (P>|z|), and 95% confidence interval upper and lower bounds for each parameter. We see in this table that shannon diversity is significantly impacted by month of life and by diet, as well as several interacting factors. More information about LME models and the interpretation of these data can be found on the `statsmodels LME description page`_, which provides a number of useful technical references for further reading.
+
+Finally, scatter plots categorized by each "group column" are shown at the bottom of the visualization, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group. 
 
 
 Volatility analysis
@@ -113,7 +115,9 @@ The resulting visualization contains some basic results. First, the "Volatility 
 
 Second, control charts display the mean value of "metric" at each "state". The first plot shown contains all samples, categorized by group (as defined by ``group-column``); the following plots show each individual group, in order to show their individual control characteristics as described in the rest of this paragraph. The mean for all samples in each plot is shown as a black line. The "control limits", 3 standard deviations above and below the mean, are shown as dashed lines. The "warning limits", 2 standard deviations above and below the mean, are shown as dotted lines. The idea behind this plot is to show how a variable is changing over time (or a gradient) in relation to the mean. Large departures from the mean values can cross the warning/control limits, indicating a major disruption at that state; for example, antibiotic use or other disturbances impacting diversity could be tracked with these plots.
 
-This visualizer currently only generates control charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
+Longitudinal values for each individual can also be plotted as spaghetti plots by setting the ``spaghetti`` parameter to "yes" or "mean". If replicate samples are collected from an individual at any time point, "yes" causes replicates for each value to be plotted; "mean" plots the mean value for that individual at that time point.
+
+This visualizer currently only generates control and spaghetti charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
 
 
 First differencing to track rate of change
@@ -158,6 +162,24 @@ This output can be used in the same way as the output of ``first-differences``. 
      --o-visualization first-distances-LME.qzv \
      --p-group-categories delivery,diet
 
+
+Tracking rate of change from static timepoints
+----------------------------------------------
+The ``first-differences`` and ``first-distances`` methods both have an optional "baseline" parameter to instead calculate differences from a static point (e.g., baseline or a time point when a treatment is administered: :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{0}`). Calculating baseline differences can help tease apart noisy longitudinal data to reveal underlying trends in individual subjects or highlight significant experimental factors related to changes in diversity or other dependent variables.
+
+
+.. command-block::
+
+   qiime longitudinal first-distances \
+     --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file ecam-sample-metadata.tsv \
+     --p-state-column month \
+     --o-first-distances first-distances.qza \
+     --p-individual-id-column studyid \
+     --p-replicate-handling random
+     --p-baseline 0
+
+.. note:: **Fun fact!** We can also use the ``first-distances`` method to track longitudinal change in the proportion of features that are shared between an individual’s samples. This can be performed by calculating pairwise Jaccard distance (proportion of features that are not shared) between each pair of samples and using this as input to ``first-distances``. This is particularly useful for pairing with the ``baseline`` parameter, e.g., to determine how unique features are lost/gained over the course of an experiment.
 
 
 Non-parametric microbial interdependence test (NMIT)
