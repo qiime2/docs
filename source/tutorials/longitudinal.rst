@@ -131,9 +131,9 @@ Another way to view time series data is by assessing how the rate of change diff
      --m-metadata-file shannon.qza \
      --p-state-column month \
      --p-metric shannon \
-     --o-first-differences shannon-first-differences.qza \
      --p-individual-id-column studyid \
-     --p-replicate-handling random
+     --p-replicate-handling random \
+     --o-first-differences shannon-first-differences.qza
 
 This outputs a ``SampleData[FirstDifferences]`` artifact, which can then be viewed, e.g., with the ``volatility`` visualizer or analyzed with ``linear-mixed-effects`` or other methods.
 
@@ -145,9 +145,9 @@ A similar method is ``first-distances``, which instead identifies the beta diver
      --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file ecam-sample-metadata.tsv \
      --p-state-column month \
-     --o-first-distances first-distances.qza \
      --p-individual-id-column studyid \
-     --p-replicate-handling random
+     --p-replicate-handling random \
+     --o-first-distances first-distances.qza
 
 This output can be used in the same way as the output of ``first-differences``. The output of ``first-distances`` is particularly empowering, though, because it allows us to analyze longitudinal changes in beta diversity using actions that cannot operate directly on a distance matrix, such as ``linear-mixed-effects``.
 
@@ -159,8 +159,8 @@ This output can be used in the same way as the output of ``first-differences``. 
      --p-metric Distance \
      --p-state-column month \
      --p-individual-id-column studyid \
-     --o-visualization first-distances-LME.qzv \
-     --p-group-categories delivery,diet
+     --p-group-categories delivery,diet \
+     --o-visualization first-distances-LME.qzv
 
 
 Tracking rate of change from static timepoints
@@ -174,10 +174,10 @@ The ``first-differences`` and ``first-distances`` methods both have an optional 
      --i-distance-matrix unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file ecam-sample-metadata.tsv \
      --p-state-column month \
-     --o-first-distances first-distances.qza \
      --p-individual-id-column studyid \
      --p-replicate-handling random \
-     --p-baseline 0
+     --p-baseline 0 \
+     --o-first-distances first-distances-baseline-0.qza
 
 .. note:: **Fun fact!** We can also use the ``first-distances`` method to track longitudinal change in the proportion of features that are shared between an individual’s samples. This can be performed by calculating pairwise Jaccard distance (proportion of features that are not shared) between each pair of samples and using this as input to ``first-distances``. This is particularly useful for pairing with the ``baseline`` parameter, e.g., to determine how unique features are lost/gained over the course of an experiment.
 
