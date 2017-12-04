@@ -159,18 +159,17 @@ Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` meth
      --p-sample-stats \
      --o-stats deblur-stats.qza
 
-.. note:: The two commands used in this section generate QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime quality-filter visualize-stats`` and ``qiime deblur visualize-stats``, respectively:
+.. note:: The two commands used in this section generate QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime metadata tabulate`` and ``qiime deblur visualize-stats``, respectively:
 
 .. command-block::
 
-   qiime quality-filter visualize-stats \
-     --i-filter-stats demux-filter-stats.qza \
+   qiime metadata tabulate \
+     --m-input-file demux-filter-stats.qza \
      --o-visualization demux-filter-stats.qzv
    qiime deblur visualize-stats \
      --i-deblur-stats deblur-stats.qza \
      --o-visualization deblur-stats.qzv
 
-     
 If you'd like to continue the tutorial using this FeatureTable (opposed to the DADA2 feature table generated in *Option 1*), run the following commands.
 
 .. command-block::
