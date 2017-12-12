@@ -99,12 +99,12 @@ The ``denoise-single`` command is the last step in this analysis that needs to b
 .. command-block::
 
    qiime feature-table merge \
-     --i-table1 table-1.qza \
-     --i-table2 table-2.qza \
+     --i-tables table-1.qza \
+     --i-tables table-2.qza \
      --o-merged-table table.qza
-   qiime feature-table merge-seq-data \
-     --i-data1 rep-seqs-1.qza \
-     --i-data2 rep-seqs-2.qza \
+   qiime feature-table merge-seqs \
+     --i-data rep-seqs-1.qza \
+     --i-data rep-seqs-2.qza \
      --o-merged-data rep-seqs.qza
 
 Next, we'll generate a summary of the merged ``FeatureTable[Frequency]`` artifact.
