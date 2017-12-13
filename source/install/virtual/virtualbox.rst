@@ -89,7 +89,14 @@ When installation is done, your screen should look like the following. Follow th
 
 .. image:: images/vbox-guest-03.jpg
 
-2. Set up a shared folder
+2. Set up copy-and-paste
+........................
+
+In the VirtualBox menu bar on your host computer, select ``Machine -> Settings``, then click ``General`` in the top bar, and ``Advanced`` in the bar immediately below it. We recommend setting ``Shared Clipboard`` and ``Drag'n'Drop`` to ``Bidirectional``, which will allow copy-and-paste from host-to-guest and from guest-to-host. The ``Drag'n'Drop`` allows you to drag folders into the window to copy them into your Virtual Machine. Click ``OK`` when you are done.
+
+.. image:: images/vbox-guest-10.jpg
+
+3. Set up a shared folder
 .........................
 
 In the VirtualBox menu bar on your host computer, select ``Devices -> Shared Folders -> Shared Folders Settings`` (note, this might be slightly different on Windows or Linux systems, please check the official `VirtualBox Docs`_). Click on the green plus sign/folder on the right side of the window, you should see a new screen prompting you for info:
@@ -102,14 +109,14 @@ Click on the ``Folder Path`` input, and using the file browser (by selecting the
 
 Click 'OK' on both dialogs to save your changes.
 
-3. Reboot
+4. Reboot
 .........
 
 Click the gear in the upper right of the screen, then ``Shut Down...``, then ``Restart``.
 
 .. image:: images/vbox-guest-06.jpg
 
-4. Enjoy!
+5. Enjoy!
 .........
 
 Once the VM has rebooted and you have logged in, you should see your shared folder in the file browser (the icon on the left bar that looks like a file cabinet):
