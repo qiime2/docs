@@ -2,7 +2,7 @@ Installing QIIME 2 using VirtualBox
 ===================================
 
 .. warning::
-   The following steps require approximately 15 GB of free disk space: 2.7 GB for the ZIP file, 3.3 GB for the unzipped ZIP file contents, and 10 GB for the installed Virtual Machine (VM). Once you have installed the VM you can free up 5 GB of space by deleting the ZIP + the unzipped ZIP file contents.
+   The following steps require at least ~25 GB of free disk space: ~5 GB for the ZIP file, ~5 GB for the unzipped ZIP file contents, and ~15 GB for the installed Virtual Machine (VM). Once you have installed the VM you can free up ~10 GB of space by deleting the ZIP + the unzipped ZIP file contents.
 
 The QIIME 2 VirtualBox image offers a convenient way to get QIIME 2 up and running, and is also the easiest way to get your hands on the experimental preview of :doc:`QIIME 2 Studio <../../interfaces/q2studio>`.
 
