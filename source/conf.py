@@ -381,3 +381,8 @@ texinfo_documents = [
 
 # Some links take awhile to hit (e.g. Heroku apps, Google Sheets).
 linkcheck_timeout = 15
+
+
+# -- Options for mathjax --------------------------------------------------
+mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
+                'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
