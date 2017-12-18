@@ -18,6 +18,7 @@ The QIIME 2 Core 2017.12 distribution includes the QIIME 2 framework, ``q2cli`` 
 
 - ``q2-alignment``
 - ``q2-composition``
+- ``q2-cutadapt``
 - ``q2-dada2``
 - ``q2-deblur``
 - ``q2-demux``
