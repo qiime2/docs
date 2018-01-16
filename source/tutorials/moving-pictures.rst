@@ -27,7 +27,7 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
 
-.. tip:: To learn more about metadata, check out :doc:`the metadata tutorial <metadata>`.
+.. tip:: To learn more about metadata, including how to format your metadata for use with QIIME 2, check out :doc:`the metadata tutorial <metadata>`.
 
 Obtaining and importing data
 ----------------------------
@@ -73,7 +73,7 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
     qiime demux emp-single \
       --i-seqs emp-single-end-sequences.qza \
       --m-barcodes-file sample-metadata.tsv \
-      --m-barcodes-category BarcodeSequence \
+      --m-barcodes-column BarcodeSequence \
       --o-per-sample-sequences demux.qza
 
 After demultiplexing, it's useful to generate a summary of the demultiplexing results. This allows you to determine how many sequences were obtained per sample, and also to get a summary of the distribution of sequence qualities at each position in your sequence data.
@@ -271,7 +271,7 @@ Here we set the ``--p-sampling-depth`` parameter to 1109. This value was chosen 
 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata. This information is present in the `sample metadata`_ file that was downloaded earlier.
 
-We'll first test for associations between discrete metadata categories and alpha diversity data. We'll do that here for the Faith Phylogenetic Diversity (a measure of community richness) and evenness metrics.
+We'll first test for associations between categorical metadata columns and alpha diversity data. We'll do that here for the Faith Phylogenetic Diversity (a measure of community richness) and evenness metrics.
 
 .. command-block::
 
@@ -286,28 +286,28 @@ We'll first test for associations between discrete metadata categories and alpha
      --o-visualization core-metrics-results/evenness-group-significance.qzv
 
 .. question::
-   What discrete sample metadata categories are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
+   Which categorical sample metadata columns are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
 
 .. question::
-   What discrete sample metadata categories are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
+   Which categorical sample metadata columns are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
 
-In this data set, no continuous sample metadata categories (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
+In this data set, no continuous sample metadata columns (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
-Next we'll analyze sample composition in the context of discrete metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., gut), are more similar to each other then they are to samples from the other groups (e.g., tongue, left palm, and right palm). If you call this command with the ``--p-pairwise`` parameter, as we'll do here, it will also perform pairwise tests that will allow you to determine which specific pairs of groups (e.g., tongue and gut) differ from one another, if any. This command can be slow to run, especially when passing ``--p-pairwise``, since it is based on permutation tests. So, unlike the previous commands, we'll run this on specific categories of metadata that we're interested in exploring, rather than all metadata categories that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata categories, as follows.
+Next we'll analyze sample composition in the context of categorical metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., gut), are more similar to each other then they are to samples from the other groups (e.g., tongue, left palm, and right palm). If you call this command with the ``--p-pairwise`` parameter, as we'll do here, it will also perform pairwise tests that will allow you to determine which specific pairs of groups (e.g., tongue and gut) differ from one another, if any. This command can be slow to run, especially when passing ``--p-pairwise``, since it is based on permutation tests. So, unlike the previous commands, we'll run this on specific columns of metadata that we're interested in exploring, rather than all metadata columns that it's applicable to. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata columns, as follows.
 
 .. command-block::
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category BodySite \
+     --m-metadata-column BodySite \
      --o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
      --p-pairwise
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Subject \
+     --m-metadata-column Subject \
      --o-visualization core-metrics-results/unweighted-unifrac-subject-group-significance.qzv \
      --p-pairwise
 
@@ -433,14 +433,14 @@ ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is bas
      --i-table gut-table.qza \
      --o-composition-table comp-gut-table.qza
 
-We can then run ANCOM on the ``Subject`` category to determine what features differ in abundance across the gut samples of the two subjects.
+We can then run ANCOM on the ``Subject`` column to determine what features differ in abundance across the gut samples of the two subjects.
 
 .. command-block::
 
    qiime composition ancom \
      --i-table comp-gut-table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Subject \
+     --m-metadata-column Subject \
      --o-visualization ancom-Subject.qzv
 
 .. question::
@@ -463,7 +463,7 @@ We're also often interested in performing a differential abundance test at a spe
    qiime composition ancom \
      --i-table comp-gut-table-l6.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Subject \
+     --m-metadata-column Subject \
      --o-visualization l6-ancom-Subject.qzv
 
 .. question::

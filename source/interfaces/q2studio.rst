@@ -14,7 +14,7 @@ Launching QIIME 2 Studio requires an active ``conda`` environment with QIIME 2 i
 
    source activate qiime2-2018.2
 
-Please note, your ``conda`` environment might have a name other than ``qiime2-2018.2``, if you or your system administrator provided one during :doc:`installation of QIIME 2<../install/index>`.
+Please note, your ``conda`` environment might have a name other than ``qiime2-2018.2``, if you or your system administrator provided one during :doc:`installation of QIIME 2 <../install/index>`.
 
 This interface requires that your system has `Node.js`_. We currently require version 5 or later; you can find `installation instructions here <https://nodejs.org/en/download/current/>`__. This dependency will be unnecessary in the future.
 

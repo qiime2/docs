@@ -87,7 +87,7 @@ You next can demultiplex the sequence reads. This requires the sample metadata f
 
    qiime demux emp-paired \
      --m-barcodes-file sample-metadata.tsv \
-     --m-barcodes-category BarcodeSequence \
+     --m-barcodes-column BarcodeSequence \
      --i-seqs emp-paired-end-sequences.qza \
      --o-per-sample-sequences demux \
      --p-rev-comp-mapping-barcodes
@@ -137,7 +137,7 @@ Use the following questions to guide your further analyses of these data data.
 
 #. What do you conclude about the associations between continuous sample metadata and the richness and evenness of these samples? For exploring associations between continuous metadata and richness or evenness, the command ``qiime diversity alpha-correlation`` will be useful. This was not covered in the Moving Pictures tutorial, but you can learn about it by running it with the ``--help`` parameter.
 
-#. What discrete sample metadata categories are most strongly associated with the differences in microbial community richness or evenness? Are these differences statistically significant?
+#. Which categorical sample metadata columns are most strongly associated with the differences in microbial community richness or evenness? Are these differences statistically significant?
 
 #. In taxonomic composition bar plots, sort the samples by their average soil relative humidity, and visualize them at the phylum level. What are the dominant phyla in these samples? Which phyla increase and which decrease with increasing average soil relative humidity?
 
