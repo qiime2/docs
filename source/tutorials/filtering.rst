@@ -88,34 +88,34 @@ Similarly, samples that contain only a few features could be filtered from a fea
 
 Both of these methods can also be applied to filter contingent on the maximum number of features or samples, using the ``--p-max-features`` and ``--p-max-samples`` parameters, and these can optionally be used in combination with ``--p-min-features`` and ``--p-min-samples``.
 
-.. _index-based-filtering:
+.. _identifier-based-filtering:
 
-Index-based filtering
-~~~~~~~~~~~~~~~~~~~~~
+Identifier-based filtering
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Index-based filtering is used to retain only a user-specified list of samples or features based on their indices (i.e., identifiers). In this case, the user will provide a tab-separated text file as input with the ``--m-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``) where the first column in the file contains the indices that should be retained, and the first row contains headers or names for each column. Only the first column in this file will be used, so there are no requirements on subsequent columns (if any are present). As a result, sample or feature metadata files can be used with this parameter. Index-based filtering can be applied as follows to remove samples from a feature table.
+Identifier-based filtering is used to retain only a user-specified list of samples or features based on their identifiers (IDs) in a QIIME 2 metadata file. To filter by IDs, the user will provide a QIIME 2 metadata file as input with the ``--m-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``) where the first column in the file contains the IDs that should be retained. Only the first column in this file will be used to filter IDs; all other columns (if any are present) will be ignored. Identifier-based filtering can be applied as follows to remove samples from a feature table.
 
-First, we'll write a header line and two sample indices to a new file called ``samples-to-keep.tsv``. (If you already have a tsv file containing a header line and the indices of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a text editor, not on the command line as is being done here.)
+Let's create a simple QIIME 2 metadata file that consists of a single column containing the IDs to filter by. We'll write a header line and two sample IDs to a new file called ``samples-to-keep.tsv``. If you already have a metadata file containing the IDs of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a spreadsheet program or text editor, not on the command line as is being done here.
 
 .. command-block::
-   echo Index > samples-to-keep.tsv
+   echo SampleID > samples-to-keep.tsv
    echo L1S8 >> samples-to-keep.tsv
    echo L1S105 >> samples-to-keep.tsv
 
-Then, we'll call the ``filter-samples`` method with the parameter ``--m-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose indices are listed in ``samples-to-keep.tsv``.
+Then, we'll run the ``filter-samples`` method with the parameter ``--m-metadata-file samples-to-keep.tsv``. The resulting table will contain only the two samples whose IDs are listed in ``samples-to-keep.tsv``.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file samples-to-keep.tsv \
-     --o-filtered-table index-filtered-table.qza
+     --o-filtered-table id-filtered-table.qza
 
 .. _metadata-based-filtering:
 
 Metadata-based filtering
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Metadata-based filtering is similar to index-based filtering, except that the list of indices to keep is determined based on metadata rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
+Metadata-based filtering is similar to identifier-based filtering, except that the list of IDs to keep is determined based on metadata search criteria rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
 
 For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes.
 
@@ -126,7 +126,7 @@ For example, filtering the table to contain only samples from subject 1 is perfo
      --p-where "Subject='subject-1'" \
      --o-filtered-table subject-1-filtered-table.qza
 
-If there are multiple values that should be retained from a single metadata category, the ``IN`` clause can be used to specify those values. For example, the following command can be used to retain all skin samples. Again, the values ``left palm`` and ``right palm`` are enclosed in single quotes.
+If there are multiple values that should be retained from a single metadata column, the ``IN`` clause can be used to specify those values. For example, the following command can be used to retain all skin samples. Again, the values ``left palm`` and ``right palm`` are enclosed in single quotes.
 
 .. command-block::
    qiime feature-table filter-samples \
@@ -235,15 +235,15 @@ Filtering distance matrices
 ---------------------------
 In this section of the tutorial we'll see how to filter (i.e., remove) samples from a distance matrix using the ``filter-distance-matrix`` method provided by the ``q2-diversity`` plugin.
 
-.. note:: Filtering distance matrices works the same way as filtering feature tables by indices or sample metadata. The examples provided in this section are brief; please refer to :ref:`index-based-filtering` and :ref:`metadata-based-filtering` above for more details.
+.. note:: Filtering distance matrices works the same way as filtering feature tables by identifiers or sample metadata. The examples provided in this section are brief; please refer to :ref:`identifier-based-filtering` and :ref:`metadata-based-filtering` above for more details.
 
-A distance matrix can be filtered based on indices. For example, to filter a distance matrix to retain the two samples specified in ``samples-to-keep.tsv`` above (see :ref:`index-based-filtering`):
+A distance matrix can be filtered based on identifiers. For example, to filter a distance matrix to retain the two samples specified in ``samples-to-keep.tsv`` above (see :ref:`identifier-based-filtering`):
 
 .. command-block::
    qiime diversity filter-distance-matrix \
      --i-distance-matrix distance-matrix.qza \
      --m-metadata-file samples-to-keep.tsv \
-     --o-filtered-distance-matrix index-filtered-distance-matrix.qza
+     --o-filtered-distance-matrix identifier-filtered-distance-matrix.qza
 
 A distance matrix can also be filtered based on sample metadata. For example, to filter a distance matrix to retain only samples from subject 2:
 

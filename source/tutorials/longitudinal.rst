@@ -74,7 +74,7 @@ The ``pairwise-distances`` visualizer also assesses changes between paired sampl
 Linear mixed effect models
 --------------------------
 
-Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric ``state-column`` (e.g., Time) and one or more comma-separated ``group-categories`` (which may be categorical or numeric; these are the fixed effects) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state caregory and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. A comma-separated list of random effects can also be input to this action; a random intercept for each individual is included by default, but another common random effect that users may wish to use is a random slope for each individual, which can be set by using the ``state-column`` value as input to the ``random-effects`` parameter. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
+Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric ``state-column`` (e.g., Time) and one or more comma-separated ``group-columns`` (which may be categorical or numeric metadata columns; these are the fixed effects) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state column and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. A comma-separated list of random effects can also be input to this action; a random intercept for each individual is included by default, but another common random effect that users may wish to use is a random slope for each individual, which can be set by using the ``state-column`` value as input to the ``random-effects`` parameter. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
 
 .. command-block::
 
@@ -82,7 +82,7 @@ Linear mixed effects (LME) models test the relationship between a single respons
      --m-metadata-file ecam-sample-metadata.tsv \
      --m-metadata-file shannon.qza \
      --p-metric shannon \
-     --p-group-categories delivery,diet,sex \
+     --p-group-columns delivery,diet,sex \
      --p-state-column month \
      --p-individual-id-column studyid \
      --o-visualization linear-mixed-effects.qzv
@@ -159,7 +159,7 @@ This output can be used in the same way as the output of ``first-differences``. 
      --p-metric Distance \
      --p-state-column month \
      --p-individual-id-column studyid \
-     --p-group-categories delivery,diet \
+     --p-group-columns delivery,diet \
      --o-visualization first-distances-LME.qzv
 
 
@@ -210,14 +210,14 @@ Now we are ready run NMIT. The output of this command is a distance matrix that 
 
 Now let's put that distance matrix to work. First we will perform PERMANOVA tests to evaluate whether between-group distances are larger than within-group distance.
 
-.. note:: NMIT computes between-subject distances across all time points, so each subject (as defined the ``--p-individual-id-column`` parameter used above) gets compressed into a single "sample" representing that subject's longitudinal microbial interdependence. This new "sample" will be labeled with the ``SampleID`` of one of the subjects with a matching ``individual-id``; this is done for the convenience of passing this distance matrix to downstream steps without needing to generate a new sample metadata file but it means that you must **pay attention**. **For significance testing and visualization, only use group categories that are uniform across each** ``individual-id``. **DO NOT ATTEMPT TO USE METADATA CATEGORIES THAT VARY OVER TIME OR BAD THINGS WILL HAPPEN.** For example, in the tutorial metadata a patient is labeled ``antiexposedall==y`` only after antibiotics have been used; this is a category that you should not use, as it varies over time. Now have fun and be responsible.
+.. note:: NMIT computes between-subject distances across all time points, so each subject (as defined the ``--p-individual-id-column`` parameter used above) gets compressed into a single "sample" representing that subject's longitudinal microbial interdependence. This new "sample" will be labeled with the ``SampleID`` of one of the subjects with a matching ``individual-id``; this is done for the convenience of passing this distance matrix to downstream steps without needing to generate a new sample metadata file but it means that you must **pay attention**. **For significance testing and visualization, only use group columns that are uniform across each** ``individual-id``. **DO NOT ATTEMPT TO USE METADATA COLUMNS THAT VARY OVER TIME OR BAD THINGS WILL HAPPEN.** For example, in the tutorial metadata a patient is labeled ``antiexposedall==y`` only after antibiotics have been used; this is a column that you should not use, as it varies over time. Now have fun and be responsible.
 
 .. command-block::
 
    qiime diversity beta-group-significance \
      --i-distance-matrix nmit-dm.qza \
      --m-metadata-file ecam-sample-metadata.tsv \
-     --m-metadata-category delivery \
+     --m-metadata-column delivery \
      --o-visualization nmit.qzv
 
 Finally, we can compute principal coordinates and use Emperor to visualize similarities among **subjects** (not individual samples; see the note above).

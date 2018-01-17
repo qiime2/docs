@@ -33,17 +33,17 @@ Next, we will attempt to predict which body site each sample originated from bas
    qiime sample-classifier classify-samples \
      --i-table moving-pictures-table.qza \
      --m-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-metadata-category BodySite \
+     --m-metadata-column BodySite \
      --p-optimize-feature-selection \
      --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 100 \
      --o-visualization moving-pictures-BodySite.qzv
 
-The visualization produced by this command presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with to the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class). 
+The visualization produced by this command presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with to the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
 
 .. question::
-   What other metadata can we predict with ``classify-samples``? Take a look at the metadata categories in the ``sample-metadata`` and try some other categories. Not all metadata can be easily learned by the classifier! 
+   What other metadata can we predict with ``classify-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other categorical columns. Not all metadata can be easily learned by the classifier!
 
 
 If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a recursive feature extraction plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the visualization. A list of the features chosen, and their relative importances, will be displayed at the bottom of the visualization. Features with higher importance scores are more important for distinguishing each class.
@@ -86,7 +86,7 @@ Next, we will train a regressor to predict an infant's age based on its microbio
    qiime sample-classifier regress-samples \
      --i-table ecam-table.qza \
      --m-metadata-file ecam-metadata.tsv \
-     --m-metadata-category month \
+     --m-metadata-column month \
      --p-optimize-feature-selection \
      --p-parameter-tuning \
      --p-estimator RandomForestRegressor \
@@ -96,7 +96,7 @@ Next, we will train a regressor to predict an infant's age based on its microbio
 The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this, model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
 
 .. question::
-   What other metadata can we predict with ``regress-samples``? Take a look at the metadata categories in the ``sample-metadata`` and try some other values. Not all metadata can be easily learned by the regressor! 
+   What other metadata can we predict with ``regress-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other values. Not all metadata can be easily learned by the regressor!
 
 .. question::
    Many different regressors can be trained via the ``--p-estimator`` parameter in ``regress-samples``. Try some of the other regressors. How do these methods compare?
@@ -105,10 +105,10 @@ The visualization produced by this command presents classification accuracy resu
 "Maturity Index" prediction
 ---------------------------
 
-.. note:: This analysis currently works best for comparing groups that are sampled fairly evenly across time (the category used for regression). Datasets that contain groups sampled sporadically at different times are not supported, and users should either filter out those samples or “bin” them with other groups prior to using this visualizer.
+.. note:: This analysis currently works best for comparing groups that are sampled fairly evenly across time (the column used for regression). Datasets that contain groups sampled sporadically at different times are not supported, and users should either filter out those samples or “bin” them with other groups prior to using this visualizer.
 .. note:: This analysis will only work on data sets with a large sample size, particularly in the "control" group, and with sufficient biological replication at each time point.
 
-This method calculates a "microbial maturity" index from a regression model trained on feature data to predict a given continuous metadata category, e.g., to predict a subject's age as a function of microbiota composition. This method is different from standard supervised regression because it quantifies the relative rate of change over time in two or more groups. The model is trained on a subset of control group samples, then predicts the category value for all samples. This visualization computes maturity index z-scores (MAZ) to compare relative "maturity" between each group, as described in `Sathish et al. 2014`_. This method was designed to predict between-group differences in intestinal microbiome development by age, so ``category`` should typically be a measure of time. Other types of continuous metadata gradients might be testable, as long as two or more different "treatment" groups are being compared *with a large number of biological replicates* in the "control" group and treatment groups are sampled at the same "states" (time or position on gradient) for comparison. However, we do not necessarily recommend *or offer technical support* for unusual approaches.
+This method calculates a "microbial maturity" index from a regression model trained on feature data to predict a given continuous metadata column, e.g., to predict a subject's age as a function of microbiota composition. This method is different from standard supervised regression because it quantifies the relative rate of change over time in two or more groups. The model is trained on a subset of control group samples, then predicts the column value for all samples. This visualization computes maturity index z-scores (MAZ) to compare relative "maturity" between each group, as described in `Sathish et al. 2014`_. This method was designed to predict between-group differences in intestinal microbiome development by age, so ``column`` should typically be a measure of time. Other types of continuous metadata gradients might be testable, as long as two or more different "treatment" groups are being compared *with a large number of biological replicates* in the "control" group and treatment groups are sampled at the same "states" (time or position on gradient) for comparison. However, we do not necessarily recommend *or offer technical support* for unusual approaches.
 
 Here we will compare microbial maturity between vaginally born and cesarean-delivered infants as a function of age in the ECAM dataset.
 
@@ -117,7 +117,7 @@ Here we will compare microbial maturity between vaginally born and cesarean-deli
    qiime sample-classifier maturity-index \
      --i-table ecam-table.qza \
      --m-metadata-file ecam-metadata.tsv \
-     --p-category month \
+     --p-column month \
      --p-group-by delivery \
      --p-control Vaginal \
      --p-test-size 0.4 \

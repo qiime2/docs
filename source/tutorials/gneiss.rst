@@ -141,7 +141,7 @@ We can visualize these balances on a heatmap to see which groups of OTUs they re
      --i-table composition.qza \
      --i-tree hierarchy.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Subject \
+     --m-metadata-column Subject \
      --p-color-map seismic \
      --o-visualization heatmap.qzv
 
@@ -158,7 +158,7 @@ Specifically we'll plot a boxplot and identify taxa that could be explaining the
      --p-taxa-level 2 \
      --p-balance-name 'y0' \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-category Subject \
+     --m-metadata-column Subject \
      --o-visualization y0_taxa_summary.qzv
 
 In this particular case, the log ratio is lower in the patient group compared to the control group.  In essence, this means that the taxa in the :math:`y0_{numerator}` on average are more abundant than the taxa in :math:`y0_{denominator}` in the healthy control group compared to the patient group.
