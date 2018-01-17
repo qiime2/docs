@@ -95,7 +95,7 @@ Identifier-based filtering
 
 Identifier-based filtering is used to retain only a user-specified list of samples or features based on their identifiers (IDs) in a QIIME 2 metadata file. To filter by IDs, the user will provide a QIIME 2 metadata file as input with the ``--m-metadata-file`` parameter (for ``filter-samples`` or ``filter-features``) where the first column in the file contains the IDs that should be retained. Only the first column in this file will be used to filter IDs; all other columns (if any are present) will be ignored. Identifier-based filtering can be applied as follows to remove samples from a feature table.
 
-Let's create a really simple QIIME 2 metadata file that consists of a single column containing the IDs to filter by. We'll write a header line and two sample IDs to a new file called ``samples-to-keep.tsv``. If you already have a metadata file containing the IDs of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a spreadsheet program or text editor, not on the command line as is being done here.
+Let's create a simple QIIME 2 metadata file that consists of a single column containing the IDs to filter by. We'll write a header line and two sample IDs to a new file called ``samples-to-keep.tsv``. If you already have a metadata file containing the IDs of the samples that you want to keep, you can skip this step. Otherwise, in practice, you'd probably create this file in a spreadsheet program or text editor, not on the command line as is being done here.
 
 .. command-block::
    echo SampleID > samples-to-keep.tsv
