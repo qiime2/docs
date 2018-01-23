@@ -94,7 +94,9 @@ To help users become aware of these recommendations, the Keemei_ metadata valida
 
 Users may be interested in the cual-id_ software for assistance with creating sample identifiers. The cual-id_ paper also provides some discussion on how to design identifiers.
 
-.. note:: Some bioinformatics tools may have more restrictive requirements on identifiers than the recommendations that are outlined here. For example, Phylip_ requires that identifiers are a maximum of 10 characters in some of its file formats, while we recommend length 36 or less. If you plan to export your data for use with other tools that may have more restrictive requirements on identifiers, we recommend that you adhere to those requirements in your QIIME 2 analyses as well, to simplify subsequent processing steps.
+.. note:: Some bioinformatics tools may have more restrictive requirements on identifiers than the recommendations that are outlined here. For example, Illumina sample sheet identifiers cannot have `.` characters, while we do include those in our set of recommended characters. Similarly, Phylip_ requires that identifiers are a maximum of 10 characters, while we recommend length 36 or less. If you plan to export your data for use with other tools that may have more restrictive requirements on identifiers, we recommend that you adhere to those requirements in your QIIME 2 analyses as well, to simplify subsequent processing steps.
+
+.. note:: The length recommended here (36 characters or less) is designed to be as short as possible while still supporting version 4 UUIDs formatted with dashes.
 
 Metadata Columns
 ****************
@@ -113,7 +115,7 @@ The following rules apply to column values:
 - May consist of any Unicode characters.
 - Empty cells represent *missing data*. Other values such as ``NA`` are not interpreted as missing data; only the empty cell is recognized as "missing". Note that cells consisting solely of whitespace characters are also interpreted as *missing data* because leading and trailing whitespace characters are always ignored, effectively making the cell empty.
 
-.. note:: The empty cell simply indicates that data is missing, but doesn't indicate what type of missing data it might be. You can use other values of your choosing to denote different types of missing data (e.g. not present vs. not ever available). These custom values won't be interpreted as missing data in QIIME 2, but you can still record and use these "missing" metadata values to perform filtering on your data prior to further analyses (e.g. using ``qiime feature-table filter-samples`` to filter samples based on custom "missing" values).
+.. note:: The empty cell simply indicates that data is missing, but doesn't indicate what type of missing data it might be. You can use other values of your choosing to denote different types of missing data (e.g. "not applicable" vs. "not collected"). These custom values won't be interpreted as missing data in QIIME 2, but you can still record and use these "missing" metadata values to perform filtering on your data prior to further analyses (e.g. using ``qiime feature-table filter-samples`` to filter samples based on custom "missing" values).
 
 Column Types
 ************
