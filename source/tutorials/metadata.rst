@@ -72,7 +72,7 @@ The following rules apply to IDs:
 
 - IDs may consist of any Unicode characters, with the exception that IDs must not start with the pound sign (``#``), as those rows would be interpreted as comments and ignored. See the section :ref:`identifier-recommendations` for recommendations on choosing identifiers in your study.
 - IDs cannot be empty (i.e. they must consist of at least one character).
-- IDs must be unique; duplicate IDs are disallowed (case-insensitive, so ``sample1`` and ``Sample1`` would be considered duplicates).
+- IDs must be unique (exact string matching is performed to detect duplicates).
 - At least one ID must be present in the file.
 - IDs cannot use any of the reserved ID column names listed above.
 
@@ -107,7 +107,7 @@ The following rules apply to column names:
 
 - May consist of any Unicode characters.
 - Cannot be empty (i.e. column names must consist of at least one character).
-- Must be unique; duplicate column names are disallowed (case-insensitive, so ``column1`` and ``Column1`` would be considered duplicates).
+- Must be unique (exact string matching is performed to detect duplicates).
 - Column names cannot use any of the reserved ID column names described in the section :ref:`identifier-column`.
 
 The following rules apply to column values:
