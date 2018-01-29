@@ -18,3 +18,4 @@ Tutorials
    quality-control
    sample-classifier
    longitudinal
+   chimera
