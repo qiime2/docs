@@ -19,3 +19,4 @@ Tutorials
    sample-classifier
    longitudinal
    chimera
+   read-joining
