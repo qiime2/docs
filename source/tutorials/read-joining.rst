@@ -3,26 +3,26 @@ Alternative methods of read-joining in QIIME 2
 
 .. note:: This tutorial does not cover read-joining and denoising with
    DADA2. Instead, this tutorial focuses on alternative approaches to analyzing
-   paired end reads in QIIME 2. If you are interested in joining and denoising
+   paired-end reads in QIIME 2. If you are interested in joining and denoising
    reads with DADA2, the :doc:`Atacama soil microbiome tutorial
    <atacama-soils>` illustrates how to use ``qiime dada2 denoise-paired`` for
-   this purpose.  If you plan to use DADA2 to join and denoising your paired
-   end data, **do not join your reads prior to denoising with DADA2;** DADA2
+   this purpose.  If you plan to use DADA2 to join and denois your paired end
+   data, **do not join your reads prior to denoising with DADA2;** DADA2
    expects reads that have not yet been joined, and will join the reads for you
    during the denoising process.
 
-In QIIME 2, we use the term *single end reads* to refer to forward or reverse
-reads in isolation; we use the term *paired end reads* to refer to forward and
+In QIIME 2, we use the term *single-end reads* to refer to forward or reverse
+reads in isolation; we use the term *paired-end reads* to refer to forward and
 reverse reads that have not yet been joined; and we use the term *joined reads*
 to refer to forward and reverse reads that have already been joined (or
 merged). **It is important to understand which of these terms apply to your
-data, as this will determine what steps are necessary to analyze your paired
-end data.**
+data, as this will determine what steps are necessary to analyze your
+paired-end data.**
 
-It is currently possible to join paired end reads in QIIME 2 using the
+It is currently possible to join paired end-reads in QIIME 2 using the
 ``q2-vsearch`` plugin, or to import reads that have been joined outside of
-QIIME 2 (for example, with `fastq-join`_).  This tutorial will cover both of
-these processes.
+QIIME 2 (for example, with `fastq-join`_, see `Importing pre-joined reads`_ for
+more details).  This tutorial will cover both of these processes.
 
 Obtain the data
 ~~~~~~~~~~~~~~~
@@ -109,20 +109,23 @@ with different parameter settings.
      --o-filter-stats demux-joined-filter-stats.qza
 
 At this stage you can choose to proceed using `Deblur`_ for additional quality
-control, or you can dereplicate sequences and optionally cluster them into OTUs
-with ``q2-vsearch``. Deblur should give much higher quality results, so we
-recommend that procedure and will illustrate that approach in the next steps of
-this tutorial.
+control, or you can dereplicate sequences and optionally :doc:`cluster them
+<../plugins/available/vsearch/index>` into OTUs with ``q2-vsearch``. Deblur
+should give much higher quality results, so we recommend that procedure and
+will illustrate that approach in the next steps of this tutorial.
 
 If you are instead interested in experimenting with an analysis workflow that
 is more like QIIME 1 processing (for example, to compare your Deblur or DADA2
 result with a QIIME 1-like pipeline), you should next dereplicate and cluster
 your sequences. If you try this option, we strongly encourage you to call
 ``qiime quality-filter q-score-joined`` with a higher ``min-quality`` threshold
-- possibly ``--p-min-quality 20`` or ``--p-min-quality 30``. You can then
-follow the steps in the `OTU clustering tutorial`_. After clustering, you will
-likely want to filter features that are observed in only one sample using
-``qiime feature-table filter-features --p-min-samples``.
+- possibly ``--p-min-quality 20`` or ``--p-min-quality 30`` (see `Bokulich et
+al. 2013`_ for more details). You can then follow the steps in the `OTU
+clustering tutorial`_. After clustering, you will likely want to filter
+features that are observed in only one sample using ``qiime feature-table
+filter-features --p-min-samples``. In addition, removing singletons with an
+abundance filter is also advisable (see `Bokulich et al. 2013`_ for more
+details), as well as :doc:`filtering chimeric sequences <chimera>`.
 
 Deblur
 ~~~~~~
@@ -164,7 +167,7 @@ data.
 --------------
 
 Importing pre-joined reads
-==========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have joined your reads outside of QIIME 2, for example with
 ``fastq-join``, this section will illustrate how to import those reads.
@@ -182,7 +185,7 @@ Unzip this file as follows:
    unzip fj-joined.zip
 
 Import reads
-~~~~~~~~~~~~
+------------
 
 Next, use ``qiime tools import`` to import these data. The format that is
 currently used here is ``SingleEndFastqManifestPhred33`` - this will
@@ -200,7 +203,7 @@ Manifest" formats <importing>`.
      --source-format SingleEndFastqManifestPhred33
 
 Viewing summary of imported data with read quality
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------
 
 You can generate a summary of the resulting artifact as follows:
 
@@ -221,3 +224,4 @@ Happy QIIMEing!
 .. _Deblur: http://msystems.asm.org/content/2/2/e00191-16
 .. _`OTU clustering tutorial`: https://forum.qiime2.org/t/clustering-sequences-into-otus-using-q2-vsearch/1348
 .. _`updated in the future`: https://github.com/qiime2/q2-types/issues/162
+.. _`Bokulich et al. 2013`: https://doi.org/10.1038/nmeth.2276
