@@ -6,7 +6,7 @@ Alternative methods of read-joining in QIIME 2
    paired-end reads in QIIME 2. If you are interested in joining and denoising
    reads with DADA2, the :doc:`Atacama soil microbiome tutorial
    <atacama-soils>` illustrates how to use ``qiime dada2 denoise-paired`` for
-   this purpose.  If you plan to use DADA2 to join and denois your paired end
+   this purpose.  If you plan to use DADA2 to join and denoise your paired end
    data, **do not join your reads prior to denoising with DADA2;** DADA2
    expects reads that have not yet been joined, and will join the reads for you
    during the denoising process.
@@ -19,7 +19,7 @@ merged). **It is important to understand which of these terms apply to your
 data, as this will determine what steps are necessary to analyze your
 paired-end data.**
 
-It is currently possible to join paired end-reads in QIIME 2 using the
+It is currently possible to join paired-end reads in QIIME 2 using the
 ``q2-vsearch`` plugin, or to import reads that have been joined outside of
 QIIME 2 (for example, with `fastq-join`_, see `Importing pre-joined reads`_ for
 more details).  This tutorial will cover both of these processes.
