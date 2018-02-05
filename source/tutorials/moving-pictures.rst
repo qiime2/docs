@@ -471,7 +471,7 @@ We're also often interested in performing a differential abundance test at a spe
 
 
 .. _sample metadata: https://data.qiime2.org/2018.2/tutorials/moving-pictures/sample_metadata
-.. _Keemei: http://keemei.qiime.org
+.. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
 .. _Caporaso et al. (2011): https://www.ncbi.nlm.nih.gov/pubmed/21624126

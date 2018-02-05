@@ -81,7 +81,7 @@ The following rules apply to IDs:
 Recommendations for Identifiers
 *******************************
 
-Our goal with QIIME 2 is to support arbitrary Unicode characters in all fields of metadata files. However, given that QIIME 2 plugins and interfaces can be developed by anyone, we can't make a guarantee that arbitrary Unicode characters will work with all plugins and interfaces. We can therefore make recommendations to users about characters that should be safe to use in identifiers, and we are preparing resources for plugin and interface developers to help them make their software as robust as possible. As developer resources become available, we will announce them in the `Developer Discussion category`_ on the QIIME 2 Forum.
+Our goal with QIIME 2 is to support arbitrary Unicode characters in all cells of metadata files. However, given that QIIME 2 plugins and interfaces can be developed by anyone, we can't make a guarantee that arbitrary Unicode characters will work with all plugins and interfaces. We can therefore make recommendations to users about characters that should be safe to use in identifiers, and we are preparing resources for plugin and interface developers to help them make their software as robust as possible. As developer resources become available, we will announce them in the `Developer Discussion category`_ on the QIIME 2 Forum.
 
 Sample and feature identifiers with problematic characters tend to cause the most issues for our users. Based on our experiences with QIIME 1, QIIME 2, and other bioinformatics and command line tools, we can recommend the following attributes for identifiers:
 
@@ -122,9 +122,11 @@ Column Types
 
 QIIME 2 currently supports *categorical* and *numeric* metadata columns. By default, QIIME 2 will attempt to infer the type of each metadata column: if the column consists only of numbers or missing data, the column is inferred to be *numeric*. Otherwise, if the column contains any non-numeric values, the column is inferred to be *categorical*. Missing data (i.e. empty cells) are supported in categorical columns as well as numeric columns.
 
-QIIME 2 supports an optional *comment directive* to allow users to explicitly state a column's type, avoiding the column type inference described above. This can be useful if there is a column that appears to be numeric, but should actually be treated as categorical metadata (e.g. a ``Subject`` column where subjects are labeled ``1``, ``2``, ``3``). Explicitly declaring a column's type also makes your metadata file more descriptive because the intended column type is included with the metadata, instead of relying on software to infer the type (which isn't always transparent).
+QIIME 2 supports an **optional** *comment directive* to allow users to explicitly state a column's type, avoiding the column type inference described above. This can be useful if there is a column that appears to be numeric, but should actually be treated as categorical metadata (e.g. a ``Subject`` column where subjects are labeled ``1``, ``2``, ``3``). Explicitly declaring a column's type also makes your metadata file more descriptive because the intended column type is included with the metadata, instead of relying on software to infer the type (which isn't always transparent).
 
 You can use an optional *comment directive* to declare column types in your metadata file. The comment directive must appear **directly** below the header. The row's first cell must be ``#q2:types`` to indicate the row is a *comment directive*. Subsequent cells may contain the values ``categorical`` or ``numeric`` (both case-insensitive). The empty cell is also supported if you do not wish to assign a type to a column (the type will be inferred in that case). Thus, it is easy to include this comment directive without having to declare types for every column in your metadata.
+
+.. tip:: Use ``qiime metadata tabulate`` to see the column types of your QIIME 2 Metadata. This works whether you're using the comment directive, type inference, or a combination of the two approaches.
 
 .. note:: In previous versions of QIIME 2 and QIIME 1, *metadata columns* were often referred to as *metadata categories*. Now that we support metadata column typing, which allows you to say whether a column contains *numeric* or *categorical* data, we would end up using terms like *categorical metadata category* or *numeric metadata category*, which can be confusing. We now avoid using the term *category* unless it is used in the context of *categorical* metadata. We've done our best to update our software and documentation to use the term *metadata column* instead of *metadata category*, but there may still be lingering usage of the previous terms out there.
 
@@ -255,7 +257,7 @@ Finally, there are export options available in the visualizations produced from 
 .. _Qiita: https://qiita.ucsd.edu/
 .. _TSV: https://en.wikipedia.org/wiki/Tab-separated_values
 .. _`mapping files`: http://qiime.org/documentation/file_formats.html#metadata-mapping-files
-.. _Keemei: http://keemei.qiime.org/
+.. _Keemei: https://keemei.qiime2.org/
 .. _`Developer Discussion category`: https://forum.qiime2.org/c/dev-discussion
 .. _`cual-id`: http://msystems.asm.org/content/1/1/e00010-15
 .. _`Phylip`: http://evolution.genetics.washington.edu/phylip.html
