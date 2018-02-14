@@ -16,6 +16,7 @@ After installing Miniconda and opening a new terminal, make sure you're running 
    :no-exec:
 
    conda update conda
+   conda install wget
 
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
@@ -38,10 +39,16 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>conda create -n qiime2-2018.2 --file https://data.qiime2.org/distro/core/qiime2-2018.2-conda-osx-64.txt</pre>
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.2-py35-osx-conda.yml
+   conda env create -n qiime2-2018.2 --file qiime2-2018.2-py35-osx-conda.yml
+   # OPTIONAL CLEANUP
+   rm qiime2-2018.2-py35-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>conda create -n qiime2-2018.2 --file https://data.qiime2.org/distro/core/qiime2-2018.2-conda-linux-64.txt</pre>
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.2-py35-linux-conda.yml
+   conda env create -n qiime2-2018.2 --file qiime2-2018.2-py35-linux-conda.yml
+   # OPTIONAL CLEANUP
+   rm qiime2-2018.2-py35-linux-conda.yml</pre>
          </div>
       </div>
    </div>
