@@ -132,6 +132,47 @@ You can use an optional *comment directive* to declare column types in your meta
 
 .. note:: The ``#q2:types`` comment directive is the only supported comment directive; others may be added in the future (e.g. ``#q2:units``). For this reason, rows starting with ``#q2:`` are disallowed, as we reserve that namespace for future comment directives.
 
+Number Formatting
+*****************
+
+If a column is to be interpreted as a *numeric* metadata column (either through column type inference or by using the ``#q2:types`` comment directive), numbers in the column must be formatted following these rules:
+
+- Use the decimal number system: ASCII characters ``[0-9]``, ``.`` for an optional decimal point, and ``+`` and ``-`` for positive and negative signs, respectively.
+
+  - Examples: ``123``, ``123.45``, ``0123.40``, ``-0.000123``, ``+1.23``
+
+- Scientific notation may be used with *E-notation*; both ``e`` and ``E`` are supported.
+
+  - Examples: ``1e9``, ``1.23E-4``, ``-1.2e-08``, ``+4.5E+6``
+
+- Only up to 15 digits **total** (including before and after the decimal point) are supported to stay within the 64-bit floating point specification. Numbers exceeding 15 total digits are unsupported and will result in undefined behavior.
+
+- Common representations of *not a number* (e.g. ``NaN``, ``nan``) or infinity (e.g. ``inf``, ``-Infinity``) are **not supported**. Use an empty cell for missing data (e.g. instead of ``NaN``). Infinity is not supported at this time in QIIME 2 metadata files.
+
+Advanced File Format Details
+****************************
+
+.. note:: The details in this section generally aren't necessary if you're creating and exporting QIIME 2 metadata files using a spreadsheet program (e.g. Microsoft Excel, Google Sheets). If you're creating TSV files by hand (e.g. in a text editor) or writing your own software to consume or produce QIIME 2 metadata files, the details in this section may be important, so read on!
+
+TSV Dialect and Parser
+~~~~~~~~~~~~~~~~~~~~~~
+
+QIIME 2 attempts to interoperate with TSV files exported from Microsoft Excel, as this is the most common TSV "dialect" we have seen in use. The QIIME 2 metadata parser (i.e. reader) uses the `Python csv module`_ ``excel-tab`` dialect for parsing TSV metadata files. This dialect supports wrapping fields in double quote characters (``"``) to allow for tab, newline, and carriage return characters within a field. To include a literal double quote character in a field, the double quote character must be immediately preceded by another double quote character. See the `Python csv module`_ for complete documentation on the ``excel-tab`` dialect.
+
+Encoding and Line Endings
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Metadata files must be encoded as UTF-8, which is backwards-compatible with ASCII encoding.
+
+Unix line endings (``\n``), Windows/DOS line endings (``\r\n``), and "classic Mac OS" line endings (``\r``) are all supported by the metadata parser for interoperability. When metadata files are written to disk in QIIME 2, the line endings will always be ``\r\n`` (Windows/DOS line endings).
+
+Trailing Empty Cells and Jagged Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The metadata parser ignores any trailing empty cells that occur past the fields declared by the header. This is mainly for interoperability with files exported from some spreadsheet programs. These trailing cells/columns may be jagged (or not); they will be ignored either way when the file is read.
+
+If a row doesn't contain as many fields as declared by the header, empty cells will be padded to match the header length (again, this is mainly for interoperability with exported spreadsheets).
+
 Using Metadata Files
 --------------------
 
@@ -261,5 +302,6 @@ Finally, there are export options available in the visualizations produced from 
 .. _`Developer Discussion category`: https://forum.qiime2.org/c/dev-discussion
 .. _`cual-id`: http://msystems.asm.org/content/1/1/e00010-15
 .. _`Phylip`: http://evolution.genetics.washington.edu/phylip.html
+.. _`Python csv module`: https://docs.python.org/3/library/csv.html
 .. _`evenness vector`: https://docs.qiime2.org/2018.2/data/tutorials/moving-pictures/core-metrics-results/evenness_vector.qza
 .. _`feature table artifact`: https://docs.qiime2.org/2018.2/data/tutorials/moving-pictures/table.qza
