@@ -35,7 +35,7 @@ Greengenes (16S rRNA)
 - `12_10 <ftp://greengenes.microbio.me/greengenes_release/gg_12_10/gg_12_10_otus.tar.gz>`_
 - `February 4th, 2011 <http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz>`_
 
-Find more information about Greengenes at http://greengenes.secondgenome.com.
+Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_ and `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_ papers.
 
 Silva (16S/18S rRNA)
 ````````````````````
