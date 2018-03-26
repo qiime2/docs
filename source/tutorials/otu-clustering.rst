@@ -156,8 +156,8 @@ defining the features in the ``FeatureTable`` in closed-reference OTU picking.
 Open-reference clustering
 ...........................
 
-Like the closed-reference clustering example above, open-reference cluster can
-be performed using the ``qiime vsearch cluster-features-open-reference``
+Like the closed-reference clustering example above, open-reference clustering
+can be performed using the ``qiime vsearch cluster-features-open-reference``
 command.
 
 .. note::
