@@ -20,3 +20,4 @@ Tutorials
    longitudinal
    chimera
    read-joining
+   otu-clustering
