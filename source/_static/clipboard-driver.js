@@ -15,8 +15,7 @@ for (x = 0; x < highlightShellElements.length; x++)
   spanElement.setAttribute("class", "glyphicon glyphicon-copy");
   spanElement.innerHTML = "";
   clipboardButton.appendChild(spanElement);
-  clipboardButton.setAttribute("class", "clipboard-btn");
-  clipboardButton.setAttribute("alt", "Click to copy the command block below");
+  clipboardButton.setAttribute("class", "btn btn-default clipboard-btn");
   clipboardButton.setAttribute("title", "Click to copy the command block below");
 
   // Grab pre element
@@ -32,5 +31,5 @@ for (x = 0; x < highlightShellElements.length; x++)
   commandBlockRoot.insertBefore(clipboardButton, commandBlockRoot.firstChild);
 }
 
-// Initialize the clipboard button framwork
+// Initialize the clipboard button framework
 new Clipboard('.clipboard-btn');
