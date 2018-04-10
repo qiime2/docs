@@ -28,7 +28,7 @@ Inspecting Artifacts and Visualizations
 
 Artifacts and visualizations generally exist as ``.qza`` and ``.qzv`` files, and therefore aren't plain-text tables and .jpg or .png images that are viewable with standard text editors and image viewers. Instead, you should inspect their data and metadata using the QIIME tools:
 
-*If QIIME 2 is installed localy*, artifacts and visualizations can be inspected with the ``.view()`` method of most artifacts in the Artifact API or the *view* tool of the q2cli, e.g.: ``qiime tools view visualization.qzv`` or ``qiime tools view artifact.qza``. This q2cli command starts a small web server and presents a view of the artifact or visualization in a browser. For an example, see the :doc:`Moving Pictures Tutorial <tutorials/moving-pictures>`.
+*If QIIME 2 is installed localy*, visualizations can be inspected with the ``.view()`` method in the Artifact API or the *view* tool of the q2cli, e.g.: ``qiime tools view visualization.qzv``. This q2cli command starts a small web server and presents a view of the artifact or visualization in a browser. For an example, see the :doc:`Moving Pictures Tutorial <tutorials/moving-pictures>`.
 
 *If QIIME 2 isn't installed* or you wish to share your results with others who don't have QIIME, use https://view.qiime2.org to easily view QIIME 2 artifacts and visualizations files without requiring a QIIME installation. This is helpful for sharing QIIME 2 data with collaborators who may not have QIIME 2 installed. https://view.qiime2.org also supports viewing data provenance. Note that the visualization will only be available for a short time and is not a permanent archive.
 
