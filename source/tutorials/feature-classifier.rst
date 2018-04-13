@@ -5,6 +5,8 @@ Training feature classifiers with q2-feature-classifier
 
 This tutorial will demonstrate how to train ``q2-feature-classifier`` for a particular dataset. We will train the `Naive Bayes`_ classifier using `Greengenes`_ reference sequences and classify the representative sequences from the `Moving Pictures`_ dataset.
 
+Note that several pre-trained classifiers are provided in the QIIME 2 :doc:`data resources <../data-resources>`. These can be used for some common marker-gene targets (e.g., 16S rRNA genes). Pre-trained classifiers for other marker genes are also available on the `QIIME 2 forum`_. 
+
 We will download and create several files, so first create a working directory.
 
 .. command-block::
@@ -16,7 +18,7 @@ We will download and create several files, so first create a working directory.
 Obtaining and importing reference data sets
 -------------------------------------------
 
-Two elements are required for training the classifier: the reference sequences and the corresponding taxonomic classifications. To reduce computation time for this tutorial we will use the relatively small `Greengenes`_ 13_8 85% OTU data set.
+Two elements are required for training the classifier: the reference sequences and the corresponding taxonomic classifications. To reduce computation time for this tutorial we will use the relatively small `Greengenes`_ 13_8 85% OTU data set. **Do not use the 85% OTUs for training classifiers to be used on real data**. We recommend using more information-rich sequences, e.g., reference sequences clustered at 99% sequence similarity, for classification of real data. See the QIIME 2 :doc:`data resources page <../data-resources>` for links to complete QIIME-compatible reference datasets.
 
 We will also download the representative sequences from the `Moving Pictures`_ tutorial to test our classifier.
 
@@ -51,7 +53,7 @@ Next we import these data into QIIME 2 Artifacts. Since the Greengenes reference
 Extract reference reads
 -----------------------
 
-It has been shown that taxonomic classification accuracy improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced `(Werner et al., 2012)`_. We know from the `Moving Pictures`_ tutorial that the sequence reads that we're trying to classify are 120-base single-end reads that were amplified with the 515F/806R primer pair. We optimize for that here by extracting reads from the reference database based on matches to this primer pair, and then slicing the result to 120 bases.
+It has been shown that taxonomic classification accuracy of 16S rRNA gene sequences improves when a Naive Bayes classifier is trained on only the region of the target sequences that was sequenced `(Werner et al., 2012)`_. This may not necessarily generalize to other marker genes (see note on fungal ITS classification below). We know from the `Moving Pictures`_ tutorial that the sequence reads that we're trying to classify are 120-base single-end reads that were amplified with the 515F/806R primer pair for 16S rRNA gene sequences. We optimize for that here by extracting reads from the reference database based on matches to this primer pair, and then slicing the result to 120 bases.
 
 .. command-block::
 
@@ -61,6 +63,10 @@ It has been shown that taxonomic classification accuracy improves when a Naive B
      --p-r-primer GGACTACHVGGGTWTCTAAT \
      --p-trunc-len 120 \
      --o-reads ref-seqs.qza
+
+.. note:: The ``--p-trunc-len`` parameter should only be used to trim reference sequences if query sequences are trimmed to this same length or shorter. Paired-end sequences that successfully join will typically be variable in length. Single-end reads that are not truncated at a specific length may also be variable in length. For classification of paired-end reads and untrimmed single-end reads, we recommend training a classifier on sequences that have been extracted at the appropriate primer sites, but are not trimmed.
+
+.. note:: The primer sequences used for extracting reads should be the actual DNA-binding (i.e., biological) sequence contained within a primer construct. It should NOT contain any non-biological, non-binding sequence, e.g., adapter, linker, or barcode sequences. If you are not sure what section of your primer sequences are actual DNA-binding, you should consult whoever constructed your sequencing library, your sequencing center, or the original source literature on these primers. If your primer sequences are > 30 nt long, they most likely contain some non-biological sequence.
 
 
 Train the classifier
@@ -91,7 +97,18 @@ Finally, we verify that the classifier works by classifying the representative s
      --m-input-file taxonomy.qza \
      --o-visualization taxonomy.qzv
 
+
+Classification of fungal ITS sequences
+--------------------------------------
+
+In our experience, fungal ITS classifiers trained on the `UNITE reference database`_ do NOT benefit from extracting/trimming reads to primer sites. We recommend training UNITE classifiers on the full reference sequences. Furthermore, we recommend the "developer" sequences (located within the QIIME-compatible release download) because the standard versions of the sequences have already been trimmed to the ITS region (excluding portions of flanking rRNA genes that may be present in amplicons generated with standard ITS primers). Alternatively, ITS query sequences should be trimmed using `ITSx`_ if the standard UNITE sequences are used for classifier training. More information can be found in the README file included with the QIIME-compatible downloads for the UNITE database.
+
+
+
 .. _Moving Pictures: ../moving-pictures/index.html
+.. _QIIME 2 forum: https://forum.qiime2.org/c/community-contributions/data-resources
 .. _Naive Bayes: http://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes
 .. _Greengenes: http://qiime.org/home_static/dataFiles.html
 .. _(Werner et al., 2012): https://www.ncbi.nlm.nih.gov/pubmed/21716311
+.. _UNITE reference database: https://unite.ut.ee/repository.php
+.. _ITSx: http://microbiology.se/software/itsx/
