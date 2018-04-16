@@ -101,8 +101,7 @@ Finally, we verify that the classifier works by classifying the representative s
 Classification of fungal ITS sequences
 --------------------------------------
 
-In our experience, fungal ITS classifiers trained on the `UNITE reference database`_ do NOT benefit from extracting/trimming reads to primer sites. We recommend training UNITE classifiers on the full reference sequences. Furthermore, we recommend the "developer" sequences (located within the QIIME-compatible release download) because the standard versions of the sequences have already been trimmed to the ITS region (excluding portions of flanking rRNA genes that may be present in amplicons generated with standard ITS primers). Alternatively, ITS query sequences should be trimmed using `ITSx`_ if the standard UNITE sequences are used for classifier training. More information can be found in the README file included with the QIIME-compatible downloads for the UNITE database.
-
+In our experience, fungal ITS classifiers trained on the `UNITE reference database`_ do NOT benefit from extracting/trimming reads to primer sites. We recommend training UNITE classifiers on the full reference sequences. Furthermore, we recommend the "developer" sequences (located within the QIIME-compatible release download) because the standard versions of the sequences have already been trimmed to the ITS region (excluding portions of flanking rRNA genes that may be present in amplicons generated with standard ITS primers).
 
 
 .. _Moving Pictures: ../moving-pictures/index.html
@@ -111,4 +110,3 @@ In our experience, fungal ITS classifiers trained on the `UNITE reference databa
 .. _Greengenes: http://qiime.org/home_static/dataFiles.html
 .. _(Werner et al., 2012): https://www.ncbi.nlm.nih.gov/pubmed/21716311
 .. _UNITE reference database: https://unite.ut.ee/repository.php
-.. _ITSx: http://microbiology.se/software/itsx/
