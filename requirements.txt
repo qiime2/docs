@@ -1,3 +1,4 @@
 # Documentation building requirements.
 Sphinx==1.4.6
 Jinja2
+sphinxcontrib-bibtex

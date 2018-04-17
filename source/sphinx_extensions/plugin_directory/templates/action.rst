@@ -1,6 +1,28 @@
 {{ title }}
 {{ '=' * title|length }}
 
+{% if has_citations %}
+.. raw:: html
+
+   <table class="table action-info">
+     <tbody>
+       <tr>
+         <th scope="row"><p></p>Citations</th>
+         <td>
+
+.. bibliography:: {{ bib_id }}.bib
+   :all:
+   :keyprefix: {{ bib_id }}:
+   :labelprefix: {{ bib_id}}:
+
+.. raw:: html
+
+         </td>
+       </tr>
+     </tbody>
+   </table>
+{% endif %}
+
 .. raw:: html
 
    <div class="tabbed">

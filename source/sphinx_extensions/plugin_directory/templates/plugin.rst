@@ -27,14 +27,24 @@
            {% for line in plugin.user_support_text.splitlines() %}
            {{ line|urlize }}<br/>
            {% endfor %}
+
+{% if plugin.citations %}
+.. raw:: html
+
          </td>
        </tr>
        <tr>
-         <th scope="row">Citation</th>
+         <th scope="row"><p></p>Citations</th>
          <td>
-           {% for line in plugin.citation_text.splitlines() %}
-           {{ line|urlize }}<br/>
-           {% endfor %}
+
+.. bibliography:: citations.bib
+   :all:
+   :keyprefix: {{ plugin.name }}:
+   :labelprefix: {{ plugin.name }}:
+{% endif %}
+
+.. raw:: html
+
          </td>
        </tr>
      </tbody>
