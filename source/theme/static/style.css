@@ -144,3 +144,16 @@ form.search input[name=q]{
   }
 
 }
+
+/* Fix up sphinxcontrib-bibtex html */
+table.citation {
+  border-left: none;
+}
+
+table.citation td {
+  padding: 0px 0px 5px 0px;
+}
+
+table.citation td.label {
+  display: none;
+}

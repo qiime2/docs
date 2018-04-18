@@ -52,9 +52,19 @@ def generate_rst(app):
             rendered = template.render(title=plugin_cli_name, plugin=plugin)
             fh.write(rendered)
 
+        if plugin.citations:
+            index_bib = os.path.join(plugin_dir, 'citations.bib')
+            write_bibtex(plugin.citations, index_bib)
+
         for action in plugin.actions.values():
             action_cli_name = action.id.replace('_', '-')
             action_path = os.path.join(plugin_dir, '%s.rst' % action_cli_name)
+
+            bib_id = ':'.join([plugin_cli_name, action_cli_name])
+            if action.citations:
+                action_bib = os.path.join(plugin_dir,
+                                          '%s.bib' % bib_id)
+                write_bibtex(action.citations, action_bib)
 
             with open(action_path, 'w') as fh:
                 title = '%s: %s' % (action_cli_name, action.name)
@@ -73,7 +83,9 @@ def generate_rst(app):
 
                 template = env.get_template('action.rst')
                 rendered = template.render(title=title, cli_help=cli_help,
-                                           api_help=api_help)
+                                           api_help=api_help, bib_id=bib_id,
+                                           has_citations=bool(action.citations)
+                                           )
                 fh.write(rendered)
 
 
@@ -81,6 +93,13 @@ def cleanup_rst(app, exception):
     if hasattr(app, 'plugin_directory_rst_dir') and \
             os.path.exists(app.plugin_directory_rst_dir):
         shutil.rmtree(app.plugin_directory_rst_dir)
+
+
+def write_bibtex(records, path):
+    citations = qiime2.sdk.Citations()
+    for idx, record in enumerate(records):
+        citations['key%d' % idx] = record
+    citations.save(path)
 
 
 def setup(app):
