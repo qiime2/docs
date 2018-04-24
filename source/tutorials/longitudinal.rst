@@ -95,29 +95,35 @@ Finally, scatter plots categorized by each "group column" are shown at the botto
 Volatility analysis
 -------------------
 
-Volatility analysis is a method for generating control charts to assess how volatile a dependent variable is over time (or a gradient) in one or more groups. Any metadata (including alpha and beta diversity artifacts) or ``FeatureTable[RelativeFrequency]`` feature can be used as the dependent variable ("metric").
+The volatility visualizer generates interactive line plots that allow us to assess how volatile a dependent variable is over a continuous, independent variable (e.g., time) in one or more groups. Multiple metadata files (including alpha and beta diversity artifacts) and ``FeatureTable[RelativeFrequency]`` tables can be used as input, and in the interactive visualization we can select different dependent variables to plot on the y-axis.
 
-Here we examine how variance in Shannon diversity changes across time in the ECAM cohort.
+Here we examine how variance in Shannon diversity and other metadata changes across time (set with the ``state-column`` parameter) in the ECAM cohort, both in groups of samples (interactively selected as described below) and in individual subjects (set with the ``individual-id-column`` parameter).
 
 .. command-block::
 
    qiime longitudinal volatility \
      --m-metadata-file ecam-sample-metadata.tsv \
      --m-metadata-file shannon.qza \
-     --p-metric shannon \
-     --p-group-column delivery \
+     --p-default-metric shannon \
+     --p-default-group-column delivery \
      --p-state-column month \
      --p-individual-id-column studyid \
      --o-visualization volatility.qzv
 
 
-The resulting visualization contains some basic results. First, the "Volatility test parameters" summarizes some key parameters, as well as global mean and standard deviation — these are measured across all samples, regardless of which group they are in.
+In the resulting visualization, a line plot appears on the left-hand side of the plot and a panel of "Plot Controls" appears to the right. These "Plot Controls" interactively adjust several variables and parameters. This allows us to determine how groups' and individuals' values change across a single independent variable, ``state-column``. Interective features in this visualization include:
 
-Second, control charts display the mean value of "metric" at each "state". The first plot shown contains all samples, categorized by group (as defined by ``group-column``); the following plots show each individual group, in order to show their individual control characteristics as described in the rest of this paragraph. The mean for all samples in each plot is shown as a black line. The "control limits", 3 standard deviations above and below the mean, are shown as dashed lines. The "warning limits", 2 standard deviations above and below the mean, are shown as dotted lines. The idea behind this plot is to show how a variable is changing over time (or a gradient) in relation to the mean. Large departures from the mean values can cross the warning/control limits, indicating a major disruption at that state; for example, antibiotic use or other disturbances impacting diversity could be tracked with these plots.
+1. The "Metric column" tab lets us select which continuous metadata values to plot on the y-axis. All continuous numeric columns found in metadata/artifacts input to this action will appear as options in this drop-down tab. In this example, the initial variable plotted in the visualization is shannon diversity because this column was designated by the optional ``default-metric`` parameter.
+2. The "Group column" tab lets us select which categorical metadata values to use for calculating mean values. All categorical numeric columns found in metadata/artifacts input to this action will appear as options in this drop-down tab. These mean values are plotted on the line plot, and the thickness and opacity of these mean lines can be modified using the slider bars in the "Plot Controls" on the right-hand side of the visualization. Error bars (standard deviation) can be toggled on and off with a button in the "Plot Controls".
+3. Longitudinal values for each individual subject are plotted as "spaghetti" lines (so-called because this tangled mass of individual vectors looks like a ball of spaghetti). The thickness and opacity of spaghetti can be modified using the slider bars in the "Plot Controls" on the right-hand side of the visualization.
+4. Color scheme can be adjusted using the "Color scheme" tab.
+5. Global mean and warning/control limits (2X and 3X standard deviations from global mean) can be toggled on/off with the buttons in the "Plot Controls". The goal of plotting these values is to show how a variable is changing over time (or a gradient) in relation to the mean. Large departures from the mean values can cross the warning/control limits, indicating a major disruption at that state; for example, antibiotic use or other disturbances impacting diversity could be tracked with these plots.
+6. Group mean lines and spaghetti can also be modified with the "scatter size" and "scatter opacity" slider bars in the "Plot Controls". These adjust the size and opacity of individual points. Maximize scatter opacity and minimize line opacity to transform these into longitudinal scatter plots!
+7. Relevant sample metadata at individual points can be viewed by hovering the mouse over a point of interest.
 
-Longitudinal values for each individual can also be plotted as spaghetti plots by setting the ``spaghetti`` parameter to "yes" or "mean". If replicate samples are collected from an individual at any time point, "yes" causes replicates for each value to be plotted; "mean" plots the mean value for that individual at that time point.
+If the interactive features of this visualization don't quite scratch your itch, click on the "Open in Vega Editor" button at the top of the "Plot Controls" and customize to your heart's content. This opens a window for manually editing plot characteristics in `Vega Editor`_, a visualization tool external to QIIME2.
 
-This visualizer currently only generates control and spaghetti charts, which are a useful **qualitative** approach for visually identifying abnormal time points; accompanying statistical tests may be added in future releases.
+Buon appetito! 🍝
 
 
 First differencing to track rate of change
@@ -239,4 +245,5 @@ So there it is. We can use PERMANOVA test or other distance-based statistical te
 
 .. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
 .. _statsmodels LME description page: http://www.statsmodels.org/dev/mixed_linear.html
+.. _Vega Editor: https://vega.github.io/vega/docs/
 .. _Zhang et al., 2017: https://doi.org/10.1002/gepi.22065
