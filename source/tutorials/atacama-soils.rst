@@ -104,14 +104,15 @@ In this example we have 150-base forward and reverse reads. Since we need the re
 
    qiime dada2 denoise-paired \
      --i-demultiplexed-seqs demux.qza \
-     --o-table table \
-     --o-representative-sequences rep-seqs \
      --p-trim-left-f 13 \
      --p-trim-left-r 13 \
      --p-trunc-len-f 150 \
-     --p-trunc-len-r 150
+     --p-trunc-len-r 150 \
+     --o-table table.qza \
+     --o-representative-sequences rep-seqs.qza \
+     --o-denoising-stats denoising-stats.qza
 
-At this stage, you will have artifacts containing the feature table and corresponding feature sequences. You can generated summaries of those as follows.
+At this stage, you will have artifacts containing the feature table and corresponding feature sequences. You can generate summaries of those as follows.
 
 .. command-block::
 
@@ -123,6 +124,14 @@ At this stage, you will have artifacts containing the feature table and correspo
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
+
+As well, you can visualize the denoising stats by running:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file denoising-stats.qza \
+     --o-visualization denoising-stats.qzv
 
 From this point, analysis of paired-end read data progresses in the same way as analysis of single-end read data. You can therefore continue your analyses of these data following the steps that you ran in :doc:`the moving pictures tutorial <moving-pictures>`.
 
