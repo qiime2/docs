@@ -124,7 +124,14 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
      --p-trim-left 0 \
      --p-trunc-len 120 \
      --o-representative-sequences rep-seqs-dada2.qza \
-     --o-table table-dada2.qza
+     --o-table table-dada2.qza \
+     --o-denoising-stats stats-dada2.qza
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file stats-dada2.qza \
+     --o-visualization stats-dada2.qzv
 
 If you'd like to continue the tutorial using this FeatureTable (opposed to the Deblur feature table generated in *Option 2*), run the following commands.
 
