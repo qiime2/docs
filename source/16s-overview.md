@@ -57,17 +57,41 @@ There are two ways to find the answers to these questions:
 
 If you're using qiime to process your data, the first thing you need to do is get that data into a format that qiime can understand.
 
-[`qiime tools import`](link to qiime tools import) will get you there.
+<Link to a tutorial>
+
+<Something about seeing all the available types of importable data>
 
 ### Demultiplex sequences
 
 If the reads for all of your samples are in the same file, you'll need to demultiplex your sequences.
+The [cutadapt plugin](https://docs.qiime2.org/2018.4/plugins/available/cutadapt/) provides functions to demultiplex sequence data with barcodes still in the sequences.
+It looks for barcode sequences at the beginning of your reads (5' end) with a certain error tolerance, removes them, and returns sequence data separated by each sample.
 
-**Method**. This method looks for exact matches to barcode sequences that are specified either in the sequences, in the sequence headers, or in a separate file.
-It returns demultiplexed fasta or fastq files, with all of the sequences corresponding to each sample in separate files.
-You don't necessarily need to do this step first, but it helps to have each sample in a separate file for downstream steps which leverage this to parallelize their processing code.
+The QIIME 2 forum has a tutorial on various functions available in cutadapt, including demultiplexing: https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313
 
-[`qiime something something`](link) does this
+
+You can learn more about how `cutadapt` works by reading their [documentation](https://cutadapt.readthedocs.io/en/stable/index.html).
+
+For single-end data, demultiplexing with cutadapt in QIIME 2 looks something like this:
+
+```
+$ qiime cutadapt demux-single \
+  --i-seqs multiplexed-seqs.qza \
+  --m-barcodes-file metadata.tsv \
+  --m-barcodes-column Barcode \
+  --p-error-rate 0 \
+  --o-per-sample-sequences demultiplexed-seqs.qza \
+  --o-untrimmed-sequences untrimmed.qza \
+  --verbose
+```
+
+You don't necessarily need to do the demultiplexing step first, but it helps to have each sample in a separate file for downstream steps which leverage this to parallelize their processing code.
+
+_The actual commands that qiime2 is calling can be found in the [source repo](https://github.com/qiime2/q2-cutadapt). As of June 2018, the main command is defined in the [`_build_demux_command()`](https://github.com/qiime2/q2-cutadapt/blob/master/q2_cutadapt/_demux.py#L36) in `_demux.py`._
+
+### Merge reads
+
+
 
 #### VSEARCH
 
