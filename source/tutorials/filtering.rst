@@ -231,6 +231,12 @@ The ``q2-taxa`` plugin provides a method, ``filter-seqs``, for filtering ``Featu
      --p-exclude mitochondria,chloroplast \
      --o-filtered-sequences sequences-with-phyla-no-mitochondria-no-chloroplast.qza
 
+
+The ``q2-feature-table`` plugin also has a ``filter-seqs`` method, which allows users to remove sequences based on various criteria, including which features are present within a feature table.
+
+See also the :doc:`q2-quality-control plugin <quality-control>`, which has an ``exclude-seqs`` action for filtering sequences based on alignment to a set of reference sequences or primers.
+
+
 Filtering distance matrices
 ---------------------------
 In this section of the tutorial we'll see how to filter (i.e., remove) samples from a distance matrix using the ``filter-distance-matrix`` method provided by the ``q2-diversity`` plugin.

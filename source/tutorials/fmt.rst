@@ -146,6 +146,9 @@ We'll also generate a summary of the merged ``FeatureData[Sequence]`` artifact. 
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
 
+
+.. _`fmt diversity`:
+
 Diversity analysis
 ------------------
 
