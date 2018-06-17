@@ -14,7 +14,7 @@ Before we begin talking about specific plugins and actions, we will discuss a co
 
 .. _`key`:
 
-.. image:: images/key.jpg
+.. image:: images/key.png
 
 
 Each type of data (i.e., Artifacts and Visualizations) and action (i.e., methods, visualizers, and pipelines) is represented by a different color-coded node. The edges connecting each node is either solid (representing either required input or output) or dashed (representing optional input). Don't know what these terms mean? Arrgh! Read the note at the top of this page.
@@ -41,7 +41,7 @@ Now that we have read the glossary and key, let us examine a conceptual overview
 
 .. _`overview`:
 
-.. image:: images/overview.jpg
+.. image:: images/overview.png
 
 The edges and nodes in this overview do not represent specific actions or data types, but instead represent conceptual categories, e.g., the basic types of data or analytical goals we might have in an experiment. All of these steps and terms are discussed in more detail below.
 
@@ -79,7 +79,7 @@ The process of demultiplexing (as it occurs in QIIME 2) will look something like
 
 .. _`derep-denoise`:
 
-.. image:: images/derep-denoise.jpg
+.. image:: images/derep-denoise.png
 
 This flowchart describes all demultiplexing steps that are currently possible in QIIME 2, depending on the type of raw data you have imported. Usually only one of the different demultiplexing actions available in ``q2-demux`` or ``q2-cutadapt`` will be applicable for your data, and that is all you will need.
 
@@ -116,7 +116,7 @@ Clustering
 ^^^^^^^^^^
 Next we will discuss clustering methods. Dereplication (the simplest clustering method, effectively producing 100% OTUs, i.e., all unique sequences observed in the dataset) is also depicted in :ref:`the demultiplexing and denoising workflow <derep-denoise>`, and is the necessary starting point to all other clustering methods in QIIME 2, as shown here:
 
-.. image:: images/clustering.jpg
+.. image:: images/clustering.png
 
 ``q2-vsearch`` implements three different `OTU clustering strategies`_: de novo, closed reference, and open reference. All should be preceded by `basic quality-score-based filtering`_ and followed by :doc:`chimera filtering <chimera>` and `aggressive OTU filtering`_ (the treacherous trio, a.k.a. the Bokulich method). 🙈🙉🙊
 
@@ -149,7 +149,7 @@ Let's see what a taxonomy classification workflow might look like:
 
 .. _`taxonomy flowchart`:
 
-.. image:: images/taxonomy.jpg
+.. image:: images/taxonomy.png
 
 
 ``q2-feature-classifier`` contains three different classification methods. ``classify-consensus-blast`` and ``classify-consensus-vsearch`` are both alignment-based methods that find a consensus assignment across N top hits. These methods take reference database ``FeatureData[Taxonomy]`` and ``FeatureData[Sequence]`` files directly, and do not need to be pre-trained.
@@ -191,7 +191,7 @@ Many diversity analyses rely on the phylogenetic similarity between individual f
 
 The different options for aligning sequences and producing a phylogeny are shown in the flowchart below. For detailed description of alignment/phylogeny building, see the `q2-phylogeny tutorial`_ and the `q2-fragment-insertion tutorial`_. 🌳
 
-.. image:: images/alignment-phylogeny.jpg
+.. image:: images/alignment-phylogeny.png
 
 Now that we have our ``Phylogeny[Rooted]`` artifact, pay attention to where it is used below. 👀
 
@@ -211,7 +211,7 @@ And more. These questions can be answered by alpha- and beta-diversity analyses.
 
 Different types of diversity analyses in QIIME 2 are exemplified in the the :ref:`moving pictures tutorial <moving pics diversity>` and :ref:`fecal microbiome transplant tutorial <fmt diversity>`, and the full suite of analyses used to generate diversity artifacts are shown here (and that's not all: note that other plugins can operate on these artifacts, as described further in this guide):
 
-.. image:: images/diversity.jpg
+.. image:: images/diversity.png
 
 The ``q2-diversity`` plugin contains `many different useful actions`_! Check them out to learn more. As you can see in the flowchart, the ``diversity core-metrics*`` pipelines (``core-metrics`` and ``core-metrics-phylogenetic``) encompass many different core diversity commands, and in the process produce the main diversity-related artifacts that can be used in downstream analyses. These are:
 
@@ -232,7 +232,7 @@ At this point you have a feature table, taxonomy classification results, alpha d
 
 Taxonomic and diversity analyses, as described above, are the basic types of analyses that most QIIME 2 users are probably going to need to perform at some point. However, this is only the beginning, and there are so many more advanced analyses at our fingertips. 🖐️⌨️
 
-.. image:: images/fun-with-features.jpg
+.. image:: images/fun-with-features.png
 
 We are only going to give a brief overview, since each of these analyses has its own in-depth tutorial to guide us:
 

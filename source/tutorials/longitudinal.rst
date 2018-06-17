@@ -11,7 +11,7 @@ This tutorial will demonstrate the various features of ``q2-longitudinal``, a pl
 
 The following flowchart illustrates the workflow involved in all ``q2-longitudinal`` analyses (:ref:`figure key <key>`). Each of these actions is described in more detail in the tutorials below.
 
-.. image:: images/longitudinal.jpg
+.. image:: images/longitudinal.png
 
 In the examples below, we use data from the `ECAM study`_, a longitudinal study of infants' and mothers' microbiota from birth through 2 years of life. First let's create a new directory and download the relevant tutorial data.
 
