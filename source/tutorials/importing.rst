@@ -19,6 +19,9 @@ You may want to begin by creating a directory to work in.
    mkdir qiime2-importing-tutorial
    cd qiime2-importing-tutorial
 
+
+.. _`importing seqs`:
+
 Sequence data with sequence quality information
 -----------------------------------------------
 
@@ -98,7 +101,7 @@ Importing data
 Format description
 ******************
 
-In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` / ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.  
+In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` / ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.
 
 The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
 
@@ -251,6 +254,8 @@ Importing data
      --source-format CasavaOneEightSingleLanePerSampleDirFmt \
      --output-path demux-paired-end.qza
 
+
+.. _`importing feature tables`:
 
 Feature table data
 ------------------

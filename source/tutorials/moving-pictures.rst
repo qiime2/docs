@@ -63,6 +63,8 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
 .. qiime1-users::
    In QIIME 1, we generally suggested performing demultiplexing through QIIME (e.g., with ``split_libraries.py`` or ``split_libraries_fastq.py``) as this step also performed quality control of sequences. We now separate the demultiplexing and quality control steps, so you can begin QIIME 2 with either multiplexed sequences (as we're doing here) or demultiplexed sequences.
 
+.. _`moving pics demux`:
+
 Demultiplexing sequences
 ------------------------
 
@@ -237,6 +239,9 @@ The FastTree program creates an unrooted tree, so in the final step in this sect
      --i-tree unrooted-tree.qza \
      --o-rooted-tree rooted-tree.qza
 
+
+.. _`moving pics diversity`:
+
 Alpha and beta diversity analysis
 ---------------------------------
 
@@ -372,6 +377,9 @@ The bottom plot in this visualization is important when grouping samples by meta
 .. question::
     When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
 
+
+.. _`moving pics taxonomy`:
+
 Taxonomic analysis
 ------------------
 
@@ -411,6 +419,8 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
+
+.. _`ancom`:
 
 Differential abundance testing with ANCOM
 -----------------------------------------

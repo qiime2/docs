@@ -69,6 +69,9 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
    :url: https://data.qiime2.org/2018.6/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
+
+.. _`atacama demux`:
+
 Paired-end read analysis commands
 ---------------------------------
 
