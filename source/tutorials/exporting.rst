@@ -17,7 +17,7 @@ Exporting a feature table
 A ``FeatureTable[Frequency]`` artifact will be exported as a `BIOM v2.1.0 formatted file`_.
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/exporting/feature-table.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/exporting/feature-table.qza
    :saveas: feature-table.qza
 
 .. command-block::
@@ -32,7 +32,7 @@ Exporting a phylogenetic tree
 A ``Phylogeny[Unrooted]`` artifact will be exported as a `newick formatted file`_.
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/exporting/unrooted-tree.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/exporting/unrooted-tree.qza
    :saveas: unrooted-tree.qza
 
 .. command-block::
