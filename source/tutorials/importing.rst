@@ -41,11 +41,11 @@ Obtaining example data
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
@@ -74,15 +74,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -154,19 +154,19 @@ Obtaining example data
 Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33`` and ``PairedEndFastqManifestPhred64``.
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/se-33.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/se-33.zip
    :saveas: se-33.zip
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/se-33-manifest
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/se-33-manifest
    :saveas: se-33-manifest
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/pe-64.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/pe-64.zip
    :saveas: pe-64.zip
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/pe-64-manifest
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/pe-64-manifest
    :saveas: pe-64-manifest
 
 .. command-block::
@@ -207,7 +207,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -237,7 +237,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -272,7 +272,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/feature-table-v100.biom
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/feature-table-v100.biom
    :saveas: feature-table-v100.biom
 
 Importing data
@@ -298,7 +298,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/feature-table-v210.biom
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
@@ -324,7 +324,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/sequences.fna
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/sequences.fna
    :saveas: sequences.fna
 
 Importing data
@@ -349,7 +349,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/aligned-sequences.fna
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/aligned-sequences.fna
    :saveas: aligned-sequences.fna
 
 Importing data
@@ -374,7 +374,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.6/tutorials/importing/unrooted-tree.tre
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/unrooted-tree.tre
    :saveas: unrooted-tree.tre
 
 Importing data
