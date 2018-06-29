@@ -23,8 +23,8 @@ A ``FeatureTable[Frequency]`` artifact will be exported as a `BIOM v2.1.0 format
 .. command-block::
 
    qiime tools export \
-     feature-table.qza \
-     --output-dir exported-feature-table
+     --input-path feature-table.qza \
+     --output-path exported-feature-table
 
 Exporting a phylogenetic tree
 -----------------------------
@@ -38,8 +38,8 @@ A ``Phylogeny[Unrooted]`` artifact will be exported as a `newick formatted file`
 .. command-block::
 
    qiime tools export \
-     unrooted-tree.qza \
-     --output-dir exported-tree
+     --input-path unrooted-tree.qza \
+     --output-path exported-tree
 
 Exporting versus extracting
 ---------------------------
