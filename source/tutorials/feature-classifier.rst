@@ -5,7 +5,7 @@ Training feature classifiers with q2-feature-classifier
 
 This tutorial will demonstrate how to train ``q2-feature-classifier`` for a particular dataset. We will train the `Naive Bayes`_ classifier using `Greengenes`_ reference sequences and classify the representative sequences from the `Moving Pictures`_ dataset.
 
-Note that several pre-trained classifiers are provided in the QIIME 2 :doc:`data resources <../data-resources>`. These can be used for some common marker-gene targets (e.g., 16S rRNA genes). Pre-trained classifiers for other marker genes are also available on the `QIIME 2 forum`_. 
+Note that several pre-trained classifiers are provided in the QIIME 2 :doc:`data resources <../data-resources>`. These can be used for some common marker-gene targets (e.g., 16S rRNA genes). Pre-trained classifiers for other marker genes are also available on the `QIIME 2 forum`_.
 
 We will download and create several files, so first create a working directory.
 
@@ -45,7 +45,7 @@ Next we import these data into QIIME 2 Artifacts. Since the Greengenes reference
 
    qiime tools import \
      --type 'FeatureData[Taxonomy]' \
-     --source-format HeaderlessTSVTaxonomyFormat \
+     --input-format HeaderlessTSVTaxonomyFormat \
      --input-path 85_otu_taxonomy.txt \
      --output-path ref-taxonomy.qza
 

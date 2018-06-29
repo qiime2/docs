@@ -200,7 +200,7 @@ Manifest" formats <importing>`.
      --input-path fj-joined/manifest \
      --output-path fj-joined-demux.qza \
      --type SampleData[JoinedSequencesWithQuality] \
-     --source-format SingleEndFastqManifestPhred33
+     --input-format SingleEndFastqManifestPhred33
 
 Viewing summary of imported data with read quality
 --------------------------------------------------

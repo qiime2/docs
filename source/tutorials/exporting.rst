@@ -50,8 +50,8 @@ QIIME 2 artifacts can be extracted using ``qiime tools extract``. Extracting an 
 
    mkdir extracted-feature-table
    qiime tools extract \
-     feature-table.qza \
-     --output-dir extracted-feature-table
+     --input-path feature-table.qza \
+     --output-path extracted-feature-table
 
 The output directory will contain a new directory whose name is the artifact's UUID. All artifact data and metadata will be stored in that directory.
 
