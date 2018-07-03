@@ -184,7 +184,7 @@ Importing Data
      --type 'SampleData[SequencesWithQuality]' \
      --input-path se-33-manifest \
      --output-path single-end-demux.qza \
-     --source-format SingleEndFastqManifestPhred33
+     --input-format SingleEndFastqManifestPhred33
 
 .. command-block::
 
@@ -192,7 +192,7 @@ Importing Data
      --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path pe-64-manifest \
      --output-path paired-end-demux.qza \
-     --source-format PairedEndFastqManifestPhred64
+     --input-format PairedEndFastqManifestPhred64
 
 
 Casava 1.8 single-end demultiplexed fastq
@@ -222,7 +222,7 @@ Importing data
    qiime tools import \
      --type 'SampleData[SequencesWithQuality]' \
      --input-path casava-18-single-end-demultiplexed \
-     --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+     --input-format CasavaOneEightSingleLanePerSampleDirFmt \
      --output-path demux-single-end.qza
 
 Casava 1.8 paired-end demultiplexed fastq
@@ -251,7 +251,7 @@ Importing data
    qiime tools import \
      --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path casava-18-paired-end-demultiplexed \
-     --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+     --input-format CasavaOneEightSingleLanePerSampleDirFmt \
      --output-path demux-paired-end.qza
 
 
@@ -283,7 +283,7 @@ Importing data
    qiime tools import \
      --input-path feature-table-v100.biom \
      --type 'FeatureTable[Frequency]' \
-     --source-format BIOMV100Format \
+     --input-format BIOMV100Format \
      --output-path feature-table-1.qza
 
 BIOM v2.1.0
@@ -309,7 +309,7 @@ Importing data
    qiime tools import \
      --input-path feature-table-v210.biom \
      --type 'FeatureTable[Frequency]' \
-     --source-format BIOMV210Format \
+     --input-format BIOMV210Format \
      --output-path feature-table-2.qza
 
 Per-feature unaligned sequence data (i.e., representative sequences)
