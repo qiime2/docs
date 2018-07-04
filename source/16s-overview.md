@@ -266,32 +266,37 @@ You can build an unrooted phylogenetic tree using a variety of methods using: [f
 
 Alpha diversity tells you something about the *diversity* of the community in each sample.
 There are many ways to calculate alpha diversity, which are wonderfully explained in a [community contribution](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282) on the qiime 2 forum.
-You can see them all within [qiime diversity alpha](https://docs.qiime2.org/2018.6/plugins/available/diversity/alpha/). The following metrics are currently supported in qiime2:
+You can see them all within [qiime diversity alpha](https://docs.qiime2.org/2018.6/plugins/available/diversity/alpha/) and [alpha-phylogenetic](https://docs.qiime2.org/2018.6/plugins/available/diversity/alpha-phylogenetic/) which requires a phylogenetic tree. 
+Non-phylogenetic-based
 `[mcintosh_d|chao1_ci|berger_parker_d|strong|robbins|mcintosh_e|michaelis_menten_fit|menhinick|doubles|pielou_e|shannon|gini_index|ace|observed_otus|kempton_taylor_q|chao1|esty_ci|dominance|lladser_pe|simpson_e|heip_e|goods_coverage|singles|osd|lladser_ci|margalef|fisher_alpha|simpson|brillouin_d|enspie]`
+Phylogenetic-based
+`[faith_pd]`
 
 
 
 ### Beta diversity
 
-You can also calculate the "distance" or "difference" between communities across samples.
-Again, there are many metrics to choose from using [beta diversity](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta/).
+You can also calculate the "distances" or "difference" between communities across samples.
+Again, there are many metrics to choose from using [beta diversity](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta/) and [beta-phylogenetic](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta-phylogenetic/) which requires a phylogenetic tree.
 The following distance metrics are currently supported in qiime2.
+Non-phylogenetic based:
 `[correlation|sokalmichener|russellrao|hamming|rogerstanimoto|chebyshev|cityblock|kulsinski|sqeuclidean|braycurtis|yule|matching|jaccard|canberra|euclidean|seuclidean|sokalsneath|wminkowski|dice|mahalanobis|cosine]`
-
+Phylogenetic-based:
+`[weighted_unifrac|unweighted_unifrac]`
 
 #### PCoA
 
-Once you've calculated distances between all pairwise samples in your data, you can project your samples onto a PCoA plot.
-
-qiime command
+Once you've calculated distances between all pairwise samples in your data, you can project your samples onto a PCoA plot using the [emperor](https://docs.qiime2.org/2018.6/plugins/available/emperor/plot/) plot tool which can also create [procrustes](https://docs.qiime2.org/2018.6/plugins/available/emperor/procrustes-plot/) plots. Currently biplots and triplots are not supported in qiim2, so if you are interested in identifying important taxa and/or environmental variables in your plots, you'll need to do this outside of qiime.
 
 #### PERMANOVA/ANOSIM/etc
 
-If you have multiple groups and want to know whether they are meanginfully different, you can use a statistical methods that calculates whether the distances between samples in different groups is different than the distance between samples in the same group.
+If you have multiple groups and want to know whether their communities as a whole are meanginfully different, you can use a statistical methods that calculates whether the distances between samples in different groups is different than the distance between samples in the same group. 
 
-There are a few different ways to do this, learn more about it somewhere...?
+In qiime2, there are currently two different methods to approach this: PERMANOVA and ANOSIM which are performed using the [beta-group-significance](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta-group-significance/) plugin.
+For a nice overview of these tests see: [PERMANOVA](https://mb3is.megx.net/gustame/hypothesis-tests/manova/npmanova) and [ANOSIM](https://mb3is.megx.net/gustame/hypothesis-tests/anosim) 
 
-qiime commands...
+Note that the PERMANOVA command in qiime is slightly different than the common adonis test implemented in R's 'vegan' package but are comparable.
+
 
 ### Differential abundance testing
 
