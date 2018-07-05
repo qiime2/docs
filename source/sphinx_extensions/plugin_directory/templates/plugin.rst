@@ -27,6 +27,14 @@
            {% for line in plugin.user_support_text.splitlines() %}
            {{ line|urlize }}<br/>
            {% endfor %}
+       <tr>
+         <th scope="row">q2cli Invocation</th>
+         <td><pre>qiime {{ title }}</pre></td>
+       </tr>
+       <tr>
+         <th scope="row">Artifact API Import</th>
+         <td><pre> from qiime2.plugins import {{ title }}</pre></td>
+       </tr>
 
 {% if plugin.citations %}
 .. raw:: html

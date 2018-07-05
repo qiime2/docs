@@ -57,6 +57,7 @@ def generate_rst(app):
             write_bibtex(plugin.citations, index_bib)
 
         for action in plugin.actions.values():
+            action_api_name = action.id
             action_cli_name = action.id.replace('_', '-')
             action_path = os.path.join(plugin_dir, '%s.rst' % action_cli_name)
 
@@ -84,8 +85,12 @@ def generate_rst(app):
                 template = env.get_template('action.rst')
                 rendered = template.render(title=title, cli_help=cli_help,
                                            api_help=api_help, bib_id=bib_id,
-                                           has_citations=bool(action.citations)
-                                           )
+                                           has_citations=bool(
+                                            action.citations),
+                                           plugin_cli_name=plugin_cli_name,
+                                           action_cli_name=action_cli_name,
+                                           plugin_api_name=plugin.name,
+                                           action_api_name=action_api_name)
                 fh.write(rendered)
 
 
