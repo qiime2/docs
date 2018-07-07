@@ -37,14 +37,19 @@
         <div class="clearfix"></div>
         <div class="highlight-shell">
           <div class="highlight">
-            <pre>wget -O "{{ node.saveas }}" "{{ node.url }}"</pre>
+            <pre>wget \
+  -O "{{ node.saveas }}" \
+  "{{ node.url }}"</pre>
           </div>
         </div>
       </div>
       <div role="tabpanel" class="tab-pane fade" id="curl-{{ node.id }}">
         <div class="highlight-shell">
           <div class="highlight">
-            <pre>curl -sL "{{ node.url }}" > "{{ node.saveas }}"</pre>
+            <pre>curl \
+  -sL \
+  "{{ node.url }}" > \
+  "{{ node.saveas }}"</pre>
           </div>
         </div>
       </div>
