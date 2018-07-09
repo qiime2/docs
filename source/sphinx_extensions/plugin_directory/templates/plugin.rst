@@ -29,11 +29,27 @@
            {% endfor %}
        <tr>
          <th scope="row">q2cli Invocation</th>
-         <td><pre>qiime {{ title }}</pre></td>
+         <td>
+
+.. command-block::
+
+             qiime {{ title }}
+
+.. raw:: html
+
+         </td>
        </tr>
        <tr>
          <th scope="row">Artifact API Import</th>
-         <td><pre> from qiime2.plugins import {{ title }}</pre></td>
+         <td>
+
+.. command-block::
+
+             from qiime2.plugins import {{ title }}
+
+.. raw:: html
+
+         </td>
        </tr>
 
 {% if plugin.citations %}

@@ -32,14 +32,18 @@
      </ul>
      <div class="tab-content">
        <div id="cli" class="tab-pane fade in active">
-         <h4>Invocation:</h4>
-         <pre>qiime {{plugin_cli_name}} {{action_cli_name}} [OPTIONS]</pre>
          <h4>Docstring:</h4>
          <pre>{{- cli_help -}}</pre>
        </div>
        <div id="api" class="tab-pane fade">
        <h4>Import:</h4>
-       <pre>from qiime2.plugins.{{- plugin_api_name -}}.actions import {{action_api_name}} as {{action_api_name}}</pre>
+
+.. command-block::
+
+       from qiime2.plugins.{{plugin_api_name}}.actions import {{action_api_name}} as {{action_api_name}}
+
+.. raw:: html
+
        <h4>Docstring:</h4>
          <pre>
            {{- api_help -}}
