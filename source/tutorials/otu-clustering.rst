@@ -52,8 +52,8 @@ Dereplicating a ``SampleData[Sequences]`` artifact
 --------------------------------------------------
 
 If you are beginning your analysis with demultiplexed, quality controlled
-sequences, such as those in a QIIME 1 ``seqs.fna`` file your first step is
-to import that data into a QIIME 1 artifact. The semantic type used here is
+sequences, such as those in a QIIME 1 ``seqs.fna`` file_ your first step
+is to import that data into a QIIME 1 artifact. The semantic type used here is
 ``SampleData[Sequences]``, indicating that the data represents collections of
 sequences associated with one or more samples.
 
@@ -186,4 +186,4 @@ sequences, composed of the reference sequences used for input, as well as the
 sequences clustered as part of the internal *de novo* clustering step.
 
 .. _vsearch: https://peerj.com/articles/2584/
-.. _QIIME 1 ``seqs.fna`` file: http://qiime.org/documentation/file_formats.html#post-split-libraries-fasta-file-overview
+.. _file: http://qiime.org/documentation/file_formats.html#post-split-libraries-fasta-file-overview
