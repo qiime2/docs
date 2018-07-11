@@ -304,9 +304,13 @@ If you are comparing two groups of samples, you can ask if any taxa in your data
 There are many ways to measure differential abundance.
 You should understand what assumptions are being made by each method and ensure that your data meets these assumptions.
 
-#### Non-parametric tests
+### Normalization methods for unequal sampling depth
+Currently only [rarefying](https://docs.qiime2.org/2018.6/plugins/available/feature-table/rarefy/) is supported in Qiime2. Other methods that were previously available in Qiime1 such as CSS or Deseq2 have not been implemented yet. However, the existing methods of differential abundance testing in Qiime2 do not require normalization but low feature samples should still be removed prior to these tests as they introduce noise and weakn the integrity of the outcome. [Filtering samples](https://docs.qiime2.org/2018.6/plugins/available/feature-table/filter-samples/) with less than 1000 features is a good start. 
 
-qiime command for wilcoxon, etc
+#### Analysis of Composition of Microbiomes (ANCOM)
+The [ANCOM plugin](https://docs.qiime2.org/2018.6/plugins/available/composition/ancom/) is a very useful tool based on [this paper](https://www.ncbi.nlm.nih.gov/pubmed/26028277) for differential abundance testing which uses uses log-ratios of relative abundance data so does not require normalization or rarefaction and does not make distributional assumptions. According to this [benchmark paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5335496/) it also appears to be more sensitive than some other tests such as DESEQ2 and MetagenomeSeq and has better control of false discovery rate. ANCOM does make some assumptions which are detailed [here](http://mortonjt.blogspot.com/2016/06/ancom-explained.html). In brief, ANCOM assumes that few taxa are changing across groups as there is a drop in power if >25% of the taxa are changing across groups. ANCOM also does not perform well when there are large number of low abundance features or features that only occur across a few samples. It is therefore strongly recommended to remove low abundance features (i.e. less than 10) and those that are present in only a few samples (i.e occuring in less than 25-50% of samples). The qiime2 plugin currently does not support pairwise comparison if you have more than 2 groups but [ANCOM2](https://sites.google.com/site/siddharthamandal1985/research) (available as an R package) can handle linear model frameworks such as repeated measures, covariates, and longtiduinal analysis. ANCOM2 will likely make its way to Qiime2 in the future.
+
+#### Gneiss
 
 #### DESEQ2
 
