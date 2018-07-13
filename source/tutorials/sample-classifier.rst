@@ -40,7 +40,7 @@ Next, we will attempt to predict which body site each sample originated from bas
      --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 100 \
-     --o-visualization moving-pictures-BodySite.qzv
+     --output-dir moving-pictures-classifier
 
 The visualization produced by this command presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with to the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
 
@@ -93,7 +93,7 @@ Next, we will train a regressor to predict an infant's age based on its microbio
      --p-parameter-tuning \
      --p-estimator RandomForestRegressor \
      --p-n-estimators 100 \
-     --o-visualization ecam-month.qzv
+     --output-dir ecam-regressor
 
 The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this, model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
 
