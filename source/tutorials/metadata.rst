@@ -260,6 +260,9 @@ Metadata merging is supported anywhere that metadata is accepted in QIIME 2. For
 .. question::
    What body sites are associated with the highest Faith's phylogentic diversity value? Hint: first color by body site, and then color by Faith's PD using a continuous color scheme.
 
+
+.. _`exploring feature metadata`:
+
 Exploring feature metadata
 --------------------------
 
