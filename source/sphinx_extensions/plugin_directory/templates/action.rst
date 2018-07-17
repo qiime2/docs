@@ -40,7 +40,7 @@
 
 .. command-block::
 
-       from qiime2.plugins.{{plugin_api_name}}.actions import {{action_api_name}} as {{action_api_name}}
+       from {{import_path}} import {{action_api_name}}
 
 .. raw:: html
 

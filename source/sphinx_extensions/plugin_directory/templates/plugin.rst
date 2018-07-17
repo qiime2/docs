@@ -45,7 +45,7 @@
 
 .. command-block::
 
-             from qiime2.plugins import {{ title }}
+             from qiime2.plugins import {{ title.replace('-', '_') }}
 
 .. raw:: html
 
