@@ -148,7 +148,8 @@ Deblur is faster for larger datasets because it uses a pre-packaged error model 
 
 
 #### Clustering
-<much of the below section is already covered by now in the above. We probably don't need to include these again, but just say 'as per above'.. I left them untouched in case you think we should keep them.>
+
+<much of the below section is already covered by now in the above. We probably don't need to include these again, but just say 'as per above'.. I left them untouched in case you think we should keep them>
 
 To cluster your sequences, you need to prepare your data.
 
@@ -267,8 +268,10 @@ You can build an unrooted phylogenetic tree using a variety of methods using: [f
 Alpha diversity tells you something about the *diversity* of the community in each sample.
 There are many ways to calculate alpha diversity, which are wonderfully explained in a [community contribution](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282) on the qiime 2 forum.
 You can see them all within [qiime diversity alpha](https://docs.qiime2.org/2018.6/plugins/available/diversity/alpha/) and [alpha-phylogenetic](https://docs.qiime2.org/2018.6/plugins/available/diversity/alpha-phylogenetic/) which requires a phylogenetic tree. 
+
 Non-phylogenetic-based
 `[mcintosh_d|chao1_ci|berger_parker_d|strong|robbins|mcintosh_e|michaelis_menten_fit|menhinick|doubles|pielou_e|shannon|gini_index|ace|observed_otus|kempton_taylor_q|chao1|esty_ci|dominance|lladser_pe|simpson_e|heip_e|goods_coverage|singles|osd|lladser_ci|margalef|fisher_alpha|simpson|brillouin_d|enspie]`
+
 Phylogenetic-based
 `[faith_pd]`
 
@@ -279,14 +282,16 @@ Phylogenetic-based
 You can also calculate the "distances" or "difference" between communities across samples.
 Again, there are many metrics to choose from using [beta diversity](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta/) and [beta-phylogenetic](https://docs.qiime2.org/2018.6/plugins/available/diversity/beta-phylogenetic/) which requires a phylogenetic tree.
 The following distance metrics are currently supported in qiime2.
+
 Non-phylogenetic based:
 `[correlation|sokalmichener|russellrao|hamming|rogerstanimoto|chebyshev|cityblock|kulsinski|sqeuclidean|braycurtis|yule|matching|jaccard|canberra|euclidean|seuclidean|sokalsneath|wminkowski|dice|mahalanobis|cosine]`
+
 Phylogenetic-based:
 `[weighted_unifrac|unweighted_unifrac]`
 
 #### PCoA
 
-Once you've calculated distances between all pairwise samples in your data, you can project your samples onto a PCoA plot using the [emperor](https://docs.qiime2.org/2018.6/plugins/available/emperor/plot/) plot tool which can also create [procrustes](https://docs.qiime2.org/2018.6/plugins/available/emperor/procrustes-plot/) plots. Currently biplots and triplots are not supported in qiim2, so if you are interested in identifying important taxa and/or environmental variables in your plots, you'll need to do this outside of qiime.
+Once you've calculated distances between all pairwise samples in your data, you can project your samples onto a PCoA plot using the [emperor](https://docs.qiime2.org/2018.6/plugins/available/emperor/plot/) plot tool which can also create [procrustes](https://docs.qiime2.org/2018.6/plugins/available/emperor/procrustes-plot/) plots. Currently biplots and triplots are not supported in qiim2, so if you are interested in identifying important taxa and/or environmental variables in your plots, you'll need to do this outside of qiime for example with vegan package in R.
 
 #### PERMANOVA/ANOSIM/etc
 
@@ -305,38 +310,31 @@ There are many ways to measure differential abundance.
 You should understand what assumptions are being made by each method and ensure that your data meets these assumptions.
 
 ### Normalization methods for unequal sampling depth
-Currently only [rarefying](https://docs.qiime2.org/2018.6/plugins/available/feature-table/rarefy/) is supported in Qiime2. Other methods that were previously available in Qiime1 such as CSS or Deseq2 have not been implemented yet. However, the existing methods of differential abundance testing in Qiime2 do not require normalization but low feature samples should still be removed prior to these tests as they introduce noise and weakn the integrity of the outcome. [Filtering samples](https://docs.qiime2.org/2018.6/plugins/available/feature-table/filter-samples/) with less than 1000 features is a good start. 
+Currently only [rarefying](https://docs.qiime2.org/2018.6/plugins/available/feature-table/rarefy/) is supported in Qiime2. Other methods that were previously available in Qiime1 such as CSS or Deseq2 have not been implemented yet. However, the existing methods of differential abundance testing in Qiime2 do not require normalization but low feature samples should still be removed prior to these tests as they introduce noise and weaken the integrity of the outcome. [Filtering samples](https://docs.qiime2.org/2018.6/plugins/available/feature-table/filter-samples/) with less than 1000 features is a good start though you'll want to make sure your choice mathces the needs of your project. 
 
 #### Analysis of Composition of Microbiomes (ANCOM)
-The [ANCOM plugin](https://docs.qiime2.org/2018.6/plugins/available/composition/ancom/) is a very useful tool based on [this paper](https://www.ncbi.nlm.nih.gov/pubmed/26028277) for differential abundance testing which uses uses log-ratios of relative abundance data so does not require normalization or rarefaction and does not make distributional assumptions. According to this [benchmark paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5335496/) it also appears to be more sensitive than some other tests such as DESEQ2 and MetagenomeSeq and has better control of false discovery rate. ANCOM does make some assumptions which are detailed [here](http://mortonjt.blogspot.com/2016/06/ancom-explained.html). In brief, ANCOM assumes that few taxa are changing across groups as there is a drop in power if >25% of the taxa are changing across groups. ANCOM also does not perform well when there are large number of low abundance features or features that only occur across a few samples. It is therefore strongly recommended to remove low abundance features (i.e. less than 10) and those that are present in only a few samples (i.e occuring in less than 25-50% of samples). The qiime2 plugin currently does not support pairwise comparison if you have more than 2 groups but [ANCOM2](https://sites.google.com/site/siddharthamandal1985/research) (available as an R package) can handle linear model frameworks such as repeated measures, covariates, and longtiduinal analysis. ANCOM2 will likely make its way to Qiime2 in the future.
+The [ANCOM plugin](https://docs.qiime2.org/2018.6/plugins/available/composition/ancom/) is a very useful tool based on [this paper](https://www.ncbi.nlm.nih.gov/pubmed/26028277) for differential abundance testing which uses log-ratios of relative abundance data so does not require normalization or rarefaction and does not make distributional assumptions. According to this [benchmark paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5335496/) it also appears to be more sensitive than some other tests such as DESEQ2 and MetagenomeSeq and has better control of false discovery rate. ANCOM does make some assumptions which are detailed [here](http://mortonjt.blogspot.com/2016/06/ancom-explained.html). In brief, ANCOM assumes that few taxa are changing across groups as there is a drop in power if >25% of the taxa are changing across groups. ANCOM also does not perform well when there are large number of low abundance features or features that only occur across a few samples. It is therefore strongly recommended to remove low abundance features (i.e. less than 10) and those that are present in only a few samples (i.e occuring in less than 25-50% of samples). The qiime2 plugin currently does not support pairwise comparison if you have more than 2 groups but [ANCOM2](https://sites.google.com/site/siddharthamandal1985/research) (available as an R package) can handle linear model frameworks such as repeated measures, covariates, and longtiduinal analysis. ANCOM2 will likely make its way to Qiime2 in the future.
 
 #### Gneiss
 Gneiss builds on the method used by ANCOM by employing [balance trees](https://github.com/biocore/gneiss/blob/master/ipynb/balance_trees.ipynb) to infer properties of subcommunities, rather than individual species ([original paper](http://msystems.asm.org/content/2/1/e00162-16)). Gneiss shares many of the same assumptions and filtering recommendations as ANCOM. The q2-gneiss plugin allows for building of common linear regression models using balances as well as dealing with mixed effects models with covariates. The [gneiss tutorial](https://docs.qiime2.org/2018.6/tutorials/gneiss/) shows a nice example of performing differential abundance testing in microbial communities with pH as a gradient covariable. 
 
-< DESEQ2 and MetagenomeSeq are currently not supported in qiime2. I personally doubt the q2 developers with implemented these since ANCOM and gneiss appear to outperform these. Perhaps someone will develop a plugin for them later) >
-#### DESEQ2
+<DESEQ2 and MetagenomeSeq are currently not supported in qiime2. I personally doubt the q2 developers with implemented these since ANCOM and gneiss appear to outperform these. Perhaps someone will develop a plugin for them later)>
 
-#### MetagenomeSeq
 
-#### Others?
+#### Analyzing longitduinal data
+Alpha and beta diversity measures can be analysed using either a paired or longitduinal approach using [q2-longitudinal](https://docs.qiime2.org/2018.6/plugins/available/longitudinal/) which utilizes linear mixed effect models or non-parametric microbial interdependence test (NMIT). See this [great tutorial](https://docs.qiime2.org/2018.6/tutorials/longitudinal/) for more details.
 
-### Machine learning and multivariate models
-
-Beyond testing for differentially abundant taxa, you can also compare groups with multi-variate approaches like regression models and machine learning classifiers.
 
 #### Machine learning classifiers
 
-Machine learning can be used to build complex models that distinguish groups of samples well.
+Machine learning can be used to build complex models that can predict a sample's metadata trait, identify features that are predictive of sample characteristics, and predict outliers. The [q-2sample-classifier](https://docs.qiime2.org/2018.6/plugins/available/sample-classifier/) has several actions for these classifiers. Also see this great [tutorial](https://docs.qiime2.org/2018.6/tutorials/sample-classifier/) for mroe details on machine learning in q2.
 You should familiarize yourself with the underlying methods called by qiime - the scikit-learn user guide is a fantastic resource.
 Also, make sure that you are using appropriate cross-validation or holdout data to prevent overfitting.
 
 qiime commands
 
-#### Regression models
-
-You can also build more complicated models to identify differences between groups of samples...
 
 ### And much much more!
 
-You can explore qiime's ever-growing list of plugins to find other methods to apply to your data.
-And remember that you're not limited to what qiime can do: you can export your data at any point and do more complicated or unique analyses on your own computer.
+You can explore qiime's ever-growing list of [plugins](https://docs.qiime2.org/2018.6/plugins/) to find other methods to apply to your data.
+And remember that you're not limited to what qiime can do: you can export your data at any point and do more complicated or unique analyses on your own computer. To easily import qiime2 artifacts into R see this neat [qiime2R plugin](https://github.com/jbisanz/qiime2R).
