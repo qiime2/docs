@@ -23,7 +23,7 @@ for (x = 0; x < highlightShellElements.length; x++)
 
   // Add the data-clipboard-text atribute to the clipboard button
   // Assign the pre elements text content to the data-clipboard-text attribute
-  clipboardButton.setAttribute("data-clipboard-text", preElements[0].textContent);
+  clipboardButton.setAttribute("data-clipboard-text", $.trim(preElements[0].textContent));
 
   // Get the command block root "div" element
   // insert the clipboardButton node as the first child of the command block root
