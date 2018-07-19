@@ -205,9 +205,9 @@ After the quality filtering step completes, you'll want to explore the resulting
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
 
-QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we use ``align-to-tree-mafft-fasttree`` pipeline from the ``q2-phylogeny`` plugin. This pipeline will output files that are created in the process of generating the tree.
+QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we will use ``align-to-tree-mafft-fasttree`` pipeline from the ``q2-phylogeny`` plugin.
 
-The pipeline achieves this by performing a multiple sequence alignment of the sequences in our ``FeatureData[Sequence]`` to create a ``FeatureData[AlignedSequence]`` QIIME 2 artifact. Here the pipeline does this with the ``mafft`` program.
+First, the pipeline uses the ``mafft`` program to perform a multiple sequence alignment of the sequences in our ``FeatureData[Sequence]`` to create a ``FeatureData[AlignedSequence]`` QIIME 2 artifact.
 Next, the pipeline masks (or filters) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
 Following that, the pipeline applies FastTree to generate a phylogenetic tree from the masked alignment.
 The FastTree program creates an unrooted tree, so in the final step in this section midpoint rooting is applied to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
