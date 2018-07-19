@@ -32,6 +32,7 @@
          <td>
 
 .. command-block::
+   :no-exec:
 
    qiime {{ title }}
 
