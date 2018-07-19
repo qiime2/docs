@@ -46,8 +46,7 @@
       <div role="tabpanel" class="tab-pane fade" id="curl-{{ node.id }}">
         <div class="highlight-shell">
           <div class="highlight">
-            <pre>curl \
-  -sL \
+            <pre>curl -sL \
   "{{ node.url }}" > \
   "{{ node.saveas }}"</pre>
           </div>
