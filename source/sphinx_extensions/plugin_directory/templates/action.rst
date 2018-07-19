@@ -39,8 +39,9 @@
        <h4>Import:</h4>
 
 .. command-block::
+   :no-exec:
 
-       from {{import_path}} import {{action_api_name}}
+   from {{import_path}} import {{action_api_name}}
 
 .. raw:: html
 

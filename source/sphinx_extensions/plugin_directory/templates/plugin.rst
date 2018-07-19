@@ -33,7 +33,7 @@
 
 .. command-block::
 
-             qiime {{ title }}
+   qiime {{ title }}
 
 .. raw:: html
 
@@ -44,8 +44,9 @@
          <td>
 
 .. command-block::
+   :no-exec:
 
-             from qiime2.plugins import {{ title.replace('-', '_') }}
+   from qiime2.plugins import {{ title.replace('-', '_') }}
 
 .. raw:: html
 
