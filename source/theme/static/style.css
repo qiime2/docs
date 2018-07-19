@@ -157,3 +157,13 @@ table.citation td {
 table.citation td.label {
   display: none;
 }
+
+.highlight-shell {
+  position: relative;
+}
+
+.clipboard-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
