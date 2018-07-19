@@ -88,8 +88,6 @@ def generate_rst(app):
                                            api_help=api_help, bib_id=bib_id,
                                            has_citations=bool(
                                             action.citations),
-                                           plugin_cli_name=plugin_cli_name,
-                                           action_cli_name=action_cli_name,
                                            import_path=import_path,
                                            action_api_name=action_api_name)
                 fh.write(rendered)
