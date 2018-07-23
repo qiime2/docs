@@ -93,7 +93,8 @@ You don't necessarily need to do the demultiplexing step first, but it helps to 
 
 _The actual commands that qiime2 is calling can be found in the [source repo](https://github.com/qiime2/q2-cutadapt). As of June 2018, the main command is defined in the [`_build_demux_command()`](https://github.com/qiime2/q2-cutadapt/blob/master/q2_cutadapt/_demux.py#L36) in `_demux.py`._
 
-Note: Currently `q2 demux` and `q2-cutadapt` do not support demultiplexing dual-barcoded paired-end sequences, but only can demultiplex with barcodes in the forward reads.
+Note: Currently `q2 demux` and `q2-cutadapt` do not support demultiplexing dual-barcoded paired-end sequences, but only can demultiplex with barcodes in the forward reads. So for the time being for this type of demultiplexing needs to be done outside of qiime using other tools for example [bcl2fastq](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html)
+
 <Maybe we can suggest an alternative tool for now outside of R, any thoughts?> 
 ### Merge reads
 If you're using DADA2, you shouldn't merge your reads beforehand as the script does this for you. Instead you need to ensure that your truncating parameters allow for a minimum of 20 nt overlap. You may even want to leave for more to account for natural amplicon length variation. Failure to do so will lead to failed or poor merging and loss of many reads. 
