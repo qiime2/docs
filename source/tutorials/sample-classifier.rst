@@ -63,7 +63,7 @@ This pipeline produces several outputs. First let's check out ``accuracy_results
 .. question::
    What other metadata can we predict with ``classify-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other categorical columns. Not all metadata can be easily learned by the classifier!
 
-This pipeline also reports the actual predictions made for each test sample in the ``predictions.qza`` output. This is a ``SampleData[Predictions]`` artifact, which is viewable as metadata. So we can take a peak with ``metadata tabulate``:
+This pipeline also reports the actual predictions made for each test sample in the ``predictions.qza`` output. This is a ``SampleData[ClassifierPredictions]`` artifact, which is viewable as metadata. So we can take a peak with ``metadata tabulate``:
 
 .. command-block::
 
@@ -103,7 +103,7 @@ Finally, the trained classification model is saved down for convenient re-use in
 
 .. command-block::
 
-   qiime sample-classifier predict-classifier \
+   qiime sample-classifier predict-classification \
      --i-table moving-pictures-table.qza \
      --i-sample-estimator moving-pictures-classifier/sample_estimator.qza \
      --o-predictions moving-pictures-classifier/new_predictions.qza
