@@ -20,6 +20,8 @@ Obtaining and importing reference data sets
 
 Two elements are required for training the classifier: the reference sequences and the corresponding taxonomic classifications. To reduce computation time for this tutorial we will use the relatively small `Greengenes`_ 13_8 85% OTU data set. **Do not use the 85% OTU data set used in this tutorial for classification of real experimental data**. We recommend using more information-rich sequences, e.g., reference sequences clustered at 99% sequence similarity, for classification of real data. See the QIIME 2 :doc:`data resources page <../data-resources>` for links to complete QIIME-compatible reference datasets.
 
+.. note:: All sequence IDs present in the reference sequences must also be present in the reference taxonomy. If using reference sequence databases that have been clustered into OTUs, make sure that the corresponding reference taxonomy is used. For example, if using the Greengenes 99% OTU sequences, the 99% OTU taxonomy must also be used.
+
 We will also download the representative sequences from the `Moving Pictures`_ tutorial to test our classifier.
 
 .. download::
