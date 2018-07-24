@@ -103,9 +103,9 @@ Finally, the trained classification model is saved down for convenient re-use in
 
 .. command-block::
 
-   qiime sample-classifier predict \
+   qiime sample-classifier predict-classifier \
      --i-table moving-pictures-table.qza \
-     --i-sample-estimator moving-pictures-classifier/feature_importance.qza \
+     --i-sample-estimator moving-pictures-classifier/sample_estimator.qza \
      --o-predictions moving-pictures-classifier/new_predictions.qza
 
 We can view these ``new_predictions.qza`` using ``metadata tabulate``, as described above... or if these aren't actually "unknown" samples we can re-test model accuracy using this new batch of samples:
@@ -191,7 +191,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
      --i-table moving-pictures-table.qza \
      --m-metadata-file moving-pictures-sample-metadata.tsv \
      --m-metadata-column BodySite \
-     --p-optimize-feature-selection \
+     --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 100 \
      --o-predictions BodySite-predictions-ncv.qza \
@@ -213,7 +213,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
      --i-table ecam-table.qza \
      --m-metadata-file ecam-metadata.tsv \
      --m-metadata-column month \
-     --p-optimize-feature-selection \
+     --p-parameter-tuning \
      --p-estimator RandomForestRegressor \
      --p-n-estimators 100 \
      --o-predictions ecam-predictions-ncv.qza \
