@@ -28,7 +28,22 @@ Supervised learning classifiers predict the categorical metadata classes of unla
    :url: https://data.qiime2.org/2018.8/tutorials/sample-classifier/moving-pictures-table.qza
    :saveas: moving-pictures-table.qza
 
-Next, we will attempt to predict which body site each sample originated from based on its microbial composition.
+Next, we will train and test a classifier that predicts which body site a sample originated from based on its microbial composition. We will do so using the ``classify-samples`` pipeline, which performs a series of steps under the hood:
+
+1. The input samples are randomly split into a ``training`` set and a ``test`` set. The test set is held out until the end of the pipeline, allowing us to test accuracy on a set of samples that was not used for model training. The fraction of test samples to remove is adjusted with the ``--p-test-size`` parameter.
+
+2. We train the learning model using the training set samples. The model is trained to predict a specific ``target`` value for each sample (contained in a metadata column) based on the feature data associated with that sample.
+
+3. K-fold `cross-validation`_ is performed during automatic feature selection and parameter optimization steps to tune the model. Five-fold cross-validation is performed by default, and this value can be adjusted using the ``--p-cv`` parameter.
+
+4. The trained model is used to predict the target values for each test sample, based on the feature data associated with that sample.
+
+5. Model accuracy is calculated by comparing each test sample's predicted value to the true value for that sample.
+
+.. image:: images/sample-classifier.png
+
+:ref:`Figure key<key>`
+
 
 .. command-block::
 
@@ -39,21 +54,74 @@ Next, we will attempt to predict which body site each sample originated from bas
      --p-optimize-feature-selection \
      --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
-     --p-n-estimators 100 \
+     --p-n-estimators 20 \
      --output-dir moving-pictures-classifier
 
-The visualization produced by this command presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with to the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
+
+This pipeline produces several outputs. First let's check out ``accuracy_results.qzv``, which presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with to the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
 
 .. question::
    What other metadata can we predict with ``classify-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other categorical columns. Not all metadata can be easily learned by the classifier!
 
+This pipeline also reports the actual predictions made for each test sample in the ``predictions.qza`` output. This is a ``SampleData[ClassifierPredictions]`` artifact, which is viewable as metadata. So we can take a peak with ``metadata tabulate``:
 
-If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a recursive feature extraction plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the visualization. A list of the features chosen, and their relative importances, will be displayed at the bottom of the visualization. Features with higher importance scores are more important for distinguishing each class.
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/predictions.qza \
+     --o-visualization moving-pictures-classifier/predictions.qzv
+
+
+Another really useful output of supervised learning methods is *feature selection*, i.e., they report which features (e.g., ASVs or taxa) are most predictive. A list of all features, and their relative importances, will be reported in ``feature_importance.qza``. Features with higher importance scores are more important for distinguishing each class. Note that some estimators — notably K-nearest neighbors models — do not report feature importance scores, so this output will be meaningless if you are using such an estimator. Feature importances are of the semantic type ``FeatureData[Importance]``, and can be interpreted as (feature) metadata so we can take a look at these feature importances (and/or :ref:`merge with other feature metadata <exploring feature metadata>`) using ``metadata tabulate``:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/feature_importance.qza \
+     --o-visualization moving-pictures-classifier/feature_importance.qzv
+
+
+If ``--p-optimize-feature-selection`` is enabled, only the selected features (i.e., the most important features, which maximize model accuracy) will be reported in this artifact. This allows us to not only see which features are most important, but also use that information to filter out uninformative features from our feature table:
+
+.. command-block::
+
+   qiime feature-table filter-features \
+     --i-table moving-pictures-table.qza \
+     --m-metadata-file moving-pictures-classifier/feature_importance.qza \
+     --o-filtered-table moving-pictures-classifier/important-feature-table.qza
+
+
+This pipeline also produces a visualization containing a summary of the model parameters used by the supervised learning estimator in ``model_summary.qzv``. If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a recursive feature extraction plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the other outputs.
 
 .. question::
    What happens when feature optimization is disabled with the option ``--p-no-optimize-feature-selection``? How does this impact classification accuracy?
 
-K-fold cross-validation is performed during automatic feature selection and parameter optimization steps. Five-fold cross-validation is performed by default, and this value can be adjusted using the ``--p-cv`` parameter. A separate portion of samples is removed from the data set prior to model training and optimization, and used as a test set to determine model accuracy. The fraction of test samples to remove is adjusted with the ``--p-test-size`` parameter.
+Finally, the trained classification model is saved down for convenient re-use in the ``sample_estimator.qza`` artifact! This allows us to predict metadata values for additional samples. For example, imagine we just received a shipment of new samples and wanted to use our pre-trained Body Site classifier to figure out what type of samples these new samples are. For the sake of convenience in this example, we will just pretend we have new samples and predict the values of the same samples that we used to train the model but **NEVER do this in practice** because:
+
+.. warning:: Testing a supervised learning model on the same samples used to train the model will give unrealistic estimates of performance! 🦄
+
+
+.. command-block::
+
+   qiime sample-classifier predict-classification \
+     --i-table moving-pictures-table.qza \
+     --i-sample-estimator moving-pictures-classifier/sample_estimator.qza \
+     --o-predictions moving-pictures-classifier/new_predictions.qza
+
+We can view these ``new_predictions.qza`` using ``metadata tabulate``, as described above... or if these aren't actually "unknown" samples we can re-test model accuracy using this new batch of samples:
+
+.. command-block::
+
+   qiime sample-classifier confusion-matrix \
+     --i-predictions moving-pictures-classifier/new_predictions.qza \
+     --m-truth-file moving-pictures-sample-metadata.tsv \
+     --m-truth-column BodySite \
+     --o-visualization moving-pictures-classifier/new_confusion_matrix.qzv
+
+
+Pretty cool! Accuracy should be inordinately high in these results because we ignored the warning above about testing on our training data, giving you a pretty good idea why you should follow the directions on the box! 😑
+
+.. note:: The model we trained here is a toy example containing very few samples from a single study and will probably not be useful for predicting other unknown samples. But if you have samples from one of these body sites, it could be a fun exercise to give it a spin!
 
 .. question::
    Try to figure out what the ``--p-parameter-tuning`` parameter does. What happens when it is disabled with the option ``--p-no-parameter-tuning``? How does this impact classification accuracy?
@@ -81,7 +149,7 @@ Supervised learning regressors predict continuous metadata values of unlabeled s
    :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
-Next, we will train a regressor to predict an infant's age based on its microbiota composition.
+Next, we will train a regressor to predict an infant's age based on its microbiota composition, using the ``regress-samples`` pipeline.
 
 .. command-block::
 
@@ -89,19 +157,75 @@ Next, we will train a regressor to predict an infant's age based on its microbio
      --i-table ecam-table.qza \
      --m-metadata-file ecam-metadata.tsv \
      --m-metadata-column month \
-     --p-optimize-feature-selection \
-     --p-parameter-tuning \
      --p-estimator RandomForestRegressor \
-     --p-n-estimators 100 \
+     --p-n-estimators 20 \
      --output-dir ecam-regressor
 
-The visualization produced by this command presents classification accuracy results in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this, model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit. The remainder of the visualization shows optional feature selection data, as described above for ``classify-samples``.
+
+The outputs produced by this command are the same as those produced by ``classify-samples``, with one exception. Regression accuracy results in ``accuracy_results.qzv`` are represented in the form of a scatter plot showing predicted vs. true values for each test sample, accompanied by a linear regression line fitted to the data with 95% confidence intervals (grey shading). The true 1:1 ratio between predicted and true values is represented by a dotted line for comparison. Below this, model accuracy is quantified in a table displaying mean square error and the R value, P value, standard error of the estimated gradient, slope, and intercept of the linear regression fit.
 
 .. question::
    What other metadata can we predict with ``regress-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other values. Not all metadata can be easily learned by the regressor!
 
 .. question::
    Many different regressors can be trained via the ``--p-estimator`` parameter in ``regress-samples``. Try some of the other regressors. How do these methods compare?
+
+
+Nested cross-validation provides predictions for all samples
+------------------------------------------------------------
+In the examples above, we split the data sets into training and test sets for model training and testing. It is *essential* that we keep a test set that the model has never seen before for validating model performance. But what if we want to predict target values for each sample in a data set? For that, my friend, we use nested cross validation (NCV). This can be valuable in a number of different cases, e.g., for predicting `mislabeled samples`_ (those that are classified incorrectly during NCV) or for assessing estimator variance (since multiple models are trained during NCV, we can look at the variance in their accuracy).
+
+.. image:: images/nested-cv.png
+
+:ref:`Figure key<key>`
+
+Under the hood, NCV works a lot like the k-fold cross validation used in ``classify-samples`` and ``regress-samples`` for model optimization, but a second layer of cross validation (an "outer loop") is incorporated to split the dataset into training and test sets K times such that each sample ends up in a test set exactly once. During each iteration of the "outer loop", the training set is split again K times (in an "inner loop") to optimize parameter settings for estimation of that fold. The end result: K different final models are trained, each sample receives a predicted value, and feature importance scores are averaged across each iteration. Overall accuracy can be calculated by comparing these predicted values to their true values, as shown below, but for those interested in accuracy variance across each fold, mean accuracy ± SD is printed to the standard output.
+
+There are NCV methods in ``q2-sample-classifier`` for both classification and regression problems. Let's give both a spin, followed by visualizers to calculate and view aggregated model accuracy results.
+
+.. command-block::
+
+   qiime sample-classifier classify-samples-ncv \
+     --i-table moving-pictures-table.qza \
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-metadata-column BodySite \
+     --p-estimator RandomForestClassifier \
+     --p-n-estimators 20 \
+     --o-predictions BodySite-predictions-ncv.qza \
+     --o-feature-importance BodySite-importance-ncv.qza
+
+
+.. command-block::
+
+   qiime sample-classifier confusion-matrix \
+     --i-predictions BodySite-predictions-ncv.qza \
+     --m-truth-file moving-pictures-sample-metadata.tsv \
+     --m-truth-column BodySite \
+     --o-visualization ncv_confusion_matrix.qzv
+
+
+.. command-block::
+
+   qiime sample-classifier regress-samples-ncv \
+     --i-table ecam-table.qza \
+     --m-metadata-file ecam-metadata.tsv \
+     --m-metadata-column month \
+     --p-estimator RandomForestRegressor \
+     --p-n-estimators 20 \
+     --o-predictions ecam-predictions-ncv.qza \
+     --o-feature-importance ecam-importance-ncv.qza
+
+.. command-block::
+
+   qiime sample-classifier scatterplot \
+     --i-predictions ecam-predictions-ncv.qza \
+     --m-truth-file ecam-metadata.tsv \
+     --m-truth-column month \
+     --o-visualization ecam-scatter.qzv
+
+.. note:: We use ``confusion-matrix`` to calculate classifier accuracy, and ``scatterplot`` for regressor accuracy. 👀
+
+So the NCV methods output feature importance scores and sample predictions, but not trained estimators (as is done for the ``classify-samples`` and ``regress-samples`` pipelines above). This is because (1) *k* models are actually used for prediction, where *k* = the number of CV folds used in the outer loop, so returning and re-using the estimators would get very messy; and (2) users interested in NCV are *most likely* not interested in re-using the models for predicting new samples.
 
 
 "Maturity Index" prediction
@@ -136,3 +260,5 @@ The average abundances of features used for training maturity models are viewed 
 .. _convert your observation tables to biom format: http://biom-format.org/documentation/biom_conversion.html
 .. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
 .. _Sathish et al. 2014: https://doi.org/10.1038/nature13421
+.. _cross-validation: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+.. _mislabeled samples: https://doi.org/10.1038/ismej.2010.148
