@@ -69,7 +69,8 @@ There are two ways to find the answers to these questions:
 ### Import data into qiime
 
 If you're using qiime to process your data, the first thing you need to do is get that data into a format that qiime can understand.
-Various importing methods currently available in qiime are highlighted [in the QIIME 2 importing tutorial](https://docs.qiime2.org/2018.6/tutorials/importing/).
+Various importing methods currently available in qiime are highlighted [in the QIIME 2 importing tutorial](https://docs.qiime2.org/2018.6/tutorials/importing/). This step has the potential to be the most confusing part of the qiime2 pipeline as there are dozens of import and format types to choose frome and only one will be appropriate for a given file.
+To see a full list of available import/format types use: `qiime tools import --show-importable-formats` & `qiime tools import --show-importable-types`
 
 If you're importing data that you've generated, you'll likely need to generate a [_manifest file_](https://docs.qiime2.org/2018.6/tutorials/importing/#fastq-manifest-formats) which maps each file to its sample ID.
 Make sure to read the [importing tutorial](https://docs.qiime2.org/2018.6/tutorials/importing/) carefully, and don't get discouraged if you get stuck - this step is often the most tedious (and the QIIME developers agree!)
@@ -88,24 +89,32 @@ If your barcodes have already been removed from the reads and are in a separate 
 
 **@Bod - TO DO: does q2-demux call an underlying function/package XX to read barcodes from index file or is it in-house code? just need a brief sentence here making it clear to power-users whether this is relying on another tool, or a simple script matching files.**
 
+<@CD I do believe this is in-house, the code certainly doesn't look like its calling any specifi package anyways. https://github.com/qiime2/q2-demux/blob/master/q2_demux/_demux.py> 
+
 If your barcodes are still in your sequences, you can use functions from the  [cutadapt plugin](https://docs.qiime2.org/2018.6/plugins/available/cutadapt/).
 The `cutadapt demux-single` looks for barcode sequences at the beginning of your reads (5' end) with a certain error tolerance, removes them, and returns sequence data separated by each sample.
 The QIIME 2 forum has a [tutorial on various functions available in cutadapt](https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313), including demultiplexing.
 You can learn more about how `cutadapt` works under the hood by reading their [documentation](https://cutadapt.readthedocs.io/en/stable/index.html).
 
 **@Bod - what's the difference between demux-single and trim-single? Is it the same method under the hood, just that demux-single converts one file into multiple files (corresponding to each sample with barcodes removed), whereas trim-single converts multiple files to multiple files with adapters/primers removed? If so, let's clarify this for power users!**
+<@CD, you're correct, they do fundementally different things since demux-single actually demultiplexes which means the input must be multiplexed sequences and does, whereas trim-single is only there for searching and trimming and doesn't do any demultiplexing, i.e takes in demultiplexed sequences. So usually you would demux-single to demux and get rid of barcodes, then do trim-single to get rid of anything after barcodes, i.e the overhang adapters or pads etc. It has a lot of options for searching and trimming which is very useful.>
 
+If your barcodes and primers are within your sequences a typical workflow would be to use `demux-single/paired` to demultiplex your sequences based on a given metadata file which also removes the barcodes, and run the output from this through `trim-single/paired` to remove any furhter non-biological sequences such as overhang adaptors or heterogenity pads etc. 
 You don't necessarily need to do the demultiplexing step first in your data processing, but it helps to have each sample in a separate file for downstream steps which leverage this to parallelize their processing code.
+<@CD, this is actually not true for the denoisers, they do need everything to be demultiplexed going on. Might be ok with OTU picking...never even though about not doing it in that order> 
 
 Note: Currently `q2-demux` and `q2-cutadapt` do not support demultiplexing dual-barcoded paired-end sequences, but only can demultiplex with barcodes in the forward reads. So for the time being for this type of demultiplexing needs to be done outside of qiime using other tools, for example [bcl2fastq](https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html).
 
 @Bod - is this still the case? The cutadapt plugin has `demux-paired` and `trim-paired` functions
+<@CD, Yup! still the case, crazy eh? see my explanation above for what the differences between trim and demux are> 
 
 @Bod - yes, let's suggest alternative tools outside of R. Maybe something in USEARCH/VSEARCH? I don't actually know what these tools are though, so if you know of others feel free to add them otherwise this is as good as it'll be!
+<@CD - The bcl2fastq tool I linked above is that, its a python tool not an R package , I don't know any other tool that specifically deals with this, at least not that I've used. So let's just stick with bcl2fastq which comes with basespace and 0is the default for Illumina runs going through basespace.>
 
 ### Merge reads
 
 Whether or not you need to merge reads depends on how you plan to cluster or denoise your sequences into amplicon sequence variants (ASVs) or operational taxonomic units (OTUs). (See below for more information on these distinctions: (TO DO: link to "### Identifying and grouping similar sequences" section in the rst file)).
+<@CD, sorry not sure what link/info you are referring to here> 
 
 #### Deciding to merge
 
@@ -129,7 +138,7 @@ You can use the QIIME 2 [VSEARCH plugin](https://docs.qiime2.org/2018.6/plugins/
 ### Remove non-biological sequences
 
 Prior to clustering or denoising, it's very important to remove all nonbiological sequences in your reads.
-These include barcodes, primers, sequencing adapters, PCR spacers etc.
+These include barcodes, overhang region of primers, sequencing adapters, PCR spacers etc.
 Failure to remove these sequences will introduce clustering artifacts and make your results mostly useless.
 
 If you're using DADA2 to denoise your sequences, you can remove biological sequences at the same time as you call the denoising function.
@@ -155,7 +164,10 @@ If you want, you can first denoise your data and then pass your exact sequence v
 Regardless of how you group your sequences, the grouping methods will output:
 
 1. A list of representative sequences for each of your OTUs and/or sequence variants (qiime data format `FeatureData[Sequence]`), and     
-1. a feature table which indicates how many reads of each OTU/sequence variants were observed in each sample. (qiime data format `FeatureTable[Frequency]`)     
+1. A feature table which indicates how many reads of each OTU/sequence variants were observed in each sample. (qiime data format `FeatureTable[Frequency]`)     
+    
+1. Dada2 and Deblur will also produce a stats summary file with useful information regarding the filtering and denoising.     
+
 
 #### Denoising
 
@@ -177,10 +189,12 @@ That said, the official qiime2 tutorial does recommend doing an initial [quality
 In our experience, DADA2 performs better without this step.
 
 Both methods have an option to truncate your reads to a constant length (**TO DO**: clarify - do they truncate reads prior to denoising, or after denoising?).
-DADA2 can handle variable lengths but deblur needs all the reads to be of equal length (**TO DO**: clarify - does this mean the input data to deblur needs to already be pre-trimmed, or does it mean that the trim length parameter is required?).
-An appropriate truncating value is important thus we strongly recommend using [summary quality plots](https://docs.qiime2.org/2018.6/plugins/available/demux/summarize/) to determine the appropriate parameters.
+<Good question! I don't know tbh..I'll ask. I'm guessing DADA2 does after so it can build a more accurate error model based on the whole thing and Deblur would do before since the error model is pre-packaged> 
+DADA2 can handle variable lengths but deblur needs all the reads to be of equal length. As so a truncating parameter in deblur is required, meaning reads shorter than `--p-trim-length` are discarded and reads longer are truncated at that position.
+An appropriate truncating value is important thus we strongly recommend using [summary quality plots](https://docs.qiime2.org/2018.6/plugins/available/demux/summarize/) to determine the appropriate parameters. Deciding how to choose these values is one of the most commonly asked questions on the qiime2 forum and unfortunately there is no one size fit all answer. If your truncating parameters are including the poor quality tail (3') of your reads with too many consecutive low scores, the reads might get discarded all together and you will end up with very few reads. If the truncating parameter is too conservative and you're trimming too much of your reads then an inadequate overlap region may lead to improper or failed merging, again leading to a loss of reads. Shorter reads also tend to have lower resolution for taxonomic assignments. One common starting point is to truncate at a position where the medial quality score dips below 20. Generally, you want to discard as much as low quality sequences as you can without sacrificing adequate overlap region. Single-end reads do not require this consideration. Ultimately, ne might have to try a few values and find the 'sweet spot' between quality vs. quantity that most satisfactorily services their data. 
 
 @Bod - can you clarify both of the TO DO's in the paragraph above?
+@CD - waiting to hear about the first one
 
 ##### DADA2
 
@@ -193,21 +207,23 @@ Note that DADA2 may be slow on very large datasets.
 You can increase the number of threads to use with the `--p-n-threads` parameter.
 
 @Bod - do you think we should include something about the truncating length parameter, and/or any other parameters? If so, mind throwing that in here?
+@DC - I added a bit there, this a loaded topic and I could write a whole document on the topic...and maybe I will later, but for now this sould suffice I think.
 
 ##### deblur
 
 Deblur tends to be faster than DADA2, especially on larger datasets, but comes with other limitations.
 
 It is faster than DADA2 because it uses a pre-packaged error model based on Illumina MiSeq and HiSeq machines instead of training one from scratch.
-It also reduces processing time with an initial positive filtering step based on the GreenGenes database (**TO DO**: what does this mean? It only processes sequences that match to GG at a certain % identity??)
+It also reduces unnecessary denoising with an initial positive filtering step which requires the reads to have a minimum 60% idenditiy similarity to sequences from the 85% OTU GreenGenes database. 
 If you don't want to do the default positive filtering to GreenGenes step, you can use a different positive filter with the [denoise-other](https://docs.qiime2.org/2018.6/plugins/available/deblur/denoise-other/) tool.
 
 @Bod - can you clarify the GG filtering stuff? Also happy to discuss offline if my confusion is confusing XD
+@CD - Is my clarification ok?
 
 Because it uses the pre-packaged model, you can only use deblur to denoise Illumina data.
-Deblur's [denoise-16S]((https://docs.qiime2.org/2018.6/plugins/available/deblur/denoise-16S/) method can also currently only denoise single-end reads.
+Deblur's [denoise-16S](https://docs.qiime2.org/2018.6/plugins/available/deblur/denoise-16S/) method can also currently only denoise single-end reads.
 It will accept unmerged paired-end reads as input, it just won't do anything with the reverse reads.
-As discussed above, deblur can however take in _merged_ reads and treat them as single-end reads.
+As discussed above, deblur can however take in _merged_ reads and treat them as single-end reads. Note that deblur's expected mean error rate increases as read lengths increase so it tends to become more conservative with longer reads, whereas dada2's error model is learnt from the data itself.
 
 #### OTU Clustering
 
@@ -230,6 +246,7 @@ Because many clustering algorithms rely on very basic measures of genetic distan
 You can use the [method name](link) method from the [plugin name](to do) plugin to trim reads to the same length. (**TO DO**: fill in method name and links.)
 
 @Bod - is there a function in qiime2 to truncate read lengths??! I can't seem to find one!! Also a note that the [overview tutorial](https://docs.qiime2.org/2018.6/tutorials/overview/) tells people to denoise --> dereplicate --> cluster. We're presenting a slightly different philosophy here - do you think it's worth highlighting the similarities/differences in the intro to this section (Identifying and grouping similar sequences)?
+@CD - If you're referring to just trimming without anything else, I actually don't think so...might be able to hack a way with cutadapt but I haven't actually thought about that. As for the denoise--> cluster approach, what is the different philosophy you are referring to? I tend to agree with that approach, OTU clustering can still benefit from having gone through denoising first, clustering after. not sure about db-otu if that is what you are referring to but for common vsearch approach I would recommend denoise -> cluster.
 
 ###### Quality filtering
 
@@ -252,6 +269,7 @@ http://www.drive5.com/usearch/manual/readqualfiltering.
 Note that many of VSEARCH methods also automatically discard reads with ambiguous base calls (i.e. bases that are called as something other than A, T, C, or G).
 
 @Bod - **TO DO**: is this true of the VSEARCH functions, do you know? I've only used USEARCH
+@CD - VSEARCH is very similar to USEARCH but I'm not sure, it's been a while since I've looked at the VSEARCH paper, might be worth referring to that [paper](https://peerj.com/articles/2584/) instead or perhaps link the default settings of [q2-vsearch](https://github.com/qiime2/q2-vsearch/blob/master/q2_vsearch/_cluster_features.py) 
 
 ##### Clustering
 
@@ -279,7 +297,7 @@ Both of these functions take as input the output of the q2-vsearch `dereplicate-
 
 ###### closed reference clustering
 
-Closed reference clustering groups sequences together which match the same reference sequence in a database with a certain similarity.
+Closed reference clustering groups sequences together which match the same reference sequence in a database with a certain similarity. Unlike the de novo method, closed reference clustering is completely parallelizable.
 Note that closed reference clustering may produce groupings that are not what you expect [link to scott's blog](link). (**TO DO** add links)
 
 VSEARCH can do closed reference clustering with the [`cluster-features-closed-reference`](https://docs.qiime2.org/2018.6/plugins/available/vsearch/cluster-features-closed-reference/) function.
@@ -290,6 +308,7 @@ You can download the references from the links on the [QIIME 2 data resources pa
 You'll need to unzip/untar and import them as `FeatureData[Sequence]` artifacts, since they're provided as raw data files.
 
 @Bod - can you double-check this for accuracy?
+@CD - You're good!
 
 ### Assign taxonomy
 
@@ -299,13 +318,14 @@ For all other *de novo* methods (including denoising reads with DADA2/deblur), y
 In qiime2, two general ways of assigning taxonomy are available and covered in the [taxonomy classification tutorial](https://docs.qiime2.org/2018.6/tutorials/overview/#taxonomy-classification-and-taxonomic-analyses).
 Taxonomy assignment functions are in the [`feature-classifier` plugin](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/).
 
-1The first way to assign taxonomy _aligns reads to reference databases directly_. It can be used with the [`classify-consensus-blast`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/) or [`classify-consensus-vsearch`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/) methods.
-These two methods differ in the type of alignment method that they use.
+The first way to assign taxonomy _aligns reads to reference databases directly_. It can be used with the [`classify-consensus-blast`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/) or [`classify-consensus-vsearch`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/) methods.
+These two methods differ in the type of alignment method that they use but both use the _consensus_ approach of taxonomy assignment which searches the database for matches to a query sequence (can be any database as long as it included an accompanying taxonomy with greengenes format). The top `maxaccepts` hits in the database are retained if they have `≥ perc-identity` to the query. The taxonomy is assigned based on `min-consensus` agreement between the two starting at the Kingdom and continue until assignments no longer agree.
 
 The second way uses trained _machine learning classifiers to assign likely taxonomies to reads_, and can be used through the  [`fit-classifier-sklearn`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-sklearn/) or [`fit-classifier-naive-bayes`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-naive-bayes/) functions.
 These two functions differ in the type of machine learning model that they use.
 
 @Bod - are my two "these two functions differ in..." statements correct?
+@CD - Yes, but I added a bit more. Might be good to get Nic to give it a final glance incase I missed something here too.
 
 The machine learning-based methods require training a classifier for your data's 16S region and sequencing primers.
 This training step is particularly computationally heavy, but in most cases you can simply download some pre-trained taxonomy classifiers [on the QIIME 2 data resources page](https://docs.qiime2.org/2018.6/data-resources/).
