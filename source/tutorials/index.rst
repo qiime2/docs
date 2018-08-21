@@ -7,6 +7,7 @@ Tutorials
    :maxdepth: 2
 
    overview
+   16s-overview
    moving-pictures
    fmt
    atacama-soils
