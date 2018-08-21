@@ -171,23 +171,20 @@ Both DADA2 and deblur perform quality filtering, denoising, and chimera removal,
 That said, the official qiime2 tutorial does recommend doing an initial [quality-filter](https://docs.qiime2.org/2018.6/tutorials/moving-pictures/#option-2-deblur) with default settings prior to using deblur.
 In our experience, DADA2 performs better without this step.
 
-Both methods have an option to truncate your reads to a constant length (**TO DO**: clarify - do they truncate reads prior to denoising, or after denoising?).
-<Good question! I don't know tbh..I'll ask. I'm guessing DADA2 does after so it can build a more accurate error model based on the whole thing and Deblur would do before since the error model is pre-packaged>
+Both methods have an option to truncate your reads to a constant length, which occurs prior to denoising.
 DADA2 can handle variable lengths but deblur needs all the reads to be of equal length.
 As so a truncating parameter in deblur is required, meaning reads shorter than `--p-trim-length` are discarded and reads longer are truncated at that position.
 
 To decide what length to truncate reads to, we recommend visualizing your raw data with [summary quality plots](https://docs.qiime2.org/2018.6/plugins/available/demux/summarize/).
-Deciding how to choose the truncation length value is one of the most commonly asked questions on the qiime2 forum, and there is unfortunately no single one-size-fits-all answer.
+Deciding how to choose the truncation length value is one of the most commonly asked questions on the qiime2 forum, and there is unfortunately no one-size-fits-all answer.
 Generally speaking, you need to choose a truncation length that balances data quality vs. quantity.
 Keeping longer reads leads to lower quality data (since the poor quality 3' tail will be included).
 If there are too many consecutive bases with low scores at the ends of your reads, you may end up discarding many of your reads.
-On the other hand, if the truncating parameter is very conservative (i.e. short truncation length), you may not have enough overlap to merge reads.
+On the other hand, if the truncating parameter is very conservative (i.e. short truncation length), you may not have enough overlap to merge reads. The overlap consideration is specific to paired-end reads, however, we strongly recommend trim/truncating the poor quality ends of single-end reads as well. 
 Shorter reads also tend to have lower resolution for taxonomic assignments.
 
 One common starting point is to truncate at a position where the median quality score dips below 20.
-Single-end reads do not require this consideration.
 
-@Bod - single-end reads *do* require this consideration, right? The only thing they don't need to consider is overlap for merging - but they should also be trimmed, no?
 
 ##### DADA2
 
@@ -207,7 +204,7 @@ It is faster than DADA2 because it uses a pre-packaged error model based on Illu
 It also performs an initial positive filtering step, where it discards any reads which do not have a minimum 60% identity similarity to sequences from the 85% OTU GreenGenes database.
 If you don't want to do this default positive filtering to GreenGenes step, you can use a different positive filter with the [denoise-other](https://docs.qiime2.org/2018.6/plugins/available/deblur/denoise-other/) tool.
 
-Because it uses the pre-packaged model, you can only use deblur to denoise Illumina data.
+Because it uses a pre-packaged error model, you can only use deblur to denoise Illumina data.
 Deblur's [denoise-16S](https://docs.qiime2.org/2018.6/plugins/available/deblur/denoise-16S/) method can also currently only denoise single-end reads.
 It will accept unmerged paired-end reads as input, it just won't do anything with the reverse reads.
 As discussed above, deblur can however take in _merged_ reads and treat them as single-end reads.
@@ -297,7 +294,7 @@ Taxonomy assignment functions are in the [`feature-classifier` plugin](https://d
 
 The first way to assign taxonomy _aligns reads to reference databases directly_. It can be used with the [`classify-consensus-blast`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/) or [`classify-consensus-vsearch`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/) methods.
 These two methods differ in the type of alignment method that they use (BLAST+ local  alignment vs. VSEARCH global alignment).
-Both use the _consensus_ approach of taxonomy assignment, which means that they search the database for matches to a query sequence and assign taxonomy based on the consensus between all of the suitable hits.
+Both use the _consensus_ approach of taxonomy assignment, which means they search the database for matches to a query sequence and assign taxonomy based on the consensus between all of the suitable hits.
 More technically, the top `maxaccepts` hits in the database are retained if they have ≥ `perc-identity` to the query.
 Then, taxonomy is assigned at each taxonomic level if at least `min-consensus` hits agree on the assignment, starting at the Kingdom level and continuing until there is no longer enough agreement to assign taxonomy.
 
