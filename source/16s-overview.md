@@ -149,7 +149,7 @@ Regardless of how you group your sequences, the grouping methods will output:
 1. A list of representative sequences for each of your OTUs and/or sequence variants (qiime data format `FeatureData[Sequence]`), and     
 1. A feature table which indicates how many reads of each OTU/sequence variants were observed in each sample. (qiime data format `FeatureTable[Frequency]`)     
 
-Dada2 and Deblur will also produce a stats summary file with useful information regarding the filtering and denoising.     
+DADA2 and Deblur will also produce a stats summary file with useful information regarding the filtering and denoising.     
 
 
 #### Denoising
