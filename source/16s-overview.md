@@ -69,7 +69,7 @@ There are two ways to find the answers to these questions:
 ### Import data into qiime
 
 If you're using qiime to process your data, the first thing you need to do is get that data into a format that qiime can understand.
-Various importing methods currently available in qiime are highlighted [in the QIIME 2 importing tutorial](https://docs.qiime2.org/2018.6/tutorials/importing/). This step has the potential to be the most confusing part of the qiime2 pipeline as there are dozens of import and format types to choose frome and only one will be appropriate for a given file.
+Various importing methods currently available in qiime are highlighted [in the QIIME 2 importing tutorial](https://docs.qiime2.org/2018.6/tutorials/importing/). This step has the potential to be the most confusing part of the QIIME 2 pipeline as there are dozens of import and format types to choose from and only one will be appropriate for a given file.
 To see a full list of available import/format types use: `qiime tools import --show-importable-formats` & `qiime tools import --show-importable-types`
 
 If you're importing data that you've generated, you'll likely need to generate a [_manifest file_](https://docs.qiime2.org/2018.6/tutorials/importing/#fastq-manifest-formats) which maps each file to its sample ID.
@@ -89,7 +89,6 @@ The `cutadapt demux-single` looks for barcode sequences at the beginning of your
 The QIIME 2 forum has a [tutorial on various functions available in cutadapt](https://forum.qiime2.org/t/demultiplexing-and-trimming-adapters-from-reads-with-q2-cutadapt/2313), including demultiplexing.
 You can learn more about how `cutadapt` works under the hood by reading their [documentation](https://cutadapt.readthedocs.io/en/stable/index.html).
 
-If your barcodes and primers are within your sequences a typical workflow would be to use `demux-single/paired` to demultiplex your sequences based on a given metadata file which also removes the barcodes, and run the output from this through `trim-single/paired` to remove any further non-biological sequences such as overhang adaptors, heterogeneity pads, etc.
 You don't necessarily need to do the demultiplexing step first in your data processing, but it helps to have each sample in a separate file for downstream quality control steps, which leverage this to parallelize their processing code.
 That said, sequences should definitely be de-multiplexed by the time you start clustering or denoising sequences.
 
@@ -168,7 +167,7 @@ We'll be using the ASV terminology throughout this tutorial.
 
 Denoising requires little data preparation.
 Both DADA2 and deblur perform quality filtering, denoising, and chimera removal, so you shouldn't need to perform any quality screening prior to running them.
-That said, the official qiime2 tutorial does recommend doing an initial [quality-filter](https://docs.qiime2.org/2018.6/tutorials/moving-pictures/#option-2-deblur) with default settings prior to using deblur.
+That said, the official QIIME 2 tutorial does recommend doing an initial [quality-filter](https://docs.qiime2.org/2018.6/tutorials/moving-pictures/#option-2-deblur) with default settings prior to using deblur.
 In our experience, DADA2 performs better without this step.
 
 Both methods have an option to truncate your reads to a constant length, which occurs prior to denoising.
@@ -176,15 +175,14 @@ DADA2 can handle variable lengths but deblur needs all the reads to be of equal 
 As so a truncating parameter in deblur is required, meaning reads shorter than `--p-trim-length` are discarded and reads longer are truncated at that position.
 
 To decide what length to truncate reads to, we recommend visualizing your raw data with [summary quality plots](https://docs.qiime2.org/2018.6/plugins/available/demux/summarize/).
-Deciding how to choose the truncation length value is one of the most commonly asked questions on the qiime2 forum, and there is unfortunately no one-size-fits-all answer.
+Deciding how to choose the truncation length value is one of the most commonly asked questions on the [QIIME 2 forum](https://forum.qiime2.org/), and there is unfortunately no one-size-fits-all answer.
 Generally speaking, you need to choose a truncation length that balances data quality vs. quantity.
 Keeping longer reads leads to lower quality data (since the poor quality 3' tail will be included).
 If there are too many consecutive bases with low scores at the ends of your reads, you may end up discarding many of your reads.
-On the other hand, if the truncating parameter is very conservative (i.e. short truncation length), you may not have enough overlap to merge reads. The overlap consideration is specific to paired-end reads, however, we strongly recommend trim/truncating the poor quality ends of single-end reads as well. 
+On the other hand, if the truncating parameter is very conservative (i.e. short truncation length), you may not have enough overlap to merge reads (if you're using paired-end data).
 Shorter reads also tend to have lower resolution for taxonomic assignments.
 
 One common starting point is to truncate at a position where the median quality score dips below 20.
-
 
 ##### DADA2
 
@@ -289,7 +287,7 @@ You'll need to unzip/untar and import them as `FeatureData[Sequence]` artifacts,
 If you clustered OTUs with closed-reference clustering, your OTUs will have the name of the reference sequence they matched to, and you don't need to do anything else to get taxonomy.
 For all other *de novo* methods (including denoising reads with DADA2/deblur), you can assign taxonomy with different probabilistic classifiers.
 
-In qiime2, two general ways of assigning taxonomy are available and covered in the [taxonomy classification tutorial](https://docs.qiime2.org/2018.6/tutorials/overview/#taxonomy-classification-and-taxonomic-analyses).
+In QIIME 2, two general ways of assigning taxonomy are available and covered in the [taxonomy classification tutorial](https://docs.qiime2.org/2018.6/tutorials/overview/#taxonomy-classification-and-taxonomic-analyses).
 Taxonomy assignment functions are in the [`feature-classifier` plugin](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/).
 
 The first way to assign taxonomy _aligns reads to reference databases directly_. It can be used with the [`classify-consensus-blast`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/) or [`classify-consensus-vsearch`](https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/) methods.
@@ -316,7 +314,7 @@ While `export` only outputs the data, the [extract](https://docs.qiime2.org/2018
 
 Note that this places generically named files (e.g. `feature-table.txt`) into the output directory, so you may want to immediately rename the files to something more information (or somehow ensure that they stay in their original directory)!
 
-You can also use the handy [qiime2R](https://github.com/jbisanz/qiime2R) package to import qiime2 artifacts directly into R.
+You can also use the handy [qiime2R](https://github.com/jbisanz/qiime2R) package to import QIIME 2 artifacts directly into R.
 
 ### After that...
 
