@@ -19,23 +19,23 @@ First, create a directory to work in and change to that directory.
 Download the data we'll use in the tutorial. This includes sample metadata, a feature table, and a distance matrix:
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/filtering/table.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/filtering/table.qza
    :saveas: table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/filtering/distance-matrix.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/filtering/distance-matrix.qza
    :saveas: distance-matrix.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/filtering/taxonomy.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/filtering/taxonomy.qza
    :saveas: taxonomy.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/filtering/sequences.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/filtering/sequences.qza
    :saveas: sequences.qza
 
 Filtering feature tables
@@ -230,6 +230,12 @@ The ``q2-taxa`` plugin provides a method, ``filter-seqs``, for filtering ``Featu
      --p-include p__ \
      --p-exclude mitochondria,chloroplast \
      --o-filtered-sequences sequences-with-phyla-no-mitochondria-no-chloroplast.qza
+
+
+The ``q2-feature-table`` plugin also has a ``filter-seqs`` method, which allows users to remove sequences based on various criteria, including which features are present within a feature table.
+
+See also the :doc:`q2-quality-control plugin <quality-control>`, which has an ``exclude-seqs`` action for filtering sequences based on alignment to a set of reference sequences or primers.
+
 
 Filtering distance matrices
 ---------------------------

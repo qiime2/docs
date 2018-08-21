@@ -17,14 +17,14 @@ Exporting a feature table
 A ``FeatureTable[Frequency]`` artifact will be exported as a `BIOM v2.1.0 formatted file`_.
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/exporting/feature-table.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/exporting/feature-table.qza
    :saveas: feature-table.qza
 
 .. command-block::
 
    qiime tools export \
-     feature-table.qza \
-     --output-dir exported-feature-table
+     --input-path feature-table.qza \
+     --output-path exported-feature-table
 
 Exporting a phylogenetic tree
 -----------------------------
@@ -32,14 +32,14 @@ Exporting a phylogenetic tree
 A ``Phylogeny[Unrooted]`` artifact will be exported as a `newick formatted file`_.
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/exporting/unrooted-tree.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/exporting/unrooted-tree.qza
    :saveas: unrooted-tree.qza
 
 .. command-block::
 
    qiime tools export \
-     unrooted-tree.qza \
-     --output-dir exported-tree
+     --input-path unrooted-tree.qza \
+     --output-path exported-tree
 
 Exporting versus extracting
 ---------------------------
@@ -50,8 +50,8 @@ QIIME 2 artifacts can be extracted using ``qiime tools extract``. Extracting an 
 
    mkdir extracted-feature-table
    qiime tools extract \
-     feature-table.qza \
-     --output-dir extracted-feature-table
+     --input-path feature-table.qza \
+     --output-path extracted-feature-table
 
 The output directory will contain a new directory whose name is the artifact's UUID. All artifact data and metadata will be stored in that directory.
 

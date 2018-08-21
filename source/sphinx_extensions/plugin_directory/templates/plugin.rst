@@ -27,6 +27,32 @@
            {% for line in plugin.user_support_text.splitlines() %}
            {{ line|urlize }}<br/>
            {% endfor %}
+       <tr>
+         <th scope="row">q2cli Invocation</th>
+         <td>
+
+.. command-block::
+   :no-exec:
+
+   qiime {{ title }}
+
+.. raw:: html
+
+         </td>
+       </tr>
+       <tr>
+         <th scope="row">Artifact API Import</th>
+         <td>
+
+.. command-block::
+   :no-exec:
+
+   from qiime2.plugins import {{ title.replace('-', '_') }}
+
+.. raw:: html
+
+         </td>
+       </tr>
 
 {% if plugin.citations %}
 .. raw:: html

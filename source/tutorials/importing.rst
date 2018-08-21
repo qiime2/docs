@@ -19,6 +19,9 @@ You may want to begin by creating a directory to work in.
    mkdir qiime2-importing-tutorial
    cd qiime2-importing-tutorial
 
+
+.. _`importing seqs`:
+
 Sequence data with sequence quality information
 -----------------------------------------------
 
@@ -38,11 +41,11 @@ Obtaining example data
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
@@ -71,15 +74,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -98,7 +101,7 @@ Importing data
 Format description
 ******************
 
-In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` / ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.  
+In the fastq manifest formats, a manifest file maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample, and indicates the direction of the reads in each ``fastq.gz`` / ``fastq`` absolute filepath. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. There are no restrictions on the name of the manifest file.
 
 The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
 
@@ -151,19 +154,19 @@ Obtaining example data
 Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33`` and ``PairedEndFastqManifestPhred64``.
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/se-33.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/se-33.zip
    :saveas: se-33.zip
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/se-33-manifest
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/se-33-manifest
    :saveas: se-33-manifest
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/pe-64.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/pe-64.zip
    :saveas: pe-64.zip
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/pe-64-manifest
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/pe-64-manifest
    :saveas: pe-64-manifest
 
 .. command-block::
@@ -181,7 +184,7 @@ Importing Data
      --type 'SampleData[SequencesWithQuality]' \
      --input-path se-33-manifest \
      --output-path single-end-demux.qza \
-     --source-format SingleEndFastqManifestPhred33
+     --input-format SingleEndFastqManifestPhred33
 
 .. command-block::
 
@@ -189,7 +192,7 @@ Importing Data
      --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path pe-64-manifest \
      --output-path paired-end-demux.qza \
-     --source-format PairedEndFastqManifestPhred64
+     --input-format PairedEndFastqManifestPhred64
 
 
 Casava 1.8 single-end demultiplexed fastq
@@ -204,7 +207,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -219,7 +222,7 @@ Importing data
    qiime tools import \
      --type 'SampleData[SequencesWithQuality]' \
      --input-path casava-18-single-end-demultiplexed \
-     --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+     --input-format CasavaOneEightSingleLanePerSampleDirFmt \
      --output-path demux-single-end.qza
 
 Casava 1.8 paired-end demultiplexed fastq
@@ -234,7 +237,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -248,9 +251,11 @@ Importing data
    qiime tools import \
      --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path casava-18-paired-end-demultiplexed \
-     --source-format CasavaOneEightSingleLanePerSampleDirFmt \
+     --input-format CasavaOneEightSingleLanePerSampleDirFmt \
      --output-path demux-paired-end.qza
 
+
+.. _`importing feature tables`:
 
 Feature table data
 ------------------
@@ -267,7 +272,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/feature-table-v100.biom
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/feature-table-v100.biom
    :saveas: feature-table-v100.biom
 
 Importing data
@@ -278,7 +283,7 @@ Importing data
    qiime tools import \
      --input-path feature-table-v100.biom \
      --type 'FeatureTable[Frequency]' \
-     --source-format BIOMV100Format \
+     --input-format BIOMV100Format \
      --output-path feature-table-1.qza
 
 BIOM v2.1.0
@@ -293,7 +298,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/feature-table-v210.biom
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
@@ -304,7 +309,7 @@ Importing data
    qiime tools import \
      --input-path feature-table-v210.biom \
      --type 'FeatureTable[Frequency]' \
-     --source-format BIOMV210Format \
+     --input-format BIOMV210Format \
      --output-path feature-table-2.qza
 
 Per-feature unaligned sequence data (i.e., representative sequences)
@@ -319,7 +324,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/sequences.fna
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/sequences.fna
    :saveas: sequences.fna
 
 Importing data
@@ -344,7 +349,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/aligned-sequences.fna
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/aligned-sequences.fna
    :saveas: aligned-sequences.fna
 
 Importing data
@@ -369,7 +374,7 @@ Obtaining example data
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/importing/unrooted-tree.tre
+   :url: https://data.qiime2.org/2018.8/tutorials/importing/unrooted-tree.tre
    :saveas: unrooted-tree.tre
 
 Importing data

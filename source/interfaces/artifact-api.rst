@@ -87,4 +87,12 @@ Another powerful feature of QIIME 2 is that you can combine interfaces. For exam
 
    qiime diversity alpha-group-significance --i-alpha-diversity oo.qza --m-metadata-file sample-metadata.tsv  --o-visualization oo-group-significance.qzv
 
+The above command as an API call is:
+
+.. code-block:: python
+
+   >>> from qiime2 import Metadata
+   >>> metadata = Metadata.load('sample-metadata.tsv')
+   >>> group_significance = diversity.actions.alpha_group_significance(alpha_diversity=alpha_diversity, metadata=metadata)
+
 .. _`Jupyter Notebook`: http://jupyter.org/

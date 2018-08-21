@@ -9,6 +9,10 @@ This tutorial will demonstrate the various features of ``q2-longitudinal``, a pl
 
 .. note:: Many of the actions in q2-longitudinal take a ``metric`` value as input, which is usually a column name in a metadata file or a metadata-transformable artifact (including alpha diversity vectors, PCoA results, and many other QIIME 2 artifacts), or a feature ID in a feature table. The names of valid ``metric`` values in metadata files and metadata-transformable artifacts can be checked with the :doc:`metadata tabulate <metadata>` command. Valid feature names (to use as ``metric`` values associated with a feature table) can be checked with the ``feature-data summarize`` command.
 
+The following flowchart illustrates the workflow involved in all ``q2-longitudinal`` analyses (:ref:`figure key <key>`). Each of these actions is described in more detail in the tutorials below.
+
+.. image:: images/longitudinal.png
+
 In the examples below, we use data from the `ECAM study`_, a longitudinal study of infants' and mothers' microbiota from birth through 2 years of life. First let's create a new directory and download the relevant tutorial data.
 
 .. command-block::
@@ -18,15 +22,15 @@ In the examples below, we use data from the `ECAM study`_, a longitudinal study 
    cd longitudinal-tutorial
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/longitudinal/ecam_shannon.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/ecam_shannon.qza
    :saveas: shannon.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
    :saveas: unweighted_unifrac_distance_matrix.qza
 
 
@@ -76,6 +80,8 @@ Linear mixed effect models
 
 Linear mixed effects (LME) models test the relationship between a single response variable and one or more independent variables, where observations are made across dependent samples, e.g., in repeated-measures sampling experiments. This implementation takes at least one numeric ``state-column`` (e.g., Time) and one or more comma-separated ``group-columns`` (which may be categorical or numeric metadata columns; these are the fixed effects) as independent variables in a LME model, and plots regression plots of the response variable ("metric") as a function of the state column and each group column. Additionally, the ``individual-id-column`` parameter should be a metadata column that indicates the individual subject/site that was sampled repeatedly. The response variable may either be a sample metadata mapping file column or a feature ID in the feature table. A comma-separated list of random effects can also be input to this action; a random intercept for each individual is included by default, but another common random effect that users may wish to use is a random slope for each individual, which can be set by using the ``state-column`` value as input to the ``random-effects`` parameter. Here we use LME to test whether alpha diversity (Shannon diversity index) changed over time and in response to delivery mode, diet, and sex in the ECAM data set.
 
+.. note:: Deciding whether a factor is a fixed effect or a random effect can be complicated. In general, a factor should be a fixed effect if the different factor levels (metadata column values) represent (more or less) all possible discrete values. For example, ``delivery mode``, ``sex``, and ``diet`` (dominantly breast-fed or formula-fed) are designated as fixed effects in the example below. Conversely, a factor should be a random effect if its values represent random samples from a population. For example, we could imagine having metadata variables like ``body-weight``, ``daily-kcal-from-breastmilk``, ``number-of-peanuts-eaten-per-day``, or ``mg-of-penicillin-administered-daily``; such values would represent random samples from within a population, and are unlikely to capture all possible values representative of the whole population. Not sure about the factors in your experiment? 🤔 Consult a statistician or reputable statistical tome for guidance. 📚
+
 .. command-block::
 
    qiime longitudinal linear-mixed-effects \
@@ -89,7 +95,11 @@ Linear mixed effects (LME) models test the relationship between a single respons
 
 The visualizer produced by this command contains several results. First, the input parameters are shown at the top of the visualization for convenience (e.g., when flipping through multiple visualizations it is useful to have a summary). Next, the "model summary" shows some descriptive information about the LME model that was trained. This just shows descriptive information about the "groups"; in this case, groups will be individuals (as set by the ``--p-individual-id-column``). The main results to examine will be the "model results" below the "model summary". These results summarize the effects of each fixed effect (and their interactions) on the dependent variable (shannon diversity). This table shows parameter estimates, estimate standard errors, z scores, P values (P>|z|), and 95% confidence interval upper and lower bounds for each parameter. We see in this table that shannon diversity is significantly impacted by month of life and by diet, as well as several interacting factors. More information about LME models and the interpretation of these data can be found on the `statsmodels LME description page`_, which provides a number of useful technical references for further reading.
 
-Finally, scatter plots categorized by each "group column" are shown at the bottom of the visualization, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group.
+Finally, scatter plots categorized by each "group column" are shown at the bottom of the visualization, with linear regression lines (plus 95% confidence interval in grey) for each group. If ``--p-lowess`` is enabled, instead locally weighted averages are shown for each group. Two different groups of scatter plots are shown. First, regression scatterplots show the relationship between ``state_column`` (x-axis) and ``metric`` (y-axis) for each sample. These plots are just used as a quick summary for reference; users are recommended to use the ``volatility`` visualizer for interactive plotting of their longitudinal data. Volatility plots can be used to qualitatively identify outliers that disproportionately drive the variance within individuals and groups, including by inspecting residuals in relation to control limits (see note below and the section on "Volatility analysis" for more details).
+
+The second set of scatterplots are fit vs. residual plots, which show the relationship between metric predictions for each sample (on the x-axis), and the residual or observation error (prediction - actual value) for each sample (on the y-axis). Residuals should be roughly zero-centered and normal across the range of measured values. Uncentered, systematically high or low, and autocorrelated values could indicate a poor model. If your residual plots look like an ugly mess without any apparent relationship between values, you are doing a good job. If you see a U-shaped curve or other non-random distribution, either your predictor variables (``group_columns`` and/or ``random_effects``) are failing to capture all explanatory information, causing information to leak into your residuals, or else you are not using an appropriate model for your data 🙁. Check your predictor variables and available metadata columns to make sure you aren't missing anything.
+
+.. note:: If you want to dot your i's and cross your t's, residual and predicted values for each sample can be obtained in the "Download raw data as tsv" link below the regression scatterplots. This file can be input as metadata to the ``volatility`` visualizer to check whether residuals are correlated with other metadata columns. If they are, those columns should probably be used as prediction variables in your model! Control limits (± 2 and 3 standard deviations) can be toggled on/off to easily identify outliers, which can be particularly useful for re-examining fit vs. residual plots with this visualizer. 🍝
 
 
 Volatility analysis
@@ -199,7 +209,7 @@ Within microbial communities, microbial populations do not exist in isolation bu
 First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/longitudinal/ecam_table_taxa.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/ecam_table_taxa.qza
    :saveas: ecam-table-taxa.qza
 
 Now we are ready run NMIT. The output of this command is a distance matrix that we can pass to other QIIME2 commands for significance testing and visualization.

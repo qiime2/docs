@@ -41,19 +41,19 @@ Start by creating a directory to work in.
 Next, download the necessary files:
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/otu-clustering/seqs.fna
+   :url: https://data.qiime2.org/2018.8/tutorials/otu-clustering/seqs.fna
    :saveas: seqs.fna
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/otu-clustering/85_otus.qza
+   :url: https://data.qiime2.org/2018.8/tutorials/otu-clustering/85_otus.qza
    :saveas: 85_otus.qza
 
 Dereplicating a ``SampleData[Sequences]`` artifact
 --------------------------------------------------
 
 If you are beginning your analysis with demultiplexed, quality controlled
-sequences, such as those in a `QIIME 1 ``seqs.fna`` file`_ your first step is
-to import that data into a QIIME 1 artifact. The semantic type used here is
+sequences, such as those in a |QIIME1_file|_ your first step
+is to import that data into a QIIME 1 artifact. The semantic type used here is
 ``SampleData[Sequences]``, indicating that the data represents collections of
 sequences associated with one or more samples.
 
@@ -186,4 +186,5 @@ sequences, composed of the reference sequences used for input, as well as the
 sequences clustered as part of the internal *de novo* clustering step.
 
 .. _vsearch: https://peerj.com/articles/2584/
-.. _QIIME 1 ``seqs.fna`` file: http://qiime.org/documentation/file_formats.html#post-split-libraries-fasta-file-overview
+.. |QIIME1_file| replace:: QIIME 1 ``seqs.fna`` file
+.. _`QIIME1_file`: http://qiime.org/documentation/file_formats.html#post-split-libraries-fasta-file-overview

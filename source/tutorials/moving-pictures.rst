@@ -22,7 +22,7 @@ Sample metadata
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
@@ -39,11 +39,11 @@ Download the sequence reads that we'll use in this analysis. In this tutorial we
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -62,6 +62,8 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
 
 .. qiime1-users::
    In QIIME 1, we generally suggested performing demultiplexing through QIIME (e.g., with ``split_libraries.py`` or ``split_libraries_fastq.py``) as this step also performed quality control of sequences. We now separate the demultiplexing and quality control steps, so you can begin QIIME 2 with either multiplexed sequences (as we're doing here) or demultiplexed sequences.
+
+.. _`moving pics demux`:
 
 Demultiplexing sequences
 ------------------------
@@ -203,39 +205,24 @@ After the quality filtering step completes, you'll want to explore the resulting
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
 
-QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. The following steps will generate this QIIME 2 artifact.
+QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we will use ``align-to-tree-mafft-fasttree`` pipeline from the ``q2-phylogeny`` plugin.
 
-First, we perform a multiple sequence alignment of the sequences in our ``FeatureData[Sequence]`` to create a ``FeatureData[AlignedSequence]`` QIIME 2 artifact. Here we do this with the ``mafft`` program.
+First, the pipeline uses the ``mafft`` program to perform a multiple sequence alignment of the sequences in our ``FeatureData[Sequence]`` to create a ``FeatureData[AlignedSequence]`` QIIME 2 artifact.
+Next, the pipeline masks (or filters) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
+Following that, the pipeline applies FastTree to generate a phylogenetic tree from the masked alignment.
+The FastTree program creates an unrooted tree, so in the final step in this section midpoint rooting is applied to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
 
 .. command-block::
 
-   qiime alignment mafft \
+   qiime phylogeny align-to-tree-mafft-fasttree \
      --i-sequences rep-seqs.qza \
-     --o-alignment aligned-rep-seqs.qza
-
-Next, we mask (or filter) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
-
-.. command-block::
-
-   qiime alignment mask \
-     --i-alignment aligned-rep-seqs.qza \
-     --o-masked-alignment masked-aligned-rep-seqs.qza
-
-Next, we'll apply FastTree to generate a phylogenetic tree from the masked alignment.
-
-.. command-block::
-
-   qiime phylogeny fasttree \
-     --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree unrooted-tree.qza
-
-The FastTree program creates an unrooted tree, so in the final step in this section we apply midpoint rooting to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
-
-.. command-block::
-
-   qiime phylogeny midpoint-root \
-     --i-tree unrooted-tree.qza \
+     --o-alignment aligned-rep-seqs.qza \
+     --o-masked-alignment masked-aligned-rep-seqs.qza \
+     --o-tree unrooted-tree.qza \
      --o-rooted-tree rooted-tree.qza
+
+
+.. _`moving pics diversity`:
 
 Alpha and beta diversity analysis
 ---------------------------------
@@ -372,6 +359,9 @@ The bottom plot in this visualization is important when grouping samples by meta
 .. question::
     When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
 
+
+.. _`moving pics taxonomy`:
+
 Taxonomic analysis
 ------------------
 
@@ -381,7 +371,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 
 .. download::
-   :url: https://data.qiime2.org/2018.4/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2018.8/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
@@ -411,6 +401,8 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
+
+.. _`ancom`:
 
 Differential abundance testing with ANCOM
 -----------------------------------------
@@ -477,7 +469,7 @@ We're also often interested in performing a differential abundance test at a spe
    Which genera differ in abundance across Subject? In which subject is each genus more abundant?
 
 
-.. _sample metadata: https://data.qiime2.org/2018.4/tutorials/moving-pictures/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb

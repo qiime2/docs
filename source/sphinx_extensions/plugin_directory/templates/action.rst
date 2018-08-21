@@ -32,11 +32,20 @@
      </ul>
      <div class="tab-content">
        <div id="cli" class="tab-pane fade in active">
-         <pre>
-           {{- cli_help -}}
-         </pre>
+         <h4>Docstring:</h4>
+         <pre>{{- cli_help -}}</pre>
        </div>
        <div id="api" class="tab-pane fade">
+       <h4>Import:</h4>
+
+.. command-block::
+   :no-exec:
+
+   from {{import_path}} import {{action_api_name}}
+
+.. raw:: html
+
+       <h4>Docstring:</h4>
          <pre>
            {{- api_help -}}
          </pre>

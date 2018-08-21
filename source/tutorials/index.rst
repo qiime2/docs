@@ -6,6 +6,7 @@ Tutorials
 .. toctree::
    :maxdepth: 2
 
+   overview
    moving-pictures
    fmt
    atacama-soils

@@ -21,7 +21,7 @@ After installing Miniconda and opening a new terminal, make sure you're running 
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
-Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2018.4 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2018.4`` to indicate what QIIME 2 release is installed (i.e. ``2018.4``).
+Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2018.8 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2018.8`` to indicate what QIIME 2 release is installed (i.e. ``2018.8``).
 
 
 .. raw:: html
@@ -39,22 +39,22 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-osx-conda.yml
-   conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-osx-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.8-py35-osx-conda.yml
+   conda env create -n qiime2-2018.8 --file qiime2-2018.8-py35-osx-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2018.4-py35-osx-conda.yml</pre>
+   rm qiime2-2018.8-py35-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.4-py35-linux-conda.yml
-   conda env create -n qiime2-2018.4 --file qiime2-2018.4-py35-linux-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2018.8-py35-linux-conda.yml
+   conda env create -n qiime2-2018.8 --file qiime2-2018.8-py35-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2018.4-py35-linux-conda.yml</pre>
+   rm qiime2-2018.8-py35-linux-conda.yml</pre>
          </div>
       </div>
    </div>
 
 
-.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2018.4`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
+.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2018.8`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
 
 
 Activate the ``conda`` environment
@@ -65,7 +65,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2018.4
+   source activate qiime2-2018.8
 
 To deactivate an environment, run ``source deactivate``.
 
