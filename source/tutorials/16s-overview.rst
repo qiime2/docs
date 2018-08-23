@@ -72,6 +72,8 @@ time you call them.** If you need to process your data more
 interactively, you might want to use the Python API - it is much faster
 since objects can be simply stored in memory.
 
+**Pro-tip #3: to enable tab-complete in QIIME 2**, run `source tab-qiime`.
+
 Raw data processing
 -------------------
 
