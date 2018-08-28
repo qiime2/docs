@@ -15,16 +15,16 @@ Consider the following example:
 On the left, we have the true abundances of ten species, and the first species doubles between Time point 1 and Time point 2.  When we normalize these to proportions, it appears as if all of the species have changed between the two time points.  Looking at proportions alone, we would never realize this problem, and we actually cannot exactly determine which species are changing based on proportions alone.
 
 While we cannot exactly solve the problem of identifying differentially abundant species, we can relax this problem and ask which partitions of microbes are changing.  In the case above, if we compute the ratio between the first species and the second species, that ratio will be 1:1 at Time point 1, and 2:1 at Time point 2 for both the original abundances and the proportions.  This is the type of question that balances try to solve.
-Rather than focusing on individual taxa, we can focus on the log ratios, since the log ratios are consist between the original abundances and the observed proportions of the species are observed.  The concept of calculating balances for multiple species can be extended to trees as shown in the following example.
+Rather than focusing on individual taxa, we can focus on the ratio between taxa (or groups of taxa), since these ratios are consist between the true abundances and the observed proportions of the species observed. We typically log transform these ratios for improved visualization ('log ratios'). The concept of calculating balances (or ratios) for multiple species can be extended to trees as shown in the following example.
 
 .. image:: images/gneiss-balances.jpg
 
-On the left, we define a tree, where each of the tips corresponds to a taxon and their corresponding proportions.  The internal nodes define the log ratio between the taxa underneath.  On the right, we have the same tree, but one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and green taxa.  By looking at balances instead proportions, we can control for the variance by restricting observations to only focus on the taxa within the balance.
+On the left, we define a tree, where each of the tips corresponds to a taxon, and underneath are the proportions of each taxon in the first sample.  The internal nodes define the log ratio (i.e. balance) between the taxa underneath.  On the right is the same tree, and underneath are the proportions of each taxon in a different sample. Only one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and taxa.  By looking at balances instead proportions, we can eliminate some of the variance by restricting observations to only focus on the taxa within a given balance.
 
 The outstanding question here is, how do we construct a tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are two main ways that this can be done
 
 1. Gradient clustering.  For example, if we want to evaluate if pH is a driving factor, we can group together according to the pH that they are observed in, and observe whether the ratios of low-pH organisms to high-pH organisms change as the pH changes.  This is available in the ``gradient-clustering`` command.
-2. Correlation clustering.  If we don't have relevant prior information about how to cluster together organisms, we can group together organisms based on how often they co-occur with each other.
+2. Correlation clustering.  If we don't have relevant prior information about how to cluster together organisms, we can group together organisms based on how often they co-occur with each other. This is available in the ``correlation-clustering`` command.
 
 Once we have a tree, we can calculate balances using the following equation
 
@@ -64,7 +64,7 @@ The datasets required for this tutorial can be found below (to learn how these w
    :saveas: taxa.qza
 
 
-The differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, we will be adding in a pseudocount to all of the counts via the ``add-pseudocount`` method.  In this way, we can apply logarithms on this transformed table.
+The differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, we will be adding in a pseudocount to all of the counts via the ``add-pseudocount`` method.  This will replace all zeroes in the table with a 1, and in this way, we can apply logarithms on this transformed table.
 
 .. command-block::
 
