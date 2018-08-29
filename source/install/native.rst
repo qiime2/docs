@@ -90,6 +90,6 @@ Now that you have the Core distribution installed, check out the :doc:`q2cli doc
 
 
 How do I update to the newest version of QIIME 2?
-------------------------------------------------
+-------------------------------------------------
 
 In order to to update/upgrade to the newest release, you simply install the newest version in a new conda environment by following the instructions above. Then you will have two conda environments, one with the older version of QIIME 2 and one with the newer version.
