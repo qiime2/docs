@@ -19,13 +19,13 @@ Rather than focusing on individual taxa, we can focus on the ratio between taxa 
 
 .. image:: images/gneiss-balances.jpg
 
-On the left, we define a tree, where each of the tips corresponds to a taxon, and underneath are the proportions of each taxon in the first sample.  The internal nodes define the log ratio (i.e. balance) between the taxa underneath.  On the right is the same tree, and underneath are the proportions of each taxon in a different sample. Only one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and taxa.  By looking at balances instead proportions, we can eliminate some of the variance by restricting observations to only focus on the taxa within a given balance.
+On the left, we define a tree, where each of the tips corresponds to a taxon, and underneath are the proportions of each taxon in the first sample.  The internal nodes (i.e. balances) define the log ratio between the taxa underneath.  On the right is the same tree, and underneath are the proportions of each taxa in a different sample. Only one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and taxa.  By looking at balances instead proportions, we can eliminate some of the variance by restricting observations to only focus on the taxa within a given balance.
 
-The outstanding question here is, how do we construct a tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are three main ways that this can be done:
+The outstanding question here is, how do we construct a balance tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are three main ways that this can be done:
 
 1. Correlation clustering.  If we don't have relevant prior information about how to cluster together organisms, we can group together organisms based on how often they co-occur with each other. This is available in the ``correlation-clustering`` command and creates tree input for ``ilr-hierarchical``.
 2. Gradient clustering.  Use a metadata category to cluster taxa found in similar sample types. For example, if we want to evaluate if pH is a driving factor, we can cluster according to the pH that the taxa are observed in, and observe whether the ratios of low-pH organisms to high-pH organisms change as the pH changes.  This is available in the ``gradient-clustering`` command and creates tree input for ``ilr-hierarchical``.
-3. Phylogenetic clustering. A phylogenetic tree (e.g. ``rooted-tree.qza``) can also be used. In this case you can use your phylogenetic tree as input for ``ilr-phylogenetic``.
+3. Phylogenetic analysis. A phylogenetic tree (e.g. ``rooted-tree.qza``) created outside of gneiss can also be used. In this case you can use your phylogenetic tree as input for ``ilr-phylogenetic``.
 
 Once we have a tree, we can calculate balances using the following equation:
 
@@ -65,16 +65,11 @@ The datasets required for this tutorial can be found below (to learn how these w
    :saveas: taxa.qza
 
 
-The differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, we will be adding in a pseudocount to all of the counts via the ``add-pseudocount`` method.  This will replace all zeroes in the table with a 1, so that we can apply logarithms on this transformed table.
+First, we will define partitions of microbes for which we want to construct balances. Again, there are multiple possible ways to construct a tree (i.e. hierarchy) which defines the partition of microbes (balances) for which we want to construct balances. We will show examples of both ``correlation-clustering`` and ``gradient-clustering`` on this dataset.
 
-.. command-block::
+Note that the differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, both clustering methods below include a default pseudocount parameter. This replaces all zeroes in the table with a 1, so that we can apply logarithms on this transformed table.
 
-   qiime gneiss add-pseudocount \
-     --i-table table.qza \
-     --p-pseudocount 1 \
-     --o-composition-table composition.qza
-
-In the next step, we will define partitions of microbes for which we want to construct balances. Again, there are multiple possible ways to construct a tree (i.e. hierarchy) which defines the partition of microbes for which we want to construct balances. We will show examples of both ``correlation-clustering`` and ``gradient-clustering`` on this dataset.
+The input table is the raw count table (FeatureTable[Frequency]).
 
 Option 1: Correlation-clustering
 ---------------------------------------------------------------
@@ -89,7 +84,7 @@ Where :math:`x` and :math:`y` represent the proportions of two microbes across a
 .. command-block::
 
    qiime gneiss correlation-clustering \
-     --i-table composition.qza \
+     --i-table table.qza \
      --o-clustering hierarchy.qza
 
 
@@ -100,7 +95,7 @@ An alternative to co-occurence clustering is to create a tree based on a numeric
 .. command-block::
 
    qiime gneiss gradient-clustering \
-     --i-table composition.qza \
+     --i-table table.qza \
      --m-gradient-file sample-metadata.tsv \
      --m-gradient-column Age \
      --o-clustering hierarchy.qza
@@ -115,7 +110,7 @@ Now that we have a tree that defines our partitions, we can perform the isometri
 .. command-block::
 
    qiime gneiss ilr-hierarchical \
-     --i-table composition.qza \
+     --i-table table.qza \
      --i-tree hierarchy.qza \
      --o-balances balances.qza
 
@@ -124,7 +119,7 @@ Alternatively, as mentioned earlier we can use a phylogenetic tree to create our
 .. command-block::
 
    qiime gneiss ilr-phylogenetic \
-     --i-table composition.qza \
+     --i-table table.qza \
      --i-tree rooted-tree.qza \
      --o-balances balances.qza
 
