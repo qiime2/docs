@@ -105,34 +105,42 @@ An alternative to co-occurence clustering is to create a tree based on a numeric
      --m-gradient-column Age \
      --o-clustering hierarchy.qza
 
-An important consideration for downstream analyses is the problem of overfitting. Especially in the case of ``gradient-clustering``
+An important consideration for downstream analyses is the problem of overfitting. When using ``gradient-clustering``, you are creating a tree to best highlight compositional differences along the metadata category of your choice, and it is possible to get false positives. Use ``gradient-clustering`` with caution.
 
 
 Building linear models using balances
 ---------------------------------------------------------------
-Now that we have a tree that defines our partitions, we can perform the isometric log ratio (ILR) transform.  The ILR transform computes the log ratios between each groups at each node in the tree; in this case we will be computing log ratios between groups of anti-correlated features.
+Now that we have a tree that defines our partitions, we can perform the isometric log ratio (ILR) transform.  The ILR transform computes the log ratios between groups at each node in the tree.
 
 .. command-block::
 
-   qiime gneiss ilr-transform \
+   qiime gneiss ilr-hierarchical \
      --i-table composition.qza \
      --i-tree hierarchy.qza \
      --o-balances balances.qza
 
 
-Once we have obtained a means to partition the features, we can now run linear regression on the balances.  In this module, the abundances will be converted to principal balances using the partition scheme that we defined earlier.  The linear regression that we will be running is called a `multivariate response linear regression`_, which boils down to performing a linear regression on each balance separately.
+Alternatively, as mentioned earlier we can use a phylogenetic tree to create our balances:
+.. command-block::
 
-We can use this to attempt to predict the microbial abundances based on environmental variables.  Running these models has multiple advantages over standard univariate regression, as it avoids many of the issues associated with overfitting, and can gain perspective about community-wide perturbations based on environmental parameters.
+   qiime gneiss ilr-phylogenetic \
+     --i-table composition.qza \
+     --i-tree rooted-tree.qza \
+     --o-balances balances.qza
 
-Since the microbial abundances can be mapped directly to balances, we can perform this multivariate response directly on the balances.  The model that we will be building is represented as follows
+Now that we have the log ratios of each node of our tree, we can run linear regression on the balances. The linear regression that we will be running is called a `multivariate response linear regression`_, which boils down to performing a linear regression on each balance separately.
+
+We can use this to attempt to associate microbial abundances with environmental variables. Running these models has multiple advantages over standard univariate regression, as it avoids many of the issues associated with overfitting, and can allow us to gain perspective about community-wide perturbations based on environmental parameters.
+
+Since the microbial abundances can be mapped directly to balances, we can perform the multivariate regression directly on the balances.  The model that we will be building is represented as follows
 
 .. math::
 
    \vec{y} = \vec{\beta_0} + \vec{\beta_{Subject}}\vec{X_{subject}} + \vec{\beta_{sex}}\vec{X_{sex}} + \vec{\beta_{age}}\vec{X_{Age}} + \vec{\beta_{sCD14ugml}}\vec{X_{sCD14ugml}} + \vec{\beta_{LBPugml}}\vec{X_{LBPugml}}
 
-Where :math:`\vec{y}` represents the matrix of balances to be predicted, :math:`\vec{\beta_i}` represents a vector of coefficients for covariate :math:`i` and math:`\vec{X_i}` represents the measures for covariate :math:`i`.
+Where :math:`\vec{y}` represents the matrix of balances to be predicted, :math:`\vec{\beta_i}` represents a vector of coefficients for covariate :math:`i` and :math:`\vec{X_i}` represents the measures for covariate :math:`i`.
 
-Remember that ANOVA is a special case of linear regression - every problem that can be solved by ANOVA can be reformulated as a linear regression.  See `this post`_ for more details.  So we can still answer the same sort of differential abundance questions using this technique, but we can start asking more precise questions, controlling for different potential confounding variables or even interaction effects.
+Remember that ANOVA is a special case of linear regression - every problem that can be solved by ANOVA can be reformulated as a linear regression.  See `this post`_ for more details.  So we can still answer the same sort of differential abundance questions using this technique, and we can start asking more precise questions, controlling for different potential confounding variables or even interaction effects.
 
 .. command-block::
 
@@ -145,19 +153,19 @@ Remember that ANOVA is a special case of linear regression - every problem that 
 
 Now we have a summary of the regression model.  Specifically we want to see which covariates impact the model the most, which balances are meaningful, and how much potential overfitting is going on.
 
-There are a few things to note in the regression summary.  There is an :math:`R^2` in the summary, which gives information about the variance in the community is explained by the regression model.  From what we can see, the regression can explain about 10% of the community.  This is typical for what we see in human gut microbes, since there is a very high amount of confounding variation due to genetics, diet, environment, etc.
+There are a few things to note in the regression summary.  There is an :math:`R^2` in the summary, which gives information about how much of the variance in the community is explained by the regression model.  From what we can see, the regression can explain about 10% of the community variation.  This is typical for what we see in human gut microbiomes, since there is a very high amount of confounding variation due to genetics, diet, environment, etc.
 
 To evaluate the explanatory model of a single covariate, a leave-one-variable-out approach is used.  One variable is left out, and the change in :math:`R^2` is calculated.  The larger the change is, the stronger the effect of the covariate is.  In this case,  Subject is the largest explanatory factor, explaining 2% of the variation.
 
 To make sure that we aren't overfitting, 10-fold cross validation is performed.  This will split the data into 10 partitions, build the model on 9 of the those partitions and use the remaining partition to measure the prediction accuracy.  This process is repeat 10 times, once for each round of cross-validation.  The within model error (``mse``), :math:`R^2` and the prediction accuracy (``pred_mse``) are reported for each round of cross validation.  Here, the prediction accuracy is less than the within model error, suggesting that over fitting is not happening.
 
-Next, we have a heatmap visualizing all of the coefficient p-values for all of the balances.  The columns of the heatmap represent balances, and the rows of the heatmap represent covariates.  The heatmap is colored by the negative log of the p-value, highlighting potentially significant p-values.  A hover tool is enabled to allow for specific coefficient values and their corresponding p-values to be obtained, and zooming is enabled to allow for navigation of interesting covariates and balances.
+Next, we have a heatmap visualizing all of the coefficient p-values for each of the balances.  The columns of the heatmap represent balances, and the rows of the heatmap represent covariates.  The heatmap is colored by the negative log of the p-value, highlighting potentially significant p-values.  A hover tool is enabled to allow for specific coefficient values and their corresponding p-values to be obtained, and zooming is enabled to allow for navigation of interesting covariates and balances.
 
 Next are the prediction and residual plots.  Here, only the top two balances are plotted, and the prediction residuals from the model are projected onto these two balances.  From these plots we can see that the predicted points lie within the same region as the original communities.  However, we can see that the residuals have roughly the same variance as the predictions.  This is a little unsettling - but note that we can only explain 10% of the community variance, so these sorts of calculations aren't completely unexpected.
 
-The branch lengths in the visualized tree are also scaled by the explained sum of squares in the models.  The longest branch lengths correspond to the most informative balances.  This can allow us to get a high-level overview of the most important balances in the model.  From this plot and the above heatmap, we can see that balance :math:`y0` is important.  These balances not only have very small p-values (with :math:`p < 0.05`) for differentiating subjects, but they also have the largest branch lengths in the tree diagram.  This suggests that these two partitions of microbes could differentiate the CFS patients from the controls.
+The branch lengths in the visualized tree are also scaled by the explained sum of squares in the models.  The longest branch lengths correspond to the most informative balances.  This can allow us to get a high-level overview of the most important balances in the model.  From this plot and the above heatmap, we can see that balance :math:`y0` is important.  These balances not only have very small p-values (with :math:`p < 0.05`) for differentiating subjects, but they also have the largest branch lengths in the tree diagram.  This suggests that this partition of microbes could differentiate the CFS patients from the controls.
 
-We can visualize these balances on a heatmap to see which groups of OTUs they represent.  By default, the values within the feature table are log-scaled, with the sample means centered around zero.
+We can visualize these balances on a heatmap to see which groups of taxa they represent.  By default, the values within the feature table are log-scaled, with the sample means centered around zero.
 
 .. command-block::
 
