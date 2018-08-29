@@ -73,7 +73,7 @@ The input table is the raw count table (FeatureTable[Frequency]).
 
 Option 1: Correlation-clustering
 ---------------------------------------------------------------
-First, we will employ unsupervised clustering via Ward's hierarchical clustering to obtain Principal Balances.  In essence, this will define the partitions of microbes that commonly co-occur with each other using Ward hierarchical clustering, which is defined by the following metric.
+This option should be your default option. We will employ unsupervised clustering via Ward's hierarchical clustering to obtain Principal Balances. In essence, this will define the partitions of microbes that commonly co-occur with each other using Ward hierarchical clustering, which is defined by the following metric.
 
 .. math::
 
@@ -90,7 +90,7 @@ Where :math:`x` and :math:`y` represent the proportions of two microbes across a
 
 Option 2: Gradient-clustering
 ---------------------------------------------------------------
-An alternative to co-occurence clustering is to create a tree based on a numeric metadata category. With ``gradient-clustering``, we can group taxa that occur in similar ranges of a metadata category. In this example, we will create a tree (hierarchy) using the metadata category Age. Note that the metadata category can have no missing variables, and must be numeric.
+An alternative to ``correlation-clustering`` is to create a tree based on a numeric metadata category. With ``gradient-clustering``, we can group taxa that occur in similar ranges of a metadata category. In this example, we will create a tree (hierarchy) using the metadata category Age. Note that the metadata category can have no missing variables, and must be numeric.
 
 .. command-block::
 
@@ -165,7 +165,7 @@ We can visualize these balances on a heatmap to see which groups of taxa they re
 .. command-block::
 
    qiime gneiss dendrogram-heatmap \
-     --i-table composition.qza \
+     --i-table table.qza \
      --i-tree hierarchy.qza \
      --m-metadata-file sample-metadata.tsv \
      --m-metadata-column Subject \
@@ -179,7 +179,7 @@ Specifically we'll plot a boxplot and identify taxa that could be explaining the
 .. command-block::
 
    qiime gneiss balance-taxonomy \
-     --i-table composition.qza \
+     --i-table table.qza \
      --i-tree hierarchy.qza \
      --i-taxonomy taxa.qza \
      --p-taxa-level 2 \
