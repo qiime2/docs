@@ -6,7 +6,7 @@ Differential abundance analysis with gneiss
 
 In this tutorial you will learn how to perform differential abundance analysis using balances in gneiss.  The main problem that we will focus on is how to identify differentially abundant taxa in a compositionally coherent way.
 
-Compositionality refers to the issue of dealing with proportions.  Since the sequencing depth is not typically biologically relevant, the microbial abundances are best interpreted as proportions.  Because of this, it becomes challenging to infer exactly which microbes are changing -- since proportions add to one, the change of a single microbe will also change the proportions of the remaining microbes.
+Compositionality refers to the issue of dealing with proportions.  To account for differences in sequencing depth, microbial abundances are typically interpreted as proportions (e.g. relative abundance).  Because of this, it becomes challenging to infer exactly which microbes are changing -- since proportions add to one, the change of a single microbe will also change the proportions of the remaining microbes.
 
 Consider the following example:
 
@@ -21,12 +21,13 @@ Rather than focusing on individual taxa, we can focus on the ratio between taxa 
 
 On the left, we define a tree, where each of the tips corresponds to a taxon, and underneath are the proportions of each taxon in the first sample.  The internal nodes define the log ratio (i.e. balance) between the taxa underneath.  On the right is the same tree, and underneath are the proportions of each taxon in a different sample. Only one of the taxa abundances changes.  As we have observed before, the proportions of all of the taxa will change, but looking at the balances, only the balances containing the purple taxa will change.  In this case, balance :math:`b_3` won't change, since it only considers the ratio between the red and taxa.  By looking at balances instead proportions, we can eliminate some of the variance by restricting observations to only focus on the taxa within a given balance.
 
-The outstanding question here is, how do we construct a tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are two main ways that this can be done
+The outstanding question here is, how do we construct a tree to control for the variation, and identify interesting differentially abundant partitions of taxa?  In gneiss, there are three main ways that this can be done:
 
-1. Gradient clustering.  For example, if we want to evaluate if pH is a driving factor, we can group together according to the pH that they are observed in, and observe whether the ratios of low-pH organisms to high-pH organisms change as the pH changes.  This is available in the ``gradient-clustering`` command.
-2. Correlation clustering.  If we don't have relevant prior information about how to cluster together organisms, we can group together organisms based on how often they co-occur with each other. This is available in the ``correlation-clustering`` command.
+1. Correlation clustering.  If we don't have relevant prior information about how to cluster together organisms, we can group together organisms based on how often they co-occur with each other. This is available in the ``correlation-clustering`` command and creates tree input for ``ilr-hierarchical``.
+2. Gradient clustering.  Use a metadata category to cluster taxa found in similar sample types. For example, if we want to evaluate if pH is a driving factor, we can cluster according to the pH that the taxa are observed in, and observe whether the ratios of low-pH organisms to high-pH organisms change as the pH changes.  This is available in the ``gradient-clustering`` command and creates tree input for ``ilr-hierarchical``.
+3. Phylogenetic clustering. A phylogenetic tree (e.g. ``rooted-tree.qza``) can also be used. In this case you can use your phylogenetic tree as input for ``ilr-phylogenetic``.
 
-Once we have a tree, we can calculate balances using the following equation
+Once we have a tree, we can calculate balances using the following equation:
 
 .. math::
 
@@ -34,9 +35,9 @@ Once we have a tree, we can calculate balances using the following equation
 
 where :math:`i` represents the :math:`i^{th}` internal node in the tree, :math:`g(x)` represents the geometric mean within set :math:`x`, and :math:`x_r` represents the set of taxa abundances in the numerator of the balance, :math:`x_s` represents the set of taxa abundances in the denominator of the balance, and :math:`r` and :math:`s` represents the number of taxa within :math:`x_r` and :math:`x_s` respectively.
 
-After the balances are calculated, standard statistical procedures such as ANOVA and linear regression can be performed.  We will see how we can run these procedures using the Chronic Fatigue Syndrome dataset.
+After the balances are calculated, standard statistical procedures such as ANOVA and linear regression can be performed.  We will demonstrate running these procedures using the Chronic Fatigue Syndrome dataset.
 
-Building linear models using balances
+Creating balances
 ---------------------------------------------------------------
 In the Chronic Fatigue Syndrome dataset published in `Giloteaux et al (2016)`_, there are 87 individuals with 48 diseased patients and 39 healthy controls. The data used in this tutorial were sequenced on an Illumina MiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
@@ -64,7 +65,7 @@ The datasets required for this tutorial can be found below (to learn how these w
    :saveas: taxa.qza
 
 
-The differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, we will be adding in a pseudocount to all of the counts via the ``add-pseudocount`` method.  This will replace all zeroes in the table with a 1, and in this way, we can apply logarithms on this transformed table.
+The differential abundance techniques that we will be running will utilize log ratio transforms. Since it is not possible to take the logarithm of zero, we will be adding in a pseudocount to all of the counts via the ``add-pseudocount`` method.  This will replace all zeroes in the table with a 1, so that we can apply logarithms on this transformed table.
 
 .. command-block::
 
@@ -73,13 +74,17 @@ The differential abundance techniques that we will be running will utilize log r
      --p-pseudocount 1 \
      --o-composition-table composition.qza
 
-In the next step, we will define partitions of microbes for which we want to construct balances.  If we have additional information about the types of habitats that microbes prefer to live in, such as pH, we can employ ``gradient-clustering`` to group together microbes based on their preferred habitat.  Since we don't have that sort of information here, we will employ unsupervised clustering via Ward's hierarchical clustering to obtain Principal Balances.  In essence, this will define the partitions of microbes that commonly co-occur with each other using Ward hierarchical clustering, which is defined by the following metric.
+In the next step, we will define partitions of microbes for which we want to construct balances. Again, there are multiple possible ways to construct a tree (i.e. hierarchy) which defines the partition of microbes for which we want to construct balances. We will show examples of both ``correlation-clustering`` and ``gradient-clustering`` on this dataset.
+
+Option 1: Correlation-clustering
+---------------------------------------------------------------
+First, we will employ unsupervised clustering via Ward's hierarchical clustering to obtain Principal Balances.  In essence, this will define the partitions of microbes that commonly co-occur with each other using Ward hierarchical clustering, which is defined by the following metric.
 
 .. math::
 
    d(x, y) = V [ \ln \frac{x}{y} ]
 
-Where :math:`x` and :math:`y` represent the proportions of two microbes across all of the samples.   If two microbes are highly correlated, then this quantity will shrink close to zero.  Ward hierarchical cluster will then use this distance metric to iteratively cluster together groups of microbes that are correlated with each other.  In the end, the tree that we obtain will highlight the high level structure and identify the blocks within in the data.
+Where :math:`x` and :math:`y` represent the proportions of two microbes across all of the samples.   If two microbes are highly correlated, then this quantity will shrink close to zero.  Ward hierarchical cluster will then use this distance metric to iteratively cluster together groups of microbes that are correlated with each other.  In the end, the tree that we obtain will highlight the high level structure and identify any blocks within in the data.
 
 .. command-block::
 
@@ -87,7 +92,25 @@ Where :math:`x` and :math:`y` represent the proportions of two microbes across a
      --i-table composition.qza \
      --o-clustering hierarchy.qza
 
-Now that we have a tree that defines our partitions, we can perform the ILR transform.  Note that the ILR transform just computes the log ratios between groups; in this case we will be computing log ratios between groups of anti-correlated features.
+
+Option 2: Gradient-clustering
+---------------------------------------------------------------
+An alternative to co-occurence clustering is to create a tree based on a numeric metadata category. With ``gradient-clustering``, we can group taxa that occur in similar ranges of a metadata category. In this example, we will create a tree (hierarchy) using the metadata category Age. Note that the metadata category can have no missing variables, and must be numeric.
+
+.. command-block::
+
+   qiime gneiss gradient-clustering \
+     --i-table composition.qza \
+     --m-gradient-file sample-metadata.tsv \
+     --m-gradient-column Age \
+     --o-clustering hierarchy.qza
+
+An important consideration for downstream analyses is the problem of overfitting. Especially in the case of ``gradient-clustering``
+
+
+Building linear models using balances
+---------------------------------------------------------------
+Now that we have a tree that defines our partitions, we can perform the isometric log ratio (ILR) transform.  The ILR transform computes the log ratios between each groups at each node in the tree; in this case we will be computing log ratios between groups of anti-correlated features.
 
 .. command-block::
 
@@ -95,6 +118,7 @@ Now that we have a tree that defines our partitions, we can perform the ILR tran
      --i-table composition.qza \
      --i-tree hierarchy.qza \
      --o-balances balances.qza
+
 
 Once we have obtained a means to partition the features, we can now run linear regression on the balances.  In this module, the abundances will be converted to principal balances using the partition scheme that we defined earlier.  The linear regression that we will be running is called a `multivariate response linear regression`_, which boils down to performing a linear regression on each balance separately.
 
