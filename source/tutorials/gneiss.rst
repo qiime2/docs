@@ -121,7 +121,7 @@ Alternatively, as mentioned earlier we can use a phylogenetic tree to create our
    qiime gneiss ilr-phylogenetic \
      --i-table table.qza \
      --i-tree rooted-tree.qza \
-     --o-balances balances.qza
+     --o-balances phylogenetic-balances.qza
 
 Now that we have the log ratios of each node of our tree, we can run linear regression on the balances. The linear regression that we will be running is called a `multivariate response linear regression`_, which boils down to performing a linear regression on each balance separately.
 
