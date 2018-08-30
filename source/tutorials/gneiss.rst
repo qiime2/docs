@@ -98,7 +98,7 @@ An alternative to ``correlation-clustering`` is to create a tree based on a nume
      --i-table table.qza \
      --m-gradient-file sample-metadata.tsv \
      --m-gradient-column Age \
-     --o-clustering hierarchy.qza
+     --o-clustering gradient-hierarchy.qza
 
 An important consideration for downstream analyses is the problem of overfitting. When using ``gradient-clustering``, you are creating a tree to best highlight compositional differences along the metadata category of your choice, and it is possible to get false positives. Use ``gradient-clustering`` with caution.
 
