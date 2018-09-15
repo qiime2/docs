@@ -25,6 +25,8 @@ You may want to begin by creating a directory to work in.
 Sequence data with sequence quality information
 -----------------------------------------------
 
+.. _`emp import`:
+
 "EMP protocol" multiplexed single-end fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -94,6 +96,8 @@ Importing data
      --type EMPPairedEndSequences \
      --input-path emp-paired-end-sequences \
      --output-path emp-paired-end-sequences.qza
+
+.. _`manifest file`:
 
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,6 +198,7 @@ Importing Data
      --output-path paired-end-demux.qza \
      --input-format PairedEndFastqManifestPhred64
 
+.. `casava import`:
 
 Casava 1.8 single-end demultiplexed fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
