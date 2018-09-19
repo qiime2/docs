@@ -8,6 +8,7 @@ Tutorials
 
    overview
    moving-pictures
+   fmt-cdiff
    fmt
    atacama-soils
    gneiss

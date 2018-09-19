@@ -9,13 +9,13 @@ Contributing source changes is a separate step from building and publishing the 
 
 ## Contributing to the docs
 
-1. Install the dependencies necessary to build the docs:
+1. Install the QIIME 2 framework. Typically you'll want the latest development version (i.e. master branch). You can find the [latest builds for your operating system here](https://github.com/qiime2/environment-files/tree/master/latest/staging). Make sure you get the raw link for your OS (e.g. `linux-64` or `osx-64`), download that file and then you can use `conda env create -n qiime2-docs --file path-to-yml` to install.
+
+2. Install the dependencies necessary to build the docs, you need to run this command within the `qiime2-docs` folder:
 
    ```shell
    pip install -r requirements.txt
    ```
-
-2. Install the QIIME 2 framework. Typically you'll want the latest development version (i.e. master branch). You can find the [latest builds for your operating system here](https://github.com/qiime2/environment-files/tree/master/latest/staging). Make sure you get the raw link for your OS (e.g. `linux-64` or `osx-64`) then you can use `conda install --file <URL>` to install.
 
 3. Make your changes to the source RST.
 
