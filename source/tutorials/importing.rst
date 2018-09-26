@@ -198,7 +198,7 @@ Importing Data
      --output-path paired-end-demux.qza \
      --input-format PairedEndFastqManifestPhred64
 
-.. `casava import`:
+.. _`casava import`:
 
 Casava 1.8 single-end demultiplexed fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

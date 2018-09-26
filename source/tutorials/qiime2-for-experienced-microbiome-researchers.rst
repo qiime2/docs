@@ -1,3 +1,7 @@
+QIIME 2 for Experienced Microbiome Researchers
+##############################################
+
+
 .. contents:: QIIME 2 for Experienced Microbiome Researchers
    :depth: 3
 
@@ -24,7 +28,7 @@ It also keeps track of everything that's been done to a given data file in the :
 Furthermore, by wrapping tools into a common framework, **data processing pipelines are streamlined**: with QIIME 2, you'll be able to re-write what was once a collection of scripts in different coding languages, calling different executables and re-formatting data inputs and outputs in most intermediate steps, into one (or a few) simple bash scripts.
 
 Finally, QIIME 2 is **open-sourced and specifically designed for experienced researchers to contribute and expand the reach of their work.**
-QIIME 2 is really just a collection of wrappers called :ref:`plugins <../plugins>`, which can be written for any software, package, or other installable executables.
+QIIME 2 is really just a collection of wrappers called :doc:`plugins <../plugins/index>`, which can be written for any software, package, or other installable executables.
 Writing a QIIME 2 plugin for a method that you develop instantly makes it accessible and usable by thousands of users.
 
 Pro-tips for power users
@@ -33,14 +37,14 @@ Pro-tips for power users
 That said, here are a few tips we've learned that should substantially improve your experience in transitioning your workflows to QIIME 2:
 
 **Pro-tip #1: QIIME 2 artifacts are just zip files**.
-If at any point you want to look at what actual files are in the ``.qza`` artifact, you can use :docs:`qiime tools export <exporting>` to extract the data file directly (which is basically just a wrapper for ``unzip``).
+If at any point you want to look at what actual files are in the ``.qza`` artifact, you can use :doc:`qiime tools export <exporting>` to extract the data file directly (which is basically just a wrapper for ``unzip``).
 Alternatively, you can also unzip your artifact directly (``unzip -k file.qza``) and look through the files in the ``data/`` folder.
 
 **Pro-tip #2: the QIIME 2 command line interface tools are slow because they have to unzip and re-zip the data contained in the artifacts each time you call them.**
 If you need to process your data more interactively, you might want to use the Python API - it is much faster since objects can be simply stored in memory.
 You can learn more about the different `QIIME 2 interfaces <https://docs.qiime2.org/2018.6/interfaces/>`__.
 
-**Pro-tip #3: to enable tab-complete in QIIME 2**, run `source tab-qiime`.
+**Pro-tip #3: to enable tab-complete in QIIME 2**, run ``source tab-qiime``.
 
 Data processing steps
 ---------------------
@@ -61,7 +65,7 @@ Importing data into QIIME 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using QIIME 2 to process your data, the first thing you need to do is get that data into a format that QIIME 2 can understand.
-Various importing methods currently available in QIIME 2 are highlighted in the :docs:`QIIME 2 importing
+Various importing methods currently available in QIIME 2 are highlighted in the :doc:`QIIME 2 importing
 tutorial <importing>`.
 
 This step has the potential to be the most confusing part of the QIIME 2 pipeline as there are dozens of import and format types to choose from.
@@ -90,6 +94,8 @@ Note: Currently ``q2-demux`` and ``q2-cutadapt`` do not support demultiplexing d
 So for the time being for this type of demultiplexing needs to be done outside of QIIME 2 using other tools, for example
 `bcl2fastq <https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html>`__.
 
+.. _`merge reads`:
+
 Merging reads
 ~~~~~~~~~~~~~~
 
@@ -97,6 +103,8 @@ Whether or not you need to merge reads depends on how you plan to cluster or den
 **TODO: link to the part of the overview tutorial where we'll put the "deciding to merge" section**
 
 If you do need to merge your reads, you can use the QIIME 2 `VSEARCH plugin <https://docs.qiime2.org/2018.6/plugins/available/vsearch/>`__  with the `join-pairs <https://docs.qiime2.org/2018.6/plugins/available/vsearch/join-pairs/>`__ method.
+
+.. _`Remove non-biological sequences`:
 
 Removing non-biological sequences
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,7 +131,7 @@ Regardless of how you group your sequences, the grouping methods will output:
 DADA2 and deblur will also produce a stats summary file with useful information regarding the filtering and denoising.
 
 Denoising
-^^^^^^^^^
+~~~~~~~~~
 
 DADA2 and deblur are currently the two denoising methods available in QIIME 2.
 You can read more about the methods in the overview tutorial (**TO DO** link to this section when it's done).
@@ -172,14 +180,12 @@ It will accept unmerged paired-end reads as input, it just won't do anything wit
 Note that deblur _can_ take in *merged* reads and treat them as single-end reads.
 
 OTU Clustering
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
-Preparing your data
-'''''''''''''''''''
+In this tutorial, we'll cover QIIME 2 methods that perform `de novo  <https://docs.qiime2.org/2018.6/plugins/available/vsearch/cluster-features-de-novo/>`__ and `closed reference <https://docs.qiime2.org/2018.6/plugins/available/vsearch/cluster-features-closed-reference/>`__ clustering.
+**TODO: link overview tutorial with more discussion about these types of clustering**
 
-To cluster your sequences, you need to prepare your data.
-
-Specifically, you need to make sure that:
+To cluster your sequences, you need to make sure that:
 
 -  paired-end reads are merged
 -  non-biological sequences are removed
@@ -188,33 +194,29 @@ Specifically, you need to make sure that:
 
 We discussed merging paired-end reads and removing non-biological sequences above (Sections `Merge reads`_ and `Remove non-biological sequences`_).
 
+Once your data is ready, you need to dereplicate your reads before clustering.
+
 Length trimming
-===============
+'''''''''''''''
 
 If for some reason your raw reads are not already all the same length, you'll need to trim them to the same length before doing OTU clustering.
 There isn't currently a QIIME 2 function to trim reads to the same length without doing anything else, though you may be able to use functions from the ``cutadapt`` plugin to do something like that.
 (The reason for this is that the `QIIME 2 workflow <https://docs.qiime2.org/2018.6/tutorials/overview/#denoising-and-clustering>`__ recommends first denoising reads - which involves a length trimming step - and then optionally passing the ASVs through a clustering algorithm.)
 
 Quality filtering
-=================
+'''''''''''''''''
 
 You can perform different types of quality filtering with the `quality filter <https://docs.qiime2.org/2018.6/plugins/available/quality-filter/>`__ plugin.
 **TODO: what's the difference between the q-score and q-score-joined? Why are there two separate functions?**
 The option descriptions for each method cover the different types of available quality filtering.
 
-Clustering
-''''''''''
-
-In this tutorial, we'll cover QIIME 2 methods that perform `de novo  <https://docs.qiime2.org/2018.6/plugins/available/vsearch/cluster-features-de-novo/>`__ and `closed reference <https://docs.qiime2.org/2018.6/plugins/available/vsearch/cluster-features-closed-reference/>`__ clustering.
-**TODO: link overview tutorial with more discussion about these types of clustering**
-
 Dereplicating sequences
-=======================
+'''''''''''''''''''''''
 
 No matter which type of clustering you do, you first need to dereplicate your sequences. The `q2-vsearch <https://docs.qiime2.org/2018.6/plugins/available/vsearch/>`__ plugin's method `dereplicate-sequences  <https://docs.qiime2.org/2018.6/plugins/available/vsearch/dereplicate-sequences/>`__ performs this step.
 
 de novo clustering
-==================
+''''''''''''''''''
 
 Sequences can be clustered *de novo* based on their genetic similarity alone (i.e. with VSEARCH) or based on a combination of their genetic similarity and abundance distributions (i.e. with distribution-based clustering).
 
@@ -224,7 +226,7 @@ Sequences can be clustered *de novo* based on their genetic similarity alone (i.
 Both of these functions take as input the output of ``q2-vsearch dereplicate-sequences``, which are dereplicated sequences with QIIME 2 data type ``'FeatureData[Sequence]'``, and a table of counts with QIIME 2 data type ``'FeatureTable[Frequency]'``.
 
 closed reference clustering
-===========================
+'''''''''''''''''''''''''''
 
 Closed reference clustering groups sequences together which match the same reference sequence in a database with a certain similarity.
 
@@ -239,7 +241,6 @@ You'll need to unzip/untar and import them as ``FeatureData[Sequence]`` artifact
 Assigning taxonomy
 ~~~~~~~~~~~~~~~~~~
 
-
 Assigning taxonomy to ASV or OTU representative sequences is covered in the `taxonomy classification
 tutorial <https://docs.qiime2.org/2018.6/tutorials/overview/#taxonomy-classification-and-taxonomic-analyses>`__.
 All taxonomy assignment methods are in the `feature-classifier plugin <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/>`__.
@@ -248,19 +249,19 @@ There are two main approaches for assigning taxonomy, each with multiple methods
 
 The first involves aligning reads to reference databases directly:
 
-  * `classify-consensus-blast <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/>`__: BLAST+ local alignment
-  * `classify-consensus-vsearch <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/>`:  VSEARCH global alignment
+- `classify-consensus-blast <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-blast/>`__: BLAST+ local alignment
+- `classify-consensus-vsearch <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/classify-consensus-vsearch/>`__:  VSEARCH global alignment
 
 Both use the *consensus* approach of taxonomy assignment, which you can learn more about in the overview (**TODO link**) and tweak with the ``maxaccepts``, ``perc-identity``, and ``min-consensus`` parameters.
 
 The second approach uses machine learning classifiers to assign likely taxonomies to reads:
 
-  * `fit-classifier-sklearn <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-sklearn/>`__
-  * `fit-classifier-naive-bayes <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-naive-bayes/>`__ functions.
+- `fit-classifier-sklearn <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-sklearn/>`__
+- `fit-classifier-naive-bayes <https://docs.qiime2.org/2018.6/plugins/available/feature-classifier/fit-classifier-naive-bayes/>`__
 
 These two functions differ in the type of machine learning model that they use.
 (**TODO: maybe link to the paper here?**)
-These methods need a pre-trained model as one of the inputs: you can either download one of the pre-trained taxonomy classifiers from the `data resources page <https://docs.qiime2.org/2018.6/data-resources/>`__, or train one yourself (following the steps outlined in the :docs:`feature classifier tutorial <feature-classifier>`).
+These methods need a pre-trained model as one of the inputs: you can either download one of the pre-trained taxonomy classifiers from the `data resources page <https://docs.qiime2.org/2018.6/data-resources/>`__, or train one yourself (following the steps outlined in the :doc:`feature classifier tutorial <feature-classifier>`).
 
 Analyze feature table and gain insight
 --------------------------------------
@@ -270,7 +271,7 @@ QIIME 2 offers multiple built-in functions to analyze your data, and you can als
 
 Some general things you can do with QIIME 2 are:
 
--  **Look at the data:** QIIME 2 has some a nice `taxa barplot visualizer <https://docs.qiime2.org/2018.6/plugins/available/taxa/barplot/?highlight=barplots#barplot-visualize-taxonomy-with-an-interactive-bar-plot>`__) to make visually exploring your data easy. You can also visualize your data on a PCoA plot with the `emperor <https://docs.qiime2.org/2018.6/plugins/available/emperor/plot/>`__ plugin (after calculating beta diversity between samples).
+-  **Look at the data:** QIIME 2 has some a nice `taxa barplot visualizer <https://docs.qiime2.org/2018.6/plugins/available/taxa/barplot/?highlight=barplots#barplot-visualize-taxonomy-with-an-interactive-bar-plot>`__ to make visually exploring your data easy. You can also visualize your data on a PCoA plot with the `emperor <https://docs.qiime2.org/2018.6/plugins/available/emperor/plot/>`__ plugin (after calculating beta diversity between samples).
 -  **Build a phylogenetic tree:** QIIME 2 has a `phylogeny <https://docs.qiime2.org/2018.6/plugins/available/phylogeny/>`__ plugin with different tree-building methods.
 -  **Calculate alpha diversity of your samples:** the `diversity plugin <https://docs.qiime2.org/2018.6/plugins/available/diversity/>`__ has many `alpha diversity metrics <https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282>`__ available through the ``alpha`` and ``alpha-phylogenetic`` methods.
 -  **Calculate beta diversity between samples:** the `diversity plugin <https://docs.qiime2.org/2018.6/plugins/available/diversity/>`__ also has these metrics available in the ``beta``, ``beta-phylogenetic``, and ``beta-phylogenetic-alt`` methods.
@@ -294,4 +295,4 @@ New plugins
 You can explore QIIME 2's ever-growing list of
 `plugins <https://docs.qiime2.org/2018.6/plugins/>`__ to find other methods to apply to your data.
 
-And remember that you can also :docs:`make your own QIIME 2 plugins <../plugins/developing>` to add functionality to QIIME 2 and share it with the community!
+And remember that you can also :doc:`make your own QIIME 2 plugins <../plugins/developing/>` to add functionality to QIIME 2 and share it with the community!
