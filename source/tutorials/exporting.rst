@@ -41,6 +41,8 @@ A ``Phylogeny[Unrooted]`` artifact will be exported as a `newick formatted file`
      --input-path unrooted-tree.qza \
      --output-path exported-tree
 
+.. _`export vs extract`:
+
 Exporting versus extracting
 ---------------------------
 

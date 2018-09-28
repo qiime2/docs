@@ -22,6 +22,8 @@ Naive Bayes classifiers trained on:
 - `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2018.8/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``9a28a285305c2bfd2de46add7dd520d7``)
 - `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2018.8/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``038b75474c899585ce7d27c4798283f1``)
 
+.. _`marker gene db`:
+
 Marker gene reference databases
 -------------------------------
 

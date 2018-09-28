@@ -142,6 +142,8 @@ If you'd like to continue the tutorial using this FeatureTable (opposed to the D
    mv rep-seqs-dada2.qza rep-seqs.qza
    mv table-dada2.qza table.qza
 
+.. _`moving pictures deblur`:
+
 Option 2: Deblur
 ~~~~~~~~~~~~~~~~
 
