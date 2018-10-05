@@ -34,8 +34,6 @@ Semantic types also help users avoid semantically incorrect analyses. For exampl
 
 Check out the :doc:`semantic types page <semantic-types>` for more information about semantic types and what types are currently available.
 
-.. _`plugins`:
-
 Plugins
 -------
 
