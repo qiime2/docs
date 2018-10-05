@@ -14,6 +14,8 @@ install:
   - wget -q https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py35-linux-conda.yml
   - conda env create -q -n test-env --file qiime2-latest-py35-linux-conda.yml
   - source activate test-env
+  - conda install -q -c anaconda -c defaults -c conda-forge -c bioconda -c https://conda.anaconda.org/biocore q2-fragment-insertion
+  - qiime dev refresh-cache
   - pip install -r requirements.txt
   - pip install flake8
 script:
