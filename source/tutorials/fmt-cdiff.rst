@@ -3,7 +3,7 @@ FMT for recurrent Clostridium difficile infection Tutorial
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-In this tutorial you’ll use QIIME 2 to perform an analysis of fecal human microbiome samples looking at short- and long-term changes in patients with multiple recurrent Clostridium difficile infection that were refractory to antibiotic therapy and treated using fecal microbiota transplantation. A study based on these samples was originally published in [Weingarden et al. (2015)](https://www.ncbi.nlm.nih.gov/pubmed/25825673) and it has been used in [animations](https://www.youtube.com/watch?v=-FFDqhM4pks) and [meta-analyses](https://github.com/knightlab-analyses/qiita-paper). The data used in this tutorial were sequenced on an Illumina MiSeq using the [Earth Microbiome Project](http://earthmicrobiome.org/) hypervariable region 4 (V4) 16S rRNA sequencing protocol.
+In this tutorial you’ll use QIIME 2 to perform an analysis of fecal human microbiome samples looking at short- and long-term changes in patients with multiple recurrent Clostridium difficile infection that were refractory to antibiotic therapy and treated using fecal microbiota transplantation. A study based on these samples was originally published in `Weingarden et al. (2015)`, and it has been used in `animations`_ and `meta-analyses`_. The data used in this tutorial were sequenced on an Illumina MiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
 Before beginning this tutorial, create a new directory and change to that directory.
 
@@ -16,11 +16,11 @@ Before beginning this tutorial, create a new directory and change to that direct
 Sample metadata
 ---------------
 
-Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. [ToDo: add metadata to Google spreadsheets?]. The following command will download the sample metadata as tab-separated text and save it in the file  `sample-metadata.tsv`. This  `sample-metadata.tsv` file is used throughout the rest of the tutorial.
+Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. [ToDo: add metadata to Google spreadsheets?]. The following command will download the sample metadata as tab-separated text and save it in the file  `sample_metadata.tsv`. This  `sample_metadata.tsv` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/sample-metadata.tsv
-   :saveas: sample-metadata.tsv
+   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/sample_metadata.tsv
+   :saveas: sample_metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
 
@@ -29,7 +29,7 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
 Obtaining and importing data
 ----------------------------
 
-Next, you’ll download the multiplexed reads. You will download three `fastq.gz` files, corresponding to the forward, reverse, and barcode (i.e., index) reads. These files contain a subset of the reads (10%) in the full data set generated for this study, which allows for the following commands to be run relatively quickly. If you are only planning to run through the commands presented here to get experience, you can use the (1% subsample data set)[add_link] so that the commands will run quickly. If you’re planning to work through the questions presented at the end of this document to gain more experience with QIIME analysis and data interpretation, you should use the 10% subsample data set so that the analysis results will be supported by more sequence data.
+Next, you’ll download the multiplexed reads. You will download three `fastq.gz` files, corresponding to the forward, reverse, and barcode (i.e., index) reads. These files contain a subset of the reads (10%) in the full data set generated for this study, which allows for the following commands to be run relatively quickly. If you are only planning to run through the commands presented here to get experience, you can use the `1% subsample data set`_ so that the commands will run quickly. If you’re planning to work through the questions presented at the end of this document to gain more experience with QIIME analysis and data interpretation, you should use the 10% subsample data set so that the analysis results will be supported by more sequence data.
 
 Download the sequence reads that we'll use in this analysis. In this tutorial we'll work with a small subset of the complete sequence data so that the commands will run quickly.
 
@@ -38,15 +38,15 @@ Download the sequence reads that we'll use in this analysis. In this tutorial we
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 .. download::
-  :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/forward.fastq.gz
+  :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/forward.fastq.gz
   :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: hhttps://data.qiime2.org/2018.11/tutorials/fmt-cdiff/reverse.fastq.gz
+   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -77,7 +77,7 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
 
     qiime demux emp-paired \
       --i-seqs emp-paired-end-sequences.qza \
-      --m-barcodes-file sample-metadata.tsv \
+      --m-barcodes-file sample_metadata.tsv \
       --m-barcodes-column BarcodeSequence \
       --p-rev-comp-mapping-barcodes \
       --o-per-sample-sequences demux.qza
@@ -138,7 +138,7 @@ Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` meth
      --o-table table-deblur.qza \
      --o-stats deblur-stats.qza
 
-.. note:: The deblur command used above generates QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime metadata tabulate`` and ``qiime deblur visualize-stats``, respectively:
+The deblur command used above generates QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime metadata tabulate`` and ``qiime deblur visualize-stats``, respectively:
 
 .. command-block::
 
@@ -151,12 +151,14 @@ Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` meth
 
 If you'd like to continue the tutorial using this feature table (as opposed to the DADA2 feature table generated in *Option 1*), run the following commands.
 
+
 .. command-block::
 
    mv rep-seqs-deblur.qza rep-seqs.qza
    mv table-deblur.qza full-table.qza
 
-Option 1: DADA2
+
+Option 2: DADA2
 ~~~~~~~~~~~~~~~
 
 `DADA2`_ is a pipeline for detecting and correcting (where possible) Illumina amplicon sequence data. As implemented in the ``q2-dada2`` plugin, this quality control process will additionally filter any phiX reads (commonly present in marker gene Illumina sequence data) that are identified in the sequencing data, and will filter chimeric sequences.
@@ -166,7 +168,7 @@ The ``dada2 denoise-single`` method requires two parameters that are used in qua
 .. question::
   Based on the plots you see in ``demux.qzv``, what values would you choose for ``--p-trunc-len`` and ``--p-trim-left`` in this case?
 
-In the ``demux.qzv`` quality plots, we see that the quality of the initial bases seems to be high, so we won't trim any bases from the beginning of the sequences. The quality seems to drop off around position 150, so we'll truncate our sequences at 120 bases. This next command may take up to 10 minutes to run, and is the slowest step in this tutorial.
+In the ``demux.qzv`` quality plots, we see that the quality of the initial bases seems to be high, so we won't trim any bases from the beginning of the sequences. The quality seems to drop off around position 150, so we'll truncate our sequences at 150 bases. This next command may take up to 10 minutes to run, and is the slowest step in this tutorial.
 
 .. command-block::
 
@@ -205,7 +207,7 @@ After the quality filtering step completes, you'll want to explore the resulting
 
    qiime feature-table summarize \
      --i-table full-table.qza \
-     --m-sample-metadata-file sample-metadata.tsv \
+     --m-sample-metadata-file sample_metadata.tsv \
      --o-visualization full-table.qzv
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
@@ -229,44 +231,43 @@ Not all fragments will be able to be inserted and further down analyses rely on 
 
 .. command-block::
 
-     qiime fragment-insertion filter-features \
-       --i-table full-table.qza \
-       --i-tree insertion-tree.qza \
-       --o-filtered-table table.qza \
-       --o-removed-table removed-table.qza
-     qiime feature-table summarize \
-       --i-table table.qza \
-       --m-sample-metadata-file sample-metadata.tsv \
-       --o-visualization table.qzv
-     qiime feature-table summarize \
-       --i-table removed-table.qza \
-       --m-sample-metadata-file sample-metadata.tsv \
-       --o-visualization removed-table.qzv
+   qiime fragment-insertion filter-features \
+     --i-table full-table.qza \
+     --i-tree insertion-tree.qza \
+     --o-filtered-table table.qza \
+     --o-removed-table removed-table.qza
+   qiime feature-table summarize \
+     --i-table table.qza \
+     --m-sample-metadata-file sample_metadata.tsv \
+     --o-visualization table.qzv
+   qiime feature-table summarize \
+     --i-table removed-table.qza \
+     --m-sample-metadata-file sample_metadata.tsv \
+     --o-visualization removed-table.qzv
 
+Alpha rarefaction plotting
+--------------------------
 
- Alpha rarefaction plotting
- --------------------------
+In this section we'll explore alpha diversity as a function of sampling depth using the ``qiime diversity alpha-rarefaction`` visualizer. This visualizer computes one or more alpha diversity metrics at multiple sampling depths, in steps between 1 (optionally controlled with ``--p-min-depth``) and the value provided as ``--p-max-depth``. At each sampling depth step, 10 rarefied tables will be generated, and the diversity metrics will be computed for all samples in the tables. The number of iterations (rarefied tables computed at each sampling depth) can be controlled with ``--p-iterations``. Average diversity values will be plotted for each sample at each even sampling depth, and samples can be grouped based on metadata in the resulting visualization if sample metadata is provided with the ``--m-metadata-file`` parameter.
 
- In this section we'll explore alpha diversity as a function of sampling depth using the ``qiime diversity alpha-rarefaction`` visualizer. This visualizer computes one or more alpha diversity metrics at multiple sampling depths, in steps between 1 (optionally controlled with ``--p-min-depth``) and the value provided as ``--p-max-depth``. At each sampling depth step, 10 rarefied tables will be generated, and the diversity metrics will be computed for all samples in the tables. The number of iterations (rarefied tables computed at each sampling depth) can be controlled with ``--p-iterations``. Average diversity values will be plotted for each sample at each even sampling depth, and samples can be grouped based on metadata in the resulting visualization if sample metadata is provided with the ``--m-metadata-file`` parameter.
+.. command-block::
 
- .. command-block::
+  qiime diversity alpha-rarefaction \
+    --i-table table.qza \
+    --i-phylogeny insertion-tree.qza \
+    --p-max-depth 8874 \
+    --m-metadata-file sample_metadata.tsv \
+    --o-visualization alpha-rarefaction.qzv
 
-    qiime diversity alpha-rarefaction \
-      --i-table table.qza \
-      --i-phylogeny insertion-tree.qza \
-      --p-max-depth 8874 \
-      --m-metadata-file sample-metadata.tsv \
-      --o-visualization alpha-rarefaction.qzv
+The visualization will have two plots. The top plot is an alpha rarefaction plot, and is primarily used to determine if the richness of the samples has been fully observed or sequenced. If the lines in the plot appear to "level out" (i.e., approach a slope of zero) at some sampling depth along the x-axis, that suggests that collecting additional sequences beyond that sampling depth would not be likely to result in the observation of additional features. If the lines in a plot don't level out, this may be because the richness of the samples hasn't been fully observed yet (because too few sequences were collected), or it could be an indicator that a lot of sequencing error remains in the data (which is being mistaken for novel diversity).
 
- The visualization will have two plots. The top plot is an alpha rarefaction plot, and is primarily used to determine if the richness of the samples has been fully observed or sequenced. If the lines in the plot appear to "level out" (i.e., approach a slope of zero) at some sampling depth along the x-axis, that suggests that collecting additional sequences beyond that sampling depth would not be likely to result in the observation of additional features. If the lines in a plot don't level out, this may be because the richness of the samples hasn't been fully observed yet (because too few sequences were collected), or it could be an indicator that a lot of sequencing error remains in the data (which is being mistaken for novel diversity).
+The bottom plot in this visualization is important when grouping samples by metadata. It illustrates the number of samples that remain in each group when the feature table is rarefied to each sampling depth. If a given sampling depth ``d`` is larger than the total frequency of a sample ``s`` (i.e., the number of sequences that were obtained for sample ``s``), it is not possible to compute the diversity metric for sample ``s`` at sampling depth ``d``. If many of the samples in a group have lower total frequencies than ``d``, the average diversity presented for that group at ``d`` in the top plot will be unreliable because it will have been computed on relatively few samples. When grouping samples by metadata, it is therefore essential to look at the bottom plot to ensure that the data presented in the top plot is reliable.
 
- The bottom plot in this visualization is important when grouping samples by metadata. It illustrates the number of samples that remain in each group when the feature table is rarefied to each sampling depth. If a given sampling depth ``d`` is larger than the total frequency of a sample ``s`` (i.e., the number of sequences that were obtained for sample ``s``), it is not possible to compute the diversity metric for sample ``s`` at sampling depth ``d``. If many of the samples in a group have lower total frequencies than ``d``, the average diversity presented for that group at ``d`` in the top plot will be unreliable because it will have been computed on relatively few samples. When grouping samples by metadata, it is therefore essential to look at the bottom plot to ensure that the data presented in the top plot is reliable.
+.. note::
+   The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
 
- .. note::
-     The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
-
- .. question::
-     When grouping samples by "host_subject_id" and viewing the alpha rarefaction plot for the "observed_otus" metric, which subjects (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those host subject ids?
+.. question::
+   When grouping samples by "host_subject_id" and viewing the alpha rarefaction plot for the "observed_otus" metric, which subjects (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those host subject ids?
 
 
 .. _`fmt cdiff diversity`:
@@ -278,17 +279,17 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
 
 * Alpha diversity
 
-  * Shannon's diversity index (a quantitative measure of community richness)
+  * Shannon's diversity index (a quantitative measure of community richness); Shannon, C.E. and Weaver, W. (1949). “The mathematical theory of communication”. University of Illonois Press, Champaign, Illonois.
   * Observed OTUs (a quantitative measure of community richness)
-  * Faith's Phylogenetic Diversity (a qualitative measure of community richness that incorporates phylogenetic relationships between the features)
-  * Evenness (or Pielou's Evenness; a measure of community evenness)
+  * Faith's Phylogenetic Diversity (a qualitative measure of community richness that incorporates phylogenetic relationships between the features); Faith. D.P. (1992). “Conservation evaluation and phylogenetic diversity”. Biological Conservation. (61) 1-10.
+  * Evenness (or Pielou's Evenness; a measure of community evenness); Pielou, E.C. (1966). “The measurement of diversity in different types of biological collections”. J. Theor. Biol. (13): 131-144.
 
 * Beta diversity
 
-  * Jaccard distance (a qualitative measure of community dissimilarity)
-  * Bray-Curtis distance (a quantitative measure of community dissimilarity)
-  * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
-  * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
+  * Jaccard distance (a qualitative measure of community dissimilarity); Jaccard, P. (1908). “Nouvellesrecherches sur la distribution florale.” Bull. Soc. V and. Sci. Nat., (44):223-270.
+  * Bray-Curtis distance (a quantitative measure of community dissimilarity); Sorenson, T. (1948) “A method of establishing groups of equal amplitude in plant sociology based on similarity of species content.” Kongelige Danske Videnskabernes Selskab 5.1-34: 4-7.
+  * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features); Lozupone, C. and Knight, R. (2005). “UniFrac: a new phylogenetic method for comparing microbial communities.” Applied and environmental microbiology 71 (12): 8228-8235.
+  * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features); Lozupone, C. A., Hamady, M., Kelley, S. T., Knight, R. (2007). “Quantitative and qualitative beta diversity measures lead to different insights into factors that structure microbial communities”. Applied and Environmental Microbiology. 73(5): 1576–85.
 
 An important parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the feature table summary (``table.qzv``) file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
@@ -300,7 +301,7 @@ An important parameter that needs to be provided to this script is ``--p-samplin
    qiime diversity core-metrics-phylogenetic \
      --i-phylogeny insertion-tree.qza \
      --i-table table.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --p-sampling-depth 881 \
      --output-dir core-metrics-results
 
@@ -318,12 +319,12 @@ We'll first test for associations between categorical metadata columns and alpha
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --o-visualization core-metrics-results/faith-pd-group-significance.qzv
 
    qiime diversity alpha-group-significance \
      --i-alpha-diversity core-metrics-results/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --o-visualization core-metrics-results/evenness-group-significance.qzv
 
 .. question::
@@ -340,14 +341,14 @@ Next we'll analyze sample composition in the context of categorical metadata usi
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --m-metadata-column disease_state \
      --p-pairwise \
      --o-visualization core-metrics-results/unweighted-unifrac-disease-state-group-significance.qzv
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --m-metadata-column animations_subject \
      --p-pairwise \
      --o-visualization core-metrics-results/unweighted-unifrac-animations-subject-group-significance.qzv
@@ -363,13 +364,13 @@ Finally, ordination is a popular approach for exploring microbial community comp
 
    qiime emperor plot \
      --i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --p-custom-axes animations_gradient \
      --o-visualization core-metrics-results/unweighted-unifrac-emperor-animations_gradient.qzv
 
    qiime emperor plot \
      --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --p-custom-axes animations_gradient \
      --o-visualization core-metrics-results/bray-curtis-emperor-animations_gradient.qzv
 
@@ -384,7 +385,7 @@ Finally, ordination is a popular approach for exploring microbial community comp
 Taxonomic analysis
 ------------------
 
-In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` QIIME 2 artifact. We'll do that using a pre-trained Naive Bayes classifier and the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include 250 bases from the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy. You can read more about this in the :doc:`grand overview <overview>`.
+In the next sections we'll begin to explore the taxonomic composition of the samples, and again relate that to sample metadata. The first step in this process is to assign taxonomy to the sequences in our ``FeatureData[Sequence]`` QIIME 2 artifact. We'll do that using a pre-trained Naive Bayes classifier and the ``q2-feature-classifier`` plugin. This classifier was trained on the Greengenes 13_8 99% OTUs, where the sequences have been trimmed to only include 250 bases from the region of the 16S that was sequenced in this analysis (the V4 region, bound by the 515F/806R primer pair). We'll apply this classifier to our sequences, and we can generate a visualization of the resulting mapping from sequence to taxonomy. You can read more about this in the :ref:`grand overview <Taxonomy>`.
 
 .. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers. We provide some common classifiers on our :doc:`data resources page <../data-resources>`, including Silva-based 16S classifiers, though in the future we may stop providing these in favor of having users train their own classifiers which will be most relevant to their sequence data.
 
@@ -405,7 +406,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
      --o-visualization taxonomy.qzv
 
 .. question::
-    Recall that our ``rep-seqs.qzv`` visualization allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that visualization and the ``taxonomy.qzv`` visualization created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features. How similar are the assignments? If they're dissimilar, at what *taxonomic level* do they begin to differ (e.g., species, genus, family, ...)?
+    Recall that our ``rep-seqs.qzv`` visualization allows you to easily BLAST the sequence associated with each feature against the NCBI nt database. Using that visualization and the ``taxonomy.qzv`` visualization created here, compare the taxonomic assignments with the taxonomy of the best BLAST hit for a few features.
 
 Next, we can view the taxonomic composition of our samples with interactive bar plots. Generate those plots with the following command and then open the visualization.
 
@@ -414,7 +415,7 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
    qiime taxa barplot \
      --i-table table.qza \
      --i-taxonomy taxonomy.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --o-visualization taxa-bar-plots.qzv
 
 .. question::
@@ -447,7 +448,7 @@ We can then run ANCOM on the ``animations_subject`` column to determine what fea
 
    qiime composition ancom \
      --i-table comp-table.qza \
-     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-file sample_metadata.tsv \
      --m-metadata-column disease_state \
      --o-visualization ancom-disease-state.qzv
 
@@ -459,25 +460,30 @@ We're also often interested in performing a differential abundance test at a spe
 .. command-block::
 
    qiime taxa collapse \
-     --i-table gut-table.qza \
+     --i-table table.qza \
      --i-taxonomy taxonomy.qza \
      --p-level 6 \
-     --o-collapsed-table gut-table-l6.qza
+     --o-collapsed-table table-l6.qza
 
    qiime composition add-pseudocount \
-     --i-table gut-table-l6.qza \
-     --o-composition-table comp-gut-table-l6.qza
+     --i-table table-l6.qza \
+     --o-composition-table comp-table-l6.qza
 
    qiime composition ancom \
-     --i-table comp-gut-table-l6.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
-     --o-visualization l6-ancom-Subject.qzv
+     --i-table comp-table-l6.qza \
+     --m-metadata-file sample_metadata.tsv \
+     --m-metadata-column disease_state \
+     --o-visualization l6-ancom-disease-state.qzv
 
 .. question::
    Which genera differ in abundance across Subject? In which subject is each genus more abundant?
 
+Congratulations! You made it to the end of the tutorial, as a next step we suggest reviewing :ref:`all sorts of downstream analyses <Fun>`.
 
+.. _Weingarden et al. (2015): https://www.ncbi.nlm.nih.gov/pubmed/25825673
+.. _animations: https://www.youtube.com/watch?v=-FFDqhM4pks
+.. _meta-analyses: https://www.ncbi.nlm.nih.gov/pubmed/30275573
+.. _1% subsample data set: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/1p/seqs.qza
 .. _sample metadata: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
