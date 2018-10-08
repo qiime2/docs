@@ -3,7 +3,7 @@ FMT for recurrent Clostridium difficile infection Tutorial
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-In this tutorial you’ll use QIIME 2 to perform an analysis of fecal human microbiome samples looking at short- and long-term changes in patients with multiple recurrent Clostridium difficile infection that were refractory to antibiotic therapy and treated using fecal microbiota transplantation. A study based on these samples was originally published in `Weingarden et al. (2015)`, and it has been used in `animations`_ and `meta-analyses`_. The data used in this tutorial were sequenced on an Illumina MiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
+In this tutorial you’ll use QIIME 2 to perform an analysis of fecal human microbiome samples looking at short- and long-term changes in patients with multiple recurrent Clostridium difficile infection that were refractory to antibiotic therapy and treated using fecal microbiota transplantation (FMT). A study based on these samples was originally published in `Weingarden et al. (2015)`, and it has been used in `animations`_ and `meta-analyses`_. `Weingarden et al. (2015)` collected samples from 14 patients and 1 donor; four of those patients were followed over time, from before FMT to up to 151 days after, and the donor was followed over 190 days. The data used in this tutorial were sequenced on an Illumina MiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
 Before beginning this tutorial, create a new directory and change to that directory.
 
@@ -349,12 +349,12 @@ Next we'll analyze sample composition in the context of categorical metadata usi
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample_metadata.tsv \
-     --m-metadata-column animations_subject \
+     --m-metadata-column disease_state \
      --p-pairwise \
      --o-visualization core-metrics-results/unweighted-unifrac-animations-subject-group-significance.qzv
 
 .. question::
-   Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What specific pairs of body sites are significantly different from each other?
+   Are the associations between disease states and differences in microbial composition statistically significant?
 
 Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime metadata distance-matrix`` in combination with ``qiime diversity mantel`` and ``qiime diversity bioenv`` commands.
 
@@ -432,45 +432,55 @@ ANCOM can be applied to identify features that are differentially abundant (i.e.
 .. note::
    Differential abundance testing in microbiome analysis is an active area of research. There are two QIIME 2 plugins that can be used for this: ``q2-gneiss`` and ``q2-composition``. This section uses ``q2-composition``, but there is :doc:`q2-gneiss <gneiss>` tutorial on a different dataset if you are interested in learning more.
 
-ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few (less than about 25%) of the features are changing between groups. If you expect that more features are changing between your groups, you should not use ANCOM as it will be more error-prone (an increase in both Type I and Type II errors is possible). Because we expect a lot of features to change in abundance across body sites, in this tutorial we'll filter our full feature table to only contain gut samples. We'll then apply ANCOM to determine which, if any, sequence variants and genera are differentially abundant across the gut samples of our two subjects.
+ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few (less than about 25%) of the features are changing between groups. If you expect that more features are changing between your groups, you should not use ANCOM as it will be more error-prone (an increase in both Type I and Type II errors is possible). We'll apply ANCOM to determine which, if any, sequence variants and genera are differentially abundant across the samples before and after FMT.
+
+We’ll start by creating a feature table that contains only the samples from patients before and after FMT. (To learn more about filtering, see the :doc:`Filtering Data <filtering>` tutorial.)
+
+.. command-block::
+
+  qiime feature-table filter-samples \
+    --i-table table.qza \
+    --m-metadata-file sample_metadata.tsv \
+    --p-where "disease_state!='healthy'" \
+    --o-filtered-table disease-table.qza
 
 ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to ``add-pseudocount`` (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact.
 
 .. command-block::
 
    qiime composition add-pseudocount \
-     --i-table table.qza \
-     --o-composition-table comp-table.qza
+     --i-table disease-table.qza \
+     --o-composition-table comp-disease-table.qza
 
-We can then run ANCOM on the ``animations_subject`` column to determine what features differ in abundance across this metadata category.
+We can then run ANCOM on the ``disease_state`` column to determine what features differ in abundance across this metadata category.
 
 .. command-block::
 
    qiime composition ancom \
-     --i-table comp-table.qza \
+     --i-table comp-disease-table.qza \
      --m-metadata-file sample_metadata.tsv \
      --m-metadata-column disease_state \
      --o-visualization ancom-disease-state.qzv
 
 .. question::
-   Which sequence variants differ in abundance across animations subject? In which subject is each sequence variant more abundant? What are the taxonomies of some of these sequence variants? (To answer the last question you'll need to refer to another visualization that was generated in this tutorial.)
+   Which sequence variants differ in abundance between pre- and post-FMT? In which group is each sequence variant more abundant? What are the taxonomies of some of these sequence variants? (To answer the last question you'll need to refer to another visualization that was generated in this tutorial.)
 
 We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps. In this tutorial, we collapse our feature table at the genus level (i.e. level 6 of the Greengenes taxonomy).
 
 .. command-block::
 
    qiime taxa collapse \
-     --i-table table.qza \
+     --i-table disease-table.qza \
      --i-taxonomy taxonomy.qza \
      --p-level 6 \
-     --o-collapsed-table table-l6.qza
+     --o-collapsed-table disease-table-l6.qza
 
    qiime composition add-pseudocount \
-     --i-table table-l6.qza \
-     --o-composition-table comp-table-l6.qza
+     --i-table disease-table-l6.qza \
+     --o-composition-table comp-disease-table-l6.qza
 
    qiime composition ancom \
-     --i-table comp-table-l6.qza \
+     --i-table comp-disease-table-l6.qza \
      --m-metadata-file sample_metadata.tsv \
      --m-metadata-column disease_state \
      --o-visualization l6-ancom-disease-state.qzv
