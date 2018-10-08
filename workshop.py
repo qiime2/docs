@@ -10,9 +10,17 @@ os.mkdir(tutorial_fp)
 
 tree = lxml.html.parse('./build/preview/tutorials/fmt-cdiff/index.html')
 
-# TODO: title
-# TODO: remove `link` tags
-# TODO: fix links to tutorial xrefs
+for node in tree.xpath('//title'):
+    node.text = 'FMT for recurrent Clostridium difficile infection Tutorial'
+
+for node in tree.xpath('//link'):
+    if node.attrib['rel'] in ['author', 'top', 'up', 'next', 'prev']:
+        node.getparent().remove(node)
+
+for misc in ['DOCUMENTATION_OPTIONS', 'UA-86671044-2']:
+    for node in tree.xpath('//script'):
+        if node.text is not None and misc in node.text:
+            node.getparent().remove(node)
 
 # Drop sidebar for this tutorial, as well as some other misc nodes
 for id_ in ['sidebar', 'header', 'github-banner']:
@@ -22,7 +30,7 @@ for node in tree.xpath("//*[@class='footer']"):
     node.getparent().remove(node)
 
 # Clean up assets
-for href in ['style.css', 'pygments.css', 'basic.css']:
+for href in ['style.css', 'pygments.css', 'basic.css', 'favicon.ico']:
     for node in tree.xpath("//*[@href='../../_static/%s']" % href):
         node.attrib['href'] = href
     # TODO: os.path.join
@@ -59,14 +67,17 @@ for node in tree.xpath('//a'):
         node.attrib['href'] = node.attrib['href'].replace(search_url, base_url)
 
 # Clean up xrefs
-base_url = 'https://docs.qiime2.org/2018.10/'
+base_url = 'https://docs.qiime2.org/2018.10/tutorials/fmt-cdiff/'
 for node in tree.xpath('//a'):
     if node.attrib['href'].startswith('../'):
-        node.attrib['href'] = node.attrib['href'].replace('../', base_url)
+        node.attrib['href'] = node.attrib['href'].replace('../', base_url, 1)
 
 # Copy all built data outputs
 shutil.copytree('./build/html/data/tutorials/fmt-cdiff',
                 os.path.join(tutorial_fp, 'data'))
+# Copy fonts
+shutil.copytree('./build/preview/_static/fonts',
+                os.path.join(tutorial_fp, 'fonts'))
 
 # Write out HTML
 tree.write(os.path.join(tutorial_fp, 'index.html'), method='html')
