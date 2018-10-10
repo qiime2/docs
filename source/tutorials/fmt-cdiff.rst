@@ -488,6 +488,17 @@ We're also often interested in performing a differential abundance test at a spe
 .. question::
    Which genera differ in abundance across Subject? In which subject is each genus more abundant?
 
+Visualizing Longitudinal Variation
+----------------------------------
+
+For longitudinal studies, we've found great use in visualizing the temporal variability using animated traces in Emperor. By doing this, you can follow the longitudinal dynamics sample by sample and subject by subject. In order to do so, you need two metadata categories one to order the samples (*Gradient category*) and one to group the samples (*Trajectory category*). For this dataset we can use the `animations_gradient` as the category that orders the samples, and the `animations_subject` as the category that groups our samples.
+
+The values in `animations_gradient` represent the number of days since the FMT was administered to the patient. In this category samples with no longitudinal data are set to 0, **note** that all values have to be numeric in order for the animation to be displayed. As for the `animations_subject`, this category includes unique identifiers for the subjects that received a FMT. Put together, these two categories will result in animated traces on a per-individual basis.
+
+In Emperor's user interface, go to the *Animations* tab, and select `animations_gradient` under the Gradient menu and select `animations_subject` under the Trajectory menu. Then click *play*, you'll see animated traces moving on the plot. You can adjust the speed and the radius of the trajectories. To start over click on the *back* button.
+
+For more information about animated ordinations, visit Emperor's `documentation`_.
+
 Congratulations! You made it to the end of the tutorial, as a next step we suggest reviewing :ref:`all sorts of downstream analyses <Fun>`.
 
 .. _Weingarden et al. (2015): https://www.ncbi.nlm.nih.gov/pubmed/25825673
@@ -499,6 +510,7 @@ Congratulations! You made it to the end of the tutorial, as a next step we sugge
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
 .. _Caporaso et al. (2011): https://www.ncbi.nlm.nih.gov/pubmed/21624126
+.. _documentation: http://emperor.microbio.me/uno/build/html/tutorials/animations.html
 .. _Earth Microbiome Project: http://earthmicrobiome.org
 .. _Clarke and Ainsworth (1993): http://www.int-res.com/articles/meps/92/m092p205.pdf
 .. _PERMANOVA: http://onlinelibrary.wiley.com/doi/10.1111/j.1442-9993.2001.01070.pp.x/full
