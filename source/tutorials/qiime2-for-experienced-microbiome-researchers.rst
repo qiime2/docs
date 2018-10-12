@@ -235,7 +235,7 @@ Quality filtering
 **Relevant plugin**: :doc:`quality-filter <../plugins/available/quality-filter/index>`
 
 You can perform different types of quality filtering with the :doc:`quality filter <../plugins/available/quality-filter/index>` plugin.
-The `q-score` method is for single- or paired-end sequences (i.e. `SampleData[PairedEndSequencesWithQuality | SequencesWithQuality]`) while `q-score-joined` is for merged reads (i.e. `SampleData[JoinedSequencesWithQuality]`).
+The `q-score` method is for single- or paired-end sequences (i.e. `SampleData[PairedEndSequencesWithQuality | SequencesWithQuality]`) while `q-score-joined` is for joined reads (i.e. `SampleData[JoinedSequencesWithQuality]` after merging).
 The option descriptions for each method cover the different types of available quality filtering.
 
 Dereplicating sequences
@@ -324,7 +324,6 @@ If you're a veteran microbiome scientist and don't want to use QIIME 2 for your 
 While ``export`` only outputs the data, the :ref:`extract <export vs extract>` tool allows you to also extract other metadata such as the citations, provenance etc.
 
 Note that this places generically named files (e.g. ``feature-table.txt``) into the output directory, so you may want to immediately rename the files to something more information (or somehow ensure that they stay in their original directory)!
-(**TODO: does the new 2018.8 version let you rename files?**)
 
 You can also use the handy `qiime2R <https://github.com/jbisanz/qiime2R>`__ package to import QIIME 2 artifacts directly into R.
 
