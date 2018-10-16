@@ -293,6 +293,11 @@ Importing Data
      --output-path paired-end-demux.qza \
      --input-format PairedEndFastqManifestPhred64
 
+Sequences without quality information (i.e. FASTA)
+--------------------------------------------------------
+
+Unfortunately, there is currently no way to import data files which contain quality-filtered FASTA sequences associated with sample IDs.
+If you have this sort of data, you might consider dereplicating your sequences externally, and then importing the representative sequences (described in the section below) and the respective feature table of counts into QIIME 2.
 
 Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 --------------------------------------------------------------------------
@@ -403,8 +408,8 @@ Importing data
      --input-format BIOMV210Format \
      --output-path feature-table-2.qza
 
-Phylogenetic trees (unrooted)
------------------------------
+Phylogenetic trees
+------------------
 
 Format description
 ~~~~~~~~~~~~~~~~~~
@@ -427,6 +432,29 @@ Importing data
      --input-path unrooted-tree.tre \
      --output-path unrooted-tree.qza \
      --type 'Phylogeny[Unrooted]'
+
+If you have a rooted tree, you can use ``--type 'Phylogeny[Rooted]'`` instead.
+
+Other data types
+----------------
+
+QIIME 2 can import many other data types not covered in this tutorial.
+You can see which formats of input data are importable with the following command:
+
+.. command-block::
+
+   qiime tools import \
+     --show-importable-formats
+
+And which QIIME 2 types you can import these formats as:
+
+.. command-block::
+
+   qiime tools import \
+     --show-importable-types
+
+Unfortunately, there isn't currently documentation detailing which data formats can be imported as which QIIME 2 data types, but hopefully the names of these formats and types should be self-explanatory enough to figure it out.
+If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 
 .. _Earth Microbiome Project (EMP) protocol: http://www.earthmicrobiome.org/protocols-and-standards/
 
