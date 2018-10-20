@@ -92,7 +92,7 @@ You next can demultiplex the sequence reads. This requires the sample metadata f
      --m-barcodes-file sample-metadata.tsv \
      --m-barcodes-column BarcodeSequence \
      --i-seqs emp-paired-end-sequences.qza \
-     --o-per-sample-sequences demux \
+     --o-per-sample-sequences demux.qza \
      --p-rev-comp-mapping-barcodes
 
    qiime demux summarize \
