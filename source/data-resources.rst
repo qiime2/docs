@@ -24,6 +24,8 @@ Naive Bayes classifiers trained on:
 
 .. _`marker gene db`:
 
+.. _`marker gene db`:
+
 Marker gene reference databases
 -------------------------------
 

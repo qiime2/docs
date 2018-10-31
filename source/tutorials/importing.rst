@@ -36,6 +36,8 @@ With QIIME 2, there are functions to import different types of FASTQ data:
 
 .. _`emp import`:
 
+.. _`emp import`:
+
 "EMP protocol" multiplexed single-end fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
