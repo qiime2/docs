@@ -7,6 +7,7 @@ Tutorials
    :maxdepth: 2
 
    overview
+   qiime2-for-experienced-microbiome-researchers
    moving-pictures
    fmt
    atacama-soils
