@@ -444,10 +444,6 @@ If you have a rooted tree, you can use ``--type 'Phylogeny[Rooted]'`` instead.
 Other data types
 ----------------
 
-.. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/importing/aligned-sequences.fna
-   :saveas: aligned-sequences.fna
-
 QIIME 2 can import many other data types not covered in this tutorial.
 You can see which formats of input data are importable with the following command:
 
