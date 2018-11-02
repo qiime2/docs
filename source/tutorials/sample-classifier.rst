@@ -1,6 +1,8 @@
 Predicting sample metadata values with q2-sample-classifier
 ===========================================================
 
+.. note:: Documentation for using all plugin actions through the Python API and command line interface is available in the q2-sample-classifier :doc:`reference documentation <../plugins/available/sample-classifier/index>`.
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
 
 .. warning:: Just as with any statistical method, the actions described in this plugin require adequate sample sizes to achieve meaningful results. As a rule of thumb, a minimum of `approximately 50 samples`_ should be provided. Categorical metadata columns that are used as classifier targets should have a minimum of 10 samples per unique value, and continuous metadata columns that are used as regressor targets should not contain many outliers or grossly uneven distributions. Smaller counts will result in inaccurate models, and may result in errors.
@@ -21,11 +23,11 @@ Predicting categorical sample data
 Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`moving pictures tutorial data <moving-pictures>` to train a classifier that predicts the body site from which a sample was collected. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2018.11/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: moving-pictures-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/sample-classifier/moving-pictures-table.qza
+   :url: https://data.qiime2.org/2018.11/tutorials/sample-classifier/moving-pictures-table.qza
    :saveas: moving-pictures-table.qza
 
 Next, we will train and test a classifier that predicts which body site a sample originated from based on its microbial composition. We will do so using the ``classify-samples`` pipeline, which performs a series of steps under the hood:
@@ -142,11 +144,11 @@ Predicting continuous (i.e., numerical) sample data
 Supervised learning regressors predict continuous metadata values of unlabeled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be producted by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `ECAM study`_, a longitudinal cohort study of microbiome development in U.S. infants. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/longitudinal/ecam_table_maturity.qza
+   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 Next, we will train a regressor to predict an infant's age based on its microbiota composition, using the ``regress-samples`` pipeline.
@@ -228,33 +230,6 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
 So the NCV methods output feature importance scores and sample predictions, but not trained estimators (as is done for the ``classify-samples`` and ``regress-samples`` pipelines above). This is because (1) *k* models are actually used for prediction, where *k* = the number of CV folds used in the outer loop, so returning and re-using the estimators would get very messy; and (2) users interested in NCV are *most likely* not interested in re-using the models for predicting new samples.
 
 
-"Maturity Index" prediction
----------------------------
-
-.. note:: This analysis currently works best for comparing groups that are sampled fairly evenly across time (the column used for regression). Datasets that contain groups sampled sporadically at different times are not supported, and users should either filter out those samples or “bin” them with other groups prior to using this visualizer.
-.. note:: This analysis will only work on data sets with a large sample size, particularly in the "control" group, and with sufficient biological replication at each time point.
-
-This method calculates a "microbial maturity" index from a regression model trained on feature data to predict a given continuous metadata column, e.g., to predict a subject's age as a function of microbiota composition. This method is different from standard supervised regression because it quantifies the relative rate of change over time in two or more groups. The model is trained on a subset of control group samples, then predicts the column value for all samples. This visualization computes maturity index z-scores (MAZ) to compare relative "maturity" between each group, as described in `Sathish et al. 2014`_. This method was designed to predict between-group differences in intestinal microbiome development by age, so ``column`` should typically be a measure of time. Other types of continuous metadata gradients might be testable, as long as two or more different "treatment" groups are being compared *with a large number of biological replicates* in the "control" group and treatment groups are sampled at the same "states" (time or position on gradient) for comparison. However, we do not necessarily recommend *or offer technical support* for unusual approaches.
-
-Here we will compare microbial maturity between vaginally born and cesarean-delivered infants as a function of age in the ECAM dataset.
-
-.. command-block::
-
-   qiime sample-classifier maturity-index \
-     --i-table ecam-table.qza \
-     --m-metadata-file ecam-metadata.tsv \
-     --p-column month \
-     --p-group-by delivery \
-     --p-control Vaginal \
-     --p-test-size 0.4 \
-     --o-visualization maturity.qzv
-
-The visualizer produces a linear regression plot of predicted vs. expected values on the control test samples (as described above for regression models). Predicted vs. expected values are also shown for all samples in both control and test sets.
-
-MAZ scores are calculated based on these predictions, statistically compared across each value "bin" (e.g., month of life) using ANOVA and paired t-tests, and shown as boxplots of MAZ distributions for each group in each value "bin". A link within the visualizers allows download of the MAZ scores for each sample, facilitating customized follow-up testing, e.g., in R, or use as metadata, e.g., for constructing PCoA plots. Want to take this analysis to the next level? Download the raw MAZ scores from within the visualization and feed these scores into :doc:`linear mixed effects models <longitudinal>`
-
-The average abundances of features used for training maturity models are viewed as heatmaps within the visualization. Feature abundance is averaged across all samples within each value bin (e.g., month of life) and within each individual sample group (e.g., vaginal controls vs. cesarean), demonstrating how different patterns of feature abundance (e.g., trajectories of development in the case of age or time-based models) may affect model predictions and MAZ scores.
-
 Best practices: things you should not do with q2-sample-classifier
 ------------------------------------------------------------------
 
@@ -279,6 +254,5 @@ As this tutorial has demonstrated, q2-sample-classifier can be extremely powerfu
 .. _scikit-learn documentation: http://scikit-learn.org/stable/supervised_learning.html
 .. _estimator selection flowchart: http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html
 .. _recursive feature elimination: http://scikit-learn.org/stable/modules/feature_selection.html#recursive-feature-elimination
-.. _Sathish et al. 2014: https://doi.org/10.1038/nature13421
 .. _cross-validation: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 .. _mislabeled samples: https://doi.org/10.1038/ismej.2010.148
