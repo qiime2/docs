@@ -463,10 +463,6 @@ And which QIIME 2 types you can import these formats as:
    qiime tools import \
      --show-importable-types
 
-.. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/importing/unrooted-tree.tre
-   :saveas: unrooted-tree.tre
-
 Unfortunately, there isn't currently documentation detailing which data formats can be imported as which QIIME 2 data types, but hopefully the names of these formats and types should be self-explanatory enough to figure it out.
 If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 
