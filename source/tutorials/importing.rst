@@ -121,6 +121,8 @@ Importing data
      --input-path emp-paired-end-sequences \
      --output-path emp-paired-end-sequences.qza
 
+.. _`casava import`:
+
 Casava 1.8 single-end demultiplexed fastq
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -299,8 +301,6 @@ Importing Data
 
 Sequences without quality information (i.e. FASTA)
 --------------------------------------------------------
-
-.. _`casava import`:
 
 Unfortunately, there is currently no way to import data files which contain quality-filtered FASTA sequences associated with sample IDs.
 If you have this sort of data, you might consider dereplicating your sequences externally, and then importing the representative sequences (described in the section below) and the respective feature table of counts into QIIME 2.
