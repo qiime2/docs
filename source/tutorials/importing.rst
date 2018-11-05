@@ -42,14 +42,14 @@ With QIIME 2, there are functions to import different types of FASTQ data:
 Format description
 ******************
 
-If your FASTQ files follow the "`Earth Microbiome Project (EMP) protocol`_"  format for `single-end` reads, you should have two ``fastq.gz`` files total:
+Single-end "`Earth Microbiome Project (EMP) protocol`_"  formatted reads should have two ``fastq.gz`` files total:
 
 1. one ``fastq.gz`` file that contains the single-end reads,
 2. and another that contains the associated barcode reads
 
-In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples.
+In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples).
 
-The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on.)
+The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on).
 
 Obtaining example data
 ```````````````````````
@@ -82,7 +82,7 @@ Importing data
 Format description
 ******************
 
-If your FASTQ files follow the "`Earth Microbiome Project (EMP) protocol`_" format for `paired-end` reads, you should have three ``fastq.gz`` files total:
+Paired-end "`Earth Microbiome Project (EMP) protocol`_" formatted reads should have three ``fastq.gz`` files total:
 
 1. one ``fastq.gz`` file that contains the forward sequence reads,
 2. one ``fastq.gz`` file that contains the reverse sequence reads,
@@ -198,7 +198,7 @@ Importing data
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually.
+If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually using a "manifest" format.
 
 Format description
 ******************
@@ -208,7 +208,7 @@ The manifest file also indicates the direction of the reads in each ``fastq.gz``
 
 The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
 
-For single-end reads, there must be exactly one line per sample id corresponding to the forward reads (or reverse, if you're processing these separately as single-end reads). For paired-end reads there must be exactly two lines per sample id, corresponding to the forward and the reverse reads. The direction field on each line can only contain the text ``forward`` or ``reverse``.
+For single-end reads, there must be exactly one line per sample ID corresponding to the forward reads (or reverse, if you're processing these separately as single-end reads). For paired-end reads there must be exactly two lines per sample id, corresponding to the forward and the reverse reads. The direction field on each line can only contain the text ``forward`` or ``reverse``.
 
 The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for two samples.
 
@@ -229,7 +229,7 @@ Just like with ``fastq.gz``, the absolute filepaths in the manifest for any ``fa
   sample-id,absolute-filepath,direction
   sample-1,$PWD/some/filepath/sample1_R1.fastq,forward
 
-There are four variants of FASTQ data which you must specific to QIIME 2 when importing, and which are defined in the following sections.
+There are four variants of FASTQ data which you must specify to QIIME 2 when importing, and which are defined in the following sections.
 
 SingleEndFastqManifestPhred33
 *****************************
