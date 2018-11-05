@@ -198,7 +198,7 @@ Importing data
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the `qiime tools import` command with a few more flags specified than in the EMP or Casava import commands.
+If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the `qiime tools import` command with different specifications than in the EMP or Casava import commands.
 
 Format description
 ******************
