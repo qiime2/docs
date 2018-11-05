@@ -139,7 +139,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.11/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -176,7 +176,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2018.11/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -311,13 +311,13 @@ Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 Format description
 ~~~~~~~~~~~~~~~~~~
 
-Unaligned sequence data is imported from a fasta formatted file containing DNA sequences that are not aligned (i.e., do not contain `-` or `.` characters). The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio fasta format description`_ for more information about the fasta format.
+Unaligned sequence data is imported from a FASTA formatted file containing DNA sequences that are not aligned (i.e., do not contain `-` or `.` characters). The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio FASTA format description`_ for more information about the FASTA format.
 
 Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/importing/sequences.fna
+   :url: https://data.qiime2.org/2018.11/tutorials/importing/sequences.fna
    :saveas: sequences.fna
 
 Importing data
@@ -336,13 +336,13 @@ Per-feature aligned sequence data (i.e., aligned representative FASTA sequences)
 Format description
 ~~~~~~~~~~~~~~~~~~
 
-Aligned sequence data is imported from a fasta formatted file containing DNA sequences that are aligned to one another. All aligned sequences must be exactly the same length. The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio fasta format description`_ for more information about the fasta format.
+Aligned sequence data is imported from a FASTA formatted file containing DNA sequences that are aligned to one another. All aligned sequences must be exactly the same length. The sequences may contain degenerate nucleotide characters, such as ``N``, but some QIIME 2 actions may not support these characters. See the `scikit-bio FASTA format description`_ for more information about the FASTA format.
 
 Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/importing/aligned-sequences.fna
+   :url: https://data.qiime2.org/2018.11/tutorials/importing/aligned-sequences.fna
    :saveas: aligned-sequences.fna
 
 Importing data
@@ -426,7 +426,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/tutorials/importing/unrooted-tree.tre
+   :url: https://data.qiime2.org/2018.11/tutorials/importing/unrooted-tree.tre
    :saveas: unrooted-tree.tre
 
 Importing data
@@ -472,7 +472,7 @@ If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 
 .. _BIOM v2.1.0 format specification: http://biom-format.org/documentation/format_versions/biom-2.1.html
 
-.. _scikit-bio fasta format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format
+.. _scikit-bio FASTA format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fasta.html#fasta-format
 
 .. _scikit-bio newick format description: http://scikit-bio.org/docs/latest/generated/skbio.io.format.newick.html
 
