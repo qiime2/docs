@@ -302,8 +302,9 @@ Importing Data
 Sequences without quality information (i.e. FASTA)
 --------------------------------------------------------
 
-Unfortunately, there is currently no way to import data files which contain quality-filtered FASTA sequences associated with sample IDs.
-If you have this sort of data, you might consider dereplicating your sequences externally, and then importing the representative sequences (described in the section below) and the respective feature table of counts into QIIME 2.
+QIIME 2 currently supports importing the |QIIME1_file|_ format, which consists of a single FASTA file with exactly two lines per record: header and sequence. Each sequence must span exactly one line and cannot be split across multiple lines. The ID in each header must follow the format ``<sample-id>_<seq-id>``. ``<sample-id>`` is the identifier of the sample the sequence belongs to, and ``<seq-id>`` is an identifier for the sequence *within* its sample.
+
+An example of importing and dereplicating this kind of data can be found in the :doc:`OTU Clustering tutorial <otu-clustering>`.
 
 Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 --------------------------------------------------------------------------
@@ -479,3 +480,6 @@ If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 .. _absolute filepaths: https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths
 
 .. _PHRED offset: http://scikit-bio.org/docs/latest/generated/skbio.io.format.fastq.html#quality-score-variants
+
+.. |QIIME1_file| replace:: QIIME 1 ``seqs.fna`` file
+.. _`QIIME1_file`: http://qiime.org/documentation/file_formats.html#post-split-libraries-fasta-file-overview
