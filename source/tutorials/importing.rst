@@ -306,6 +306,8 @@ QIIME 2 currently supports importing the |QIIME1_file|_ format, which consists o
 
 An example of importing and dereplicating this kind of data can be found in the :doc:`OTU Clustering tutorial <otu-clustering>`.
 
+Other FASTA formats like FASTA files with differently formatted sequence headers or per-sample demultiplexed FASTA files (i.e. one FASTA file per sample) are not currently supported.
+
 Per-feature unaligned sequence data (i.e., representative FASTA sequences)
 --------------------------------------------------------------------------
 
