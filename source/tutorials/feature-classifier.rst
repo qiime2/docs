@@ -64,11 +64,15 @@ It has been shown that taxonomic classification accuracy of 16S rRNA gene sequen
      --p-f-primer GTGCCAGCMGCCGCGGTAA \
      --p-r-primer GGACTACHVGGGTWTCTAAT \
      --p-trunc-len 120 \
+     --p-min-length 100 \
+     --p-max-length 400 \
      --o-reads ref-seqs.qza
 
 .. note:: The ``--p-trunc-len`` parameter should only be used to trim reference sequences if query sequences are trimmed to this same length or shorter. Paired-end sequences that successfully join will typically be variable in length. Single-end reads that are not truncated at a specific length may also be variable in length. For classification of paired-end reads and untrimmed single-end reads, we recommend training a classifier on sequences that have been extracted at the appropriate primer sites, but are not trimmed.
 
 .. note:: The primer sequences used for extracting reads should be the actual DNA-binding (i.e., biological) sequence contained within a primer construct. It should NOT contain any non-biological, non-binding sequence, e.g., adapter, linker, or barcode sequences. If you are not sure what section of your primer sequences are actual DNA-binding, you should consult whoever constructed your sequencing library, your sequencing center, or the original source literature on these primers. If your primer sequences are > 30 nt long, they most likely contain some non-biological sequence.
+
+.. note:: The example command above uses the ``min-length`` and ``max-length`` parameters to exclude simulated amplicons that are far outside of the anticipated length distribution using those primers. Such amplicons are likely non-target hits and should be excluded. If you adapt this command for your own use, be sure to select settings that are appropriate for the marker gene, no the settings used here. The ``min-length`` parameter is applied _after_ the ``trim-left`` and ``trunc-len`` parameters, and ``max-length`` _before_, so be sure to set appropriate settings to prevent valid sequences from being filtered out.
 
 
 Train the classifier
