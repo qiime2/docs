@@ -26,6 +26,7 @@ The QIIME 2 Core 2018.11 distribution includes the QIIME 2 framework, ``q2cli`` 
 - ``q2-emperor``
 - ``q2-feature-classifier``
 - ``q2-feature-table``
+- ``q2-fragment-insertion``
 - ``q2-gneiss``
 - ``q2-longitudinal``
 - ``q2-metadata``
