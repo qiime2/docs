@@ -138,7 +138,7 @@ Buon appetito! 🍝
 
 First differencing to track rate of change
 ------------------------------------------
-Another way to view time series data is by assessing how the rate of change differs over time. We can do this through calculating first differences, which is the magnitude of change between successive time points. If :math:`Y_\text{t}` is the value of metric :math:`Y` at time :math:`t`, the first difference at time :math:`t`, :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{t-1}`. This calculation is performed at fixed intervals, so for each interval :math:`{\Delta}Y_\text{t}` is not calculated for subjects that are missing samples at times :math:`t` or :math:`t-1`. This transformation is performed in the ``first-differences`` method in ``q2-longitudinal``. 
+Another way to view time series data is by assessing how the rate of change differs over time. We can do this through calculating first differences, which is the magnitude of change between successive time points. If :math:`Y_\text{t}` is the value of metric :math:`Y` at time :math:`t`, the first difference at time :math:`t`, :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{t-1}`. This calculation is performed at fixed intervals, so for each interval :math:`{\Delta}Y_\text{t}` is not calculated for subjects that are missing samples at times :math:`t` or :math:`t-1`. This transformation is performed in the ``first-differences`` method in ``q2-longitudinal``.
 
 .. command-block::
 
@@ -317,6 +317,8 @@ Here we will compare microbial maturity between vaginally born and cesarean-deli
      --p-individual-id-column studyid \
      --p-control Vaginal \
      --p-test-size 0.4 \
+     --p-stratify \
+     --p-random-state 1010101 \
      --output-dir maturity
 
 This pipeline produces several output files:
