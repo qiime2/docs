@@ -67,7 +67,7 @@ The :doc:`overview tutorial <overview>` and :doc:`list of available plugins <../
 Importing data into QIIME 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Relevant plugin**: ``qiime tools import`` (@Team - there is no doc page for these??!)
+**Relevant plugin**: ``qiime tools import``
 
 If you're using QIIME 2 to process your data, the first thing you need to do is get that data into a format that QIIME 2 can understand.
 Various importing methods currently available in QIIME 2 are highlighted in the :doc:`QIIME 2 importing tutorial <importing>`.
@@ -318,7 +318,7 @@ Some general things you can do with QIIME 2 are:
 Export the data
 ~~~~~~~~~~~~~~~
 
-**Relevant plugin**: ``qiime tools export`` (this one also doesn't have a doc page?!)
+**Relevant plugin**: ``qiime tools export``
 
 If you're a veteran microbiome scientist and don't want to use QIIME 2 for your analyses, you can extract your feature table and sequences from the artifact using the :doc:`export <exporting>` tool.
 While ``export`` only outputs the data, the :ref:`extract <export vs extract>` tool allows you to also extract other metadata such as the citations, provenance etc.
