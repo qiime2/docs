@@ -420,17 +420,19 @@ We will download and create several files, so first create a working directory.
    mkdir training-feature-classifiers
    cd training-feature-classifiers
 
-Importing reference data sets
+Import data
 -----------------------------
 
 We assume that the data is in a single `biom` table with multiple samples and where the features are ASVs. The example we use here is the deblur output for `Study ID 11488 <https://qiita.ucsd.edu/study/description/11488#>`_ in Qiita, which contains 362 samples from cheese rinds. We import it into `cheese-table.qza`
 
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-data/workshops/monash18/cheese-data/cheese.biom
+   :saveas: cheese.biom
+
 .. command-block::
 
-   cp ~/Data/cheese/all.biom .
-
    qiime tools import \
-      --input-path all.biom \
+      --input-path cheese.biom \
       --input-format BIOMV210Format \
       --type FeatureTable[Frequency] \
       --output-path cheese-table.qza
