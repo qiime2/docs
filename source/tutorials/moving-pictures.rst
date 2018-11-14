@@ -207,22 +207,18 @@ After the quality filtering step completes, you'll want to explore the resulting
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
 
-QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we will use ``align-to-tree-mafft-fasttree`` pipeline from the ``q2-phylogeny`` plugin.
+QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we will use ``sepp`` from the ``q2-fragment-insertion`` plugin.
 
-First, the pipeline uses the ``mafft`` program to perform a multiple sequence alignment of the sequences in our ``FeatureData[Sequence]`` to create a ``FeatureData[AlignedSequence]`` QIIME 2 artifact.
-Next, the pipeline masks (or filters) the alignment to remove positions that are highly variable. These positions are generally considered to add noise to a resulting phylogenetic tree.
-Following that, the pipeline applies FastTree to generate a phylogenetic tree from the masked alignment.
-The FastTree program creates an unrooted tree, so in the final step in this section midpoint rooting is applied to place the root of the tree at the midpoint of the longest tip-to-tip distance in the unrooted tree.
+The following single command will produce two outputs: 1) `rooted-tree.qza` is the `Phylogeny[Rooted]` and 2) `placements.qza` provides placement distributions for the fragments (you will most likely ignore this output) (Computation might take some 10 minutes):
 
 .. command-block::
 
-   qiime phylogeny align-to-tree-mafft-fasttree \
-     --i-sequences rep-seqs.qza \
-     --o-alignment aligned-rep-seqs.qza \
-     --o-masked-alignment masked-aligned-rep-seqs.qza \
-     --o-tree unrooted-tree.qza \
-     --o-rooted-tree rooted-tree.qza
+   qiime fragment-insertion sepp \
+     --i-representative-sequences rep-seqs.qza \
+     --o-tree rooted-tree.qza \
+     --o-placements insertion-placements.qza
 
+.. note:: Fragment insertion can fail for fragments that are too remotely related to everything in the reference phylogeny. As a result it may be necessary to filter the feature table to prevent downstream diversity analyses from failing. Please refer to the `q2-fragment-insertion` documentation for step-by-step instructions. 
 
 .. _`moving pics diversity`:
 
