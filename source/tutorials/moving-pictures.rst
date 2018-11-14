@@ -216,7 +216,7 @@ The following single command will produce two outputs: 1) `rooted-tree.qza` is t
    qiime fragment-insertion sepp \
      --i-representative-sequences rep-seqs.qza \
      --o-tree rooted-tree.qza \
-     --o-placements insertion-placements.qza
+     --o-placements insertion-placements.qza --verbose
 
 .. note:: Fragment insertion can fail for fragments that are too remotely related to everything in the reference phylogeny. As a result it may be necessary to filter the feature table to prevent downstream diversity analyses from failing. Please refer to the `q2-fragment-insertion` documentation for step-by-step instructions. 
 

@@ -4,14 +4,14 @@ import shutil
 import lxml, lxml.html
 
 
-tutorial_fp = './build/fmt-cdiff-s3'
+tutorial_fp = './build/monash18'
 shutil.rmtree(tutorial_fp, ignore_errors=True)
 os.mkdir(tutorial_fp)
 
-tree = lxml.html.parse('./build/preview/tutorials/fmt-cdiff/index.html')
+tree = lxml.html.parse('./build/preview/tutorials/moving-pictures/index.html')
 
 for node in tree.xpath('//title'):
-    node.text = 'FMT for recurrent Clostridium difficile infection Tutorial'
+    node.text = 'Microbiome Analysis with QIIME 2'
 
 for node in tree.xpath('//link'):
     if node.attrib['rel'] in ['author', 'top', 'up', 'next', 'prev']:
@@ -53,27 +53,27 @@ for src in ['jquery.js', 'underscore.js', 'doctools.js', 'external-links.js',
 search_url = ('https%3A%2F%2Fdocs.qiime2.org%2F2018.11%2Fdata%2Ftutorials'
               '%2Ffmt-cdiff')
 base_url = ('https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fqiime2-workshops'
-            '%2Ffmt-cdiff%2Fdata')
+            '%2Fmonash18%2Fdata')
 for node in tree.xpath('//a'):
     if search_url in node.attrib['href']:
         node.attrib['href'] = node.attrib['href'].replace(search_url, base_url)
 
 # Clean up download links
-search_url = 'https://docs.qiime2.org/2018.11/data/tutorials/fmt-cdiff/'
+search_url = 'https://docs.qiime2.org/2018.11/data/tutorials/moving-pictures/'
 base_url = ('https://s3-us-west-2.amazonaws.com/qiime2-workshops/'
-            'fmt-cdiff/data/')
+            'monash18/data/')
 for node in tree.xpath('//a'):
     if search_url in node.attrib['href']:
         node.attrib['href'] = node.attrib['href'].replace(search_url, base_url)
 
 # Clean up xrefs
-base_url = 'https://docs.qiime2.org/2018.10/tutorials/fmt-cdiff/'
+base_url = 'https://docs.qiime2.org/2018.11/tutorials/moving-pictures/'
 for node in tree.xpath('//a'):
     if node.attrib['href'].startswith('../'):
         node.attrib['href'] = node.attrib['href'].replace('../', base_url, 1)
 
 # Copy all built data outputs
-shutil.copytree('./build/html/data/tutorials/fmt-cdiff',
+shutil.copytree('./build/html/data/tutorials/moving-pictures',
                 os.path.join(tutorial_fp, 'data'))
 # Copy fonts
 shutil.copytree('./build/preview/_static/fonts',
