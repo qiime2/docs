@@ -715,7 +715,7 @@ Under the hood, NCV works a lot like the k-fold cross validation used in ``class
 
    qiime sample-classifier confusion-matrix \
      --i-predictions BodySite-predictions-ncv.qza \
-     --m-truth-file moving-pictures-sample-metadata.tsv \
+     --m-truth-file sample-metadata.tsv \
      --m-truth-column BodySite \
      --o-visualization ncv_confusion_matrix.qzv
      
