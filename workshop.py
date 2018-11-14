@@ -51,7 +51,7 @@ for src in ['jquery.js', 'underscore.js', 'doctools.js', 'external-links.js',
 
 # Clean up q2view links
 search_url = ('https%3A%2F%2Fdocs.qiime2.org%2F2018.11%2Fdata%2Ftutorials'
-              '%2Ffmt-cdiff')
+              '%2Fmoving-pictures')
 base_url = ('https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fqiime2-workshops'
             '%2Fmonash18%2Fdata')
 for node in tree.xpath('//a'):
