@@ -330,33 +330,6 @@ Finally, ordination is a popular approach for exploring microbial community comp
 .. question::
     What differences do you observe between the unweighted UniFrac and Bray-Curtis PCoA plots?
 
-Alpha rarefaction plotting
---------------------------
-
-In this section we'll explore alpha diversity as a function of sampling depth using the ``qiime diversity alpha-rarefaction`` visualizer. This visualizer computes one or more alpha diversity metrics at multiple sampling depths, in steps between 1 (optionally controlled with ``--p-min-depth``) and the value provided as ``--p-max-depth``. At each sampling depth step, 10 rarefied tables will be generated, and the diversity metrics will be computed for all samples in the tables. The number of iterations (rarefied tables computed at each sampling depth) can be controlled with ``--p-iterations``. Average diversity values will be plotted for each sample at each even sampling depth, and samples can be grouped based on metadata in the resulting visualization if sample metadata is provided with the ``--m-metadata-file`` parameter.
-
-.. command-block::
-
-   qiime diversity alpha-rarefaction \
-     --i-table table.qza \
-     --i-phylogeny rooted-tree.qza \
-     --p-max-depth 4000 \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization alpha-rarefaction.qzv
-
-The visualization will have two plots. The top plot is an alpha rarefaction plot, and is primarily used to determine if the richness of the samples has been fully observed or sequenced. If the lines in the plot appear to "level out" (i.e., approach a slope of zero) at some sampling depth along the x-axis, that suggests that collecting additional sequences beyond that sampling depth would not be likely to result in the observation of additional features. If the lines in a plot don't level out, this may be because the richness of the samples hasn't been fully observed yet (because too few sequences were collected), or it could be an indicator that a lot of sequencing error remains in the data (which is being mistaken for novel diversity).
-
-The bottom plot in this visualization is important when grouping samples by metadata. It illustrates the number of samples that remain in each group when the feature table is rarefied to each sampling depth. If a given sampling depth ``d`` is larger than the total frequency of a sample ``s`` (i.e., the number of sequences that were obtained for sample ``s``), it is not possible to compute the diversity metric for sample ``s`` at sampling depth ``d``. If many of the samples in a group have lower total frequencies than ``d``, the average diversity presented for that group at ``d`` in the top plot will be unreliable because it will have been computed on relatively few samples. When grouping samples by metadata, it is therefore essential to look at the bottom plot to ensure that the data presented in the top plot is reliable.
-
-.. note::
-    The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
-
-.. question::
-    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
-
-.. question::
-    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
-
 
 .. _`moving pics taxonomy`:
 
@@ -399,6 +372,139 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
 .. question::
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
+
+.. _`sample classifier`:
+
+Predicting sample metadata values with q2-sample-classifier
+===========================================================
+
+.. note:: Documentation for using all plugin actions through the Python API and command line interface is available in the q2-sample-classifier :doc:`reference documentation <../plugins/available/sample-classifier/index>`.
+
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
+
+.. warning:: Just as with any statistical method, the actions described in this plugin require adequate sample sizes to achieve meaningful results. As a rule of thumb, a minimum of `approximately 50 samples`_ should be provided. Categorical metadata columns that are used as classifier targets should have a minimum of 10 samples per unique value, and continuous metadata columns that are used as regressor targets should not contain many outliers or grossly uneven distributions. Smaller counts will result in inaccurate models, and may result in errors.
+
+This tutorial will demonstrate how to use ``q2-sample-classifier`` to predict sample metadata values. Supervised learning methods predict sample data (e.g., metadata values) as a function of other sample data (e.g., microbiota composition). The predicted targets may be discrete sample classes (for classification problems) or continuous values (for regression problems). Any other data may be used as predictive features, but for the purposes of q2-sample-classifier this will most commonly be microbial sequence variant, operational taxonomic unit (OTU), or taxonomic composition data. However, any features contained in a feature table may be used — for non-microbial data, just `convert your observation tables to biom format`_ and :doc:`import the feature table data into qiime2 <importing>`.
+
+We will download and create several files, so first create a working directory.
+
+.. command-block::
+   :no-exec:
+
+   mkdir sample-classifier-tutorial
+   cd sample-classifier-tutorial
+
+Predicting categorical sample data
+----------------------------------
+
+Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`moving pictures tutorial data <moving-pictures>` to train a classifier that predicts the body site from which a sample was collected.
+
+Next, we will train and test a classifier that predicts which body site a sample originated from based on its microbial composition. We will do so using the ``classify-samples`` pipeline, which performs a series of steps under the hood:
+
+1. The input samples are randomly split into a ``training`` set and a ``test`` set. The test set is held out until the end of the pipeline, allowing us to test accuracy on a set of samples that was not used for model training. The fraction of input samples to include in the test set is adjusted with the ``--p-test-size`` parameter.
+
+2. We train the learning model using the training set samples. The model is trained to predict a specific ``target`` value for each sample (contained in a metadata column) based on the feature data associated with that sample. A range of different estimators can be selected using the ``estimator`` parameter; more details on individual estimators can be found in the `scikit-learn documentation`_ (not sure which to choose? See the `estimator selection flowchart`_).
+
+3. K-fold `cross-validation`_ is performed during automatic feature selection and parameter optimization steps to tune the model. Five-fold cross-validation is performed by default, and this value can be adjusted using the ``--p-cv`` parameter.
+
+4. The trained model is used to predict the target values for each test sample, based on the feature data associated with that sample.
+
+5. Model accuracy is calculated by comparing each test sample's predicted value to the true value for that sample.
+
+.. image:: images/sample-classifier.png
+
+:ref:`Figure key<key>`
+
+
+.. command-block::
+
+   qiime sample-classifier classify-samples \
+     --i-table table.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-column BodySite \
+     --p-optimize-feature-selection \
+     --p-parameter-tuning \
+     --p-estimator RandomForestClassifier \
+     --p-n-estimators 20 \
+     --output-dir moving-pictures-classifier
+
+
+This pipeline produces several outputs. First let's check out ``accuracy_results.qzv``, which presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
+
+.. question::
+   What other metadata can we predict with ``classify-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other categorical columns. Not all metadata can be easily learned by the classifier!
+
+This pipeline also reports the actual predictions made for each test sample in the ``predictions.qza`` output. This is a ``SampleData[ClassifierPredictions]`` artifact, which is viewable as metadata. So we can take a peak with ``metadata tabulate``:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/predictions.qza \
+     --o-visualization moving-pictures-classifier/predictions.qzv
+
+
+Another really useful output of supervised learning methods is *feature selection*, i.e., they report which features (e.g., ASVs or taxa) are most predictive. A list of all features, and their relative importances (or feature weights or model coefficients, depending on the learning model used), will be reported in ``feature_importance.qza``. Features with higher importance scores were more useful for distinguishing classes. Feature importance scores are assigned directly by the scikit-learn learning estimator that was used; more details on individual estimators and their importance scores should refer to the `scikit-learn documentation`_. Note that some estimators — notably K-nearest neighbors models — do not report feature importance scores, so this output will be meaningless if you are using such an estimator. Feature importances are of the semantic type ``FeatureData[Importance]``, and can be interpreted as (feature) metadata so we can take a look at these feature importances (and/or :ref:`merge with other feature metadata <exploring feature metadata>`) using ``metadata tabulate``:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/feature_importance.qza \
+     --o-visualization moving-pictures-classifier/feature_importance.qzv
+
+
+If ``--p-optimize-feature-selection`` is enabled, only the selected features (i.e., the most important features, which maximize model accuracy, as determined using `recursive feature elimination`_) will be reported in this artifact, and all other results (e.g., model accuracy and predictions) that are output use the final, optimized model that utilizes this reduced feature set. This allows us to not only see which features are most important (and hence used by the model), but also use that information to filter out uninformative features from our feature table for other downstream analyses outside of q2-sample-classifier:
+
+.. command-block::
+
+   qiime feature-table filter-features \
+     --i-table table.qza \
+     --m-metadata-file moving-pictures-classifier/feature_importance.qza \
+     --o-filtered-table moving-pictures-classifier/important-feature-table.qza
+
+
+This pipeline also produces a visualization containing a summary of the model parameters used by the supervised learning estimator in ``model_summary.qzv``. If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a `recursive feature elimination`_ plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the other outputs.
+
+.. question::
+   What happens when feature optimization is disabled with the option ``--p-no-optimize-feature-selection``? How does this impact classification accuracy?
+
+Finally, the trained classification model is saved for convenient re-use in the ``sample_estimator.qza`` artifact! This allows us to predict metadata values for additional samples. For example, imagine we just received a shipment of new samples and wanted to use our pre-trained Body Site classifier to figure out what type of samples these new samples are. For the sake of convenience in this example, we will just pretend we have new samples and predict the values of the same samples that we used to train the model but **NEVER do this in practice** because:
+
+.. warning:: Testing a supervised learning model on the same samples used to train the model will give unrealistic estimates of performance! 🦄
+
+
+.. command-block::
+
+   qiime sample-classifier predict-classification \
+     --i-table table.qza \
+     --i-sample-estimator moving-pictures-classifier/sample_estimator.qza \
+     --o-predictions moving-pictures-classifier/new_predictions.qza
+
+We can view these ``new_predictions.qza`` using ``metadata tabulate``, as described above... or if these aren't actually "unknown" samples we can re-test model accuracy using this new batch of samples:
+
+.. command-block::
+
+   qiime sample-classifier confusion-matrix \
+     --i-predictions moving-pictures-classifier/new_predictions.qza \
+     --m-truth-file sample-metadata.tsv \
+     --m-truth-column BodySite \
+     --o-visualization moving-pictures-classifier/new_confusion_matrix.qzv
+
+
+Pretty cool! Accuracy should be inordinately high in these results because we ignored the warning above about testing on our training data, giving you a pretty good idea why you should follow the directions on the box! 😑
+
+.. note:: The model we trained here is a toy example containing very few samples from a single study and will probably not be useful for predicting other unknown samples. But if you have samples from one of these body sites, it could be a fun exercise to give it a spin!
+
+.. question::
+   Try to figure out what the ``--p-parameter-tuning`` parameter does. What happens when it is disabled with the option ``--p-no-parameter-tuning``? How does this impact classification accuracy?
+
+.. question::
+   Many different classifiers can be trained via the ``--p-estimator`` parameter in ``classify-samples``. Try some of the other classifiers. How do these methods compare?
+
+.. question::
+   Sequence variants are not the only feature data that can be used to train a classifier or regressor. Taxonomic composition is another feature type that can be easily created using the tutorial data provided in QIIME2. Try to figure out how this works (hint: you will need to assign taxonomy, as described in the :doc:`moving pictures tutorial <moving-pictures>`, and :doc:`collapse taxonomy <../plugins/available/taxa/collapse/>` to create a new feature table). Try using feature tables collapsed to different taxonomic levels. How does taxonomic specificity (e.g., species-level is more specific than phylum-level) impact classifier performance?
+
+.. question::
+   The ``--p-n-estimators`` parameter adjusts the number of trees grown by ensemble estimators, such as random forest classifiers (this parameter will have no effect on non-ensemble methods), which increases classifier accuracy up to a certain point, but at the cost of increased computation time. Try the same command above with different numbers of estimators, e.g., 10, 50, 100, 250, and 500 estimators. How does this impact the overall accuracy of predictions? Are more trees worth the time?
 
 .. _`ancom`:
 
