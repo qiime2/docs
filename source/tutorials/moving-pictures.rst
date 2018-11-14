@@ -591,7 +591,10 @@ Next, we will train and test a classifier that predicts which body site a sample
    :no-exec:
 
    mkdir sample-classifier-tutorial
+   cp table.qza sample-classifier-tutorial
+   cp sample-metadata.tsv sample-classifier-tutorial
    cd sample-classifier-tutorial
+   
 
 
 .. command-block::
@@ -683,6 +686,59 @@ Pretty cool! Accuracy should be inordinately high in these results because we ig
 
 .. question::
    The ``--p-n-estimators`` parameter adjusts the number of trees grown by ensemble estimators, such as random forest classifiers (this parameter will have no effect on non-ensemble methods), which increases classifier accuracy up to a certain point, but at the cost of increased computation time. Try the same command above with different numbers of estimators, e.g., 10, 50, 100, 250, and 500 estimators. How does this impact the overall accuracy of predictions? Are more trees worth the time?
+   
+
+Nested cross-validation provides predictions for all samples
+------------------------------------------------------------
+In the examples above, we split the data sets into training and test sets for model training and testing. It is *essential* that we keep a test set that the model has never seen before for validating model performance. But what if we want to predict target values for each sample in a data set? For that, my friend, we use nested cross validation (NCV). This can be valuable in a number of different cases, e.g., for predicting `mislabeled samples`_ (those that are classified incorrectly during NCV) or for assessing estimator variance (since multiple models are trained during NCV, we can look at the variance in their accuracy).
+
+.. image:: images/nested-cv.png
+
+:ref:`Figure key<key>`
+
+Under the hood, NCV works a lot like the k-fold cross validation used in ``classify-samples`` for model optimization, but a second layer of cross validation (an "outer loop") is incorporated to split the dataset into training and test sets K times such that each sample ends up in a test set exactly once. During each iteration of the "outer loop", the training set is split again K times (in an "inner loop") to optimize parameter settings for estimation of that fold. The end result: K different final models are trained, each sample receives a predicted value, and feature importance scores are averaged across each iteration. Overall accuracy can be calculated by comparing these predicted values to their true values, as shown below, but for those interested in accuracy variance across each fold, mean accuracy ± SD is printed to the standard output.
+
+
+.. command-block::
+
+   qiime sample-classifier classify-samples-ncv \
+     --i-table table.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-column BodySite \
+     --p-estimator RandomForestClassifier \
+     --p-n-estimators 20 \
+     --o-predictions BodySite-predictions-ncv.qza \
+     --o-feature-importance BodySite-importance-ncv.qza
+
+
+.. command-block::
+
+   qiime sample-classifier confusion-matrix \
+     --i-predictions BodySite-predictions-ncv.qza \
+     --m-truth-file moving-pictures-sample-metadata.tsv \
+     --m-truth-column BodySite \
+     --o-visualization ncv_confusion_matrix.qzv
+     
+     
+So the NCV methods output feature importance scores and sample predictions, but not trained estimators (as is done for the ``classify-samples`` pipeline above). This is because (1) *k* models are actually used for prediction, where *k* = the number of CV folds used in the outer loop, so returning and re-using the estimators would get very messy; and (2) users interested in NCV are *most likely* not interested in re-using the models for predicting new samples.
+
+
+Best practices: things you should not do with q2-sample-classifier
+------------------------------------------------------------------
+
+As this tutorial has demonstrated, q2-sample-classifier can be extremely powerful for feature selection and metadata prediction. However, with power comes responsibility. Unsuspecting users are at risk of committing grave errors, particularly from overfitting and data leakage. Here follows an (inevitably incomplete) list of ways that users can abuse *this plugin*, yielding misleading results. Do not do these things. More extensive guides exist for avoiding data leakage and overfitting *in general*, so this list focuses on bad practices that are particular to this plugin and to biological data analysis.
+
+1. **Data leakage** occurs whenever a learning model learns (often inadvertently) about test sample data, leading to unduly high performance estimates.
+
+   a. Model accuracy should always be assessed on test data that has never been seen by the learning model. The pipelines and nested cross-validation methods in q2-sample-classifier (including those described in this tutorial) do this by default. However, care must be taken when using the ``fit-*`` and ``predict-*`` methods independently.
+
+   b. In some situations, technical replicates could be problematic and lead to pseudo-data leakage, depending on experimental design and technical precision. If in doubt, :doc:`group <../plugins/available/feature-table/group/>` your feature table to average technical replicates, or filter technical replicates from your data prior to supervised learning analysis.
+
+2. **Overfitting** occurs whenever a learning model is trained to overperform on the training data but, in doing so, cannot generalize well to other data sets. This can be problematic, particularly on small data sets and whenever input data have been contorted in inappropriate ways.
+
+   a. If the learning model is intended to predict values from data that is produced in batches (e.g., to make a diagnosis on microbiome sequence data that will be produced in a future analysis), consider incorporating multiple batches in your training data to reduce the likelihood that learning models will overfit on batch effects and similar noise.
+
+   b. Similarly, be aware that batch effects can strongly impact performance, particularly if these are covariates with the target values that you are attempting to predict. For example, if you wish to classify whether samples belong to one of two different groups and those groups were analyzed on separate sequencing runs (for microbiome amplicon sequence data), training a classifier on these data will likely lead to inaccurate results that will not generalize to other data sets.
 
 
 .. _`ancom`:
