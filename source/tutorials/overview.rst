@@ -3,12 +3,14 @@ Overview of QIIME 2 Plugin Workflows
 
 .. note:: Abandon all hope, ye who enter. If you have not read the :doc:`glossary <../glossary>`. 👺
 
+.. note:: This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research. For experienced users who are already well versed in microbiome analysis, and those who are adverse to uncontrolled use of emoji, mosey on over to the :doc:`overview tutorial for experienced users <qiime2-for-experienced-microbiome-researchers>`.
+
 Welcome all newcomers 👋. This guide will give you an overview of many of the main plugins and actions available in QIIME 2, and guide you to the relevant tutorials for deeper exploration. In other words, it might not answer the question, "how do I use QIIME 2", but it will point you in the right direction. Consider this your treasure map: QIIME 2 actions are the stepping stones on your path to glory, and the flowcharts below will tell you where all the goodies are buried. 🗺️
 
 Remember, *many paths lead from the foot of the mountain, but at the peak we all gaze at the same moon.* 🌕
 
-QIIME 2 for dummies
--------------------
+Let's get oriented: flowcharts
+------------------------------
 
 Before we begin talking about specific plugins and actions, we will discuss a conceptual overview of a standard QIIME 2 workflow for analyzing amplicon sequence data. And before we look at that overview, we must look at the key to our treasure map:
 
@@ -26,6 +28,9 @@ In the flowcharts below:
 * Artifacts are labeled with the :doc:`semantic type <../semantic-types>` of that file. Don't worry — you will not need to type out those long names unless if you need to :doc:`import <importing>` a file into that format.
 * Visualizations are variously labeled as "visualization", some name that represents the information shown in that visualization, or replaced with an image representing some of the tasty information you might find inside that visualization... 🍙
 
+Useful points for beginners
+---------------------------
+
 Just a few more **important points** before we go further:
 
 1. The guide below is not exhaustive by any means. It only covers some of the chief actions in most of the "core" QIIME 2 plugins. There are many more actions and plugins to discover. Curious to learn more? See all installed plugins by typing ``qiime --help`` into your terminal (and hit "enter"). See all actions in the ``demux`` plugin by typing ``qiime demux --help``. Learn about the ``emp-single`` method in ``demux`` by typing ``qiime demux emp-single --help``. Now you know how to access the help documentation for all other plugins and actions. 😊
@@ -36,6 +41,9 @@ Just a few more **important points** before we go further:
 6. Do not forget to cite appropriately! Unsure what to cite? To see the citations for a specific action or plugin, type in the help commands that you learned above, but replace ``--help`` with ``--citations``. Even better: go to https://view.qiime2.org/ and drag and drop any QIIME 2 artifact or visualization into the window. Provided that file was generated in QIIME 2018.4+, the "citations" tab should contain information on **all** relevant citations used for the generation of that file. Groovy. 😎
 
 💃💃💃
+
+Conceptual overview of QIIME 2
+------------------------------
 
 Now that we have read the glossary and key, let us examine a conceptual overview of the various possible workflows for examining amplicon sequence data:
 
