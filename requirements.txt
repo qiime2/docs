@@ -1,4 +1,6 @@
 # Documentation building requirements.
+# TODO: unpin this
 Sphinx==1.4.6
 Jinja2
-sphinxcontrib-bibtex
+# TODO: unpin this
+sphinxcontrib-bibtex==0.4.0
