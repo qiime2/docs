@@ -16,7 +16,7 @@ Before beginning this tutorial, create a new directory and change to that direct
 Sample metadata
 ---------------
 
-Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. [ToDo: add metadata to Google spreadsheets?]. The following command will download the sample metadata as tab-separated text and save it in the file  `sample_metadata.tsv`. This  `sample_metadata.tsv` file is used throughout the rest of the tutorial.
+Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The following command will download the sample metadata as tab-separated text and save it in the file  `sample_metadata.tsv`. This  `sample_metadata.tsv` file is used throughout the rest of the tutorial.
 
 .. download::
    :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/sample_metadata.tsv
