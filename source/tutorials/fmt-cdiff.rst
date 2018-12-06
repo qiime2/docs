@@ -349,7 +349,7 @@ Next we'll analyze sample composition in the context of categorical metadata usi
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample_metadata.tsv \
-     --m-metadata-column disease_state \
+     --m-metadata-column animations_subject \
      --p-pairwise \
      --o-visualization core-metrics-results/unweighted-unifrac-animations-subject-group-significance.qzv
 
