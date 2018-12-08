@@ -158,6 +158,6 @@ Use the following questions to guide your further analyses of these data data.
 Acknowledgements
 ----------------
 
-The data used in this tutorial is presented in: *Arid Soil Microbiome: Significant Impacts of Increasing Aridity. Neilson, Califf, Cardona, Copeland, van Treuren, Josephson, Knight, Gilbert, Quade, Caporaso, and Maier. mSystems (under review).*
+The data used in this tutorial is presented in: *Significant Impacts of Increasing Aridity on the Arid Soil Microbiome.* Julia W. Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will van Treuren, Karen L. Josephson, Rob Knight, Jack A. Gilbert, Jay Quade, J. Gregory Caporaso, and Raina M. Maier. mSystems May 2017, 2 (3) e00195-16; DOI: 10.1128/mSystems.00195-16.
 
 .. _sample metadata: https://data.qiime2.org/2019.1/tutorials/atacama-soils/sample_metadata
