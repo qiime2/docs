@@ -1,8 +1,10 @@
 FAES QIIME 2 Workshop
 =====================
 
-.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
+.. contents:: FAES QIIME 2 Workshop
+   :depth: 2
 
+.. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 System Setup
 ------------
@@ -52,6 +54,18 @@ In this tutorial we will use several different datasets, these are already avail
    :saveas: ecam/ecam-unweighted-unifrac-distance-matrix.qza
 
 
+.. _`moving pics sample metadata`:
+
+Sample metadata
+---------------
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input sample-metadata.tsv \
+     --o-visualization sample-metadata.qzv
+
+
 .. _`moving pics demux`:
 
 Demultiplexing sequences
@@ -89,6 +103,9 @@ After demultiplexing, it's useful to generate a summary of the demultiplexing re
 
    Alternatively, you can view QIIME 2 artifacts and visualizations at `view.qiime2.org <https://view.qiime2.org>`__ by uploading files or providing URLs. There are also precomputed results that can be viewed or downloaded after each step in the tutorial. These can be used if you're reading the tutorial, but not running the commands yourself.
 
+
+.. _`moving pics dada2 denoise`:
+
 Sequence quality control and feature table construction
 -------------------------------------------------------
 
@@ -122,8 +139,11 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
      --m-input-file stats-dada2.qza \
      --o-visualization stats-dada2.qzv
 
-FeatureTable and FeatureData summaries
---------------------------------------
+
+.. _`moving pics summaries rarefaction`:
+
+FeatureTable and FeatureData summaries; Rarefaction
+---------------------------------------------------
 
 After the quality filtering step completes, you'll want to explore the resulting data. You can do this using the following two commands, which will create visual summaries of the data. The ``feature-table summarize`` command will give you information on how many sequences are associated with each sample and with each feature, histograms of those distributions, and some related summary statistics. The ``feature-table tabulate-seqs`` command will provide a mapping of feature IDs to sequences, and provide links to easily BLAST each sequence against the NCBI nt database. The latter visualization will be very useful later in the tutorial, when you want to learn more about specific features that are important in the data set.
 
@@ -136,6 +156,12 @@ After the quality filtering step completes, you'll want to explore the resulting
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
+
+An important parameter that needs to be provided to future steps in this analysis involves the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you specify 500 as an even sampling depth, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
+
+.. question::
+   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics-phylogenetic`` command?
+
 
 .. _`moving pics build tree`:
 
@@ -156,6 +182,7 @@ The following command will produce a few outputs. We're primarily interested in 
      --o-masked-alignment masked-aligned-rep-seqs.qza \
      --o-tree unrooted-tree.qza \
      --o-rooted-tree rooted-tree.qza
+
 
 .. _`moving pics diversity`:
 
@@ -178,11 +205,6 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
   * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
   * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
 
-An important parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above and choosing a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
-
-.. question::
-   View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics-phylogenetic`` command?
-
 .. command-block::
 
    qiime diversity core-metrics-phylogenetic \
@@ -194,13 +216,11 @@ An important parameter that needs to be provided to this script is ``--p-samplin
 
 Here we set the ``--p-sampling-depth`` parameter to 1109. This value was chosen based on the number of sequences in the ``L3S341`` sample because it's close to the number of sequences in the next few samples that have higher sequence counts, and because it is considerably higher (relatively) than the number of sequences in the one sample that has fewer sequences. This will allow us to retain most of our samples. The one sample that has fewer sequences will be dropped from the ``core-metrics-phylogenetic`` analyses and anything that uses these results.
 
-.. note:: The sampling depth of 1109 was chosen based on the DADA2 feature table summary. If you are using a Deblur feature table rather than a DADA2 feature table, you might want to choose a different even sampling depth. Apply the logic from the previous paragraph to help you choose an even sampling depth.
-
 .. note:: In many Illumina runs you'll observe a few samples that have very low sequence counts. You will typically want to exclude those from the analysis by choosing a larger value for the sampling depth at this stage.
 
 After computing diversity metrics, we can begin to explore the microbial composition of the samples in the context of the sample metadata. This information is present in the `sample metadata`_ file that was downloaded earlier.
 
-We'll first test for associations between categorical metadata columns and alpha diversity data. We'll do that here for the Faith Phylogenetic Diversity (a measure of community richness) and evenness metrics.
+We'll first test for associations between categorical metadata columns and alpha diversity data. We'll do that here for the Faith Phylogenetic Diversity (a measure of community richness).
 
 .. command-block::
 
@@ -209,16 +229,8 @@ We'll first test for associations between categorical metadata columns and alpha
      --m-metadata-file sample-metadata.tsv \
      --o-visualization core-metrics-results/faith-pd-group-significance.qzv
 
-   qiime diversity alpha-group-significance \
-     --i-alpha-diversity core-metrics-results/evenness_vector.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --o-visualization core-metrics-results/evenness-group-significance.qzv
-
 .. question::
    Which categorical sample metadata columns are most strongly associated with the differences in microbial community **richness**? Are these differences statistically significant?
-
-.. question::
-   Which categorical sample metadata columns are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
 
 In this data set, no continuous sample metadata columns (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
@@ -233,19 +245,12 @@ Next we'll analyze sample composition in the context of categorical metadata usi
      --o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
      --p-pairwise
 
-   qiime diversity beta-group-significance \
-     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
-     --o-visualization core-metrics-results/unweighted-unifrac-subject-group-significance.qzv \
-     --p-pairwise
-
 .. question::
    Are the associations between subjects and differences in microbial composition statistically significant? How about body sites? What specific pairs of body sites are significantly different from each other?
 
 Again, none of the continuous sample metadata that we have for this data set are correlated with sample composition, so we won't test for those associations here. If you're interested in performing those tests, you can use the ``qiime metadata distance-matrix`` in combination with ``qiime diversity mantel`` and ``qiime diversity bioenv`` commands.
 
-Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. While our ``core-metrics-phylogenetic`` command did already generate some Emperor plots, we want to pass an optional parameter, ``--p-custom-axes``, which is very useful for exploring time series data. The PCoA results that were used in ``core-metrics-phylogeny`` are also available, making it easy to generate new visualizations with Emperor. We will generate Emperor plots for unweighted UniFrac and Bray-Curtis so that the resulting plot will contain axes for principal coordinate 1, principal coordinate 2, and days since the experiment start. We will use that last axis to explore how these samples changed over time.
+Finally, ordination is a popular approach for exploring microbial community composition in the context of sample metadata. We can use the `Emperor`_ tool to explore principal coordinates (PCoA) plots in the context of sample metadata. While our ``core-metrics-phylogenetic`` command did already generate some Emperor plots, we want to pass an optional parameter, ``--p-custom-axes``, which is very useful for exploring time series data. The PCoA results that were used in ``core-metrics-phylogeny`` are also available, making it easy to generate new visualizations with Emperor. We will generate Emperor plots for unweighted UniFrac and Jaccard so that the resulting plot will contain axes for principal coordinate 1, principal coordinate 2, and days since the experiment start. We will use that last axis to explore how these samples changed over time.
 
 .. command-block::
 
@@ -255,17 +260,19 @@ Finally, ordination is a popular approach for exploring microbial community comp
      --p-custom-axes DaysSinceExperimentStart \
      --o-visualization core-metrics-results/unweighted-unifrac-emperor-DaysSinceExperimentStart.qzv
 
+.. command-block::
+
    qiime emperor plot \
-     --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
+     --i-pcoa core-metrics-results/jaccard_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
      --p-custom-axes DaysSinceExperimentStart \
-     --o-visualization core-metrics-results/bray-curtis-emperor-DaysSinceExperimentStart.qzv
+     --o-visualization core-metrics-results/jaccard-emperor-DaysSinceExperimentStart.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
 
 .. question::
-    What differences do you observe between the unweighted UniFrac and Bray-Curtis PCoA plots?
+    What differences do you observe between the unweighted UniFrac and Jaccard PCoA plots?
 
 
 .. _`moving pics taxonomy`:
@@ -310,10 +317,10 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
     Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
 
 
-Training a taxonomic classifier
-===============================
+Training a taxonomic classifier with q2-clawback
+================================================
 
-This tutorial gives a deliberately-complicated example of how to train a naive Bayes classifier for short read taxonomic classification.
+This tutorial gives an example of how to train a naive Bayes classifier for short read taxonomic classification.
 
 It includes
 
@@ -341,10 +348,10 @@ It turns out that trimming the 16S sequences is important for generating class w
 .. command-block::
 
    qiime feature-classifier extract-reads \
+      --i-sequences gg-99-ref-seqs.qza \
       --p-f-primer GTGCCAGCMGCCGCGGTAA \
       --p-r-primer GGACTACHVGGGTWTCTAAT \
-      --o-reads gg-99-ref-seqs-515f-806r.qza \
-      --i-sequences gg-99-ref-seqs.qza
+      --o-reads gg-99-ref-seqs-515f-806r.qza
 
 
 Assemble the class weights
@@ -355,35 +362,35 @@ First pull the ASVs out of the data and force them to be classified all the way 
 .. command-block::
 
    qiime clawback sequence-variants-from-samples \
-      --o-sequences cheese-seqs.qza \
-      --i-samples cheese-table.qza
+      --i-samples cheese-table.qza \
+      --o-sequences cheese-seqs.qza
 
    qiime feature-classifier classify-sklearn \
-      --p-confidence -1.0 \
-      --o-classification full-confidence.qza \
       --i-reads cheese-seqs.qza \
-      --i-classifier gg-13-8-99-515-806-nb-classifier.qza
+      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
+      --p-confidence -1.0 \
+      --o-classification full-confidence.qza
 
 Next aggregate the results into a single weights vector.
 
 .. command-block::
 
    qiime clawback generate-class-weights \
-      --o-class-weight cheese-weight.qza \
       --i-reference-taxonomy gg-99-ref-taxa.qza \
       --i-reference-sequences gg-99-ref-seqs-515f-806r.qza \
       --i-samples cheese-table.qza \
-      --i-taxonomy-classification full-confidence.qza
+      --i-taxonomy-classification full-confidence.qza \
+      --o-class-weight cheese-weight.qza
 
 Finally, train the classifier.
 
 .. command-block::
 
    qiime feature-classifier fit-classifier-naive-bayes \
-      --o-classifier cheese-classifier.qza \
       --i-reference-reads gg-99-ref-seqs-515f-806r.qza \
       --i-reference-taxonomy gg-99-ref-taxa.qza \
-      --i-class-weight cheese-weight.qza
+      --i-class-weight cheese-weight.qza \
+      --o-classifier cheese-classifier.qza
 
 
 Try classifying the original samples
@@ -398,51 +405,50 @@ First using the off-the-shelf classifier (which has been trained using uniform w
 .. command-block::
 
    qiime feature-classifier classify-sklearn \
-      --o-classification uniform-cheese.qza \
       --i-reads cheese-seqs.qza \
-      --i-classifier gg-13-8-99-515-806-nb-classifier.qza
+      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
+      --o-classification uniform-cheese.qza
 
 Now use the bespoke classifier:
 
 .. command-block::
 
    qiime feature-classifier classify-sklearn \
-      --o-classification bespoke-cheese.qza \
       --i-reads cheese-seqs.qza \
-      --i-classifier cheese-classifier.qza
+      --i-classifier cheese-classifier.qza \
+      --o-classification bespoke-cheese.qza
 
 Now compare the results
 -----------------------
 
-Using a fairly unorthidox pipeline we can compare the results. We presumptiously call bespoke "expected" and uniform "observed" in the following comparison.
+Using a fairly unorthodox pipeline we can compare the results. We presumptiously call bespoke "expected" and uniform "observed" in the following comparison.
 
 .. command-block::
 
    qiime taxa collapse \
-      --p-level 7 \
-      --o-collapsed-table uniform-collapsed.qza \
       --i-table cheese-table.qza \
-      --i-taxonomy uniform-cheese.qza
+      --i-taxonomy uniform-cheese.qza \
+      --p-level 7 \
+      --o-collapsed-table uniform-collapsed.qza
 
    qiime feature-table relative-frequency \
       --o-relative-frequency-table uniform-collapsed-relative.qza \
       --i-table uniform-collapsed.qza
 
    qiime taxa collapse \
-      --p-level 7 \
-      --o-collapsed-table bespoke-collapsed.qza \
       --i-table cheese-table.qza \
-      --i-taxonomy bespoke-cheese.qza
+      --i-taxonomy bespoke-cheese.qza \
+      --p-level 7 \
+      --o-collapsed-table bespoke-collapsed.qza
 
    qiime feature-table relative-frequency \
-      --o-relative-frequency-table bespoke-collapsed-relative.qza \
-      --i-table bespoke-collapsed.qza
+      --i-table bespoke-collapsed.qza \
+      --o-relative-frequency-table bespoke-collapsed-relative.qza
 
    qiime quality-control evaluate-composition \
-      --o-visualization diff.qzv \
       --i-expected-features bespoke-collapsed-relative.qza \
-      --i-observed-features uniform-collapsed-relative.qza
-
+      --i-observed-features uniform-collapsed-relative.qza \
+      --o-visualization diff.qzv
 
 Now `diff.qzv` should contain a comparison between the taxonomic classifications using the two methods.
 
@@ -504,9 +510,13 @@ We're also often interested in performing a differential abundance test at a spe
      --p-level 6 \
      --o-collapsed-table gut-table-l6.qza
 
+.. command-block::
+
    qiime composition add-pseudocount \
      --i-table gut-table-l6.qza \
      --o-composition-table comp-gut-table-l6.qza
+
+.. command-block::
 
    qiime composition ancom \
      --i-table comp-gut-table-l6.qza \
@@ -840,7 +850,6 @@ Finally, scatter plots categorized by each "group column" are shown at the botto
 The second set of scatterplots are fit vs. residual plots, which show the relationship between metric predictions for each sample (on the x-axis), and the residual or observation error (prediction - actual value) for each sample (on the y-axis). Residuals should be roughly zero-centered and normal across the range of measured values. Uncentered, systematically high or low, and autocorrelated values could indicate a poor model. If your residual plots look like an ugly mess without any apparent relationship between values, you are doing a good job. If you see a U-shaped curve or other non-random distribution, either your predictor variables (``group_columns`` and/or ``random_effects``) are failing to capture all explanatory information, causing information to leak into your residuals, or else you are not using an appropriate model for your data 🙁. Check your predictor variables and available metadata columns to make sure you aren't missing anything.
 
 .. note:: If you want to dot your i's and cross your t's, residual and predicted values for each sample can be obtained in the "Download raw data as tsv" link below the regression scatterplots. This file can be input as metadata to the ``volatility`` visualizer to check whether residuals are correlated with other metadata columns. If they are, those columns should probably be used as prediction variables in your model! Control limits (± 2 and 3 standard deviations) can be toggled on/off to easily identify outliers, which can be particularly useful for re-examining fit vs. residual plots with this visualizer. 🍝
-
 
 
 Feature volatility analysis
