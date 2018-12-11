@@ -25,6 +25,9 @@ import sphinx
 import qiime2
 
 
+REL_WORKING_DIR = '.'
+CURRENT_TUTORIAL = None
+
 loader = jinja2.PackageLoader('sphinx_extensions.command_block', 'templates')
 jinja_env = jinja2.Environment(loader=loader)
 
@@ -69,6 +72,9 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
     }
 
     def run(self):
+        global CURRENT_TUTORIAL
+        global CURRENT_WORKING_DIR
+
         command_mode = True if self.name == 'command-block' else False
         opts = self.options
         download_opts = [k in opts for k in ['url', 'saveas']]
@@ -100,8 +106,14 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         if not ((env.config.command_block_no_exec
                  and env.config.debug_page != env.docname) or
                 'no-exec' in self.options):
-            working_dir = os.path.join(env.app.command_block_working_dir.name,
-                                       env.docname)
+
+            if env.docname != CURRENT_TUTORIAL:
+                CURRENT_TUTORIAL = env.docname
+                CURRENT_WORKING_DIR = os.path.join(
+                    env.app.command_block_working_dir.name,
+                    env.docname)
+
+            working_dir = CURRENT_WORKING_DIR
             os.makedirs(working_dir, exist_ok=True)
 
             self._execute_commands(commands, working_dir)
@@ -128,6 +140,14 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         for command in commands:
             command = command.strip()
             if not command:
+                continue
+
+            if command.startswith('cd'):
+                global CURRENT_WORKING_DIR
+                new_path = os.path.join(working_dir, command.split(' ', 1)[-1])
+                new_path = os.path.normpath(new_path)
+                CURRENT_WORKING_DIR = working_dir = new_path
+                app.info("Changing directory: %s" % working_dir)
                 continue
 
             try:
@@ -175,15 +195,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                     dest_filepath = os.path.join(dest_dir, filename)
 
                     if os.path.exists(dest_filepath):
-                        if (os.path.getmtime(dest_filepath) <
-                                os.path.getmtime(src_filepath)):
-                            msg = (
-                                "Command overwrote path %r that was created "
-                                "by a previous command in this file. Output "
-                                "overwriting is not supported by the `%s` "
-                                "directive." % (file_relpath, self.name)
-                            )
-                            raise sphinx.errors.ExtensionError(msg)
+                        pass
                     else:
                         shutil.copyfile(src_filepath, dest_filepath)
 
