@@ -99,16 +99,10 @@ After demultiplexing, it's useful to generate a summary of the demultiplexing re
 Sequence quality control and feature table construction
 -------------------------------------------------------
 
-QIIME 2 plugins are available for several quality control methods, including `DADA2`_, `Deblur`_, and `basic quality-score-based filtering`_. In this tutorial we present this step using `DADA2`_ and `Deblur`_. These steps are interchangeable, so you can use whichever of these you prefer. The result of both of these methods will be a ``FeatureTable[Frequency]`` QIIME 2 artifact, which contains counts (frequencies) of each unique sequence in each sample in the dataset, and a ``FeatureData[Sequence]`` QIIME 2 artifact, which maps feature identifiers in the ``FeatureTable`` to the sequences they represent.
-
-.. note::
-   As you work through one or both of the options in this section, you'll create artifacts with filenames that are specific to the method that you're running (e.g., the feature table that you generate with ``dada2 denoise-single`` will be called ``table-dada2.qza``). After creating these artifacts you'll rename the artifacts from one of the two options to more generic filenames (e.g., ``table.qza``). This process of creating a specific name for an artifact and then renaming it is only done to allow you to choose which of the two options you'd like to use for this step, and then complete the tutorial without paying attention to that choice again. It's important to note that in this step, or any step in QIIME 2, the filenames that you're giving to artifacts or visualizations are not important.
+QIIME 2 plugins are available for several quality control methods, including `DADA2`_, `Deblur`_, and `basic quality-score-based filtering`_. In this tutorial we present this step using `DADA2`_. The result will be a ``FeatureTable[Frequency]`` QIIME 2 artifact, which contains counts (frequencies) of each unique sequence in each sample in the dataset, and a ``FeatureData[Sequence]`` QIIME 2 artifact, which maps feature identifiers in the ``FeatureTable`` to the sequences they represent.
 
 .. qiime1-users::
    The ``FeatureTable[Frequency]`` QIIME 2 artifact is the equivalent of the QIIME 1 OTU or BIOM table, and the ``FeatureData[Sequence]`` QIIME 2 artifact is the equivalent of the QIIME 1 *representative sequences* file. Because the "OTUs" resulting from `DADA2`_ and `Deblur`_ are created by grouping unique sequences, these are the equivalent of 100% OTUs from QIIME 1, and are generally referred to as *sequence variants*. In QIIME 2, these OTUs are higher resolution than the QIIME 1 default of 97% OTUs, and they're higher quality since these quality control steps are better than those implemented in QIIME 1. This should therefore result in more accurate estimates of diversity and taxonomic composition of samples than was achieved with QIIME 1.
-
-Option 1: DADA2
-~~~~~~~~~~~~~~~
 
 `DADA2`_ is a pipeline for detecting and correcting (where possible) Illumina amplicon sequence data. As implemented in the ``q2-dada2`` plugin, this quality control process will additionally filter any phiX reads (commonly present in marker gene Illumina sequence data) that are identified in the sequencing data, and will filter chimeric sequences.
 
@@ -125,8 +119,8 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
      --i-demultiplexed-seqs demux.qza \
      --p-trim-left 0 \
      --p-trunc-len 120 \
-     --o-representative-sequences rep-seqs-dada2.qza \
-     --o-table table-dada2.qza \
+     --o-representative-sequences rep-seqs.qza \
+     --o-table table.qza \
      --o-denoising-stats stats-dada2.qza
 
 .. command-block::
@@ -134,60 +128,6 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
    qiime metadata tabulate \
      --m-input-file stats-dada2.qza \
      --o-visualization stats-dada2.qzv
-
-If you'd like to continue the tutorial using this FeatureTable (opposed to the Deblur feature table generated in *Option 2*), run the following commands.
-
-.. command-block::
-
-   mv rep-seqs-dada2.qza rep-seqs.qza
-   mv table-dada2.qza table.qza
-
-.. _`moving pictures deblur`:
-
-Option 2: Deblur
-~~~~~~~~~~~~~~~~
-
-`Deblur`_ uses sequence error profiles to associate erroneous sequence reads with the true biological sequence from which they are derived, resulting in high quality sequence variant data. This is applied in two steps. First, an initial quality filtering process based on quality scores is applied. This method is an implementation of the quality filtering approach described by `Bokulich et al. (2013)`_.
-
-.. command-block::
-
-   qiime quality-filter q-score \
-    --i-demux demux.qza \
-    --o-filtered-sequences demux-filtered.qza \
-    --o-filter-stats demux-filter-stats.qza
-
-.. note:: In the `Deblur`_ paper, the authors used different quality-filtering parameters than what `they currently recommend after additional analysis <https://qiita.ucsd.edu/static/doc/html/deblur_quality.html>`_. The parameters used here are based on those more recent recommendations.
-
-Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` method. This method requires one parameter that is used in quality filtering, ``--p-trim-length n`` which truncates the sequences at position ``n``. In general, the Deblur developers recommend setting this value to a length where the median quality score begins to drop too low. On these data, the quality plots (prior to quality filtering) suggest a reasonable choice is in the 115 to 130 sequence position range. This is a subjective assessment. One situation where you might deviate from that recommendation is when performing a meta-analysis across multiple sequencing runs. In this type of meta-analysis, it is critical that the read lengths be the same for all of the sequencing runs being compared to avoid introducing a study-specific bias. Since we already using a trim length of 120 for ``qiime dada2 denoise-single``, and since 120 is reasonable given the quality plots, we'll pass ``--p-trim-length 120``. This next command may take up to 10 minutes to run.
-
-.. command-block::
-
-   qiime deblur denoise-16S \
-     --i-demultiplexed-seqs demux-filtered.qza \
-     --p-trim-length 120 \
-     --o-representative-sequences rep-seqs-deblur.qza \
-     --o-table table-deblur.qza \
-     --p-sample-stats \
-     --o-stats deblur-stats.qza
-
-.. note:: The two commands used in this section generate QIIME 2 artifacts containing summary statistics. To view those summary statistics, you can visualize them using ``qiime metadata tabulate`` and ``qiime deblur visualize-stats``, respectively:
-
-.. command-block::
-
-   qiime metadata tabulate \
-     --m-input-file demux-filter-stats.qza \
-     --o-visualization demux-filter-stats.qzv
-   qiime deblur visualize-stats \
-     --i-deblur-stats deblur-stats.qza \
-     --o-visualization deblur-stats.qzv
-
-If you'd like to continue the tutorial using this FeatureTable (opposed to the DADA2 feature table generated in *Option 1*), run the following commands.
-
-.. command-block::
-   :no-exec:
-
-   mv rep-seqs-deblur.qza rep-seqs.qza
-   mv table-deblur.qza table.qza
 
 FeatureTable and FeatureData summaries
 --------------------------------------
@@ -204,21 +144,25 @@ After the quality filtering step completes, you'll want to explore the resulting
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
 
+.. _`moving pics build tree`:
+
 Generate a tree for phylogenetic diversity analyses
 ---------------------------------------------------
 
-QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact. To generate a phylogenetic tree we will use ``sepp`` from the ``q2-fragment-insertion`` plugin.
+QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact.
 
-The following single command will produce two outputs: 1) `rooted-tree.qza` is the `Phylogeny[Rooted]` and 2) `placements.qza` provides placement distributions for the fragments (you will most likely ignore this output) (Computation might take some 10 minutes):
+QIIME 2 has several methods generate a rooted phylogenetic tree. Here's we'll use ``align-to-tree-mafft-fasttree``.
+
+The following command will produce a few outputs. We're primarily interested in ``rooted-tree.qza``, the ``Phylogeny[Rooted]``.
 
 .. command-block::
 
-   qiime fragment-insertion sepp \
-     --i-representative-sequences rep-seqs.qza \
-     --o-tree rooted-tree.qza \
-     --o-placements insertion-placements.qza --verbose
-
-.. note:: Fragment insertion can fail for fragments that are too remotely related to everything in the reference phylogeny. As a result it may be necessary to filter the feature table to prevent downstream diversity analyses from failing. Please refer to the `q2-fragment-insertion` documentation for step-by-step instructions.
+   qiime phylogeny align-to-tree-mafft-fasttree \
+     --i-sequences rep-seqs.qza \
+     --o-alignment aligned-rep-seqs.qza \
+     --o-masked-alignment masked-aligned-rep-seqs.qza \
+     --o-tree unrooted-tree.qza \
+     --o-rooted-tree rooted-tree.qza
 
 .. _`moving pics diversity`:
 
@@ -667,6 +611,13 @@ First, we will train and test a classifier that predicts delivery mode based on 
 .. image:: images/sample-classifier.png
 
 :ref:`Figure key<key>`
+
+.. command-block::
+
+   mkdir sample-classifier-tutorial
+   cp table.qza sample-classifier-tutorial
+   cp sample-metadata.tsv sample-classifier-tutorial
+   cd sample-classifier-tutorial
 
 .. command-block::
 
