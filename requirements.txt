@@ -1,5 +1,5 @@
 # Documentation building requirements.
 Sphinx==1.4.6
 Jinja2
-sphinxcontrib-bibtex
+sphinxcontrib-bibtex==0.4.0
 lxml
