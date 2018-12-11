@@ -170,7 +170,7 @@ Preparing data for denoising
 
 Denoising requires little data preparation.
 Both DADA2 and deblur perform quality filtering, denoising, and chimera removal, so you shouldn't need to perform any quality screening prior to running them.
-That said, the deblur developers recommend doing an initial :ref:`quality-filter <moving pictures deblur>` with default settings prior to using deblur (as illustrated in the :ref:`"Moving Pictures" tutorial <moving pictures deblur>`).
+That said, the deblur developers recommend doing an initial quality-filter with default settings prior to using deblur (as illustrated in the "Moving Pictures" tutorial).
 Q-score based filtering is built in to DADA2, so doing this `quality-filter` step prior to denoising with DADA2 is unnecessary.
 
 Both methods have an option to truncate your reads to a constant length (which occurs prior to denoising).
