@@ -57,6 +57,7 @@ base_url = ('https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fqiime2-workshops'
 for node in tree.xpath('//a'):
     if search_url in node.attrib['href']:
         node.attrib['href'] = node.attrib['href'].replace(search_url, base_url)
+        node.attrib['target'] = '_blank'
 
 # Clean up download links
 search_url = 'https://docs.qiime2.org/2018.11/data/tutorials/moving-pictures/'
