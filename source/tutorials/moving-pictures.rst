@@ -1,72 +1,65 @@
-"Moving Pictures" tutorial
-==========================
+FAES QIIME 2 Workshop
+=====================
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
-In this tutorial you'll use QIIME 2 to perform an analysis of human microbiome samples from two individuals at four body sites at five timepoints, the first of which immediately followed antibiotic usage. A study based on these samples was originally published in `Caporaso et al. (2011)`_. The data used in this tutorial were sequenced on an Illumina HiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
-.. qiime1-users::
-   These are the same data that are used in the QIIME 1 `Illumina Overview Tutorial`_.
+System Setup
+------------
 
-Before beginning this tutorial, create a new directory and change to that directory.
-
-.. command-block::
-   :no-exec:
-
-   mkdir qiime2-moving-pictures-tutorial
-   cd qiime2-moving-pictures-tutorial
-
-Sample metadata
----------------
-
-Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
-
-.. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/moving-pictures/sample_metadata.tsv
-   :saveas: sample-metadata.tsv
-
-.. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
-
-.. tip:: To learn more about metadata, including how to format your metadata for use with QIIME 2, check out :doc:`the metadata tutorial <metadata>`.
-
-Obtaining and importing data
-----------------------------
-
-Download the sequence reads that we'll use in this analysis. In this tutorial we'll work with a small subset of the complete sequence data so that the commands will run quickly.
+In this tutorial we will use several different datasets, these are already available in your cluster environment, but if you want to follow along on a different machine, you should run the steps below:
 
 .. command-block::
 
-   mkdir emp-single-end-sequences
+   mkdir moving-pictures
+   mkdir cheese
+   mkdir ecam
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
-   :saveas: emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/moving-pictures/emp-single-end-sequences.qza
+   :saveas: moving-pictures/emp-single-end-sequences.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
-   :saveas: emp-single-end-sequences/sequences.fastq.gz
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/moving-pictures/sample-metadata.tsv
+   :saveas: moving-pictures/sample-metadata.tsv
 
-All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/cheese/gg-99-ref-seqs.qza
+   :saveas: cheese/gg-99-ref-seqs.qza
 
-The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSingleEndSequences`` QIIME 2 artifacts contain sequences that are multiplexed, meaning that the sequences have not yet been assigned to samples (hence the inclusion of both ``sequences.fastq.gz`` and ``barcodes.fastq.gz`` files, where the ``barcodes.fastq.gz`` contains the barcode read associated with each sequence in ``sequences.fastq.gz``.) To learn about how to import sequence data in other formats, see the :doc:`importing data tutorial <importing>`.
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/cheese/gg-99-ref-taxa.qza
+   :saveas: cheese/gg-99-ref-taxa.qza
 
-.. command-block::
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/cheese/cheese-table.qza
+   :saveas: cheese/cheese-table.qza
 
-   qiime tools import \
-     --type EMPSingleEndSequences \
-     --input-path emp-single-end-sequences \
-     --output-path emp-single-end-sequences.qza
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/ecam/ecam-metadata.tsv
+   :saveas: ecam/ecam-metadata.tsv
 
-.. tip::
-   Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation. For example, the command above created a single ``emp-single-end-sequences.qza`` file, and a corresponding precomputed file is linked above. You can view precomputed QIIME 2 artifacts and visualizations without needing to install additional software (e.g. QIIME 2).
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/ecam/ecam-table.qza
+   :saveas: ecam/ecam-table.qza
 
-.. qiime1-users::
-   In QIIME 1, we generally suggested performing demultiplexing through QIIME (e.g., with ``split_libraries.py`` or ``split_libraries_fastq.py``) as this step also performed quality control of sequences. We now separate the demultiplexing and quality control steps, so you can begin QIIME 2 with either multiplexed sequences (as we're doing here) or demultiplexed sequences.
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/ecam/ecam-shannon.qza
+   :saveas: ecam/ecam-shannon.qza
+
+.. download::
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-workshops/faes18/starting-data/ecam/ecam-unweighted-unifrac-distance-matrix.qza
+   :saveas: ecam/ecam-unweighted-unifrac-distance-matrix.qza
+
 
 .. _`moving pics demux`:
 
 Demultiplexing sequences
 ------------------------
+
+.. command-block::
+
+   cd moving-pictures
 
 To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads). The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences.
 
@@ -329,59 +322,16 @@ It includes
 
 Off-the-shelf classifiers are available in the `QIIME 2 docs <https://docs.qiime2.org/2018.11/data-resources/>`_. A tutorial that just covers trimming reference sequences is also available in the `docs <https://docs.qiime2.org/2018.11/tutorials/feature-classifier/>`_. A tutorial that covers downloading community-sourced data from `Qiita <https://qiita.ucsd.edu/>`_ for a range of habitat types is available on the `forum <https://forum.qiime2.org/t/using-q2-clawback-to-assemble-taxonomic-weights/5859>`_.
 
-We will download and create several files, so first create a working directory.
+The example we use here is the deblur output for `Study ID 11488 <https://qiita.ucsd.edu/study/description/11488#>`_ in Qiita, which contains 362 samples from cheese rinds.
 
 .. command-block::
 
-   mkdir -p clawback-tutorial
-   cd clawback-tutorial
-
-Import data
------------
-
-We assume that the data is in a single `biom` table with multiple samples and where the features are ASVs. The example we use here is the deblur output for `Study ID 11488 <https://qiita.ucsd.edu/study/description/11488#>`_ in Qiita, which contains 362 samples from cheese rinds. We import it into `cheese-table.qza`
-
-.. download::
-   :url: https://s3-us-west-2.amazonaws.com/qiime2-data/workshops/monash18/cheese-data/cheese.biom
-   :saveas: cheese.biom
+   cd ../cheese
 
 .. command-block::
 
-   qiime tools import \
-      --input-path cheese.biom \
-      --input-format BIOMV210Format \
-      --type FeatureTable[Frequency] \
-      --output-path cheese-table.qza
+   cp ../moving-pictures/gg-13-8-99-515-806-nb-classifier.qza .
 
-We will also require the Greengenes 99% OTU sequences and taxonomies.
-
-.. download::
-   :url: ftp://greengenes.microbio.me/greengenes_release//gg_13_8_otus/taxonomy/99_otu_taxonomy.txt
-   :saveas: 99_otu_taxonomy.txt
-
-.. download::
-   :url: ftp://greengenes.microbio.me/greengenes_release//gg_13_8_otus/rep_set/99_otus.fasta
-   :saveas: 99_otus.fasta
-
-.. command-block::
-
-   qiime tools import \
-      --input-path 99_otu_taxonomy.txt \
-      --input-format HeaderlessTSVTaxonomyFormat \
-      --type FeatureData[Taxonomy] \
-      --output-path gg-99-ref-taxa.qza
-
-   qiime tools import \
-      --input-path 99_otus.fasta \
-      --input-format DNAFASTAFormat \
-      --type FeatureData[Sequence] \
-      --output-path gg-99-ref-seqs.qza
-
-To save some time we will download the off-the-shelf naive Bayes classifier that has been trained on the 16S V4 region.
-
-.. download::
-   :url: https://data.qiime2.org/2018.11/common/gg-13-8-99-515-806-nb-classifier.qza
-   :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 Trim the reads
 --------------
@@ -500,7 +450,11 @@ Now `diff.qzv` should contain a comparison between the taxonomic classifications
 .. _`ancom`:
 
 Differential abundance testing with ANCOM
------------------------------------------
+=========================================
+
+.. command-block::
+
+   cd ../moving-pictures
 
 ANCOM can be applied to identify features that are differentially abundant (i.e. present in different abundances) across sample groups. As with any bioinformatics method, you should be aware of the assumptions and limitations of ANCOM before using it. We recommend reviewing the `ANCOM paper`_ before using this method.
 
@@ -575,26 +529,16 @@ Predicting sample metadata values with q2-sample-classifier
 
 This tutorial will demonstrate how to use ``q2-sample-classifier`` to predict sample metadata values. Supervised learning methods predict sample data (e.g., metadata values) as a function of other sample data (e.g., microbiota composition). The predicted targets may be discrete sample classes (for classification problems) or continuous values (for regression problems). Any other data may be used as predictive features, but for the purposes of q2-sample-classifier this will most commonly be microbial sequence variant, operational taxonomic unit (OTU), or taxonomic composition data. However, any features contained in a feature table may be used — for non-microbial data, just `convert your observation tables to biom format`_ and :doc:`import the feature table data into qiime2 <importing>`.
 
-We will download and create several files, so first create a working directory.
 
 .. command-block::
-   :no-exec:
 
-   mkdir sample-classifier-tutorial
-   cd sample-classifier-tutorial
+   cd ../ecam
+
 
 Predicting categorical sample data
 ----------------------------------
 
-Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `ECAM study`_, a longitudinal cohort study of microbiome development in U.S. infants. Download the feature table and sample metadata with the following links:
-
-.. download::
-   :url: https://data.qiime2.org/2019.1/tutorials/longitudinal/sample_metadata.tsv
-   :saveas: ecam-metadata.tsv
-
-.. download::
-   :url: https://data.qiime2.org/2019.1/tutorials/longitudinal/ecam_table_maturity.qza
-   :saveas: ecam-table.qza
+Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `ECAM study`_, a longitudinal cohort study of microbiome development in U.S. infants.
 
 First, we will train and test a classifier that predicts delivery mode based on its microbial composition. We will do so using the ``classify-samples`` pipeline, which performs a series of steps under the hood:
 
@@ -836,26 +780,6 @@ The following flowchart illustrates the workflow involved in all ``q2-longitudin
 
 .. image:: images/longitudinal.png
 
-In the examples below, we use data from the `ECAM study`_, a longitudinal study of infants' and mothers' microbiota from birth through 2 years of life. First let's create a new directory and download the relevant tutorial data.
-
-.. command-block::
-   :no-exec:
-
-   mkdir longitudinal-tutorial
-   cd longitudinal-tutorial
-
-.. download::
-   :url: https://data.qiime2.org/2019.1/tutorials/longitudinal/sample_metadata.tsv
-   :saveas: ecam-sample-metadata.tsv
-
-.. download::
-   :url: https://data.qiime2.org/2019.1/tutorials/longitudinal/ecam_shannon.qza
-   :saveas: shannon.qza
-
-.. download::
-   :url: https://data.qiime2.org/2019.1/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
-   :saveas: unweighted_unifrac_distance_matrix.qza
-
 
 Volatility analysis
 -------------------
@@ -867,8 +791,8 @@ Here we examine how variance in Shannon diversity and other metadata changes acr
 .. command-block::
 
   qiime longitudinal volatility \
-    --m-metadata-file ecam-sample-metadata.tsv \
-    --m-metadata-file shannon.qza \
+    --m-metadata-file ecam-metadata.tsv \
+    --m-metadata-file ecam-shannon.qza \
     --p-default-metric shannon \
     --p-default-group-column delivery \
     --p-state-column month \
@@ -901,8 +825,8 @@ Linear mixed effects (LME) models test the relationship between a single respons
 .. command-block::
 
    qiime longitudinal linear-mixed-effects \
-     --m-metadata-file ecam-sample-metadata.tsv \
-     --m-metadata-file shannon.qza \
+     --m-metadata-file ecam-metadata.tsv \
+     --m-metadata-file ecam-shannon.qza \
      --p-metric shannon \
      --p-group-columns delivery,diet,sex \
      --p-state-column month \
@@ -936,7 +860,7 @@ Let's test this out on the ECAM dataset. First download a table to work with:
 
    qiime longitudinal feature-volatility \
      --i-table ecam-table.qza \
-     --m-metadata-file ecam-sample-metadata.tsv \
+     --m-metadata-file ecam-metadata.tsv \
      --p-state-column month \
      --p-individual-id-column studyid \
      --p-n-estimators 10 \
@@ -976,7 +900,7 @@ Here we will compare microbial maturity between vaginally born and cesarean-deli
 
    qiime longitudinal maturity-index \
      --i-table ecam-table.qza \
-     --m-metadata-file ecam-sample-metadata.tsv \
+     --m-metadata-file ecam-metadata.tsv \
      --p-state-column month \
      --p-group-by delivery \
      --p-individual-id-column studyid \
