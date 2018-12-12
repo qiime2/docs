@@ -61,8 +61,12 @@ Sample metadata
 
 .. command-block::
 
+   cd moving-pictures
+
+.. command-block::
+
    qiime metadata tabulate \
-     --m-input sample-metadata.tsv \
+     --m-input-file sample-metadata.tsv \
      --o-visualization sample-metadata.qzv
 
 
@@ -70,10 +74,6 @@ Sample metadata
 
 Demultiplexing sequences
 ------------------------
-
-.. command-block::
-
-   cd moving-pictures
 
 To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads). The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences.
 
@@ -140,6 +140,27 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
      --o-visualization stats-dada2.qzv
 
 
+.. _`moving pics build tree`:
+
+Generate a tree for phylogenetic diversity analyses
+---------------------------------------------------
+
+QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact.
+
+QIIME 2 has several methods generate a rooted phylogenetic tree. Here's we'll use ``align-to-tree-mafft-fasttree``.
+
+The following command will produce a few outputs. We're primarily interested in ``rooted-tree.qza``, the ``Phylogeny[Rooted]``.
+
+.. command-block::
+
+   qiime phylogeny align-to-tree-mafft-fasttree \
+     --i-sequences rep-seqs.qza \
+     --o-alignment aligned-rep-seqs.qza \
+     --o-masked-alignment masked-aligned-rep-seqs.qza \
+     --o-tree unrooted-tree.qza \
+     --o-rooted-tree rooted-tree.qza
+
+
 .. _`moving pics dada2 summaries`:
 
 FeatureTable and FeatureData summaries
@@ -166,27 +187,6 @@ An important parameter that needs to be provided to future steps in this analysi
 
 .. question::
    View the ``table.qzv`` QIIME 2 artifact, and in particular the *Interactive Sample Detail* tab in that visualization. What value would you choose to pass for ``--p-sampling-depth``? How many samples will be excluded from your analysis based on this choice? How many total sequences will you be analyzing in the ``core-metrics-phylogenetic`` command?
-
-
-.. _`moving pics build tree`:
-
-Generate a tree for phylogenetic diversity analyses
----------------------------------------------------
-
-QIIME supports several phylogenetic diversity metrics, including Faith's Phylogenetic Diversity and weighted and unweighted UniFrac. In addition to counts of features per sample (i.e., the data in the ``FeatureTable[Frequency]`` QIIME 2 artifact), these metrics require a rooted phylogenetic tree relating the features to one another. This information will be stored in a ``Phylogeny[Rooted]`` QIIME 2 artifact.
-
-QIIME 2 has several methods generate a rooted phylogenetic tree. Here's we'll use ``align-to-tree-mafft-fasttree``.
-
-The following command will produce a few outputs. We're primarily interested in ``rooted-tree.qza``, the ``Phylogeny[Rooted]``.
-
-.. command-block::
-
-   qiime phylogeny align-to-tree-mafft-fasttree \
-     --i-sequences rep-seqs.qza \
-     --o-alignment aligned-rep-seqs.qza \
-     --o-masked-alignment masked-aligned-rep-seqs.qza \
-     --o-tree unrooted-tree.qza \
-     --o-rooted-tree rooted-tree.qza
 
 
 .. _`moving pics diversity`:
@@ -570,13 +570,6 @@ First, we will train and test a classifier that predicts delivery mode based on 
 .. image:: images/sample-classifier.png
 
 :ref:`Figure key<key>`
-
-.. command-block::
-
-   mkdir sample-classifier-tutorial
-   cp table.qza sample-classifier-tutorial
-   cp sample-metadata.tsv sample-classifier-tutorial
-   cd sample-classifier-tutorial
 
 .. command-block::
 
