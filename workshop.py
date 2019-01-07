@@ -1,7 +1,8 @@
 import os
 import shutil
 
-import lxml, lxml.html
+import lxml
+import lxml.html
 
 
 tutorial_fp = './build/faes18'
@@ -41,8 +42,8 @@ for href in ['bootstrap.min.css', 'normalize.css']:
     # TODO: os.path.join
     shutil.copy('./build/preview/_static/css/%s' % href, tutorial_fp)
 for src in ['jquery.js', 'underscore.js', 'doctools.js', 'external-links.js',
-             'bootstrap-dropdown.js', 'bootstrap.min.js', 'clipboard.min.js',
-             'clipboard-driver.js']:
+            'bootstrap-dropdown.js', 'bootstrap.min.js', 'clipboard.min.js',
+            'clipboard-driver.js']:
     for node in tree.xpath("//*[@src='../../_static/%s']" % src):
         node.attrib['src'] = src
     # TODO: os.path.join
@@ -53,7 +54,7 @@ for src in ['jquery.js', 'underscore.js', 'doctools.js', 'external-links.js',
 search_url = ('https%3A%2F%2Fdocs.qiime2.org%2F2018.11%2Fdata%2Ftutorials'
               '%2Fmoving-pictures')
 base_url = ('https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fqiime2-workshops'
-            '%2Ffaes18')
+            '%2Ffaes18%2Fdata')
 for node in tree.xpath('//a'):
     if search_url in node.attrib['href']:
         node.attrib['href'] = node.attrib['href'].replace(search_url, base_url)
