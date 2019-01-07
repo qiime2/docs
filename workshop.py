@@ -1,7 +1,8 @@
 import os
 import shutil
 
-import lxml, lxml.html
+import lxml
+import lxml.html
 
 
 tutorial_fp = './build/faes18'
@@ -41,8 +42,8 @@ for href in ['bootstrap.min.css', 'normalize.css']:
     # TODO: os.path.join
     shutil.copy('./build/preview/_static/css/%s' % href, tutorial_fp)
 for src in ['jquery.js', 'underscore.js', 'doctools.js', 'external-links.js',
-             'bootstrap-dropdown.js', 'bootstrap.min.js', 'clipboard.min.js',
-             'clipboard-driver.js']:
+            'bootstrap-dropdown.js', 'bootstrap.min.js', 'clipboard.min.js',
+            'clipboard-driver.js']:
     for node in tree.xpath("//*[@src='../../_static/%s']" % src):
         node.attrib['src'] = src
     # TODO: os.path.join
