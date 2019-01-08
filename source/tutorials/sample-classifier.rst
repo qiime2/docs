@@ -57,6 +57,7 @@ Next, we will train and test a classifier that predicts which body site a sample
      --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 20 \
+     --p-random-state 123 \
      --output-dir moving-pictures-classifier
 
 
@@ -161,6 +162,7 @@ Next, we will train a regressor to predict an infant's age based on its microbio
      --m-metadata-column month \
      --p-estimator RandomForestRegressor \
      --p-n-estimators 20 \
+     --p-random-state 123 \
      --output-dir ecam-regressor
 
 
@@ -193,6 +195,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
      --m-metadata-column BodySite \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 20 \
+     --p-random-state 123 \
      --o-predictions BodySite-predictions-ncv.qza \
      --o-feature-importance BodySite-importance-ncv.qza
 
@@ -214,6 +217,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
      --m-metadata-column month \
      --p-estimator RandomForestRegressor \
      --p-n-estimators 20 \
+     --p-random-state 123 \
      --o-predictions ecam-predictions-ncv.qza \
      --o-feature-importance ecam-importance-ncv.qza
 

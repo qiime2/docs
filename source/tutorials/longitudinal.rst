@@ -275,7 +275,7 @@ Let's test this out on the ECAM dataset. First download a table to work with:
      --p-state-column month \
      --p-individual-id-column studyid \
      --p-n-estimators 10 \
-     --p-random-state 123 \
+     --p-random-state 17 \
      --output-dir ecam-feat-volatility
 
 All of the parameters used in this pipeline are described for other ``q2-longitudinal`` actions or in the :doc:`sample classifier tutorial <sample-classifier>`, so will not be discussed here. This pipeline produces multiple outputs:
