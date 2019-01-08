@@ -391,7 +391,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 
 .. download::
-   :url: https://data.qiime2.org/2018.8/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2018.11/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
