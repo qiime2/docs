@@ -65,3 +65,11 @@ dummy:
 	$(SPHINXBUILD) -b dummy -D command_block_no_exec=1 $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+.PHONY: deploy-workshop-s3
+deploy-workshop-s3:
+	aws s3 sync \
+		--exclude *.DS_Store \
+		--acl public-read \
+		build/fmt-cdiff-s3/ \
+		s3://qiime2-workshops/fmt-cdiff
