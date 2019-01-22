@@ -39,16 +39,16 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2019.1-py35-osx-conda.yml
-   conda env create -n qiime2-2019.1 --file qiime2-2019.1-py35-osx-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2019.1-py36-osx-conda.yml
+   conda env create -n qiime2-2019.1 --file qiime2-2019.1-py36-osx-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2019.1-py35-osx-conda.yml</pre>
+   rm qiime2-2019.1-py36-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2019.1-py35-linux-conda.yml
-   conda env create -n qiime2-2019.1 --file qiime2-2019.1-py35-linux-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2019.1-py36-linux-conda.yml
+   conda env create -n qiime2-2019.1 --file qiime2-2019.1-py36-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2019.1-py35-linux-conda.yml</pre>
+   rm qiime2-2019.1-py36-linux-conda.yml</pre>
          </div>
       </div>
    </div>
