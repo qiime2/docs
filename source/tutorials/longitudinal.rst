@@ -275,7 +275,7 @@ Let's test this out on the ECAM dataset. First download a table to work with:
      --p-state-column month \
      --p-individual-id-column studyid \
      --p-n-estimators 10 \
-     --p-random-state 123 \
+     --p-random-state 17 \
      --output-dir ecam-feat-volatility
 
 All of the parameters used in this pipeline are described for other ``q2-longitudinal`` actions or in the :doc:`sample classifier tutorial <sample-classifier>`, so will not be discussed here. This pipeline produces multiple outputs:
@@ -339,7 +339,7 @@ This pipeline produces several output files:
 
 8. ``model_summary.qzv`` contains a summary of the model parameters used by the supervised learning estimator, as described in the :doc:`sample classifier tutorial <sample-classifier>` for the equivalently named outputs from the ``classify-samples`` pipeline.
 
-So what does this all show us? In the ECAM dataset that we are testing here, we see that MAZ scores are suppressed in Cesarean-delivered subjects in the second year of life, compared to vaginally born subjects (See ``volatility-plots.qzv``). Several important sequence variants exhibit reduced frequency during this time frame, suggesting involvement in delayed maturation of the Cesarean cohort (See ``clustermap.qzv``). (This tutorial example does not have a ``random-state`` set so local results may vary slightly)
+So what does this all show us? In the ECAM dataset that we are testing here, we see that MAZ scores are suppressed in Cesarean-delivered subjects in the second year of life, compared to vaginally born subjects (See ``volatility-plots.qzv``). Several important sequence variants exhibit reduced frequency during this time frame, suggesting involvement in delayed maturation of the Cesarean cohort (See ``clustermap.qzv``).
 
 Note that none of the results presented so far actually confirm a statistical difference between groups. Want to take this analysis to the next level (with multivariate statistical testing)? Use the MAZ scores (or possibly ``predictions``) as input metrics (dependent variables) in linear mixed effects models (as described above).
 
