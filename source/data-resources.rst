@@ -18,9 +18,9 @@ Taxonomy classifiers for use with q2-feature-classifier
 Naive Bayes classifiers trained on:
 
 - `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2019.1/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``UPDATE ME``)
-- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.1/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``UPDATE ME``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2019.1/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``UPDATE ME``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.1/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``UPDATE ME``)
+- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.1/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``9f50514214ffb6fee9d2f87a47a51076``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2019.1/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``581f97e4294cce93102b00ffaf8a1d9a``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.1/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``3afcc86150423263b3a7d983789ad0a3``)
 
 .. _`marker gene db`:
 
