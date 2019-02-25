@@ -494,7 +494,7 @@ Congratulations! You made it to the end of the tutorial, as a next step we sugge
 .. _animations: https://www.youtube.com/watch?v=-FFDqhM4pks
 .. _meta-analyses: https://www.ncbi.nlm.nih.gov/pubmed/30275573
 .. _1% subsample data set: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/1p/seqs.qza
-.. _sample metadata: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
