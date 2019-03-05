@@ -43,12 +43,30 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
    conda env create -n qiime2-2019.4 --file qiime2-2019.4-py36-osx-conda.yml
    # OPTIONAL CLEANUP
    rm qiime2-2019.4-py36-osx-conda.yml</pre>
+            <div class="alert alert-warning">
+               If you encounter this error with wget:
+              <pre>Disabling SSL due to encountered errors.</pre>
+               you can download the file by clicking directly on this link:<br>
+               <a href="https://data.qiime2.org/distro/core/qiime2-2019.4-py36-osx-conda.yml">
+                  https://data.qiime2.org/distro/core/qiime2-2019.4-py36-osx-conda.yml
+               </a><br>
+               Please note, depending on your browser, this might open immediately as a "Download" dialog. If it does not open that dialog you might need to "Save" the file manually.
+            </div>
          </div>
          <div id="linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2019.4-py36-linux-conda.yml
    conda env create -n qiime2-2019.4 --file qiime2-2019.4-py36-linux-conda.yml
    # OPTIONAL CLEANUP
    rm qiime2-2019.4-py36-linux-conda.yml</pre>
+            <div class="alert alert-warning">
+               If you encounter this error with wget:
+              <pre>Disabling SSL due to encountered errors.</pre>
+               you can download the file by clicking directly on this link:<br>
+               <a href="https://data.qiime2.org/distro/core/qiime2-2019.4-py36-linux-conda.yml">
+                  https://data.qiime2.org/distro/core/qiime2-2019.4-py36-linux-conda.yml
+               </a><br>
+               Please note, depending on your browser, this might open immediately as a "Download" dialog. If it does not open that dialog you might need to "Save" the file manually.
+            </div>
          </div>
       </div>
    </div>
