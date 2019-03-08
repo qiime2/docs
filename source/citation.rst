@@ -37,8 +37,39 @@ Each time any action is performed in QIIME™ 2, that information is logged in t
 5. Review the citations list and use common sense to make sure that you are citing all software and methods appropriately. If you notice any discrepancies in the citations that are listed by any QIIME 2 plugin, please verify which plugin/action is missing citations or mis-citing, using the directions above for retrieving plugin-specific citation information. Then get in touch on the `QIIME 2 forum`_ to let us know!
 
 
+Example methods descriptions
+----------------------------
+A good methods description not only gives credit where it is due, it also promotes transparency and reproducibility of the results. A bad methods section will not detail the steps performed in an analysis; will not cite or incompletely cite underlying plugins, methods, or software; and will utterly obfuscate any possibility of reproducing that analysis.
+
+A bad methods section
+`````````````````````
+  Bacterial 16S rRNA gene sequence data were analyzed with QIIME 2 (Bolyen et al., 2018) to generate principal coordinates analysis plots and assign taxonomy.
+
+.. question:: What steps were performed in this analysis? What distance metric was used for PCoA? Was any type of quality control or normalization applied to the data? What methods and reference databases were used to assign taxonomy?
+
+A good methods section
+``````````````````````
+This methods section was adapted from `Pearson et al. 2019`_ (and shortened in the interest of brevity; see the original publication for a full methods description). Note that each step of analysis is described, including non-default parameter settings, the plugins performing each operation are mentioned, and individual plugins, underlying software, and methods/metrics are cited as appropriate. This paragraph describes most of the steps that are performed in a basic QIIME 2 analysis (e.g., following the :doc:`moving pictures tutorial <tutorials/moving-pictures>`), plus some additional steps; it may be used as a template methods section for similar workflows.
+
+  Microbiome bioinformatics were performed with QIIME 2 2017.4 (Bolyen et al. 2018). Raw sequence data were demultiplexed and quality filtered using the q2‐demux plugin followed by denoising with DADA2 (Callahan et al. 2016) (via q2‐dada2). All amplicon sequence variants (ASVs) were aligned with mafft (Katoh et al. 2002) (via q2‐alignment) and used to construct a phylogeny with fasttree2 (Price et al. 2010) (via q2‐phylogeny). Alpha‐diversity metrics (observed OTUs and Faith's Phylogenetic Diversity (Faith 1992)), beta diversity metrics (weighted UniFrac (Lozupone et al. 2007), unweighted UniFrac (Lozupone et al. 2005), Jaccard distance, and Bray‐Curtis dissimilarity), and Principle Coordinate Analysis (PCoA) were estimated using q2‐diversity after samples were rarefied (subsampled without replacement) to 900 sequences per sample. Taxonomy was assigned to ASVs using the q2‐feature‐classifier (Bokulich et al. 2018a) classify‐sklearn naïve Bayes taxonomy classifier against the Greengenes 13_8 99% OTUs reference sequences (McDonald et al. 2012). We computed the change in direction and magnitude in the first principal co-ordinate axis (PC1) for each subject between their pretreatment and posttreatment samples using q2‐longitudinal (Bokulich et al. 2018b). The average change in PC1 for each treatment group, overall and stratified by sex, was tested for difference from zero using a one‐sample t test with Benjamini‐Hochberg false discovery rate (FDR) correction (Benjamini and Hochberg 1995).
+
+
+* Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical and powerful approach to multiple testing. J R Stat Soc Series B Stat Methodol. 1995;57:289‐300.
+* Bokulich NA, Kaehler BD, Rideout JR, et al. Optimizing taxonomic classification of marker‐gene amplicon sequences with QIIME 2's q2‐feature‐classifier plugin. Microbiome. 2018a;6:90.
+* Bokulich NA, Dillon MR, Zhang Y, et al. q2‐longitudinal: Longitudinal and paired‐sample analyses of microbiome data. mSystems. 2018b;3:e00219‐e318.
+* Bolyen E, Rideout JR, Dillon MR, et al. QIIME 2: reproducible, interactive, scalable, and extensible microbiome data science. PeerJ Preprints. 2018;6:e27295v2.
+* Bray JR, Curtis JT. An ordination of upland forest communities of southern Wisconsin. Ecol Monogr. 1957;27:325-349
+* Callahan BJ, McMurdie PJ, Rosen MJ, et al. DADA2: high‐resolution sample inference from Illumina amplicon data. Nat Methods. 2016;13:581‐583.
+* Faith DP. Conservation evaluation and phylogenetic diversity. Biol Cons. 1992;61:1‐10.
+* Katoh K, Misawa K, Kuma K, et al. MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform. Nucleic Acids Res. 2002;30:3059‐3066.
+* Lozupone CA, Hamady M, Kelley ST, et al. Quantitative and qualitative beta diversity measures lead to different insights into factors that structure microbial communities. Appl Environ Microbiol. 2007;73:1576‐1585.
+* Lozupone C, Knight R. UniFrac: a new phylogenetic method for comparing microbial communities. Appl Environ Microbiol. 2005;71:8228‐8235.
+* McDonald D, Price MN, Goodrich J, et al. An improved Greengenes taxonomy with explicit ranks for ecological and evolutionary analyses of bacteria and archaea. ISME J. 2012;6:610‐ 618.
+* Price MN, Dehal PS, Arkin AP. FastTree 2–approximately maximum‐likelihood trees for large alignments. PLoS ONE. 2010;5:e9490.
+
 
 .. _preprint: https://peerj.com/preprints/27295/
 .. _VSEARCH: https://github.com/torognes/vsearch
 .. _q2-feature-classifier: https://doi.org/10.1186/s40168-018-0470-z
 .. _QIIME 2 forum: https://forum.qiime2.org/
+.. _Pearson et al. 2019: https://doi.org/10.1002/cam4.1965
