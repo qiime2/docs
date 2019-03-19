@@ -4,3 +4,4 @@ Sphinx==1.4.6
 Jinja2
 # TODO: unpin this
 sphinxcontrib-bibtex==0.4.0
+lxml

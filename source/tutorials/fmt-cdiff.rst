@@ -19,7 +19,7 @@ Sample metadata
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The following command will download the sample metadata as tab-separated text and save it in the file  `sample_metadata.tsv`. This  `sample_metadata.tsv` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/sample_metadata.tsv
+   :url: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/sample_metadata.tsv
    :saveas: sample_metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
@@ -38,15 +38,15 @@ Download the sequence reads that we'll use in this analysis. In this tutorial we
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 .. download::
-  :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/forward.fastq.gz
+  :url: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/10p/forward.fastq.gz
   :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/10p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -134,6 +134,7 @@ Next, the Deblur workflow is applied using the ``qiime deblur denoise-16S`` meth
      --i-demultiplexed-seqs demux-filtered.qza \
      --p-trim-length 150 \
      --p-sample-stats \
+     --p-jobs-to-start 4 \
      --o-representative-sequences rep-seqs-deblur.qza \
      --o-table table-deblur.qza \
      --o-stats deblur-stats.qza
@@ -176,6 +177,7 @@ In the ``demux.qzv`` quality plots, we see that the quality of the initial bases
     --i-demultiplexed-seqs demux.qza \
     --p-trim-left 0 \
     --p-trunc-len 150 \
+    --p-n-threads 4 \
     --o-representative-sequences rep-seqs-dada2.qza \
     --o-table table-dada2.qza \
     --o-denoising-stats stats-dada2.qza
@@ -224,6 +226,7 @@ The pipeline uses the ``sepp`` program will create a rooted tree with the new se
 
    qiime fragment-insertion sepp \
      --i-representative-sequences rep-seqs.qza \
+     --p-threads 4 \
      --o-tree insertion-tree.qza \
      --o-placements insertion-placements.qza
 
@@ -303,6 +306,7 @@ An important parameter that needs to be provided to this script is ``--p-samplin
      --i-table table.qza \
      --m-metadata-file sample_metadata.tsv \
      --p-sampling-depth 881 \
+     --p-n-jobs 4 \
      --output-dir core-metrics-results
 
 Here we set the ``--p-sampling-depth`` parameter to 881. This will allow us to retain most of our samples. The samples that has fewer sequences will be dropped from the ``core-metrics-phylogenetic`` analyses and anything that uses these results.
@@ -391,7 +395,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2019.1/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
@@ -399,6 +403,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
    qiime feature-classifier classify-sklearn \
      --i-classifier gg-13-8-99-515-806-nb-classifier.qza \
      --i-reads rep-seqs.qza \
+     --p-n-jobs 2 \
      --o-classification taxonomy.qza
 
    qiime metadata tabulate \
@@ -493,7 +498,7 @@ Congratulations! You made it to the end of the tutorial, as a next step we sugge
 .. _Weingarden et al. (2015): https://www.ncbi.nlm.nih.gov/pubmed/25825673
 .. _animations: https://www.youtube.com/watch?v=-FFDqhM4pks
 .. _meta-analyses: https://www.ncbi.nlm.nih.gov/pubmed/30275573
-.. _1% subsample data set: https://data.qiime2.org/2018.11/tutorials/fmt-cdiff/1p/seqs.qza
+.. _1% subsample data set: https://data.qiime2.org/2019.1/tutorials/fmt-cdiff/1p/seqs.qza
 .. _sample metadata: https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
