@@ -22,8 +22,6 @@ Sorted alphabetically by repo name.
   | The CI automation engine that builds and distributes QIIME 2
 - [conda-channel-resource](https://github.com/qiime2/conda-channel-resource/issues)
   | A Concourse resource for working with conda
-- [conda-recipes](https://github.com/qiime2/conda-recipes/issues)
-  | Old conda recipes (repo is mostly unused now)
 - [data.qiime2.org](https://github.com/qiime2/data.qiime2.org/issues)
   | Web app for vanity URLs for QIIME 2 data assets
 - [dev-docs](https://github.com/qiime2/dev-docs/issues)
@@ -54,12 +52,16 @@ Sorted alphabetically by repo name.
   | The q2-demux plugin
 - [q2-diversity](https://github.com/qiime2/q2-diversity/issues)
   | The q2-diversity plugin
+- [q2-diversity-lib](https://github.com/qiime2/q2-diversity-lib/issues)
+  | The q2-diversity-lib plugin
 - [q2-emperor](https://github.com/qiime2/q2-emperor/issues)
   | The q2-emperor plugin
 - [q2-feature-classifier](https://github.com/qiime2/q2-feature-classifier/issues)
   | The q2-feature-classifier plugin
 - [q2-feature-table](https://github.com/qiime2/q2-feature-table/issues)
   | The q2-feature-table plugin
+- [q2-fragment-insertion](https://github.com/qiime2/q2-fragment-insertion/issues)
+  | The q2-fragment-insertion plugin
 - [q2-gneiss](https://github.com/qiime2/q2-gneiss/issues)
   | The q2-gneiss plugin
 - [q2-longitudinal](https://github.com/qiime2/q2-longitudinal/issues)
@@ -74,6 +76,8 @@ Sorted alphabetically by repo name.
   | The q2-quality-filter plugin
 - [q2-sample-classifier](https://github.com/qiime2/q2-sample-classifier/issues)
   | The q2-sample-classifier plugin
+- [q2-shogun](https://github.com/qiime2/q2-shogun/issues)
+  | The q2-shogun plugin
 - [q2-taxa](https://github.com/qiime2/q2-taxa/issues)
   | The q2-taxa plugin
 - [q2-types](https://github.com/qiime2/q2-types/issues)
