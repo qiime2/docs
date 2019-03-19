@@ -22,15 +22,15 @@ In the examples below, we use data from the `ECAM study`_, a longitudinal study 
    cd longitudinal-tutorial
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2019.4/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/ecam_shannon.qza
+   :url: https://data.qiime2.org/2019.4/tutorials/longitudinal/ecam_shannon.qza
    :saveas: shannon.qza
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
+   :url: https://data.qiime2.org/2019.4/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
    :saveas: unweighted_unifrac_distance_matrix.qza
 
 
@@ -138,7 +138,7 @@ Buon appetito! 🍝
 
 First differencing to track rate of change
 ------------------------------------------
-Another way to view time series data is by assessing how the rate of change differs over time. We can do this through calculating first differences, which is the magnitude of change between successive time points. If :math:`Y_\text{t}` is the value of metric :math:`Y` at time :math:`t`, the first difference at time :math:`t`, :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{t-1}`. This transformation is performed in the ``first-differences`` method in ``q2-longitudinal``.
+Another way to view time series data is by assessing how the rate of change differs over time. We can do this through calculating first differences, which is the magnitude of change between successive time points. If :math:`Y_\text{t}` is the value of metric :math:`Y` at time :math:`t`, the first difference at time :math:`t`, :math:`{\Delta}Y_\text{t} = Y_\text{t} - Y_\text{t-1}`. This calculation is performed at fixed intervals, so for each interval :math:`{\Delta}Y_\text{t}` is not calculated for subjects that are missing samples at times :math:`t` or :math:`t-1`. This transformation is performed in the ``first-differences`` method in ``q2-longitudinal``.
 
 .. command-block::
 
@@ -209,7 +209,7 @@ Within microbial communities, microbial populations do not exist in isolation bu
 First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/ecam_table_taxa.qza
+   :url: https://data.qiime2.org/2019.4/tutorials/longitudinal/ecam_table_taxa.qza
    :saveas: ecam-table-taxa.qza
 
 Now we are ready run NMIT. The output of this command is a distance matrix that we can pass to other QIIME2 commands for significance testing and visualization.
@@ -264,7 +264,7 @@ This pipeline identifies features that are predictive of a numeric metadata colu
 Let's test this out on the ECAM dataset. First download a table to work with:
 
 .. download::
-   :url: https://data.qiime2.org/2018.11/tutorials/longitudinal/ecam_table_maturity.qza
+   :url: https://data.qiime2.org/2019.4/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 .. command-block::
@@ -275,7 +275,7 @@ Let's test this out on the ECAM dataset. First download a table to work with:
      --p-state-column month \
      --p-individual-id-column studyid \
      --p-n-estimators 10 \
-     --p-random-state 123 \
+     --p-random-state 17 \
      --output-dir ecam-feat-volatility
 
 All of the parameters used in this pipeline are described for other ``q2-longitudinal`` actions or in the :doc:`sample classifier tutorial <sample-classifier>`, so will not be discussed here. This pipeline produces multiple outputs:
@@ -317,6 +317,8 @@ Here we will compare microbial maturity between vaginally born and cesarean-deli
      --p-individual-id-column studyid \
      --p-control Vaginal \
      --p-test-size 0.4 \
+     --p-stratify \
+     --p-random-state 1010101 \
      --output-dir maturity
 
 This pipeline produces several output files:
@@ -337,7 +339,7 @@ This pipeline produces several output files:
 
 8. ``model_summary.qzv`` contains a summary of the model parameters used by the supervised learning estimator, as described in the :doc:`sample classifier tutorial <sample-classifier>` for the equivalently named outputs from the ``classify-samples`` pipeline.
 
-So what does this all show us? In the ECAM dataset that we are testing here, we see that MAZ scores are suppressed in Cesarean-delivered subjects in the second year of life, compared to vaginally born subjects (See ``volatility-plots.qzv``). Several important sequence variants exhibit reduced frequency during this time frame, suggesting involvement in delayed maturation of the Cesarean cohort (See ``clustermap.qzv``). (This tutorial example does not have a ``random-state`` set so local results may vary slightly)
+So what does this all show us? In the ECAM dataset that we are testing here, we see that MAZ scores are suppressed in Cesarean-delivered subjects in the second year of life, compared to vaginally born subjects (See ``volatility-plots.qzv``). Several important sequence variants exhibit reduced frequency during this time frame, suggesting involvement in delayed maturation of the Cesarean cohort (See ``clustermap.qzv``).
 
 Note that none of the results presented so far actually confirm a statistical difference between groups. Want to take this analysis to the next level (with multivariate statistical testing)? Use the MAZ scores (or possibly ``predictions``) as input metrics (dependent variables) in linear mixed effects models (as described above).
 

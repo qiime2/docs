@@ -14,9 +14,6 @@ Sorted alphabetically by repo name.
 - A Concourse resource for working with conda
   https://github.com/qiime2/conda-channel-resource/issues
 
-- Old conda recipes (repo is mostly unused now)
-  https://github.com/qiime2/conda-recipes/issues
-
 - Web app for vanity URLs for QIIME 2 data assets
   https://github.com/qiime2/data.qiime2.org/issues
 
@@ -62,6 +59,9 @@ Sorted alphabetically by repo name.
 - The q2-diversity plugin
   https://github.com/qiime2/q2-diversity/issues
 
+- The q2-diversity-lib plugin
+  https://github.com/qiime2/q2-diversity-lib/issues
+
 - The q2-emperor plugin
   https://github.com/qiime2/q2-emperor/issues
 
@@ -70,6 +70,9 @@ Sorted alphabetically by repo name.
 
 - The q2-feature-table plugin
   https://github.com/qiime2/q2-feature-table/issues
+
+- The q2-fragment-insertion plugin
+  https://github.com/qiime2/q2-fragment-insertion/issues
 
 - The q2-gneiss plugin
   https://github.com/qiime2/q2-gneiss/issues
@@ -91,6 +94,9 @@ Sorted alphabetically by repo name.
 
 - The q2-sample-classifier plugin
   https://github.com/qiime2/q2-sample-classifier/issues
+
+- The q2-shogun plugin
+  https://github.com/qiime2/q2-shogun/issues
 
 - The q2-taxa plugin
   https://github.com/qiime2/q2-taxa/issues
