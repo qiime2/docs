@@ -26,5 +26,6 @@ Table of contents
    data-resources
    supplementary-resources
    glossary
+   citation
 
 .. _QIIME 1: http://qiime.org
