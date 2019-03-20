@@ -85,7 +85,7 @@ shutil.copytree('./build/preview/_static/fonts',
                 os.path.join(OUTPUT_TUTORIAL_FP, 'fonts'))
 # Update font paths
 with fileinput.FileInput(os.path.join(OUTPUT_TUTORIAL_FP, 'bootstrap.min.css'),
-        inplace=True, backup='.bak') as fh:
+                         inplace=True, backup='.bak') as fh:
     for line in fh:
         print(line.replace('../fonts/', './fonts/'), end='')
 
