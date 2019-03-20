@@ -74,7 +74,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'QIIME 2'
-copyright = '2016-2018, QIIME 2 development team'
+copyright = '2016-2019, QIIME 2 development team'
 author = 'QIIME 2 development team'
 
 # The version info for the project you're documenting, acts as replacement for
