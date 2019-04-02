@@ -21,12 +21,14 @@ import docutils.parsers.rst.directives
 import docutils.statemachine
 import jinja2
 import sphinx
+from sphinx.util import logging
 
 import qiime2
 
 
 loader = jinja2.PackageLoader('sphinx_extensions.command_block', 'templates')
 jinja_env = jinja2.Environment(loader=loader)
+logger = logging.getLogger(__name__)
 
 
 class download_node(docutils.nodes.Element):
@@ -124,14 +126,13 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         return node
 
     def _execute_commands(self, commands, working_dir):
-        app = self._get_env().app
         for command in commands:
             command = command.strip()
             if not command:
                 continue
 
             try:
-                app.info("Running command: %s" % command)
+                logger.info("Running command: %s" % command)
                 comp_proc = subprocess.run(command,
                                            stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE,

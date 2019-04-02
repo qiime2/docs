@@ -11,6 +11,7 @@
          <td>
 
 .. bibliography:: {{ bib_id }}.bib
+   :list: bullet
    :all:
    :keyprefix: {{ bib_id }}:
    :labelprefix: {{ bib_id}}:

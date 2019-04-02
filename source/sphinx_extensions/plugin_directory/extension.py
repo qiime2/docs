@@ -15,9 +15,12 @@ import textwrap
 import jinja2
 import qiime2.sdk
 
+from sphinx.util import logging
+logger = logging.getLogger(__name__)
+
 
 def generate_rst(app):
-    app.info("Generating QIIME 2 plugin directory... (this may take awhile)")
+    logger.info("Generating QIIME 2 plugin directory... (this may take awhile)")
 
     # Refresh the CLI cache just in case it is out of date with what's
     # installed (this should only affect packages while they are installed in
@@ -72,7 +75,7 @@ def generate_rst(app):
                 title = '%s: %s' % (action_cli_name, action.name)
                 directive_indent = ' ' * 3
 
-                app.info("Generating help text for `%s %s`..." %
+                logger.info("Generating help text for `%s %s`..." %
                          (plugin_cli_name, action_cli_name))
                 command = ['qiime', plugin_cli_name, action_cli_name, '--help']
                 proc = subprocess.run(command, check=True,

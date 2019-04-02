@@ -7,40 +7,33 @@
 # ----------------------------------------------------------------------------
 
 from docutils import nodes
-from docutils.parsers.rst import Directive
-from sphinx.util.compat import make_admonition
+from sphinx.util.docutils import SphinxDirective
 
 
-class question(nodes.Admonition, nodes.Element):
+class QuestionAdmonition(nodes.Admonition, nodes.Element):
     pass
 
 
-def visit_question_node(self, node):
-    self.visit_admonition(node)
-
-
-def depart_question_node(self, node):
-    self.depart_admonition(node)
-
-
-class QuestionDirective(Directive):
+class QuestionDirective(SphinxDirective):
     has_content = True
 
     def run(self):
-        env = self.state.document.settings.env
+        target_id = 'question-%d' % self.env.new_serialno('question')
+        target_node = nodes.target('', '', ids=[target_id])
 
-        targetid = 'question-%d' % env.new_serialno('question')
-        targetnode = nodes.target('', '', ids=[targetid])
+        question_node = QuestionAdmonition(self.content)
+        question_node += nodes.title(text='Question')
+        question_node['classes'] += ['question']
+        self.state.nested_parse(self.content, self.content_offset,
+                                question_node)
 
-        self.options['class'] = ['question']
-        ad = make_admonition(question, self.name, ['Question'], self.options,
-                             self.content, self.lineno, self.content_offset,
-                             self.block_text, self.state, self.state_machine)
-        return [targetnode] + ad
+        return [target_node, question_node]
 
 
 def setup(app):
-    app.add_node(question, html=(visit_question_node, depart_question_node))
+    app.add_node(QuestionAdmonition,
+                 html=(lambda s, n: s.visit_admonition(n),
+                       lambda s, n: s.depart_admonition(n)))
     app.add_directive('question', QuestionDirective)
 
-    return {'version': '0.0.1'}
+    return {'version': '0.0.2'}
