@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 
 
 def generate_rst(app):
-    logger.info("Generating QIIME 2 plugin directory... (this may take awhile)")
+    logger.info(
+        "Generating QIIME 2 plugin directory... (this may take a while)")
 
     # Refresh the CLI cache just in case it is out of date with what's
     # installed (this should only affect packages while they are installed in
@@ -76,7 +77,7 @@ def generate_rst(app):
                 directive_indent = ' ' * 3
 
                 logger.info("Generating help text for `%s %s`..." %
-                         (plugin_cli_name, action_cli_name))
+                            (plugin_cli_name, action_cli_name))
                 command = ['qiime', plugin_cli_name, action_cli_name, '--help']
                 proc = subprocess.run(command, check=True,
                                       stdout=subprocess.PIPE,
