@@ -7,42 +7,33 @@
 # ----------------------------------------------------------------------------
 
 from docutils import nodes
-from docutils.parsers.rst import Directive
-from sphinx.util.compat import make_admonition
+from sphinx.util.docutils import SphinxDirective
 
 
-class qiime1users(nodes.Admonition, nodes.Element):
+class QIIME1UsersAdmonition(nodes.Admonition, nodes.Element):
     pass
 
 
-def visit_qiime1users_node(self, node):
-    self.visit_admonition(node)
-
-
-def depart_qiime1users_node(self, node):
-    self.depart_admonition(node)
-
-
-class QIIME1UsersDirective(Directive):
+class QIIME1UsersDirective(SphinxDirective):
     has_content = True
 
     def run(self):
-        env = self.state.document.settings.env
+        target_id = 'qiime1users-%d' % self.env.new_serialno('qiime1users')
+        target_node = nodes.target('', '', ids=[target_id])
 
-        targetid = 'qiime1users-%d' % env.new_serialno('qiime1users')
-        targetnode = nodes.target('', '', ids=[targetid])
+        qiime1user_node = QIIME1UsersAdmonition(self.content)
+        qiime1user_node += nodes.title(text='QIIME 1 Users')
+        qiime1user_node['classes'] += ['qiime1']
+        self.state.nested_parse(self.content, self.content_offset,
+                                qiime1user_node)
 
-        self.options['class'] = ['qiime1']
-        ad = make_admonition(qiime1users, self.name, ['QIIME 1 Users'],
-                             self.options, self.content, self.lineno,
-                             self.content_offset, self.block_text, self.state,
-                             self.state_machine)
-        return [targetnode] + ad
+        return [target_node, qiime1user_node]
 
 
 def setup(app):
-    app.add_node(qiime1users,
-                 html=(visit_qiime1users_node, depart_qiime1users_node))
+    app.add_node(QIIME1UsersAdmonition,
+                 html=(lambda s, n: s.visit_admonition(n),
+                       lambda s, n: s.depart_admonition(n)))
     app.add_directive('qiime1-users', QIIME1UsersDirective)
 
-    return {'version': '0.0.1'}
+    return {'version': '0.0.2'}

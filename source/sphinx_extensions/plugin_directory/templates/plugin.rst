@@ -64,6 +64,7 @@
          <td>
 
 .. bibliography:: citations.bib
+   :list: bullet
    :all:
    :keyprefix: {{ plugin.name }}:
    :labelprefix: {{ plugin.name }}:
