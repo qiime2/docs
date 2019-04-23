@@ -8,7 +8,7 @@
 # extension raises one, so this flag is mission-critical. All custom directives
 # now raise a `docutils`-based exception, which Sphinx will convert to a.
 # warning. Without this flag, that warning will never see the light of day.
-SPHINXOPTS    = -W
+SPHINXOPTS    = #-W
 SPHINXBUILD   = sphinx-build
 BUILDDIR      = build
 DEBUG         =

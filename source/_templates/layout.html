@@ -9,10 +9,9 @@
 
 {# Extra tags needed in head #}
 {% block extrahead %}
-  <script src="{{ pathto('_static/bootstrap.min.js', 1) }}"></script>
   <script src="{{pathto('_static/clipboard.min.js', 1) }}"></script>
   <link rel="icon" href="{{ pathto('_static/favicon.ico', 1) }}" type="image/png" />
-  <link rel="stylesheet" href="{{ pathto('_static/css/bootstrap.min.css', 1) }}" media="screen" />
+  <link rel="stylesheet" href="{{ pathto('_static/css/bulma.min.css', 1) }}" media="screen" />
   <link rel="stylesheet" href="{{ pathto('_static/css/normalize.css', 1) }}" media="screen">
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -26,27 +25,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
 
-{# Github Banner #}
-{% block header %}
-<a href="https://github.com/qiime2/qiime2" id="github-banner">
-  <img
-    src="{{ pathto('_static/github_banner.png', 1) }}"
-    alt="Fork me on GitHub"
-  />
-</a>
-{% endblock %}
+{% block header %}{% endblock %}
 
-{# wrapper div isn't closed as it is used in footer #}
 {% block content %}
-  <div id="wrapper" class="container clearfix">
-    <div id="header">
-      <a href="/">
-        <img
-          class="img-responsive"
-          src="{{ pathto('_static/q2docs.png', 1) }}" alt="QIIME 2 Docs"
-        />
-      </a>
+
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img class="header" src="{{ pathto('_static/q2docs.png', 1) }}" alt="QIIME 2" style="max-height: 40px;">
+        </a>
+        <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-start">
+        </div>
+        <div class="navbar-end">
+          <a class="navbar-item" href="/">
+            Home
+          </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <p class="navbar-link">
+              Resources
+            </p>
+            <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" target="_blank" href="https://dev.qiime2.org/">
+                Dev Docs
+              </a>
+              <a class="navbar-item" target="_blank" href="https://forum.qiime2.org/">
+                Forum
+              </a>
+              <a class="navbar-item" target="_blank" href="https://library.qiime2.org/">
+                Library
+              </a>
+              <a class="navbar-item" target="_blank" href="https://qiime2.org/">
+                Main Site
+              </a>
+              <a class="navbar-item" target="_blank" href="https://view.qiime2.org/">
+                View
+              </a>
+              <a class="navbar-item" target="_blank" href="https://workshops.qiime2.org/">
+                Workshops
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <div class="content">
+        {% if render_sidebar %}
+          {{ sidebar() }}
+        {% endif %}
+        {% block document %}
+          {% block body %} {% endblock %}
+        {% endblock %}
+      </div>
+    </div>
+  </section>
+
+  {#--
+  <div id="wrapper" class="container clearfix">
     <div id="content">
       {% block document %}
       <div id="body" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 main pull-right">
@@ -64,6 +111,8 @@
       </div>
       {% endif %}
     </div>
+  </div>
+  --#}
 {% endblock %}
 
 
@@ -71,58 +120,24 @@
 {% block relbar1 %}{% endblock %}
 {%- block relbar2 %}{% endblock %}
 
-
-{# Custom sidebar override to stop sphinxwrapper from being generated #}
-{% macro q2sidebar() -%}
-  {%- block sidebarlogo %}
-    {%- if logo %}
-    <p class="logo"><a href="{{ pathto(master_doc) }}">
-      <img class="logo" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo"/>
-    </a></p>
-    {%- endif %}
-  {%- endblock %}
-  {%- if sidebars != None %}
-    {#- new style sidebar: explicitly include/exclude templates #}
-    {%- for sidebartemplate in sidebars %}
-    {%- include sidebartemplate %}
-    {%- endfor %}
-  {%- else %}
-    {#- old style sidebars: using blocks -- should be deprecated #}
-    {%- block sidebartoc %}
-    {%- include "localtoc.html" %}
-    {%- endblock %}
-    {%- block sidebarrel %}
-    {%- include "relations.html" %}
-    {%- endblock %}
-    {%- block sidebarsourcelink %}
-    {%- include "sourcelink.html" %}
-    {%- endblock %}
-    {%- if customsidebar %}
-    {%- include customsidebar %}
-    {%- endif %}
-    {%- block sidebarsearch %}
-    {%- include "searchbox.html" %}
-    {%- endblock %}
-  {%- endif %}
-{%- endmacro %}
-
 {%- block footer %}
-    <div class="footer" role="contentinfo">
-    {%- if show_copyright %}
-      {%- if hasdoc('copyright') %}
-        {% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
-      {%- else %}
-        {% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
+    <footer class="footer" style="padding-bottom: 3rem;">
+      <div class="content has-text-centered">
+      {%- if show_copyright %}
+        {%- if hasdoc('copyright') %}
+          {% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+        {%- else %}
+          {% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
+        {%- endif %}
       {%- endif %}
-    {%- endif %}
-    {%- if last_updated %}
-      {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
-    {%- endif %}
-    {%- if show_sphinx %}
-      {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
-    {%- endif %}
-    </div>
-  </div>
+      {%- if last_updated %}
+        {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+      {%- endif %}
+      {%- if show_sphinx %}
+        {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+      {%- endif %}
+      </div>
+    </footer>
   <script src="{{ pathto('_static/bootstrap-dropdown.js', 1) }}" charset="utf-8"></script>
   <script src="{{ pathto('_static/clipboard-driver.js', 1) }}"></script>
   <script src="/versions.js" charset="utf-8"></script>
