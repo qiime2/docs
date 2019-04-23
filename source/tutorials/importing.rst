@@ -210,7 +210,7 @@ The manifest file also indicates the direction of the reads in each ``fastq.gz``
 
 The manifest file is a tab-seperated (i.e., ``.tsv``) text file. The first column defines the Sample ID, while the second (and optional third) column defines the absolute filepath to the forward (and optional reverse) reads. All of the rules and behavior of this format are inherited from the :doc:`QIIME 2 Metadata format <metadata>`.
 
-The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for three samples.
+The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for four samples.
 
 ::
 
