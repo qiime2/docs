@@ -94,6 +94,22 @@ If ``--p-optimize-feature-selection`` is enabled, only the selected features (i.
      --o-filtered-table moving-pictures-classifier/important-feature-table.qza
 
 
+We can also use the ``heatmap`` pipeline to generate an abundance heatmap of the most important features in each sample or group. Let's make a heatmap of the top 30 most abundant features in each of our sample types:
+
+.. command-block::
+
+   qiime sample-classifier heatmap \
+     --i-table moving-pictures-table.qza \
+     --i-importance moving-pictures-classifier/feature_importance.qza \
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-metadata-column BodySite \
+     --p-group-samples \
+     --p-feature-count 30 \
+     --p-mode median-ceiling \
+     --o-filtered-table moving-pictures-classifier/important-feature-table-top-30.qza \
+     --o-heatmap moving-pictures-classifier/important-feature-heatmap.qzv
+
+
 This pipeline also produces a visualization containing a summary of the model parameters used by the supervised learning estimator in ``model_summary.qzv``. If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a `recursive feature elimination`_ plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the other outputs.
 
 .. question::
