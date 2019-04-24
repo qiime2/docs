@@ -105,7 +105,6 @@ We can also use the ``heatmap`` pipeline to generate an abundance heatmap of the
      --m-metadata-column BodySite \
      --p-group-samples \
      --p-feature-count 30 \
-     --p-mode median-ceiling \
      --o-filtered-table moving-pictures-classifier/important-feature-table-top-30.qza \
      --o-heatmap moving-pictures-classifier/important-feature-heatmap.qzv
 
