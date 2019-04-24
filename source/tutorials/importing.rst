@@ -200,63 +200,40 @@ Importing data
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the `qiime tools import` command with different specifications than in the EMP or Casava import commands.
+If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the ``qiime tools import`` command with different specifications than in the EMP or Casava import commands.
 
 Format description
 ******************
 
 First, you'll create a text file called a "manifest file", which maps sample identifiers to ``fastq.gz`` or ``fastq`` `absolute filepaths`_ that contain sequence and quality data for the sample (i.e. these are FASTQ files).
-The manifest file also indicates the direction of the reads in each ``fastq.gz`` or ``fastq`` file. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. You can call the manifest file whatever you want.
+The manifest file also indicates the direction of the reads in each ``fastq.gz`` or ``fastq`` file. The manifest file will generally be created by you, and it is designed to be a simple format that doesn't put restrictions on the naming of the demultiplexed ``fastq.gz`` / ``fastq`` files, since there is no broadly used naming convention for these files. You can call the manifest file whatever you want. As well, the manifest format is Metadata-compatible, so you can re-use the manifest file to bootstrap your :doc:`Sample Metadata <metadata>`, too.
 
-The manifest file is a comma-separated (i.e., ``.csv``) text file. The first field on each line is the sample identifier that should be used by QIIME, the second field is the absolute filepath, and the third field is the read direction. Lines beginning with ``#`` and blank lines are ignored. The first line in the file that does not begin with a ``#`` and is not blank must be the header line: ``sample-id,absolute-filepath,direction``. With the exception of the header line, the order of lines in this file is not important.
+The manifest file is a tab-seperated (i.e., ``.tsv``) text file. The first column defines the Sample ID, while the second (and optional third) column defines the absolute filepath to the forward (and optional reverse) reads. All of the rules and behavior of this format are inherited from the :doc:`QIIME 2 Metadata format <metadata>`.
 
-For single-end reads, there must be exactly one line per sample ID corresponding to the forward reads (or reverse, if you're processing these separately as single-end reads). For paired-end reads there must be exactly two lines per sample id, corresponding to the forward and the reverse reads. The direction field on each line can only contain the text ``forward`` or ``reverse``.
-
-The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for two samples.
+The ``fastq.gz`` absolute filepaths may contain environment variables (e.g., ``$HOME`` or ``$PWD``). The following example illustrates a simple fastq manifest file for paired-end read data for four samples.
 
 ::
 
-  sample-id,absolute-filepath,direction
-  # Lines starting with '#' are ignored and can be used to create
-  # "comments" or even "comment out" entries
-  sample-1,$PWD/some/filepath/sample1_R1.fastq.gz,forward
-  sample-2,$PWD/some/filepath/sample2_R1.fastq.gz,forward
-  sample-1,$PWD/some/filepath/sample1_R2.fastq.gz,reverse
-  sample-2,$PWD/some/filepath/sample2_R2.fastq.gz,reverse
+  sample-id	forward-absolute-filepath	reverse-absolute-filepath
+  sample-1	$PWD/some/filepath/sample0_R1.fastq.gz	$PWD/some/filepath/sample1_R2.fastq.gz
+  sample-2	$PWD/some/filepath/sample2_R1.fastq.gz	$PWD/some/filepath/sample2_R2.fastq.gz
+  sample-3	$PWD/some/filepath/sample3_R1.fastq.gz	$PWD/some/filepath/sample3_R2.fastq.gz
+  sample-4	$PWD/some/filepath/sample4_R1.fastq.gz	$PWD/some/filepath/sample4_R2.fastq.gz
 
-Just like with ``fastq.gz``, the absolute filepaths in the manifest for any ``fastq`` files must be accurate. The following example illustrates a simple fastq manifest file for ``fastq`` single-end read data for one sample.
+Just like with ``fastq.gz``, the absolute filepaths in the manifest for any ``fastq`` files must be accurate. The following example illustrates a simple fastq manifest file for ``fastq`` single-end read data for two samples.
 
 ::
 
-  sample-id,absolute-filepath,direction
-  sample-1,$PWD/some/filepath/sample1_R1.fastq,forward
+  sample-id	absolute-filepath
+  sample-1	$PWD/some/filepath/sample1_R1.fastq
+  sample-2	$PWD/some/filepath/sample2_R1.fastq
 
-There are four variants of FASTQ data which you must specify to QIIME 2 when importing, and which are defined in the following sections.
+There are four variants of FASTQ data which you must specify to QIIME 2 when importing, and which are defined in the following sections. Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33V2`` and ``PairedEndFastqManifestPhred64V2``.
 
-SingleEndFastqManifestPhred33
-*****************************
+SingleEndFastqManifestPhred33V2
+*******************************
 
 In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
-
-SingleEndFastqManifestPhred64
-*****************************
-
-In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
-
-PairedEndFastqManifestPhred33
-*****************************
-
-In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample id. As a result, each sample id is represented twice in the manifest file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
-
-PairedEndFastqManifestPhred64
-*****************************
-
-In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample id. As a result, each sample id is represented twice in the manifest file: once for its forward reads, and once for its reverse reads. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
-
-Obtaining example data
-```````````````````````
-
-Since importing data in these four formats is very similar, we'll only provide examples for two of the variants: ``SingleEndFastqManifestPhred33`` and ``PairedEndFastqManifestPhred64``.
 
 .. download::
    :url: https://data.qiime2.org/2019.4/tutorials/importing/se-33.zip
@@ -265,6 +242,32 @@ Since importing data in these four formats is very similar, we'll only provide e
 .. download::
    :url: https://data.qiime2.org/2019.4/tutorials/importing/se-33-manifest
    :saveas: se-33-manifest
+
+.. command-block::
+
+   unzip -q se-33.zip
+
+   qiime tools import \
+     --type 'SampleData[SequencesWithQuality]' \
+     --input-path se-33-manifest \
+     --output-path single-end-demux.qza \
+     --input-format SingleEndFastqManifestPhred33V2
+
+
+SingleEndFastqManifestPhred64V2
+*******************************
+
+In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
+
+PairedEndFastqManifestPhred33V2
+*******************************
+
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample ID. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
+
+PairedEndFastqManifestPhred64V2
+*******************************
+
+In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample ID. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
 
 .. download::
    :url: https://data.qiime2.org/2019.4/tutorials/importing/pe-64.zip
@@ -276,28 +279,13 @@ Since importing data in these four formats is very similar, we'll only provide e
 
 .. command-block::
 
-   unzip -q se-33.zip
    unzip -q pe-64.zip
-
-
-Importing Data
-**************
-
-.. command-block::
-
-   qiime tools import \
-     --type 'SampleData[SequencesWithQuality]' \
-     --input-path se-33-manifest \
-     --output-path single-end-demux.qza \
-     --input-format SingleEndFastqManifestPhred33
-
-.. command-block::
 
    qiime tools import \
      --type 'SampleData[PairedEndSequencesWithQuality]' \
      --input-path pe-64-manifest \
      --output-path paired-end-demux.qza \
-     --input-format PairedEndFastqManifestPhred64
+     --input-format PairedEndFastqManifestPhred64V2
 
 Sequences without quality information (i.e. FASTA)
 --------------------------------------------------------
