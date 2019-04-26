@@ -68,7 +68,7 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
 Demultiplexing sequences
 ------------------------
 
-To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads). The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences.
+To demultiplex sequences we need to know which barcode sequence is associated with each sample. This information is contained in the `sample metadata`_ file. You can run the following commands to demultiplex the sequences (the ``demux emp-single`` command refers to the fact that these sequences are barcoded according to the `Earth Microbiome Project`_ protocol, and are single-end reads). The ``demux.qza`` QIIME 2 artifact will contain the demultiplexed sequences. The second output (``demux-details.qza``) presents Golay error correction details, and will not be explored in this tutorial (you can visualize these data using ``qiime metadata tabulate``).
 
 .. command-block::
 
@@ -76,7 +76,8 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
       --i-seqs emp-single-end-sequences.qza \
       --m-barcodes-file sample-metadata.tsv \
       --m-barcodes-column BarcodeSequence \
-      --o-per-sample-sequences demux.qza
+      --o-per-sample-sequences demux.qza \
+      --o-error-correction-details demux-details.qza
 
 After demultiplexing, it's useful to generate a summary of the demultiplexing results. This allows you to determine how many sequences were obtained per sample, and also to get a summary of the distribution of sequence qualities at each position in your sequence data.
 
