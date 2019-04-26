@@ -1,11 +1,6 @@
 {% extends "!layout.html" %}
-
 {# Override basic theme to be fully custom website #}
 {# Block reference found at: https://github.com/contpub/sphinx-themes/tree/master/basic #}
-
-{%- block doctype -%}
-<!DOCTYPE html>
-{%- endblock %}
 
 {# Extra tags needed in head #}
 {% block extrahead %}
@@ -25,10 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
 
-{% block header %}{% endblock %}
-
-{% block content %}
-
+{% block header %}
   <nav class="navbar is-light" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
@@ -78,66 +70,45 @@
       </div>
     </div>
   </nav>
+{% endblock %}
 
-  <section class="section">
-    <div class="container">
+{# Removing content from header and footer relation bars #}
+{% block relbar1 %}{% endblock %}
+
+{% block content %}
+  <section class="main-content columns is-fullheight">
+    <aside class="menu column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+      <p class="menu-label">
+        Table of Contents
+      </p>
+      {{ toctree()|replace('class="current"', 'class="menu-list"')|replace("current reference internal", "is-active reference internal")}}
+    </aside>
+
+    <div class="container column is-10">
       <div class="content">
-        {% if render_sidebar %}
-          {{ sidebar() }}
-        {% endif %}
         {% block document %}
           {% block body %} {% endblock %}
         {% endblock %}
       </div>
     </div>
   </section>
-
-  {#--
-  <div id="wrapper" class="container clearfix">
-    <div id="content">
-      {% block document %}
-      <div id="body" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 main pull-right">
-        {% block body %} {% endblock %}
-      </div>
-      {% endblock %}
-
-      {% if render_sidebar %}
-      <div id="sidebar" class="col-lg-2 col-md-2 col-sm-12 col-xs-12 side pull-left">
-        <div id="version-div" class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-          <ul id="version-list" class="dropdown-menu"></ul>
-        </div>
-        {{ q2sidebar() }}
-      </div>
-      {% endif %}
-    </div>
-  </div>
-  --#}
 {% endblock %}
 
-
 {# Removing content from header and footer relation bars #}
-{% block relbar1 %}{% endblock %}
 {%- block relbar2 %}{% endblock %}
 
 {%- block footer %}
-    <footer class="footer" style="padding-bottom: 3rem;">
-      <div class="content has-text-centered">
-      {%- if show_copyright %}
-        {%- if hasdoc('copyright') %}
-          {% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
-        {%- else %}
-          {% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
-        {%- endif %}
+  <footer class="footer" style="padding-bottom: 3rem;">
+    <div class="content has-text-centered">
+    {%- if show_copyright %}
+      {%- if hasdoc('copyright') %}
+        {% trans path=pathto('copyright'), copyright=copyright|e %}&#169; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
+      {%- else %}
+        {% trans copyright=copyright|e %}&#169; Copyright {{ copyright }}.{% endtrans %}
       {%- endif %}
-      {%- if last_updated %}
-        {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
-      {%- endif %}
-      {%- if show_sphinx %}
-        {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
-      {%- endif %}
-      </div>
-    </footer>
+    {%- endif %}
+    </div>
+  </footer>
   <script src="{{ pathto('_static/bootstrap-dropdown.js', 1) }}" charset="utf-8"></script>
   <script src="{{ pathto('_static/clipboard-driver.js', 1) }}"></script>
   <script src="/versions.js" charset="utf-8"></script>
