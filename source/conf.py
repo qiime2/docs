@@ -214,6 +214,7 @@ html_static_path = ['_static']
 # html_sidebars = {
 #     "**": ['globaltoc.html', 'searchbox.html']
 # }
+html_experimental_html5_writer = True
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
