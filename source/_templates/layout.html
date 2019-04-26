@@ -76,19 +76,23 @@
 {% block relbar1 %}{% endblock %}
 
 {% block content %}
-  <section class="main-content columns is-fullheight">
-    <aside class="menu column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
-      <p class="menu-label">
-        Table of Contents
-      </p>
-      {{ toctree()|replace('class="current"', 'class="menu-list"')|replace("current reference internal", "is-active reference internal")}}
-    </aside>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <aside class="menu column is-3">
+          <p class="menu-label">
+            Table of Contents
+          </p>
+          {{ toctree()|replace('class="current"', 'class="menu-list"')|replace("current reference internal", "is-active reference internal")}}
+        </aside>
 
-    <div class="container column is-10">
-      <div class="content">
-        {% block document %}
-          {% block body %} {% endblock %}
-        {% endblock %}
+        <div class="column is-10">
+          <div class="content">
+            {% block document %}
+              {% block body %} {% endblock %}
+            {% endblock %}
+          </div>
+        </div>
       </div>
     </div>
   </section>
