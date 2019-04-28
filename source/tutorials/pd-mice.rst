@@ -1,21 +1,3 @@
-.. _Sampson et al, 2016:  https://www.ncbi.nlm.nih.gov/pubmed/27912057
-.. _PRJEB17694: https://www.ebi.ac.uk/ena/data/view/PRJEB17694
-.. _qiita: www.qiita.ucsd.edu
-.. _EMP 515f-806r: http://www.earthmicrobiome.org/protocols-and-standards/16s/
-.. _absolute path: https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths
-.. _q2-dbOTU: https://library.qiime2.org/plugins/q2-dbotu/4/
-.. _Dada2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
-.. _Deblur: https://www.ncbi.nlm.nih.gov/pubmed/28289731
-.. _Nearing et al, 2018: https://www.ncbi.nlm.nih.gov/pubmed/30123705
-.. _Bokulich et al, 2013: https://www.ncbi.nlm.nih.gov/pubmed/23202435
-.. _Weiss et al, 2017: https://www.ncbi.nlm.nih.gov/pubmed/28253908
-.. _qiime forum by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
-.. _view.qiime2.org: http://www.view.qiime2.org
-.. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
-.. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
-.. _... 
-
-
 Parkinson’s Mouse Tutorial
 ------------------------------------
 
@@ -656,40 +638,21 @@ When you open the ancom visualizations, you’ll see a volcano plot on top which
 Longitudinal Analysis
 =====================
 
-This study includes a longitudinal component; samples from each mouse
-were collected 7, 14, 21, and 49 days post fecal transplant. We can use
-the ``q2-longitudinal`` plug-in to explore the hypothesis that a mouse’s
-genetic background affected the change in the microbial community of
-each mouse. For this longitudinal analysis, we’re going to focus on beta
-diversity. Alpha diversity changes wildly in infants, but it’s often
-stable in adults over short time periods. We’re dealing with an adult
-fecal community over a relatively short time period, and there is no
-difference in alpha diversity with time. The `longitudinal analysis
-tutorial <>`__ is an excellent resource for exploring changes samples.
+This study includes a longitudinal component; samples from each mouse were collected 7, 14, 21, and 49 days post fecal transplant. We can use the ``q2-longitudinal`` plug-in to explore the hypothesis that a mouse’s genetic background affected the change in the microbial community of each mouse. For this longitudinal analysis, we’re going to focus on beta diversity. Alpha diversity changes wildly in infants, but it’s often stable in adults over short time periods. We’re dealing with an adult fecal community over a relatively short time period, and there is no difference in alpha diversity with time. The :doc:`longitudinal analysis tutorial <longitudinal>` is an excellent resource for exploring changes samples.
 
 PCoA-based analyses
 -------------------
 
-We can start by exploring temporal change in the PCoA using the
-animations tab.
+We can start by exploring temporal change in the PCoA using the animations tab.
 
-\\begin{exercise}[PCoA
-Animations]:raw-latex:`\label{exer:pcoa_animation}` Open the unweighted
-UniFrac emperor plot (). Color the samples by mouse id. Click on the
-“animations” tab and animate using the ``day_post_transplant`` as your
-gradient and ``mouse_id`` as your trajectory. Do you observe any clear
-temporal trends based on the PCoA?
+.. question::
 
-What happens if you color by ``day_post_transplant``? Do you see a
-difference based on the day? *Hint: Trying changing the colormap to a
-sequential colormap like viridis.*
+Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
 
-\\end{exercise}
+What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
-Sometimes, it can also be useful to view the PCoA using a custom axis.
-Let’s use ``q2-emperor`` to make a PCoA where we can look at the time
-after transplant as a custom axis using the ``--p-custom-axes``
-parameter.
+
+Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s use ``q2-emperor`` to make a PCoA where we can look at the time after transplant as a custom axis using the ``--p-custom-axes`` parameter.
 
 .. command-block::
 
@@ -701,20 +664,13 @@ parameter.
 
 
 
-We might also want to look a the variation along the PC if we start from
-the same point. We can use volatility analysis from the
-``q2-longitudinal`` plugin to look at how samples from an individual
-move along each PC.
+We might also want to look a the variation along the PC if we start from the same point. We can use volatility analysis from the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC.
 
-The ``--m-metadata-file`` column can take several types, including a
-metadata file (like our ``metadata.tsv``) as well as a
-``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll
-use later), or a ``PCoA`` artifact.
+The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
 
 .. command-block::
 
-    %%time
-    !qiime longitudinal volatility \
+    qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --o-visualization ./pc_vol.qzv \
@@ -723,15 +679,14 @@ use later), or a ``PCoA`` artifact.
 
 
 
-.. raw:: latex
+.. question::
 
-   \begin{exercise}[PCoA Volatility]\label{ex:pc.vol}
-   Open the emperor plot with the custom axis. Try exploring the custom axis plot to see if you can find new insight.
+   
+    Try exploring the PCoA with the custom axis plot to see if you can find new insight. 
+    Now, open the volatility plot. What's different in this visualization what what you see in the PCoA with custom axes?
 
-   Now, open the volatility plot. What's different in this visualization what what you see in the PCoA with custom axes?
+    Using the **[Axis]** tab in the emperor PCoA, switch the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
 
-   Using the **[Axis]** tab in the emperor PCoA, switch the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
-   \end{exercise}
 
 Distance-based analysis
 -----------------------
@@ -765,38 +720,19 @@ We can again use volatility analysis to visualize the change in beta diversity b
 
 
 
-A linear mixed effects (LME) model lets us test whether there’s a
-relationship between a dependent variable and one or more independent
-variables in an experiment using repeated measures. Since we’re
-interested in genotype, we should use this as an independent predictor.
+A linear mixed effects (LME) model lets us test whether there’s a relationship between a dependent variable and one or more independent variables in an experiment using repeated measures. Since we’re interested in genotype, we should use this as an independent predictor.
 
-For our experiment, we’re currently interested in the change in
-distance from the initial timepoint, so we’ll use this as our outcome
-variable (given by ``--p-metric``).
+For our experiment, we’re currently interested in the change in distance from the initial timepoint, so we’ll use this as our outcome variable (given by ``--p-metric``).
 
-``q2-longitudinal`` also requires a state column (``--p-state-column``)
-which designates the time component in the metadata, and an individual
-identifier (``--p-individual-id-column``). Which columns should we use
-in our data?
+``q2-longitudinal`` also requires a state column (``--p-state-column``) which designates the time component in the metadata, and an individual identifier (``--p-individual-id-column``). Which columns should we use in our data?
 
-We can build a model either using the ``--p-formula`` parameter or the
-``--p-group-columns`` parameter. For this analysis, we’re interested in
-whether genotype affects the longitudinal change in the microbial
-community. However, we also know from our cross sectional analysis that
-donor plays a large role in shaping the fecal community. So, we should
-also probably include that in this analysis. We may also want to
-consider cage effect in our experiment, since this is a common
-confounder in rodent studies. However, the original experimental design
-here was clever: although cages were grouped by donor (mice are
-coprophagic), they were of mixed genotype. This partial randomization
-helps limit some of the cage effects we might otherwise see.
+We can build a model either using the ``--p-formula`` parameter or the ``--p-group-columns`` parameter. For this analysis, we’re interested in whether genotype affects the longitudinal change in the microbial community. However, we also know from our cross sectional analysis that donor plays a large role in shaping the fecal community. So, we should also probably include that in this analysis. We may also want to consider cage effect in our experiment, since this is a common confounder in rodent studies. However, the original experimental design here was clever: although cages were grouped by donor (mice are coprophagic), they were of mixed genotype. This partial randomization helps limit some of the cage effects we might otherwise see.
 
 Based on the experimental design, what group columns should we choose?
 
 .. command-block::
 
-    %%time
-    !qiime longitudinal linear-mixed-effects \
+    qiime longitudinal linear-mixed-effects \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
      --o-visualization ./from_first_unifrac_lme.qzv \
@@ -809,65 +745,39 @@ Based on the experimental design, what group columns should we choose?
 
 Now, let’s look at the results of the models.
 
-\\begin{exercise}[Distance Volatility]:raw-latex:`\label{ex:dist.vol}`
-Open the distance volatility plot (``./from_first_unifrac_vol.qzv``)
-using the qiime 2 viewer. Based on the volatility plot, does one donor
-change more over time than the other? What about by genotype? Cage?
+.. question:: 
+    Open the distance volatility plot (``./from_first_unifrac_vol.qzv``) using the qiime 2 viewer. Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
 
-Now, let’s open the linear mixed effects model
-(``./from_first_unifrac_lme.qzv``). Is there a significant association
-between the genotype and temporal change? Which genotype is more stable
-(has lower variation)? Is there a temporal change associated with the
-donor? Did you expect or not expect this based on the volatility plot
-results? Can you find an interaction between the donor and genotype?
-\\end{exercise}
+    Now, let’s open the linear mixed effects model (``./from_first_unifrac_lme.qzv``). Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
 
 Synthesis
 =========
 
-Based on the results of the analysis, we can say that there is a
-difference in the microbial communities of these mice based on their
-donor and genetic background. (This recapitulates the results of the
-original analysis.)
+Based on the results of the analysis, we can say that there is a difference in the microbial communities of these mice based on their donor and genetic background. (This recapitulates the results of the original analysis.)
 
 We found that the donor is the primary driver of alpha diversity.
 
-But, we saw differences by donor and genotype based on beta diversity.
-Using the PCoA, we can see clear separation between the mice from the
-two donors (this recapitulates the results of the original paper). After
-adjusting for the donor, we saw a significant difference between the
-genotypes.
+But, we saw differences by donor and genotype based on beta diversity. Using the PCoA, we can see clear separation between the mice from the two donors (this recapitulates the results of the original paper). After adjusting for the donor, we saw a significant difference between the genotypes.
 
-Although there wasn’t a clear pattern in the barchart at the phylum
-level between donors or genotypes, we were still able to find ASVs which
-differentiated the genotypes at using ANCOM. There was no overlap between
-these ASVs in the donor and genetic background, supporting the
-hypothesis that the difference due to genotype is seperate from the
-difference due to donor.
+Although there wasn’t a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes at using ANCOM. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is seperate from the difference due to donor.
 
-The volatility plots and temporal analysis showed the microbiome in
-different genetic backgrounds changed differently over time.
+The volatility plots and temporal analysis showed the microbiome in different genetic backgrounds changed differently over time.
 
-This suggests that there is an effect on the microbiome of mice
-receiving fecal transplants due to genotype.
+This suggests that there is an effect on the microbiome of mice receiving fecal transplants due to genotype.
 
-Next Steps
-==========
+.. _Sampson et al, 2016:  https://www.ncbi.nlm.nih.gov/pubmed/27912057
+.. _PRJEB17694: https://www.ebi.ac.uk/ena/data/view/PRJEB17694
+.. _qiita: www.qiita.ucsd.edu
+.. _EMP 515f-806r: http://www.earthmicrobiome.org/protocols-and-standards/16s/
+.. _absolute path: https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths
+.. _q2-dbOTU: https://library.qiime2.org/plugins/q2-dbotu/4/
+.. _Dada2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
+.. _Deblur: https://www.ncbi.nlm.nih.gov/pubmed/28289731
+.. _Nearing et al, 2018: https://www.ncbi.nlm.nih.gov/pubmed/30123705
+.. _Bokulich et al, 2013: https://www.ncbi.nlm.nih.gov/pubmed/23202435
+.. _Weiss et al, 2017: https://www.ncbi.nlm.nih.gov/pubmed/28253908
+.. _qiime forum by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
+.. _view.qiime2.org: http://www.view.qiime2.org
+.. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
+.. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
 
-There are a number of good tutorials on `qiime2.org <>`__.
-
-If you’re interested in alternative pipelines (for a more “choose your
-own adventure” feel), please check out the `plugins library <>`__.
-
-These include community contributed plug-ins to address a variety of
-steps. If you run into questions, the `qiime 2 forum <>`__ is useful to
-both check if others have had the same problem or to post your own
-question.
-
-Good luck, and happy QIIME-ing!
-
-Acknowledgements
-================
-
-Pieces of this tutorial have been adapted from the `QIIME 2 moving
-pictures tutorial <>`__ by the QIIME development team.
