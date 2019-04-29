@@ -126,7 +126,7 @@ We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://drive.google.com/file/d/1Xdfkxh14xcdoBqi6SZTS_UtKwEU3pnrC/view?usp=sharing
+   :url: https://gist.githubusercontent.com/jwdebelius/7d636639b237bee3d89c3bcbde8c2849/raw/f9d1ef84a0156fd92ee58304c1aaca4d72e45b7a/gistfile1.txt
    :saveas: manifest
 
 .. download::
