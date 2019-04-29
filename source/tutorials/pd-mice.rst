@@ -572,7 +572,7 @@ Now, let’s use the filtered table to build an interactive barplot of the taxon
 
 .. command-block::
 
-qiime taxa barplot \
+    qiime taxa barplot \
      --i-table ./table_1k.qza \
      --i-taxonomy ./taxonomy.qza \
      --m-metadata-file ./metadata.tsv \

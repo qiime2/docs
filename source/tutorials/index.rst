@@ -11,6 +11,7 @@ Tutorials
    moving-pictures
    fmt
    atacama-soils
+   pd-mice
    gneiss
    importing
    exporting
