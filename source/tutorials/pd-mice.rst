@@ -71,7 +71,7 @@ Before starting the analysis, we recommend exploring the metadata. The  metadata
 |                         | not have any       |                 |                  |
 |                         | additional risk    |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| ``cage_id``             | the unique         | categorical     | ‘``"C31"``;      |
+| ``cage_id``             | the unique         | categorical     | ``"C31"``;       |
 |                         | identifier for     |                 | ``"C35"``;       |
 |                         | each cage of       |                 | ``"C42"``;       |
 |                         | mice               |                 | ``"C43"``;       |
@@ -195,16 +195,17 @@ The help documentation is a good reference for any command, and the first place 
 Sequence quality control and feature table
 ==========================================
 
-There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME offers clustering through :doc:```q2-vsearch`<otu-clustering>`` and ```q2-dbOTU_`` plug-ins, currently.
+There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME offers clustering through :doc:```q2-vsearch`<otu-clustering>`` and 
+```q2-dbOTU_``` plug-ins, currently.
 
-ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `Dada2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithm and motivation for denoising are nicely described in `Nearing et al, 2018`_.
+ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `Dada2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithms and motivation for denoising are nicely described in `Nearing et al, 2018`_.
 
 It is worth noting in either case that denoising to ASVs and clustering to OTUs are seperate, but parallel steps. A choice should be made for a single pathway: either denoising or OTU based clustering; it is not recommended to combine the steps.
 
+In this tutorial, we’ll denoise using Deblur on single ended sequences. those interested in Dada2 may find the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Atacama soil tutorial <atacama-soils>`. An example of using Deblur with paired end reads can be found in the :doc:`Alternative methods of read joining <read-joining/>` tutorial.
+
 Quality filtering
 -----------------
-
-In this tutorial, we’ll denoise using Deblur on single ended sequences. those interested in Dada2 may find the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Atacama soil tutorial <atacama-soils>`. An example of using Deblur with paired end reads can be found in the :doc:`Alternative methods of read joining <read-joining/>` tutorial.
 
 Deblur assumes an upper error profile from an Illumina run, and applies that to all sequences. The first step for denoising with Deblur is to perform quality filtering. This method is an implementation of the quality filtering approach from `Bokulich et al, 2013`_. We’ll run the quality filtering with the default QIIME 2 parameters. The parameters used here are not those from the original Deblur paper, but reflect the current recommended practices.
 
@@ -225,8 +226,6 @@ For the deblur algorithm we need to select a sequence length for trimming. Let�
     qiime demux summarize \
      --i-data ./quality_filtered_seqs.qza \
      --o-visualization ./quality_filtered_seqs.qzv
-    #  --p-n 1000
-
 
 We can use the ``qiime metadata tabulate`` command to summarize the statistics and help us understand how many sequences were lost during quality filtering and where they were lost.
 
@@ -251,7 +250,7 @@ Next, we’ll apply the Deblur algorithm with the ``qiime deblur denoise-16S`` c
 
 The method requires the use of an additional parameter: ``p-trim-length``. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
-The command is expected to take about 3-4 minutes to run.
+*Note*: The command is expected to take about 3-4 minutes to run.
 
 .. command-block::
 
@@ -271,7 +270,7 @@ We can also review the deblur stats using the ``qiime deblur visualize-stats`` c
       --i-deblur-stats ./deblur_stats.qza  \
       --o-visualization ./deblur_stats.qzv
 
-
+.. I haven't been quite able ot get this to visualize and Im not sure why. everything else runs fun, my table is fine, but the statistics are wonky. --jwd
 
 Feature Table Summary
 ---------------------
@@ -319,12 +318,16 @@ We’ll start by using the representative set of sequences from denoising (``Fea
 
 It’s worth noting that naive bayesian classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
 
+..need to download a classifier. currently using the same as moving-pictures
+
 .. command-block::
 
     qiime feature-classifier classify-sklearn \
      --i-reads ./deblur_rep_set.qza \
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
+
+.. do we want to throw clawback in here? 
 
 Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` function.
 
@@ -397,9 +400,11 @@ If you’re still unsure whether the rarefaction depth, you can also use the sam
    1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample? 
    2. Which mice did the missing samples come from?
 
+
 **Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
 
 In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+
 
 Diversity Analysis
 ==================
@@ -544,6 +549,7 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain? 
 
+.. do we also want permadisp here?
 
 Taxonomy Barchart
 =================
@@ -583,7 +589,7 @@ Differential Abundance with ANCOM
 
 Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Blah, blah, blah filter sequences to remove the ones in one sample because those tend to screw with things.
+Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the compositional composition of a sample further disrupting 
 
 .. command-block::
 
@@ -764,6 +770,11 @@ Although there wasn’t a clear pattern in the barchart at the phylum level betw
 The volatility plots and temporal analysis showed the microbiome in different genetic backgrounds changed differently over time.
 
 This suggests that there is an effect on the microbiome of mice receiving fecal transplants due to genotype.
+
+.. Next steps?
+.. ===========
+
+.. Refereences
 
 .. _Sampson et al, 2016:  https://www.ncbi.nlm.nih.gov/pubmed/27912057
 .. _PRJEB17694: https://www.ebi.ac.uk/ena/data/view/PRJEB17694
