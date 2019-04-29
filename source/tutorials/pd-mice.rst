@@ -180,8 +180,7 @@ The help documentation is a good reference for any command, and the first place 
      --o-visualization ./demux_seqs.qzv \
      --p-n 1000
 
-
- You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
+You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
 
 .. question::
 
@@ -708,8 +707,7 @@ We can again use volatility analysis to visualize the change in beta diversity b
 
 .. command-block::
 
-    %%time
-    !qiime longitudinal volatility \
+    qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
      --o-visualization ./from_first_unifrac_vol.qzv \
