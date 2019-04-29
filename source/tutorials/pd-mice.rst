@@ -22,7 +22,7 @@ This tutorial will explore the hypothesis that the genetic background of a human
 Set up
 ======
 
-This tutorial assumes that you have QIIME installed according to the :doc: <`installation instructions <../install/index>`. 
+This tutorial assumes that you have QIIME installed according to the :doc:`installation instructions <../install/index>`. 
 
 Before running the tutorial, you will need to make a directory for the tutorial data and navigate into that directory.
 
@@ -35,7 +35,7 @@ Before running the tutorial, you will need to make a directory for the tutorial 
 Metadata
 ========
 
-Before starting the analysis, we recommend exploring the metadata. The  metadata file contains 5 columns; a brief description of each column and  what it means can be found below.
+Before starting any analysis, it's important to be familiar with the metadata. In this study, the metadata file contains 7 columns.
 
 +-------------------------+--------------------+-----------------+------------------+
 | variable                | description        | data type       | values           |
@@ -105,20 +105,18 @@ Before starting the analysis, we recommend exploring the metadata. The  metadata
 
 Even though the mouse ID looks like a number, we will specify the type using the ``#q2_type`` column in the data.
 
-You can download the metadata from and save it as a tsv.
+The metadata is avaliable as a `Google Sheet`_, or ou can download it directly from and save it as a tsv.
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/pd-mice/metadata.tsv
+   :url: https://drive.google.com/file/d/1Wcq0rTC0017XAigIiXrCmOWcdgsvOoO0/view?usp=sharing
    :saveas: metadata.tsv
-
-
 
 The sample metadata will be used through out the tutorial.
 
 Loading the data into QIIME
 ===========================
 
-In QIIME 2, all data is structured as an Artifact of a specific semantic type. The artifacts contain the data as well as information about the data, including a record of the original data, the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and types of artifacts :doc: `here <../semantic-types/>`.
+In QIIME 2, all data is structured as an Artifact of a specific semantic type. The artifacts contain the data as well as information about the data, including a record of the original data, the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and types of artifacts :doc:`here <../semantic-types/>`.
 
 Our samples were amplified u|sing the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
 region covered by the primers we used 290bp and so with 150bp reads, our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc: `moving pictures tutorial <moving-pictures>` describes how to demultiplex your sequences if they were sequenced using the Earth Microbiome Project protocol.
@@ -128,11 +126,11 @@ We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/pd-mice/manifest
+   :url: https://drive.google.com/file/d/1Xdfkxh14xcdoBqi6SZTS_UtKwEU3pnrC/view?usp=sharing
    :saveas: manifest
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/pd-mice/demuliplexed_seqs.zip
+   :url: https://drive.google.com/open?id=1QDWETNPd58MZMlQvlFEOV8ArHqJd_-zr
    :saveas: demuliplexed_seqs.zip
 
 You'll need to unzip the directory of sequences.
@@ -183,9 +181,9 @@ The help documentation is a good reference for any command, and the first place 
      --p-n 1000
 
 
-.. question::
+ You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
 
-   Let's explore the demultiplexed sequence visualization. You can view the .qzv visualization file at [view.qiime2.org/](https://view.qiime2.org/). Just drag and drop the file into the viewer window.
+.. question::
 
    1. After demultiplexing, which sample has the lowest sequencing depth?
    2. What is the median sequence length? 
@@ -195,8 +193,8 @@ The help documentation is a good reference for any command, and the first place 
 Sequence quality control and feature table
 ==========================================
 
-There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME offers clustering through :doc:```q2-vsearch`<otu-clustering>`` and 
-```q2-dbOTU_``` plug-ins, currently.
+There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME offers clustering through :doc:`q2-vsearch<otu-clustering>` and 
+`q2-dbOTU_` plug-ins, currently.
 
 ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `Dada2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithms and motivation for denoising are nicely described in `Nearing et al, 2018`_.
 
@@ -484,11 +482,7 @@ Next, we’ll compare the structure of the microbiome communities using beta div
 
 .. question:: 
 
-    Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. On the left hand side of the page you’ll see a series of navigation bars.
-
-    Can you find separation in the data? Using the drop down menu, what is the major driver of separation in the data?
-
-    What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
+    Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
 
     One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
 
@@ -614,14 +608,13 @@ Let’s use ANCOM to check whether there is a difference in the mice based on th
 
 .. command-block::
 
-    %%time
-    !qiime composition ancom \
+    qiime composition ancom \
      --i-table ./table1k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column donor \
      --o-visualization ./ancom_donor.qzv
     
-    !qiime composition ancom \
+    qiime composition ancom \
      --i-table ./table1k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column genotype \
@@ -653,9 +646,9 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
 .. question::
 
-Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
+    Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
 
-What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
+    What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
 
 Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s use ``q2-emperor`` to make a PCoA where we can look at the time after transplant as a custom axis using the ``--p-custom-axes`` parameter.
@@ -791,4 +784,4 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 .. _view.qiime2.org: http://www.view.qiime2.org
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
-
+.. _Google Sheet: https://docs.google.com/spreadsheets/d/1wBU1JTUg_lMIgFtadk3Q9wYUVg68E10ajFWM1nbbZEo/edit?usp=sharing
