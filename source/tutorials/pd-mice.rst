@@ -43,7 +43,7 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 | sample-id               | unique sample      | —               | unique for each  |
 |                         | identifier         |                 | sample           |
 +-------------------------+--------------------+-----------------+------------------+
-| mouse-id                | the unique         | categorical     | ``"435"``;       |
+| mouse_id                | the unique         | categorical     | ``"435"``;       |
 |                         | identifier for     |                 | ``"437"``;       |
 |                         | each mouse         |                 | ``"456"``;       |
 |                         |                    |                 | ``"457"``;       |
@@ -71,7 +71,7 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | not have any       |                 |                  |
 |                         | additional risk    |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| cage-id                 | the unique         | categorical     | ``"C31"``;       |
+| cage_id                 | the unique         | categorical     | ``"C31"``;       |
 |                         | identifier for     |                 | ``"C35"``;       |
 |                         | each cage of       |                 | ``"C42"``;       |
 |                         | mice               |                 | ``"C43"``;       |
@@ -84,7 +84,7 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | donated the        |                 |                  |
 |                         | feces              |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| donor-status            | whether the        | categorical     | ``"Healthy"``;   |
+| donor_status            | whether the        | categorical     | ``"Healthy"``;   |
 |                         | donor has          |                 | ``"PD"``         |
 |                         | Parkinson's        |                 |                  |
 |                         | disease or not     |                 |                  |
@@ -97,7 +97,7 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | neurologically     |                 |                  |
 |                         | healthy)           |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| days-post-transplant    | the number of      | numeric         | 7, 14, 21, 49    |
+| days_post_transplant    | the number of      | numeric         | 7, 14, 21, 49    |
 |                         | days after the     |                 |                  |
 |                         | mice were          |                 |                  |
 |                         | humanized          |                 |                  |
@@ -495,14 +495,14 @@ Let’s also check whether there’s a relationship between cage where a mouse l
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file metadata.tsv \
-     --m-metadata-column cage-id \
+     --m-metadata-column cage_id \
      --o-visualization core-metrics-results/unweighted-unifrac-cage-significance.qzv \
      --p-pairwise
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
      --m-metadata-file metadata.tsv \
-     --m-metadata-column cage-id \
+     --m-metadata-column cage_id \
      --o-visualization core-metrics-results/weighted-unifrac-cage-significance.qzv \
      --p-pairwise
 
@@ -619,7 +619,7 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
 .. question::
 
-   Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse-id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
+   Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
 
    What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
@@ -631,7 +631,7 @@ Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s u
    qiime emperor plot \
      --i-pcoa ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file ./metadata.tsv \
-     --p-custom-axes days-post-transplant \
+     --p-custom-axes days_post_transplant \
      --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv
 
 We might also want to look a the variation along the PC if we start from the same point. We can use volatility analysis from the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC.
@@ -643,8 +643,8 @@ The ``--m-metadata-file`` column can take several types, including a metadata fi
    qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
-     --p-state-column days-post-transplant \
-     --p-individual-id-column mouse-id \
+     --p-state-column days_post_transplant \
+     --p-individual-id-column mouse_id \
      --o-visualization ./pc_vol.qzv
 
 .. question::
@@ -667,8 +667,8 @@ We’ll start this analysis by looking at how much the microbial community of ea
      --i-distance-matrix ./core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file ./metadata.tsv \
      --o-first-distances ./from_first_unifrac.qza \
-     --p-state-column days-post-transplant \
-     --p-individual-id-column mouse-id
+     --p-state-column days_post_transplant \
+     --p-individual-id-column mouse_id
 
 We can again use volatility analysis to visualize the change in beta diversity based on distance.
 
@@ -677,8 +677,8 @@ We can again use volatility analysis to visualize the change in beta diversity b
    qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
-     --p-state-column days-post-transplant \
-     --p-individual-id-column mouse-id \
+     --p-state-column days_post_transplant \
+     --p-individual-id-column mouse_id \
      --p-default-metric Distance \
      --o-visualization ./from_first_unifrac_vol.qzv
 
@@ -698,8 +698,8 @@ Based on the experimental design, what group columns should we choose?
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
      --p-metric Distance \
-     --p-state-column days-post-transplant \
-     --p-individual-id-column mouse-id \
+     --p-state-column days_post_transplant \
+     --p-individual-id-column mouse_id \
      --p-group-columns genotype,donor \
      --o-visualization ./from_first_unifrac_lme.qzv
 
