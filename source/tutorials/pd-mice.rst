@@ -1,13 +1,13 @@
 Parkinson’s Mouse Tutorial
 ------------------------------------
 
-As an example of how to process data through QIIME 2, we will use a set of humanized murine fecal samples from `Sampson et al, 2016`_. 
+As an example of how to process data through QIIME 2, we will use a set of humanized murine fecal samples from `Sampson et al, 2016`_.
 
 The original study was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
 To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples.
 
-Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson’s disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson’s disease due to a mutation (“aSyn”) or resistant wild type mice (“BDF1”). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson’s disease.
+Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson’s disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson’s disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson’s disease.
 
 We’ll look a subset of data from two human donors (one healthy and one with PD) whose samples were transplanted into two cages of mice from the susceptible genotype.
 
@@ -16,22 +16,21 @@ For this tutorial, a subset of the metadata has been pulled from the full file, 
 Hypothesis
 ==========
 
-This tutorial will explore the hypothesis that the genetic background of a humanized mouse influences the microbial community. However, we'll also need to consider other confounders which might drive the shape of the microbiome instead of the mouse genotype. 
+This tutorial will explore the hypothesis that the genetic background of a humanized mouse influences the microbial community. However, we'll also need to consider other confounders which might drive the shape of the microbiome instead of the mouse genotype.
 
 
 Set up
 ======
 
-This tutorial assumes that you have QIIME installed according to the :doc:`installation instructions <../install/index>`. 
+This tutorial assumes that you have QIIME 2 installed according to the :doc:`installation instructions <../install/index>`.
 
 Before running the tutorial, you will need to make a directory for the tutorial data and navigate into that directory.
 
 .. command-block::
    :no-exec:
 
-    mkdir ./mouse_tutorial 
-    cd ./mouse_tutorial
-
+   mkdir ./mouse_tutorial
+   cd ./mouse_tutorial
 
 Metadata
 ========
@@ -115,21 +114,23 @@ The metadata is avaliable as a `Google Sheet`_, or ou can download it directly f
 
 The sample metadata will be used through out the tutorial.
 
-Loading the data into QIIME
-===========================
+Loading the data into QIIME 2
+=============================
 
 In QIIME 2, all data is structured as an Artifact of a specific semantic type. The artifacts contain the data as well as information about the data, including a record of the original data, the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and types of artifacts :doc:`here <../semantic-types/>`.
 
 Our samples were amplified u|sing the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
 region covered by the primers we used 290bp and so with 150bp reads, our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc: `moving pictures tutorial <moving-pictures>` describes how to demultiplex your sequences if they were sequenced using the Earth Microbiome Project protocol.
 
-We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would chose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME to the path to the sequence file, and the read direction. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id\tabsolute-filepath\tdirection``. The sample order after the header line does not matter.
+We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would chose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path to the sequence file, and the read direction. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id\tabsolute-filepath``. The sample order after the header line does not matter.
+
+.. My vote is to merge the manifest with the sample metadata
 
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-      :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
-      :saveas: manifest
+   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest
+   :saveas: manifest
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/demultiplexed_seqs.zip
@@ -138,15 +139,15 @@ Let's start by downloading the manifest and corresponding sequences.
 You'll need to unzip the directory of sequences.
 
 .. command-block::
-    unzip demuliplexed_seqs.zip
 
+   unzip demuliplexed_seqs.zip
 
 You can use the ``head`` command to check the first five lines of the sample manifest.
 
 .. command-block::
    :no-exec:
 
-    head -n 6 manifest
+   head -n 6 manifest
 
 When using the single end manifest format, a sample name can only appear in one line and can only map to one sequencing file. In a paired end manifest, the sample name should appear twice. The **absolute-filepath** for each sample must be an `absolute path`_, which specifies the “full” location of the file. We do that here using the ``$PWD`` variable, which uses the local absolute directory. The **direction** column can only have two values: *forward* and *reverse*.
 
@@ -154,23 +155,20 @@ We’ll use the manifest to import our data.
 
 .. command-block::
 
-    qiime tools import \
+   qiime tools import \
      --type "SampleData[SequencesWithQuality]" \
      --input-format SingleEndFastqManifestPhred33V2 \
      --input-path ./manifest \
      --output-path ./demux_seqs.qza
-
-.. tsv V2 vs csv V1. Nice
 
 Let’s check the sequences and the sequencing depth of the samples using the ``qiime demux summarize`` command. It provides information about the number of sequences in each sample, as well as the quality of the sequences.
 
 Before running the command, let’s review the help documentation to make sure we understand the arguments.
 
 .. command-block::
-    :no-exec:
+   :no-exec:
 
-    qiime demux summarize --help
-
+   qiime demux summarize --help
 
 Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``. However, to speed up the command process, we’ll change the ``--p-n`` parameter to 1000. This means that rather than resampling the sequences 10000 times (the default number) to get the quality score, we’ll only re-sample them 1000 times.
 
@@ -178,25 +176,24 @@ The help documentation is a good reference for any command, and the first place 
 
 .. command-block::
 
-    qiime demux summarize \
+   qiime demux summarize \
      --i-data ./demux_seqs.qza \
-     --o-visualization ./demux_seqs.qzv \
-     --p-n 1000
+     --p-n 1000 \
+     --o-visualization ./demux_seqs.qzv
 
 You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
 
 .. question::
 
    1. After demultiplexing, which sample has the lowest sequencing depth?
-   2. What is the median sequence length? 
+   2. What is the median sequence length?
    3. What is the median quality score at position 125?
-   
+
 
 Sequence quality control and feature table
 ==========================================
 
-There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME offers clustering through :doc:`q2-vsearch<otu-clustering>` and 
-`q2-dbOTU_` plug-ins, currently.
+There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME 2 offers clustering through :doc:`q2-vsearch<otu-clustering>` and `q2-dbOTU_` plug-ins, currently.
 
 ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `Dada2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithms and motivation for denoising are nicely described in `Nearing et al, 2018`_.
 
@@ -213,17 +210,16 @@ To do this, we’ll apply the ``qiime quality-filter q-score`` command. We’ll 
 
 .. command-block::
 
-    qiime quality-filter q-score \
+   qiime quality-filter q-score \
      --i-demux ./demux_seqs.qza \
      --o-filtered-sequences ./quality_filtered_seqs.qza \
      --o-filter-stats ./quality_filter_stats.qza
-
 
 For the deblur algorithm we need to select a sequence length for trimming. Let’s summarize the data again to check the appropriate trimming length.
 
 .. command-block::
 
-    qiime demux summarize \
+   qiime demux summarize \
      --i-data ./quality_filtered_seqs.qza \
      --o-visualization ./quality_filtered_seqs.qzv
 
@@ -231,20 +227,16 @@ We can use the ``qiime metadata tabulate`` command to summarize the statistics a
 
 .. command-block::
 
-    qiime metadata tabulate \
+   qiime metadata tabulate \
      --m-input-file ./quality_filter_stats.qza \
      --o-visualization ./quality_filter_stats.qzv
-
 
 .. question::
 
    In how many samples were there reads exceeding the maximum number of ambiguous bases?
 
-
-
 Denoising
 ---------
-
 
 Next, we’ll apply the Deblur algorithm with the ``qiime deblur denoise-16S`` command.
 
@@ -254,13 +246,13 @@ The method requires the use of an additional parameter: ``p-trim-length``. This 
 
 .. command-block::
 
-    qiime deblur denoise-16S \
+   qiime deblur denoise-16S \
      --i-demultiplexed-seqs ./quality_filtered_seqs.qza \
      --p-trim-length 150 \
+     --p-sample-stats \
      --o-table ./deblur_table.qza \
      --o-representative-sequences ./deblur_rep_set.qza \
-     --o-stats ./deblur_stats.qza 
-
+     --o-stats ./deblur_stats.qza
 
 We can also review the deblur stats using the ``qiime deblur visualize-stats`` command.
 
@@ -270,8 +262,6 @@ We can also review the deblur stats using the ``qiime deblur visualize-stats`` c
       --i-deblur-stats ./deblur_stats.qza  \
       --o-visualization ./deblur_stats.qzv
 
-.. I haven't been quite able ot get this to visualize and Im not sure why. everything else runs fun, my table is fine, but the statistics are wonky. --jwd 20190430
-
 Feature Table Summary
 ---------------------
 
@@ -279,31 +269,30 @@ After we finish denoising the data, we can check the quality filtering results. 
 
 .. command-block::
 
-    qiime feature-table summarize \
+   qiime feature-table summarize \
      --i-table ./deblur_table.qza \
      --o-visualization ./deblur_table.qzv
 
-.. question:: 
+.. question::
 
    1. How many features remain after denoising?
-   2. Which sample has the fewest sequences? How many does it have? 
+   2. Which sample has the fewest sequences? How many does it have?
    3. Which sample has the most? How many sequences does that sample have?
    4. If we chose to filter the data to retain only samples with 2500 sequences, how many samples would we lose?
    5. Which features are observed in at least 47 samples?
 
-
 Generating a Phylogenetic Tree for Diversity Analysis
 =====================================================
 
-QIIME analysis allows the use of phylogenetic trees for both diversity metrics such as PD whole tree and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
+QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics such as PD whole tree and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
 
-QIIME offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
+QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
 *Note: This command tables about 11 minutes to run.*
 
 .. command-block::
 
-    qiime fragment-insertion sepp \
+   qiime fragment-insertion sepp \
      --i-representative-sequences ./deblur_rep_set.qza \
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza
@@ -317,45 +306,43 @@ Let’s do one more preparation step before we dig into the analysis! To be able
 For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
 
 .. download::
-    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
-    :saveas: gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
+   :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 It’s worth noting that naive bayesian classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
 
 .. command-block::
 
-    qiime feature-classifier classify-sklearn \
+   qiime feature-classifier classify-sklearn \
      --i-reads ./deblur_rep_set.qza \
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
 
-.. do we want to throw clawback in here? 
+.. do we want to throw clawback in here?
 
 Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` function.
 
 .. command-block::
 
-    qiime metadata tabulate \
+   qiime metadata tabulate \
      --m-input-file ./taxonomy.qza \
      --o-visualization ./taxonomy.qzv
-
 
 Let’s also tabulate the representative sequences. Tabulating the representative sequences will allow us to see the sequence assigned to the identifier and interactively blast the sequence against the NCBI database.
 
 .. command-block::
 
-    qiime feature-table tabulate-seqs \
+   qiime feature-table tabulate-seqs \
      --i-data ./deblur_rep_set.qza \
      --o-visualization ./deblur_rep_set.qzv
 
-
 .. question::
 
-    Find the feature, ``59196a586276f0be745d0e334fc071c6``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
+   Find the feature, ``59196a586276f0be745d0e334fc071c6``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
 
-    How many sequences are mapped to g__Akkermansia?
+   How many sequences are mapped to g__Akkermansia?
 
-    Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
+   Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
 
 
 Alpha Rarefaction and Selecting a Rarefaction Depth
@@ -372,19 +359,18 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
 
 .. command-block::
 
-    qiime diversity alpha-rarefaction \
+   qiime diversity alpha-rarefaction \
      --i-table ./deblur_table.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./alpha_rarefaction_curves.qzv \
      --p-min-depth 10 \
      --p-max-depth 2500
 
-
 The visualization file will give us two curves. The top curve will give the alpha diversity (observed OTUs or shannon) as a function of the sequencing depth. This is used to determine whether the richness or evenness has saturated based on the sequencing depth. The rarefaction curve should “level out” as you approach a sequencing depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
 The second curve shows the number of samples in each group at each sequencing depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata group. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata categories.
 
-If you’re still unsure whether the rarefaction depth, you can also use the sample summary to look at which samples are lost by adding metadata to the feature table summary. 
+If you’re still unsure whether the rarefaction depth, you can also use the sample summary to look at which samples are lost by adding metadata to the feature table summary.
 
 *Hint*: We generated this in the after we built the feature table.
 
@@ -393,14 +379,13 @@ If you’re still unsure whether the rarefaction depth, you can also use the sam
    Start by opening the rarefaction curves.
 
    1. Are all metadata columns represented in the visualization? If not, which columns were excluded and why?
-   2. Which metric shows saturation and stabilization of the diversity? 
+   2. Which metric shows saturation and stabilization of the diversity?
    3.  Which mouse genetic background has higher diversity, based on the curve? Which has shallower sequencing depth?
 
    Now, let's check the feature table summary.
 
-   1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample? 
+   1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample?
    2. Which mice did the missing samples come from?
-
 
 **Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
 
@@ -438,13 +423,12 @@ One important consideration for diversity calculations is the Rarefaction depth.
 
 .. command-block::
 
-    qiime diversity core-metrics-phylogenetic \
+   qiime diversity core-metrics-phylogenetic \
      --i-table ./deblur_table.qza \
      --i-phylogeny ./tree.qza \
      --m-metadata-file ./metadata.tsv \
-     --output-dir ./core-metrics-results \
-     --p-sampling-depth 1000
-
+     --p-sampling-depth 1000 \
+     --output-dir ./core-metrics-results
 
 Alpha Diversity
 ---------------
@@ -455,12 +439,10 @@ Let’s test the relationship between the phylogenetic alpha diversity and evenn
 
 .. command-block::
 
-    qiime diversity alpha-group-significance \
+   qiime diversity alpha-group-significance \
      --i-alpha-diversity ./core-metrics-results/faith_pd_vector.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./core-metrics-results/faiths_pd_statistics.qzv
-
-
 
 .. command-block::
 
@@ -469,12 +451,11 @@ Let’s test the relationship between the phylogenetic alpha diversity and evenn
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./core-metrics-results/evenness_statistics.qzv
 
-.. question:: 
+.. question::
 
-    For this exercise, we'll look at the group significance results for Faith's phylogenetic diversity and evenness. 
+   For this exercise, we'll look at the group significance results for Faith's phylogenetic diversity and evenness.
 
-    Based on the group significance test, is there a difference in phylogenetic diversity by genotype? Is there a difference based on the donor?
-
+   Based on the group significance test, is there a difference in phylogenetic diversity by genotype? Is there a difference based on the donor?
 
 If we had a continuous covariate that we thought was associated with the alpha diversity, we could test that using ``qiime diversity alpha-correlation``. However, the only continuous variable in this dataset is the days since transplant.
 
@@ -483,11 +464,11 @@ Beta Diversity
 
 Next, we’ll compare the structure of the microbiome communities using beta diversity. Start by making a visualize inspection of the principle coordinates plots (PCoA) plots that were generated by emperor and ``core-metrics-results/weighted_unifrac_emperor.qzv`` into `view.qiime2.org`_
 
-.. question:: 
+.. question::
 
-    Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
+   Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
 
-    One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
+   One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
 
 Now, let’s analyze the statistical trends using `PERMANOVA`_. Permanova tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
 
@@ -495,44 +476,41 @@ Let’s use the command to test whether the donor identity (which we identified 
 
 .. command-block::
 
-    qiime diversity beta-group-significance \
-      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
-      --m-metadata-file metadata.tsv \
-      --m-metadata-column donor \
-      --o-visualization core-metrics-results/unweighted-unifrac-donor-significance.qzv
-    
-    qiime diversity beta-group-significance \
-      --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
-      --m-metadata-file metadata.tsv \
-      --m-metadata-column donor \
-      --o-visualization core-metrics-results/weighted-unifrac-donor-significance.qzv
+   qiime diversity beta-group-significance \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column donor \
+     --o-visualization core-metrics-results/unweighted-unifrac-donor-significance.qzv
 
-
+   qiime diversity beta-group-significance \
+     --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column donor \
+     --o-visualization core-metrics-results/weighted-unifrac-donor-significance.qzv
 
 Let’s also check whether there’s a relationship between cage where a mouse lives and the beta diversity, since this is often an important technical effect to consider. Since we have several cages, we’ll use the ``--p-pairwise`` parameter that will let us check whether there are individual differences between the cages driving the difference. This may be useful, since if we check the metadata, we may find that cage is nested by donor.
 
 .. command-block::
 
-    qiime diversity beta-group-significance \
-      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
-      --m-metadata-file metadata.tsv \
-      --m-metadata-column cage_id \
-      --o-visualization core-metrics-results/unweighted-unifrac-cage-significance.qzv \
-      --p-pairwise
-    
-    qiime diversity beta-group-significance \
-      --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
-      --m-metadata-file metadata.tsv \
-      --m-metadata-column cage_id \
-      --o-visualization core-metrics-results/weighted-unifrac-cage-significance.qzv \
-      --p-pairwise
+   qiime diversity beta-group-significance \
+     --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column cage_id \
+     --o-visualization core-metrics-results/unweighted-unifrac-cage-significance.qzv \
+     --p-pairwise
 
+   qiime diversity beta-group-significance \
+     --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column cage_id \
+     --o-visualization core-metrics-results/weighted-unifrac-cage-significance.qzv \
+     --p-pairwise
 
 We can use the adonis function to look at a multivariate model. Let’s look at the intersection between donor and genotype.
 
 .. command-block::
 
-    qiime diversity adonis \
+   qiime diversity adonis \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file metadata.tsv \
      --o-visualization core-metrics-results/unweighted_adonis.qzv \
@@ -541,11 +519,11 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
 .. do we also want permadisp here?
 
 .. question::
-   Is there a significant effect of donor? 
+   Is there a significant effect of donor?
 
    From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
-   If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain? 
+   If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 Taxonomy Barchart
 =================
@@ -558,22 +536,20 @@ For this example, we need to filter out samples with fewer sequences than our ra
 
 .. command-block::
 
-    !qiime feature-table filter-samples \
+   qiime feature-table filter-samples \
      --i-table ./deblur_table.qza \
-     --o-filtered-table ./table_1k.qza \
-     --p-min-frequency 1000
-
+     --p-min-frequency 1000 \
+     --o-filtered-table ./table_1k.qza
 
 Now, let’s use the filtered table to build an interactive barplot of the taxonomy in the sample.
 
 .. command-block::
 
-    qiime taxa barplot \
+   qiime taxa barplot \
      --i-table ./table_1k.qza \
      --i-taxonomy ./taxonomy.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./taxa_barplot.qzv
-
 
 .. question::
 
@@ -585,19 +561,17 @@ Differential Abundance with ANCOM
 
 Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the compositional composition of a sample further disrupting 
+Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the compositional composition of a sample further disrupting.
 
 .. command-block::
 
    qiime feature-table filter-features \
      --i-table ./table_1k.qza \
-     --o-filtered-table ./table_1k_abund.qza \
      --p-min-frequency 50 \
-     --p-min-samples 4
-
+     --p-min-samples 4 \
+     --o-filtered-table ./table_1k_abund.qza
 
 ANCOM operates on a ``FeatureTable[Composition]`` Artifact, which is based on the relative abundance of features on a per-sample basis. However, the ``FeatureTable[Composition]`` object cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` object.
-
 
 .. command-block::
 
@@ -605,31 +579,28 @@ ANCOM operates on a ``FeatureTable[Composition]`` Artifact, which is based on th
      --i-table ./table_1k_abund.qza \
      --o-composition-table ./table1k_abund_comp.qza
 
-
 Let’s use ANCOM to check whether there is a difference in the mice based on their donor and then by their genetic background. The test will calculate the number of ratios between pairs of ASVs are significantly different with fdr-corrected p < 0.05.
 
 .. command-block::
 
-    qiime composition ancom \
+   qiime composition ancom \
      --i-table ./table1k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column donor \
      --o-visualization ./ancom_donor.qzv
-    
-    qiime composition ancom \
+
+   qiime composition ancom \
      --i-table ./table1k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
 
-
-
 When you open the ancom visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically fdr-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does produce a traditional p-value.
 
 .. question::
 
-   Open the ANCOM visualizations for the donor and genotype and the taxonomy visualization artifact. 
-   
+   Open the ANCOM visualizations for the donor and genotype and the taxonomy visualization artifact.
+
    1. Are there more differentially abundant features between the donors or the mouse genotype? Did you expect this result based on the beta diversity?
    2. Are there any features that are differentially abundant in both the donors and by genotype?
    3. How many differentially abundant features are there between the two genotypes? Using the percentile abundances as a guide, can you tell if they are more abundant in wild type or susceptible mice?
@@ -648,22 +619,20 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
 .. question::
 
-    Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
+   Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
 
-    What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
+   What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
 
 Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s use ``q2-emperor`` to make a PCoA where we can look at the time after transplant as a custom axis using the ``--p-custom-axes`` parameter.
 
 .. command-block::
 
-    qiime emperor plot \
+   qiime emperor plot \
      --i-pcoa ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file ./metadata.tsv \
-     --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv \
-     --p-custom-axes days_post_transplant
-
-
+     --p-custom-axes days_post_transplant \
+     --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv
 
 We might also want to look a the variation along the PC if we start from the same point. We can use volatility analysis from the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC.
 
@@ -671,23 +640,19 @@ The ``--m-metadata-file`` column can take several types, including a metadata fi
 
 .. command-block::
 
-    qiime longitudinal volatility \
+   qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
-     --o-visualization ./pc_vol.qzv \
      --p-state-column days_post_transplant \
-     --p-individual-id-column mouse_id
-
-
+     --p-individual-id-column mouse_id \
+     --o-visualization ./pc_vol.qzv
 
 .. question::
 
-   
-    Try exploring the PCoA with the custom axis plot to see if you can find new insight. 
+    Try exploring the PCoA with the custom axis plot to see if you can find new insight.
     Now, open the volatility plot. What's different in this visualization what what you see in the PCoA with custom axes?
 
     Using the **[Axis]** tab in the emperor PCoA, switch the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
-
 
 Distance-based analysis
 -----------------------
@@ -705,20 +670,17 @@ We’ll start this analysis by looking at how much the microbial community of ea
      --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id
 
-
 We can again use volatility analysis to visualize the change in beta diversity based on distance.
 
 .. command-block::
 
-    qiime longitudinal volatility \
+   qiime longitudinal volatility \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
-     --o-visualization ./from_first_unifrac_vol.qzv \
      --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
-     --p-default-metric Distance
-
-
+     --p-default-metric Distance \
+     --o-visualization ./from_first_unifrac_vol.qzv
 
 A linear mixed effects (LME) model lets us test whether there’s a relationship between a dependent variable and one or more independent variables in an experiment using repeated measures. Since we’re interested in genotype, we should use this as an independent predictor.
 
@@ -732,23 +694,21 @@ Based on the experimental design, what group columns should we choose?
 
 .. command-block::
 
-    qiime longitudinal linear-mixed-effects \
+   qiime longitudinal linear-mixed-effects \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
-     --o-visualization ./from_first_unifrac_lme.qzv \
      --p-metric Distance \
      --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
-     --p-group-columns genotype,donor
-
-
+     --p-group-columns genotype,donor \
+     --o-visualization ./from_first_unifrac_lme.qzv
 
 Now, let’s look at the results of the models.
 
-.. question:: 
-    Open the distance volatility plot (``./from_first_unifrac_vol.qzv``) using the qiime 2 viewer. Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
+.. question::
+   Open the distance volatility plot (``./from_first_unifrac_vol.qzv``) using the qiime 2 viewer. Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
 
-    Now, let’s open the linear mixed effects model (``./from_first_unifrac_lme.qzv``). Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
+   Now, let’s open the linear mixed effects model (``./from_first_unifrac_lme.qzv``). Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
 
 Synthesis
 =========
