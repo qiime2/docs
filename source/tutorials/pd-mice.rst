@@ -128,8 +128,13 @@ We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
-   :saveas: manifest
+    :url: https://gist.githubusercontent.com/jwdebelius/7d636639b237bee3d89c3bcbde8c2849/raw/f9d1ef84a0156fd92ee58304c1aaca4d72e45b7a/gistfile1.txt
+    :saveas: manifest
+.. working off the csv version to see if it runs based on latest on 8 May 2019
+.. which seems ot reference qiime2-2019.4?
+
+..   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
+..   :saveas: manifest
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/demultiplexed_seqs.zip
@@ -137,7 +142,7 @@ Let's start by downloading the manifest and corresponding sequences.
 
 You'll need to unzip the directory of sequences.
 
-..command-block::
+.. command-block::
     unzip demuliplexed_seqs.zip
 
 
