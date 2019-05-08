@@ -665,7 +665,7 @@ Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s u
      --i-pcoa ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv \
-     --p-custom-axes day_post_transplant
+     --p-custom-axes days_post_transplant
 
 
 
@@ -679,7 +679,7 @@ The ``--m-metadata-file`` column can take several types, including a metadata fi
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --o-visualization ./pc_vol.qzv \
-     --p-state-column day_post_transplant \
+     --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id
 
 
@@ -706,7 +706,7 @@ We’ll start this analysis by looking at how much the microbial community of ea
      --i-distance-matrix ./core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file ./metadata.tsv \
      --o-first-distances ./from_first_unifrac.qza \
-     --p-state-column day_post_transplant \
+     --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id
 
 
@@ -718,7 +718,7 @@ We can again use volatility analysis to visualize the change in beta diversity b
      --m-metadata-file ./metadata.tsv \
      --m-metadata-file ./from_first_unifrac.qza \
      --o-visualization ./from_first_unifrac_vol.qzv \
-     --p-state-column day_post_transplant \
+     --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
      --p-default-metric Distance
 
@@ -741,7 +741,7 @@ Based on the experimental design, what group columns should we choose?
      --m-metadata-file ./from_first_unifrac.qza \
      --o-visualization ./from_first_unifrac_lme.qzv \
      --p-metric Distance \
-     --p-state-column day_post_transplant \
+     --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
      --p-group-columns genotype,donor
 
