@@ -41,10 +41,10 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 +-------------------------+--------------------+-----------------+------------------+
 | variable                | description        | data type       | values           |
 +=========================+====================+=================+==================+
-| sample_name             | unique sample      | —               | unique for each  |
+| sample-id               | unique sample      | —               | unique for each  |
 |                         | identifier         |                 | sample           |
 +-------------------------+--------------------+-----------------+------------------+
-| mouse_id                | the unique         | categorical     | ``"435"``;       |
+| mouse-id                | the unique         | categorical     | ``"435"``;       |
 |                         | identifier for     |                 | ``"437"``;       |
 |                         | each mouse         |                 | ``"456"``;       |
 |                         |                    |                 | ``"457"``;       |
@@ -72,33 +72,33 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | not have any       |                 |                  |
 |                         | additional risk    |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| cage_id                 | the unique         | categorical     | ``"C31"``;       |
+| cage-id                 | the unique         | categorical     | ``"C31"``;       |
 |                         | identifier for     |                 | ``"C35"``;       |
 |                         | each cage of       |                 | ``"C42"``;       |
 |                         | mice               |                 | ``"C43"``;       |
 |                         |                    |                 | ``"C44"``;       |
-|                         |                    |                 | ``"C49"``’       |
+|                         |                    |                 | ``"C49"``        |
 +-------------------------+--------------------+-----------------+------------------+
-| donor                   | A unique           | categorical     | ``"hc_1"``,      |
+| donor                   | A unique           | categorical     | ``"hc_1"``       |
 |                         | identifier for     |                 | ``"pd_1"``       |
 |                         | the human who      |                 |                  |
 |                         | donated the        |                 |                  |
 |                         | feces              |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| donor_status            | whether the        | categorical     | ``"Healthy"``;   |
+| donor-status            | whether the        | categorical     | ``"Healthy"``;   |
 |                         | donor has          |                 | ``"PD"``         |
-|                         | Parkinson’s        |                 |                  |
+|                         | Parkinson's        |                 |                  |
 |                         | disease or not     |                 |                  |
 |                         | (Donor             |                 |                  |
 |                         | ``pd_1`` had       |                 |                  |
-|                         | Parkinson’s        |                 |                  |
+|                         | Parkinson's        |                 |                  |
 |                         | disease;           |                 |                  |
 |                         | ``hc_1``           |                 |                  |
 |                         | was                |                 |                  |
 |                         | neurologically     |                 |                  |
 |                         | healthy)           |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| day_post_transplant     | the number of      | numeric         | 7, 14, 21, 49    |
+| days-post-transplant    | the number of      | numeric         | 7, 14, 21, 49    |
 |                         | days after the     |                 |                  |
 |                         | mice were          |                 |                  |
 |                         | humanized          |                 |                  |
@@ -128,13 +128,8 @@ We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-    :url: https://gist.githubusercontent.com/jwdebelius/7d636639b237bee3d89c3bcbde8c2849/raw/f9d1ef84a0156fd92ee58304c1aaca4d72e45b7a/gistfile1.txt
-    :saveas: manifest
-.. working off the csv version to see if it runs based on latest on 8 May 2019
-.. which seems ot reference qiime2-2019.4?
-
-..   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
-..   :saveas: manifest
+      :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
+      :saveas: manifest
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/demultiplexed_seqs.zip
@@ -161,10 +156,11 @@ We’ll use the manifest to import our data.
 
     qiime tools import \
      --type "SampleData[SequencesWithQuality]" \
-     --input-format SingleEndFastqManifestPhred33 \
+     --input-format SingleEndFastqManifestPhred33V2 \
      --input-path ./manifest \
      --output-path ./demux_seqs.qza
 
+.. tsv V2 vs csv V1. Nice
 
 Let’s check the sequences and the sequencing depth of the samples using the ``qiime demux summarize`` command. It provides information about the number of sequences in each sample, as well as the quality of the sequences.
 
