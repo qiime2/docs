@@ -318,11 +318,13 @@ Taxonomic Classification
 
 Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them “names”, we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
 
-We’ll start by using the representative set of sequences from denoising (``FeatureData[Sequence]`` type) with the ``q2-feature-classifier`` plugin. We will use a classifier trained for classification on the 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
+For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
+
+.. download::
+    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
+    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 It’s worth noting that naive bayesian classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
-
-..need to download a classifier. currently using the same as moving-pictures
 
 .. command-block::
 
