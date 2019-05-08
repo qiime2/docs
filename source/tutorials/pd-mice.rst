@@ -32,6 +32,7 @@ Before running the tutorial, you will need to make a directory for the tutorial 
     mkdir ./mouse_tutorial 
     cd ./mouse_tutorial
 
+
 Metadata
 ========
 
@@ -40,10 +41,10 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 +-------------------------+--------------------+-----------------+------------------+
 | variable                | description        | data type       | values           |
 +=========================+====================+=================+==================+
-| ``sample_name``         | unique sample      | —               | unique for each  |
+| sample_name             | unique sample      | —               | unique for each  |
 |                         | identifier         |                 | sample           |
 +-------------------------+--------------------+-----------------+------------------+
-| ``mouse_id``            | the unique         | categorical     | ``"435"``;       |
+| mouse_id                | the unique         | categorical     | ``"435"``;       |
 |                         | identifier for     |                 | ``"437"``;       |
 |                         | each mouse         |                 | ``"456"``;       |
 |                         |                    |                 | ``"457"``;       |
@@ -56,7 +57,7 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         |                    |                 | ``"546"``;       |
 |                         |                    |                 | ``"547"``        |
 +-------------------------+--------------------+-----------------+------------------+
-| ``genotype``            | the genetic        | categorical     | ``"wild_type"``; |
+| genotype                | the genetic        | categorical     | ``"wild_type"``; |
 |                         | background of      |                 | ``"susceptible"``|
 |                         | the mouse. The     |                 |                  |
 |                         | Thy1-aSyn          |                 |                  |
@@ -71,44 +72,45 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | not have any       |                 |                  |
 |                         | additional risk    |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| ``cage_id``             | the unique         | categorical     | ``"C31"``;       |
+| cage_id                 | the unique         | categorical     | ``"C31"``;       |
 |                         | identifier for     |                 | ``"C35"``;       |
 |                         | each cage of       |                 | ``"C42"``;       |
 |                         | mice               |                 | ``"C43"``;       |
 |                         |                    |                 | ``"C44"``;       |
 |                         |                    |                 | ``"C49"``’       |
 +-------------------------+--------------------+-----------------+------------------+
-| ``donor``               | A unique           | categorical     | ``"hc_1"``,      |
+| donor                   | A unique           | categorical     | ``"hc_1"``,      |
 |                         | identifier for     |                 | ``"pd_1"``       |
 |                         | the human who      |                 |                  |
 |                         | donated the        |                 |                  |
 |                         | feces              |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| ``donor_status``        | whether the        | categorical     | ``"Healthy"``;   |
+| donor_status            | whether the        | categorical     | ``"Healthy"``;   |
 |                         | donor has          |                 | ``"PD"``         |
 |                         | Parkinson’s        |                 |                  |
 |                         | disease or not     |                 |                  |
 |                         | (Donor             |                 |                  |
-|                         | ``PDGI_7`` had     |                 |                  |
+|                         | ``pd_1`` had       |                 |                  |
 |                         | Parkinson’s        |                 |                  |
 |                         | disease;           |                 |                  |
-|                         | ``DYS_108A``       |                 |                  |
+|                         | ``hc_1``           |                 |                  |
 |                         | was                |                 |                  |
 |                         | neurologically     |                 |                  |
 |                         | healthy)           |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| ``day_post_transplant`` | the number of      | numeric         | 7, 14, 21, 49    |
+| day_post_transplant     | the number of      | numeric         | 7, 14, 21, 49    |
 |                         | days after the     |                 |                  |
 |                         | mice were          |                 |                  |
 |                         | humanized          |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
+
 
 Even though the mouse ID looks like a number, we will specify the type using the ``#q2_type`` column in the data.
 
 The metadata is avaliable as a `Google Sheet`_, or ou can download it directly from and save it as a tsv.
 
 .. download::
-   :url: https://drive.google.com/file/d/1Wcq0rTC0017XAigIiXrCmOWcdgsvOoO0/view?usp=sharing
+   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/sample_metadata.tsv
    :saveas: metadata.tsv
 
 The sample metadata will be used through out the tutorial.
@@ -121,22 +123,22 @@ In QIIME 2, all data is structured as an Artifact of a specific semantic type. T
 Our samples were amplified u|sing the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
 region covered by the primers we used 290bp and so with 150bp reads, our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc: `moving pictures tutorial <moving-pictures>` describes how to demultiplex your sequences if they were sequenced using the Earth Microbiome Project protocol.
 
-We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would chose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME. We create a comma separated sample manifest file that maps the sample name we want to use in QIIME to the path to the sequence file, and the read direction. When QIIME reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id,absolute-filepath,direction``. The sample order after the header line does not matter.
+We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would chose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME to the path to the sequence file, and the read direction. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id\tabsolute-filepath\tdirection``. The sample order after the header line does not matter.
 
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://gist.githubusercontent.com/jwdebelius/7d636639b237bee3d89c3bcbde8c2849/raw/f9d1ef84a0156fd92ee58304c1aaca4d72e45b7a/gistfile1.txt
+   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest 
    :saveas: manifest
 
 .. download::
-   :url: https://drive.google.com/open?id=1QDWETNPd58MZMlQvlFEOV8ArHqJd_-zr
+   :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/demultiplexed_seqs.zip
    :saveas: demuliplexed_seqs.zip
 
 You'll need to unzip the directory of sequences.
 
 ..command-block::
-    unzip  demuliplexed_seqs.zip
+    unzip demuliplexed_seqs.zip
 
 
 You can use the ``head`` command to check the first five lines of the sample manifest.
@@ -169,7 +171,7 @@ Before running the command, let’s review the help documentation to make sure w
     qiime demux summarize --help
 
 
-we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``. However, to speed up the command process, we’ll change the ``--p-n`` parameter to 1000. This means that rather than resampling the sequences 10000 times (the default number) to get the quality score, we’ll only re-sample them 1000 times.
+Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``. However, to speed up the command process, we’ll change the ``--p-n`` parameter to 1000. This means that rather than resampling the sequences 10000 times (the default number) to get the quality score, we’ll only re-sample them 1000 times.
 
 The help documentation is a good reference for any command, and the first place to look if you’re getting errors, especially errors about parameters.
 
@@ -267,7 +269,7 @@ We can also review the deblur stats using the ``qiime deblur visualize-stats`` c
       --i-deblur-stats ./deblur_stats.qza  \
       --o-visualization ./deblur_stats.qzv
 
-.. I haven't been quite able ot get this to visualize and Im not sure why. everything else runs fun, my table is fine, but the statistics are wonky. --jwd
+.. I haven't been quite able ot get this to visualize and Im not sure why. everything else runs fun, my table is fine, but the statistics are wonky. --jwd 20190430
 
 Feature Table Summary
 ---------------------
@@ -361,8 +363,7 @@ Although sequencing depth in a microbiome samples does not directly relate to th
 Current best practices suggest the use of rarefaction, a normalizational via sub sampling without replacement. Rarefaction occurs in two steps. First, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analysis. Several strategies exist to figure out the right rarefaction depth, but alpha rarefaction is a data-driven way to approach the problem.
 
 We’ll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the
-sample with the most has 3008. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 2500 sequences per sample, we’ll be looking at information from about 22 samples. So, let’s set this as our maximum sequencing depth.
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the sample with the most has 3008. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 2500 sequences per sample, we’ll be looking at information from about 22 samples. So, let’s set this as our maximum sequencing depth.
 
 At each sampling depth, 10 rarified tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by passing the metadata file into the ``--m-metadata-file`` parameter.
 
@@ -534,6 +535,7 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
      --o-visualization core-metrics-results/unweighted_adonis.qzv \
      --p-formula genotype+donor
 
+.. do we also want permadisp here?
 
 .. question::
    Is there a significant effect of donor? 
@@ -541,8 +543,6 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
    From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain? 
-
-.. do we also want permadisp here?
 
 Taxonomy Barchart
 =================
@@ -778,8 +778,8 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 .. _Nearing et al, 2018: https://www.ncbi.nlm.nih.gov/pubmed/30123705
 .. _Bokulich et al, 2013: https://www.ncbi.nlm.nih.gov/pubmed/23202435
 .. _Weiss et al, 2017: https://www.ncbi.nlm.nih.gov/pubmed/28253908
-.. _qiime forum by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
-.. _view.qiime2.org: http://www.view.qiime2.org
+.. _qiime forum by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282/
+.. _view.qiime2.org: http://www.view.qiime2.org/
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
-.. _Google Sheet: https://docs.google.com/spreadsheets/d/1wBU1JTUg_lMIgFtadk3Q9wYUVg68E10ajFWM1nbbZEo/edit?usp=sharing
+.. _Google Sheet: https://data.qiime2.org/2019.7/tutorials/pd-mice/sample_metadata
