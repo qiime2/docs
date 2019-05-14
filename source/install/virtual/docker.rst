@@ -14,7 +14,7 @@ In a terminal with Docker activated, run:
 .. command-block::
    :no-exec:
 
-   docker pull qiime2/core:2019.4
+   docker pull qiime2/core:2019.7
 
 3. Confirm the installation
 ---------------------------
@@ -24,4 +24,4 @@ Run the following to confirm that the image was successfully fetched.
 .. command-block::
    :no-exec:
 
-   docker run -t -i -v $(pwd):/data qiime2/core:2019.4 qiime
+   docker run -t -i -v $(pwd):/data qiime2/core:2019.7 qiime
