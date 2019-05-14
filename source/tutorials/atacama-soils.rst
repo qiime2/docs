@@ -21,7 +21,7 @@ Start by creating a directory to work in.
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/sample_metadata.tsv
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 
@@ -35,15 +35,15 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 10% subsample data
@@ -56,17 +56,17 @@ Next, you'll download the multiplexed reads. You will download three ``fastq.gz`
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/10p/forward.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/10p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2019.4/tutorials/atacama-soils/10p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2019.7/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 
@@ -161,4 +161,4 @@ Acknowledgements
 
 The data used in this tutorial is presented in: *Significant Impacts of Increasing Aridity on the Arid Soil Microbiome.* Julia W. Neilson, Katy Califf, Cesar Cardona, Audrey Copeland, Will van Treuren, Karen L. Josephson, Rob Knight, Jack A. Gilbert, Jay Quade, J. Gregory Caporaso, and Raina M. Maier. mSystems May 2017, 2 (3) e00195-16; DOI: 10.1128/mSystems.00195-16.
 
-.. _sample metadata: https://data.qiime2.org/2019.4/tutorials/atacama-soils/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2019.7/tutorials/atacama-soils/sample_metadata
