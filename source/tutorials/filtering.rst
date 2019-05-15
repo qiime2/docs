@@ -117,13 +117,13 @@ Metadata-based filtering
 
 Metadata-based filtering is similar to identifier-based filtering, except that the list of IDs to keep is determined based on metadata search criteria rather than being provided by the user directly. This is achieved using the ``--p-where`` parameter in combination with the ``--m-metadata-file`` parameter. The user provides a description of the samples that should be retained based on their metadata using ``--p-where``, where the syntax for this description is the SQLite `WHERE-clause <https://en.wikipedia.org/wiki/Where_(SQL)>`_ syntax.
 
-For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``Subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes.
+For example, filtering the table to contain only samples from subject 1 is performed as follows. Here, the ``--p-where`` parameter is specifying that we want to retain all of the samples whose ``subject`` is ``subject-1`` in ``sample-metadata.tsv``. Note that the value ``subject-1`` must be enclosed in single quotes, and the column name (``subject``) should be quoted with square brackets to ensure SQLite interprets the column name correctly.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "Subject='subject-1'" \
+     --p-where "[subject]='subject-1'" \
      --o-filtered-table subject-1-filtered-table.qza
 
 If there are multiple values that should be retained from a single metadata column, the ``IN`` clause can be used to specify those values. For example, the following command can be used to retain all skin samples. Again, the values ``left palm`` and ``right palm`` are enclosed in single quotes.
@@ -132,34 +132,34 @@ If there are multiple values that should be retained from a single metadata colu
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "BodySite IN ('left palm', 'right palm')" \
+     --p-where "[body-site] IN ('left palm', 'right palm')" \
      --o-filtered-table skin-filtered-table.qza
 
-``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` *and* whose ``BodySite`` is ``gut`` in ``sample-metadata.tsv``. With the ``AND`` keyword, both of the expressions being evaluated must be true for a sample to be retained. This means that samples whose ``BodySite`` is ``gut`` but whose ``Subject`` is ``subject-2`` would not be in the resulting table. Similarly, samples whose ``Subject`` is ``subject-1`` but whose ``BodySite`` is *not* ``gut`` would not be in the resulting table.
+``--p-where`` expressions can be combined using the ``AND`` and ``OR`` keywords. Here the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``subject`` is ``subject-1`` *and* whose ``body-site`` is ``gut`` in ``sample-metadata.tsv``. With the ``AND`` keyword, both of the expressions being evaluated must be true for a sample to be retained. This means that samples whose ``body-site`` is ``gut`` but whose ``subject`` is ``subject-2`` would not be in the resulting table. Similarly, samples whose ``subject`` is ``subject-1`` but whose ``body-site`` is *not* ``gut`` would not be in the resulting table.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "Subject='subject-1' AND BodySite='gut'" \
+     --p-where "[subject]='subject-1' AND [body-site]='gut'" \
      --o-filtered-table subject-1-gut-filtered-table.qza
 
-The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifies that either of the expressions can be true for a sample to be retained. For lack of a more relevant application to the example data being used here, the ``OR`` keyword in this example is applied to retain all of the samples where ``BodySite`` is ``gut`` *or* ``ReportedAntibioticUsage`` is ``Yes`` in ``sample-metadata.tsv``. In contrast to ``AND``, this means that samples whose ``BodySite`` is ``gut`` but whose ``ReportedAntibioticUsage`` is ``No`` would be in the resulting table. Similarly, samples whose ``ReportedAntibioticUsage`` is ``Yes`` but whose ``BodySite`` is *not* ``gut`` would also be in the resulting table.
+The ``OR`` keyword syntax is similar to the ``AND`` keyword syntax, but specifies that either of the expressions can be true for a sample to be retained. For lack of a more relevant application to the example data being used here, the ``OR`` keyword in this example is applied to retain all of the samples where ``body-site`` is ``gut`` *or* ``reported-antibiotic-usage`` is ``Yes`` in ``sample-metadata.tsv``. In contrast to ``AND``, this means that samples whose ``body-site`` is ``gut`` but whose ``reported-antibiotic-usage`` is ``No`` would be in the resulting table. Similarly, samples whose ``reported-antibiotic-usage`` is ``Yes`` but whose ``body-site`` is *not* ``gut`` would also be in the resulting table.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "BodySite='gut' OR ReportedAntibioticUsage='Yes'" \
+     --p-where "[body-site]='gut' OR [reported-antibiotic-usage]='Yes'" \
      --o-filtered-table gut-abx-positive-filtered-table.qza
 
-This syntax also supports negating individual clauses of the ``--p-where`` expression (or the whole expression). Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``Subject`` is ``subject-1`` and whose ``BodySite`` is *not* ``gut`` in ``sample-metadata.tsv``.
+This syntax also supports negating individual clauses of the ``--p-where`` expression (or the whole expression). Here, the ``--p-where`` parameter is specifying that we want to retain only the samples whose ``subject`` is ``subject-1`` and whose ``body-site`` is *not* ``gut`` in ``sample-metadata.tsv``.
 
 .. command-block::
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "Subject='subject-1' AND NOT BodySite='gut'" \
+     --p-where "[subject]='subject-1' AND NOT [body-site]='gut'" \
      --o-filtered-table subject-1-non-gut-filtered-table.qza
 
 Taxonomy-based filtering of tables and sequences
@@ -257,5 +257,5 @@ A distance matrix can also be filtered based on sample metadata. For example, to
    qiime diversity filter-distance-matrix \
      --i-distance-matrix distance-matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "Subject='subject-2'" \
+     --p-where "[subject]='subject-2'" \
      --o-filtered-distance-matrix subject-2-filtered-distance-matrix.qza

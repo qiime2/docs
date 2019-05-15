@@ -75,7 +75,7 @@ To demultiplex sequences we need to know which barcode sequence is associated wi
     qiime demux emp-single \
       --i-seqs emp-single-end-sequences.qza \
       --m-barcodes-file sample-metadata.tsv \
-      --m-barcodes-column BarcodeSequence \
+      --m-barcodes-column barcode-sequence \
       --o-per-sample-sequences demux.qza \
       --o-error-correction-details demux-details.qza
 
@@ -288,7 +288,7 @@ We'll first test for associations between categorical metadata columns and alpha
 .. question::
    Which categorical sample metadata columns are most strongly associated with the differences in microbial community **evenness**? Are these differences statistically significant?
 
-In this data set, no continuous sample metadata columns (e.g., ``DaysSinceExperimentStart``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
+In this data set, no continuous sample metadata columns (e.g., ``days-since-experiment-start``) are correlated with alpha diversity, so we won't test for those associations here. If you're interested in performing those tests (for this data set, or for others), you can use the ``qiime diversity alpha-correlation`` command.
 
 Next we'll analyze sample composition in the context of categorical metadata using PERMANOVA (first described in `Anderson (2001)`_) using the ``beta-group-significance`` command. The following commands will test whether distances between samples within a group, such as samples from the same body site (e.g., gut), are more similar to each other then they are to samples from the other groups (e.g., tongue, left palm, and right palm). If you call this command with the ``--p-pairwise`` parameter, as we'll do here, it will also perform pairwise tests that will allow you to determine which specific pairs of groups (e.g., tongue and gut) differ from one another, if any. This command can be slow to run, especially when passing ``--p-pairwise``, since it is based on permutation tests. So, unlike the previous commands, we'll run ``beta-group-significance`` on specific columns of metadata that we're interested in exploring, rather than all metadata columns to which it is applicable. Here we'll apply this to our unweighted UniFrac distances, using two sample metadata columns, as follows.
 
@@ -297,14 +297,14 @@ Next we'll analyze sample composition in the context of categorical metadata usi
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column BodySite \
+     --m-metadata-column body-site \
      --o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
      --p-pairwise
 
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
+     --m-metadata-column subject \
      --o-visualization core-metrics-results/unweighted-unifrac-subject-group-significance.qzv \
      --p-pairwise
 
@@ -320,14 +320,14 @@ Finally, ordination is a popular approach for exploring microbial community comp
    qiime emperor plot \
      --i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-custom-axes DaysSinceExperimentStart \
-     --o-visualization core-metrics-results/unweighted-unifrac-emperor-DaysSinceExperimentStart.qzv
+     --p-custom-axes days-since-experiment-start \
+     --o-visualization core-metrics-results/unweighted-unifrac-emperor-days-since-experiment-start.qzv
 
    qiime emperor plot \
      --i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-custom-axes DaysSinceExperimentStart \
-     --o-visualization core-metrics-results/bray-curtis-emperor-DaysSinceExperimentStart.qzv
+     --p-custom-axes days-since-experiment-start \
+     --o-visualization core-metrics-results/bray-curtis-emperor-days-since-experiment-start.qzv
 
 .. question::
     Do the Emperor plots support the other beta diversity analyses we've performed here? (Hint: Experiment with coloring points by different metadata.)
@@ -357,10 +357,10 @@ The bottom plot in this visualization is important when grouping samples by meta
     The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
 
 .. question::
-    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
 
 .. question::
-    When grouping samples by "BodySite" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
 
 
 .. _`moving pics taxonomy`:
@@ -402,7 +402,7 @@ Next, we can view the taxonomic composition of our samples with interactive bar 
      --o-visualization taxa-bar-plots.qzv
 
 .. question::
-    Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by BodySite, then by Subject, and then by DaysSinceExperimentStart. What are the dominant phyla in each in BodySite? Do you observe any consistent change across the two subjects between DaysSinceExperimentStart ``0`` and the later timepoints?
+    Visualize the samples at *Level 2* (which corresponds to the phylum level in this analysis), and then sort the samples by ``body-site``, then by ``subject``, and then by ``days-since-experiment-start``. What are the dominant phyla in each in ``body-site``? Do you observe any consistent change across the two subjects between ``days-since-experiment-start`` ``0`` and the later timepoints?
 
 
 .. _`ancom`:
@@ -424,7 +424,7 @@ We'll start by creating a feature table that contains only the gut samples. (To 
    qiime feature-table filter-samples \
      --i-table table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --p-where "BodySite='gut'" \
+     --p-where "[body-site]='gut'" \
      --o-filtered-table gut-table.qza
 
 ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is based on frequencies of features on a per-sample basis, but cannot tolerate frequencies of zero. To build the composition artifact, a ``FeatureTable[Frequency]``  artifact must be provided to ``add-pseudocount`` (an imputation method), which will produce the ``FeatureTable[Composition]`` artifact.
@@ -435,15 +435,15 @@ ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is bas
      --i-table gut-table.qza \
      --o-composition-table comp-gut-table.qza
 
-We can then run ANCOM on the ``Subject`` column to determine what features differ in abundance across the gut samples of the two subjects.
+We can then run ANCOM on the ``subject`` column to determine what features differ in abundance across the gut samples of the two subjects.
 
 .. command-block::
 
    qiime composition ancom \
      --i-table comp-gut-table.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
-     --o-visualization ancom-Subject.qzv
+     --m-metadata-column subject \
+     --o-visualization ancom-subject.qzv
 
 .. question::
    Which sequence variants differ in abundance across Subject? In which subject is each sequence variant more abundant? What are the taxonomies of some of these sequence variants? (To answer the last question you'll need to refer to another visualization that was generated in this tutorial.)
@@ -465,11 +465,11 @@ We're also often interested in performing a differential abundance test at a spe
    qiime composition ancom \
      --i-table comp-gut-table-l6.qza \
      --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
-     --o-visualization l6-ancom-Subject.qzv
+     --m-metadata-column subject \
+     --o-visualization l6-ancom-subject.qzv
 
 .. question::
-   Which genera differ in abundance across Subject? In which subject is each genus more abundant?
+   Which genera differ in abundance across subject? In which subject is each genus more abundant?
 
 
 .. _sample metadata: https://data.qiime2.org/2019.7/tutorials/moving-pictures/sample_metadata

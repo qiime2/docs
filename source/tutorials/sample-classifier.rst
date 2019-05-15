@@ -52,7 +52,7 @@ Next, we will train and test a classifier that predicts which body site a sample
    qiime sample-classifier classify-samples \
      --i-table moving-pictures-table.qza \
      --m-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-metadata-column BodySite \
+     --m-metadata-column body-site \
      --p-optimize-feature-selection \
      --p-parameter-tuning \
      --p-estimator RandomForestClassifier \
@@ -102,7 +102,7 @@ We can also use the ``heatmap`` pipeline to generate an abundance heatmap of the
      --i-table moving-pictures-table.qza \
      --i-importance moving-pictures-classifier/feature_importance.qza \
      --m-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-metadata-column BodySite \
+     --m-metadata-column body-site \
      --p-group-samples \
      --p-feature-count 30 \
      --o-filtered-table moving-pictures-classifier/important-feature-table-top-30.qza \
@@ -133,7 +133,7 @@ We can view these ``new_predictions.qza`` using ``metadata tabulate``, as descri
    qiime sample-classifier confusion-matrix \
      --i-predictions moving-pictures-classifier/new_predictions.qza \
      --m-truth-file moving-pictures-sample-metadata.tsv \
-     --m-truth-column BodySite \
+     --m-truth-column body-site \
      --o-visualization moving-pictures-classifier/new_confusion_matrix.qzv
 
 
@@ -207,20 +207,20 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
    qiime sample-classifier classify-samples-ncv \
      --i-table moving-pictures-table.qza \
      --m-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-metadata-column BodySite \
+     --m-metadata-column body-site \
      --p-estimator RandomForestClassifier \
      --p-n-estimators 20 \
      --p-random-state 123 \
-     --o-predictions BodySite-predictions-ncv.qza \
-     --o-feature-importance BodySite-importance-ncv.qza
+     --o-predictions body-site-predictions-ncv.qza \
+     --o-feature-importance body-site-importance-ncv.qza
 
 
 .. command-block::
 
    qiime sample-classifier confusion-matrix \
-     --i-predictions BodySite-predictions-ncv.qza \
+     --i-predictions body-site-predictions-ncv.qza \
      --m-truth-file moving-pictures-sample-metadata.tsv \
-     --m-truth-column BodySite \
+     --m-truth-column body-site \
      --o-visualization ncv_confusion_matrix.qzv
 
 
