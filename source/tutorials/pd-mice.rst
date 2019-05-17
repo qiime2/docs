@@ -1,9 +1,7 @@
 Parkinson’s Mouse Tutorial
 ------------------------------------
 
-As an example of how to process data through QIIME 2, we will use a set of humanized murine fecal samples from `Sampson et al, 2016`_.
-
-The original study was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
+This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from humanized mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
 To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples.
 
