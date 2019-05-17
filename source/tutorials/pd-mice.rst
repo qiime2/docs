@@ -168,7 +168,7 @@ Before running the command, let’s review the help documentation to make sure w
 
    qiime demux summarize --help
 
-Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``. However, to speed up the command process, we’ll change the ``--p-n`` parameter to 1000. This means that rather than resampling the sequences 10000 times (the default number) to get the quality score, we’ll only re-sample them 1000 times.
+Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``.
 
 The help documentation is a good reference for any command, and the first place to look if you’re getting errors, especially errors about parameters.
 
@@ -176,7 +176,6 @@ The help documentation is a good reference for any command, and the first place 
 
    qiime demux summarize \
      --i-data ./demux_seqs.qza \
-     --p-n 1000 \
      --o-visualization ./demux_seqs.qzv
 
 You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
