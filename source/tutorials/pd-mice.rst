@@ -117,7 +117,7 @@ Loading the data into QIIME 2
 
 In QIIME 2, all data is structured as an Artifact of a specific semantic type. The artifacts contain the data as well as information about the data, including a record of the original data, the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and types of artifacts :doc:`here <../semantic-types/>`.
 
-Our samples were amplified u|sing the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
+Our samples were amplified using the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
 region covered by the primers we used 290bp and so with 150bp reads, our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc: `moving pictures tutorial <moving-pictures>` describes how to demultiplex your sequences if they were sequenced using the Earth Microbiome Project protocol.
 
 We will load the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would chose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path to the sequence file, and the read direction. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id\tabsolute-filepath``. The sample order after the header line does not matter.
@@ -240,7 +240,7 @@ Next, we’ll apply the Deblur algorithm with the ``qiime deblur denoise-16S`` c
 
 The method requires the use of an additional parameter: ``p-trim-length``. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
-*Note*: The command is expected to take about 3-4 minutes to run.
+.. note:: The command is expected to take about 3-4 minutes to run.
 
 .. command-block::
 
@@ -299,7 +299,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
 Taxonomic Classification
 ========================
 
-Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them “names”, we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
+Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
 
 For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
 
@@ -307,7 +307,7 @@ For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 r
    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
-It’s worth noting that naive bayesian classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
+It’s worth noting that Naive Bayes classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
 
 .. command-block::
 
@@ -417,7 +417,7 @@ This method wraps several other methods, and it’s worthwhile to note that the 
 
 One important consideration for diversity calculations is the Rarefaction depth. Above, we used alpha rarefaction and the sample summary to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
 
-*Note*: This step takes about 7 minutes
+.. note:: This step takes about 7 minutes
 
 .. command-block::
 
