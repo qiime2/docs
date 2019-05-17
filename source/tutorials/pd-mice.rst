@@ -242,7 +242,7 @@ Next, we’ll apply the Deblur algorithm with the ``qiime deblur denoise-16S`` c
 
 The method requires the use of an additional parameter: ``p-trim-length``. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
-*Note*: The command is expected to take about 3-4 minutes to run.
+.. note:: The command is expected to take about 3-4 minutes to run.
 
 .. command-block::
 
