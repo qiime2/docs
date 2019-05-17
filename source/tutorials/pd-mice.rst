@@ -9,7 +9,7 @@ Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the mi
 
 We’ll look a subset of data from two human donors (one healthy and one with PD) whose samples were transplanted into two cages of mice from the susceptible genotype.
 
-For this tutorial, a subset of the metadata has been pulled from the full file, and the sequences also been subsamples down to around 5000 sequences per sample from a much larger distribution to make the dataset easier to run in a short time. The sequences for the full study were deposited in EBI with accession `PRJEB17694`_; processed tables can be downloaded from the `qiita`_  database from study 10483.
+For this tutorial, a subset of the metadata has been pulled from the full file, and the sequences have also been subsampled down to around 5000 sequences per sample from a much larger distribution to allow the tutorial to run in a short time. The sequences for the full study were deposited in EBI with accession `PRJEB17694`_; processed tables can be downloaded from the `qiita`_  database from study 10483.
 
 Hypothesis
 ==========
