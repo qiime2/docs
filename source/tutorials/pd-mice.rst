@@ -301,7 +301,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
 Taxonomic Classification
 ========================
 
-Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them “names”, we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
+Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
 
 For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
 
