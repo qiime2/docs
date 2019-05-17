@@ -559,7 +559,7 @@ Differential Abundance with ANCOM
 
 Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the compositional composition of a sample further disrupting.
+Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as trade off between the model, computation, and statistical 
 
 .. command-block::
 
@@ -593,7 +593,7 @@ Let’s use ANCOM to check whether there is a difference in the mice based on th
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
 
-When you open the ancom visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically fdr-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does produce a traditional p-value.
+When you open the ancom visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically fdr-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
 
 .. question::
 
@@ -632,6 +632,8 @@ Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s u
      --p-custom-axes days_post_transplant \
      --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv
 
+.. included to recapitulate the step from moving pictures. Im not sure it adds much, and it covered there?
+
 We might also want to look a the variation along the PC if we start from the same point. We can use volatility analysis from the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC.
 
 The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
@@ -650,7 +652,7 @@ The ``--m-metadata-file`` column can take several types, including a metadata fi
     Try exploring the PCoA with the custom axis plot to see if you can find new insight.
     Now, open the volatility plot. What's different in this visualization what what you see in the PCoA with custom axes?
 
-    Using the **[Axis]** tab in the emperor PCoA, switch the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
+    Using the **[Axis]** tab in the emperor PCoA, show the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
 
 Distance-based analysis
 -----------------------
@@ -704,6 +706,7 @@ Based on the experimental design, what group columns should we choose?
 Now, let’s look at the results of the models.
 
 .. question::
+
    Open the distance volatility plot (``./from_first_unifrac_vol.qzv``) using the qiime 2 viewer. Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
 
    Now, let’s open the linear mixed effects model (``./from_first_unifrac_lme.qzv``). Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
