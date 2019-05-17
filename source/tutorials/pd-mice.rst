@@ -419,7 +419,7 @@ This method wraps several other methods, and it’s worthwhile to note that the 
 
 One important consideration for diversity calculations is the Rarefaction depth. Above, we used alpha rarefaction and the sample summary to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
 
-*Note*: This step takes about 7 minutes
+.. note:: This step takes about 7 minutes
 
 .. command-block::
 
