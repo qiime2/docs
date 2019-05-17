@@ -292,7 +292,8 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
    qiime fragment-insertion sepp \
      --i-representative-sequences ./deblur_rep_set.qza \
      --o-tree ./tree.qza \
-     --o-placements ./tree_placements.qza
+     --o-placements ./tree_placements.qza \
+     --p-threads 1
 
 
 Taxonomic Classification
@@ -345,9 +346,9 @@ Let’s also tabulate the representative sequences. Tabulating the representativ
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
 
-Although sequencing depth in a microbiome samples does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities `Weiss et al, 2017`_. Therefore, for most diversity metrics, a normalization approach is needed.
+Although sequencing depth in a microbiome samples does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
-Current best practices suggest the use of rarefaction, a normalizational via sub sampling without replacement. Rarefaction occurs in two steps. First, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analysis. Several strategies exist to figure out the right rarefaction depth, but alpha rarefaction is a data-driven way to approach the problem.
+Current best practices suggest the use of rarefaction, a normalizational via sub sampling without replacement. Rarefaction occurs in two steps. First, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out the right rarefaction depth, but alpha rarefaction is a data-driven way to approach the problem.
 
 We’ll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
 ``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the sample with the most has 3008. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 2500 sequences per sample, we’ll be looking at information from about 22 samples. So, let’s set this as our maximum sequencing depth.
