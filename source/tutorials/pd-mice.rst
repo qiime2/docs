@@ -285,7 +285,7 @@ QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics
 
 QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
-*Note: This command tables about 11 minutes to run.*
+.. note:: This command takes approximately 10 minutes to run when ``-p-n-threads`` is set to ``1``. If your computation environment supports it, we suggest including an appropriately-set ``--p-n-threads`` parameter.*
 
 .. command-block::
 
