@@ -309,7 +309,7 @@ For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 r
    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
-It’s worth noting that naive bayesian classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
+It’s worth noting that Naive Bayes classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
 
 .. command-block::
 
