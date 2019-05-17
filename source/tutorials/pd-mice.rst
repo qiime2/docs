@@ -147,7 +147,7 @@ You can use the ``head`` command to check the first five lines of the sample man
 
    head -n 6 manifest
 
-When using the single end manifest format, a sample name can only appear in one line and can only map to one sequencing file. In a paired end manifest, the sample name should appear twice. The **absolute-filepath** for each sample must be an `absolute path`_, which specifies the “full” location of the file. We do that here using the ``$PWD`` variable, which uses the local absolute directory. The **direction** column can only have two values: *forward* and *reverse*.
+When using the manifest formats, a sample name can only appear in one line and can only map to one sequencing file per column (one column for single-end, two columns for paired-end). The **absolute-filepath** for each sample must be an `absolute path`_, which specifies the "full" location of the file. We do that here using the ``$PWD`` variable, which uses the local absolute directory.
 
 We’ll use the manifest to import our data.
 
