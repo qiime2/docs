@@ -385,9 +385,13 @@ If you’re still unsure whether the rarefaction depth, you can also use the sam
    1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample?
    2. Which mice did the missing samples come from?
 
-**Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
+After we've looked through the data, we need to select a rarefaction depth.
 
-In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+.. checkpoint::
+
+   **Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
+
+   In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
 
 
 Diversity Analysis
