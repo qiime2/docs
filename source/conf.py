@@ -51,6 +51,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx_extensions.question',
     'sphinx_extensions.qiime1',
+    'sphinx_extensions.checkpoint',
     'sphinx_extensions.command_block',
     'sphinx_extensions.plugin_directory',
     'sphinx_extensions.external_links',

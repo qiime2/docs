@@ -23,9 +23,9 @@ class CheckpointDirective(SphinxDirective):
 
         checkpoint_node = CheckpointAdmonition(self.content)
         checkpoint_node += nodes.title(text='Checkpoint')
-        checkpoint_node['checkpoint'] += ['checkpoint']
+        checkpoint_node['classes'] += ['checkpoint']
         self.state.nested_parse(self.content, self.content_offset,
-                                question_node)
+                                checkpoint_node)
 
         return [target_node, checkpoint_node]
 
