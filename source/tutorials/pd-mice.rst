@@ -370,7 +370,7 @@ The second curve shows the number of samples in each group at each sequencing de
 
 If you’re still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
 
-*Hint*: We generated this in the after we built the feature table.
+*Hint*: We generated this after we built the feature table.
 
 .. question::
 
