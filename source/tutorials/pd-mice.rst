@@ -293,7 +293,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
      --i-representative-sequences ./deblur_rep_set.qza \
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza \
-     --p-threads 1
+     --p-n-threads 1
 
 
 Taxonomic Classification
