@@ -318,7 +318,7 @@ It’s worth noting that Naive Bayes classifiers perform best when they’re tra
 
 .. do we want to throw clawback in here?
 
-Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` function.
+Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` method.
 
 .. command-block::
 
