@@ -516,7 +516,10 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
-.. 
+.. Yep, donor is a significant and large effect, as we expected from the PCoA
+.. Overall, cage is significant but some of this is drive by between donor differences. 
+.. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
+
 
 Taxonomy Barchart
 =================
@@ -531,7 +534,7 @@ For this example, we need to filter out samples with fewer sequences than our ra
 
    qiime feature-table filter-samples \
      --i-table ./dada2_table.qza \
-     --p-min-frequency 1000 \
+     --p-min-frequency 2000 \
      --o-filtered-table ./table_1k.qza
 
 Now, let’s use the filtered table to build an interactive barplot of the taxonomy in the sample.
@@ -548,6 +551,7 @@ Now, let’s use the filtered table to build an interactive barplot of the taxon
 
    Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprising you? Why or why not?
 
+.. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance. 
 
 Differential Abundance with ANCOM
 =================================
@@ -559,7 +563,7 @@ Before we being, we're going to filter out low abundance/low prevelance ASVs. Fi
 .. command-block::
 
    qiime feature-table filter-features \
-     --i-table ./table_1k.qza \
+     --i-table ./table_2k.qza \
      --p-min-frequency 50 \
      --p-min-samples 4 \
      --o-filtered-table ./table_1k_abund.qza
@@ -569,21 +573,21 @@ ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on 
 .. command-block::
 
    qiime composition add-pseudocount \
-     --i-table ./table_1k_abund.qza \
-     --o-composition-table ./table1k_abund_comp.qza
+     --i-table ./table_2k_abund.qza \
+     --o-composition-table ./table2k_abund_comp.qza
 
 Let’s use ANCOM to check whether there is a difference in the mice based on their donor and then by their genetic background. The test will calculate the number of ratios between pairs of ASVs are significantly different with fdr-corrected p < 0.05.
 
 .. command-block::
 
    qiime composition ancom \
-     --i-table ./table1k_abund_comp.qza \
+     --i-table ./table2k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column donor \
      --o-visualization ./ancom_donor.qzv
 
    qiime composition ancom \
-     --i-table ./table1k_abund_comp.qza \
+     --i-table ./table2k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
@@ -596,9 +600,13 @@ When you open the ANCOM visualizations, you’ll see a volcano plot on top which
 
    1. Are there more differentially abundant features between the donors or the mouse genotype? Did you expect this result based on the beta diversity?
    2. Are there any features that are differentially abundant in both the donors and by genotype?
-   3. How many differentially abundant features are there between the two genotypes? Using the percentile abundances as a guide, can you tell if they are more abundant in wild type or susceptible mice?
+   3. How many differentially abundant features are there between the two genotypes? Using the percentile abundances and volcano plot as a guide, can you tell if they are more abundant in wild type or susceptible mice?
    4. Use taxonomy metadata visualization and search sequence identifiers for the significantly different features by genotype. What genera do they belong to?
 
+.. More differentially abundant features by donor than genotype. Not suprising given the size of donor in b-div vs the size of genotype
+.. Nope. Whoo! :celebrate:
+.. There are three 3 features that are differentially abundant. All three are more abundant in WT mice
+.. ac5402de1ddf427ab8d2b0a8a0a44f19: g__Bacteriodetes; 79280cea51a6fe8a3432b2f266dd34db: g__Faecalibacterium (prausnitzii); 3017f87a3b0f5200ed54eca17eef3cbb: f__[Mogibacteriaceae]
 
 Longitudinal Analysis
 =====================
@@ -616,6 +624,8 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
    What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
+.. No clear pattern based on animations
+
 
 A volitility plot will let us look at patterns of variation variation along principle coordinate axes starting from same point. This can be helpful since inter-individual variation can be large and instead lets of focus instead of the changes. 
 
@@ -632,10 +642,9 @@ Let's use the ``q2-longitudinal`` plugin to look at how samples from an individu
 
 .. question::
 
-    Try exploring the PCoA with the custom axis plot to see if you can find new insight.
-    Now, open the volatility plot. What's different in this visualization what what you see in the PCoA with custom axes?
+    Using the controls, look at variation in cage along PCs 1, 2, and 3. What kind of patterns do you see with time along each axis?
 
-    Using the **[Axis]** tab in the emperor PCoA, show the third axis to PC3. Switch the Volatility plot so you're also viewing variation along Axis 3 (the third PC). Color the two plots by the same metric. Does the change you see when you animate the PCoA match what you can learn from the volatility plot?
+.. In this version, there's seperation, but not a lot of temporal trends.
 
 Distance-based analysis
 -----------------------
@@ -665,6 +674,12 @@ We can again use volatility analysis to visualize the change in beta diversity b
      --p-default-metric Distance \
      --o-visualization ./from_first_unifrac_vol.qzv
 
+.. question::
+
+   Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
+
+.. samples from the hc change more over time; cage42 shows a lot of volitility. there isnt as much temporal change by genotype but there is some seperation
+
 A linear mixed effects (LME) model lets us test whether there’s a relationship between a dependent variable and one or more independent variables in an experiment using repeated measures. Since we’re interested in genotype, we should use this as an independent predictor.
 
 For our experiment, we’re currently interested in the change in distance from the initial timepoint, so we’ll use this as our outcome variable (given by ``--p-metric``).
@@ -690,9 +705,9 @@ Now, let’s look at the results of the models.
 
 .. question::
 
-   Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
-
    Now, let’s open the linear mixed effects model. Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
+
+.. yes, there's a significant association. The susceptable mice are more stable. There isn't a statistically significant difference based on donor though. the interaction between donor and genotype is significant.
 
 Synthesis
 =========
