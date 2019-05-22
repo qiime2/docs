@@ -326,7 +326,7 @@ Now, let’s review the taxonomy associated with the sequences using the ``qiime
      --m-input-file ./taxonomy.qza \
      --o-visualization ./taxonomy.qzv
 
-Let’s also tabulate the representative sequences. Tabulating the representative sequences will allow us to see the sequence assigned to the identifier and interactively blast the sequence against the NCBI database.
+Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). Tabulating the representative sequences will allow us to see the sequence assigned to the identifier and interactively blast the sequence against the NCBI database.
 
 .. command-block::
 
