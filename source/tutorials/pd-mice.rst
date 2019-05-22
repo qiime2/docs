@@ -186,6 +186,10 @@ You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and dr
    2. What is the median sequence length?
    3. What is the median quality score at position 125?
 
+.. lowest sequecing depth: 4237 seqs, recip.460.WT.HC3.D14
+.. median length: 150 nt
+.. median qual score at 125: 38
+
 
 Sequence quality control and feature table
 ==========================================
@@ -226,6 +230,7 @@ After we finish denoising the data, we can check the quality filtering results. 
 
    qiime feature-table summarize \
      --i-table ./dada2_table.qza \
+     --m-sample-metadata-file ./metadata.tsv \
      --o-visualization ./dada2_table.qzv
 
 .. question::
@@ -233,13 +238,20 @@ After we finish denoising the data, we can check the quality filtering results. 
    Start with the feature table summary. 
 
    1. How many features remain after denoising?
-   3. Which sample has the most? How many sequences does that sample have?
-   4. If we chose to filter the data to retain only samples with 2500 sequences, how many samples would we lose?
-   5. Which features are observed in at least 47 samples?
-   2. Which sample has the fewest sequences? How many does it have?
+   2. Which sample has the most? How many sequences does that sample have?
+   3. If we chose to filter the data to retain only samples with 4250 sequences, how many samples would we lose?
+   4. Which features are observed in at least 47 samples?
+   5. Which sample has the fewest sequences? How many does it have?
 
    If you open the denoising summary, can you find the step where the sample with the fewest sequences fails? 
 
+.. JWD: Adding answers for my own reference 
+.. After denoising: 287 features
+.. Most sequences: recip.539.ASO.PD4.D14, 4996
+.. With 4250 seqs/sample, we retain 26 of 48 samples => 22 samples remain
+.. 3 features are found in 47 samples: 04c8be5a3a6ba2d70446812e99318905, ea2b0e4a93c24c6c3661cbe347f93b74, 1ad289cd8f44e109fd95de0382c5b252
+.. Sample recip.460.WT.HC3.D49 has the lowest final depth with 347 sequences
+.. the sample fails in the denoising stage
 
 Generating a Phylogenetic Tree for Diversity Analysis
 =====================================================
@@ -248,7 +260,7 @@ QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics
 
 QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
-.. note:: This command takes approximately 10 minutes to run when ``-p-n-threads`` is set to ``1``. If your computation environment supports it, we suggest including an appropriately-set ``--p-n-threads`` parameter.*
+.. note:: This command may be slow. If your computation environment supports it, we suggest including an appropriately-set ``--p-n-threads`` parameter.*
 
 .. command-block::
 
@@ -256,7 +268,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
      --i-representative-sequences ./dada2_rep_set.qza \
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza \
-     --p-n-threads 1
+     --p-threads 1
 
 
 Taxonomic Classification
@@ -279,7 +291,7 @@ It’s worth noting that Naive Bayes classifiers perform best when they’re tra
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
 
-.. do we want to throw clawback in here?
+.. TODO: add clawback?
 
 Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` method.
 
@@ -305,6 +317,10 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
 
    Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
 
+.. 1. 59196a586276f0be745d0e334fc071c6 maps to k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Lachnospiraceae; g__Blautia; s__ with a confidence of 0.99928
+.. 2. Two sequences map to g__Akkermansia
+.. 3. They both should blast. ...Potentially tricky note here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily. 
+
 
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
@@ -314,7 +330,7 @@ Although sequencing depth in a microbiome sample does not directly relate to the
 Current best practices suggest the use of rarefaction, a normalizational via sub sampling without replacement. Rarefaction occurs in two steps. First, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out the right rarefaction depth, but alpha rarefaction is a data-driven way to approach the problem.
 
 We’ll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the sample with the most has 3008. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 2500 sequences per sample, we’ll be looking at information from about 22 samples. So, let’s set this as our maximum sequencing depth.
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the sample with the most has 4996 sequences. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we’ll be looking at information from  22 samples. So, let’s set this as our maximum sequencing depth.
 
 At each sampling depth, 10 rarified tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by passing the metadata file into the ``--m-metadata-file`` parameter.
 
@@ -325,7 +341,7 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./alpha_rarefaction_curves.qzv \
      --p-min-depth 10 \
-     --p-max-depth 2500
+     --p-max-depth 4250
 
 The visualization file will give us two curves. The top curve will give the alpha diversity (observed OTUs or shannon) as a function of the sequencing depth. This is used to determine whether the richness or evenness has saturated based on the sequencing depth. The rarefaction curve should “level out” as you approach a sequencing depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
@@ -341,20 +357,26 @@ If you’re still unsure of the rarefaction depth, you can also use the sample s
 
    1. Are all metadata columns represented in the visualization? If not, which columns were excluded and why?
    2. Which metric shows saturation and stabilization of the diversity?
-   3.  Which mouse genetic background has higher diversity, based on the curve? Which has shallower sequencing depth?
+   3. Which mouse genetic background has higher diversity, based on the curve? Which has shallower sequencing depth?
 
    Now, let's check the feature table summary.
 
-   1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample?
-   2. Which mice did the missing samples come from?
+   4. What percentage of samples are lost if we set the rarefaction depth to 2500 sequences per sample?
+   5. Which mice did the missing samples come from?
 
-After we've looked through the data, we need to select a rarefaction depth.
+.. 1. We can't look at the days since transplant (this is a numeric column)
+.. 2. shannon. Always shannon. Shannon is a good justification for rarefaction. Just ignore the observed ASVs behind the curtain
+.. 3. suspectible has higher diversity, wild type had a shallower sequencing depth
+.. 4. we lose 8% of samples (4 samples).
+.. 5. The samples come from mouse 457, 469, 537, and 538.
+
+After we've looked through the data, we need to select a rarefaction depth. In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
 
 .. checkpoint::
 
    **Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
 
-   In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+   Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
 
 
 Diversity Analysis
@@ -384,15 +406,13 @@ This method wraps several other methods, and it’s worthwhile to note that the 
 
 One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
 
-.. note:: This step takes about 7 minutes
-
 .. command-block::
 
    qiime diversity core-metrics-phylogenetic \
      --i-table ./dada2_table.qza \
      --i-phylogeny ./tree.qza \
      --m-metadata-file ./metadata.tsv \
-     --p-sampling-depth 1000 \
+     --p-sampling-depth 2000 \
      --output-dir ./core-metrics-results
 
 Alpha Diversity
@@ -422,6 +442,9 @@ Let’s test the relationship between the phylogenetic alpha diversity and evenn
 
    Based on the group significance test, is there a difference in phylogenetic diversity by genotype? Is there a difference based on the donor?
 
+.. There is no difference in evenness by genotype, but hte difference in phylogenetic diversity is borderline signfiicant (p=0.0508)
+.. there is a difference in both evenness and PD by donor
+
 If we had a continuous covariate that we thought was associated with the alpha diversity, we could test that using ``qiime diversity alpha-correlation``. However, the only continuous variable in this dataset is the days since transplant.
 
 Beta Diversity
@@ -434,6 +457,9 @@ Next, we’ll compare the structure of the microbiome communities using beta div
    Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
 
    One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
+
+.. The major seperation in unweighted UniFrac dhsould be due to donor. 
+.. we see some clustering by cage, but the points are mixed
 
 Now, let’s analyze the statistical trends using `PERMANOVA`_. Permanova tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
 
@@ -489,6 +515,8 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
    From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
+
+.. 
 
 Taxonomy Barchart
 =================
