@@ -626,21 +626,9 @@ We can start by exploring temporal change in the PCoA using the animations tab.
    What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
 
-Sometimes, it can also be useful to view the PCoA using a custom axis. Let’s use ``q2-emperor`` to make a PCoA where we can look at the time after transplant as a custom axis using the ``--p-custom-axes`` parameter.
+A volitility plot will let us look at patterns of variation variation along principle coordinate axes starting from same point. This can be helpful since inter-individual variation can be large and instead lets of focus instead of the changes. 
 
-.. command-block::
-
-   qiime emperor plot \
-     --i-pcoa ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
-     --m-metadata-file ./metadata.tsv \
-     --p-custom-axes days_post_transplant \
-     --o-visualization ./core-metrics-results/unweighted_unifrac_emperor_time_axis.qzv
-
-.. included to recapitulate the step from moving pictures. Im not sure it adds much, and it covered there?
-
-We might also want to look a the variation along the PC if we start from the same point. We can use volatility analysis from the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC.
-
-The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
+Let's use the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC. The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
 
 .. command-block::
 
