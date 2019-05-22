@@ -573,7 +573,7 @@ Before we being, we're going to filter out low abundance/low prevelance ASVs. Fi
      --p-min-samples 4 \
      --o-filtered-table ./table_1k_abund.qza
 
-ANCOM operates on a ``FeatureTable[Composition]`` Artifact, which is based on the relative abundance of features on a per-sample basis. However, the ``FeatureTable[Composition]`` object cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` object.
+ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` object, creating a ``FeatureTable[Composition]`` in its place.
 
 .. command-block::
 
