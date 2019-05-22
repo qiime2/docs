@@ -435,7 +435,7 @@ One important consideration for diversity calculations is the rarefaction depth.
 Alpha Diversity
 ---------------
 
-Alpha diversity asks whether the number of distribution of features within a sample differ between different conditions. The comparison makes no assumptions about the features that are shared between samples; two samples can have the same alpha diversity and not share any features. The rarified alpha diversity produced by ``q2-diversity`` is a univariate, continuous value and can be tested using common non-parametric statistical tests.
+Alpha diversity asks whether the distribution of features within a sample differ between different conditions. The comparison makes no assumptions about the features that are shared between samples; two samples can have the same alpha diversity and not share any features. The rarified alpha diversity produced by ``q2-diversity`` is a univariate, continuous value and can be tested using common non-parametric statistical tests.
 
 Let’s test the relationship between the phylogenetic alpha diversity and evenness and our covariates of interest.
 
