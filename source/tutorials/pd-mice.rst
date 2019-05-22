@@ -597,7 +597,7 @@ Let’s use ANCOM to check whether there is a difference in the mice based on th
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
 
-When you open the ancom visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically fdr-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
+When you open the ANCOM visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
 
 .. question::
 
