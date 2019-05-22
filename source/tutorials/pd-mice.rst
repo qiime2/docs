@@ -368,7 +368,7 @@ The visualization file will give us two curves. The top curve will give the alph
 
 The second curve shows the number of samples in each group at each sequencing depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata group. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata categories.
 
-If you’re still unsure whether the rarefaction depth, you can also use the sample summary to look at which samples are lost by adding metadata to the feature table summary.
+If you’re still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
 
 *Hint*: We generated this in the after we built the feature table.
 
