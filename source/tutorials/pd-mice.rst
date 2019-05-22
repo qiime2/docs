@@ -346,7 +346,7 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
 
-Although sequencing depth in a microbiome samples does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
+Although sequencing depth in a microbiome sample does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
 Current best practices suggest the use of rarefaction, a normalizational via sub sampling without replacement. Rarefaction occurs in two steps. First, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out the right rarefaction depth, but alpha rarefaction is a data-driven way to approach the problem.
 
@@ -368,9 +368,9 @@ The visualization file will give us two curves. The top curve will give the alph
 
 The second curve shows the number of samples in each group at each sequencing depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata group. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata categories.
 
-If you’re still unsure whether the rarefaction depth, you can also use the sample summary to look at which samples are lost by adding metadata to the feature table summary.
+If you’re still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
 
-*Hint*: We generated this in the after we built the feature table.
+*Hint*: We generated this after we built the feature table.
 
 .. question::
 
@@ -419,7 +419,7 @@ There is a very good discussion of diversity metrics and their meanings in a `qi
 
 This method wraps several other methods, and it’s worthwhile to note that the steps in ``qiime diversity core-metrics-phylogenetic`` can be executed independently.
 
-One important consideration for diversity calculations is the Rarefaction depth. Above, we used alpha rarefaction and the sample summary to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
+One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
 
 .. note:: This step takes about 7 minutes
 
@@ -435,7 +435,7 @@ One important consideration for diversity calculations is the Rarefaction depth.
 Alpha Diversity
 ---------------
 
-Alpha diversity asks whether the number of distribution of features within a sample differ between different conditions. The comparison makes no assumptions about the features that are shared between samples; two samples can have the same alpha diversity and not share any features. The rarified alpha diversity produced by ``q2-diversity`` is a univariate, continuous value and can be tested using common non-parametric statistical tests.
+Alpha diversity asks whether the distribution of features within a sample differ between different conditions. The comparison makes no assumptions about the features that are shared between samples; two samples can have the same alpha diversity and not share any features. The rarified alpha diversity produced by ``q2-diversity`` is a univariate, continuous value and can be tested using common non-parametric statistical tests.
 
 Let’s test the relationship between the phylogenetic alpha diversity and evenness and our covariates of interest.
 
