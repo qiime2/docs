@@ -196,68 +196,26 @@ ASVs are a more recent development and provide better resolution in features tha
 
 It is worth noting in either case that denoising to ASVs and clustering to OTUs are seperate, but parallel steps. A choice should be made for a single pathway: either denoising or OTU based clustering; it is not recommended to combine the steps.
 
-In this tutorial, we’ll denoise using Deblur on single ended sequences. those interested in Dada2 may find the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Atacama soil tutorial <atacama-soils>`. An example of using Deblur with paired end reads can be found in the :doc:`Alternative methods of read joining <read-joining/>` tutorial.
+In this tutorial, we’ll denoise using Dada2 on single ended sequences. An example of using Dada2 on paired end data can be found in the :doc:`Atacama soil tutorial <atacama-soils>`. Those interested in Deblur can refer to :doc:`moving pictures tutorial  <moving-pictures/>` for single end processing and :doc:`Alternative methods of read joining <read-joining/>` tutorial for paired end sequences.
 
-Quality filtering
------------------
-
-Deblur assumes an upper error profile from an Illumina run, and applies that to all sequences. The first step for denoising with Deblur is to perform quality filtering. This method is an implementation of the quality filtering approach from `Bokulich et al, 2013`_. We’ll run the quality filtering with the default QIIME 2 parameters. The parameters used here are not those from the original Deblur paper, but reflect the current recommended practices.
-
-To do this, we’ll apply the ``qiime quality-filter q-score`` command. We’ll input a ``Sequences[WithQuality]`` and will the same type of artifact after quality filtering.
+The method requires the use of an additional parameter: ``--p-trunc-length``. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
 .. command-block::
 
-   qiime quality-filter q-score \
-     --i-demux ./demux_seqs.qza \
-     --o-filtered-sequences ./quality_filtered_seqs.qza \
-     --o-filter-stats ./quality_filter_stats.qza
-
-For the deblur algorithm we need to select a sequence length for trimming. Let’s summarize the data again to check the appropriate trimming length.
-
-.. command-block::
-
-   qiime demux summarize \
-     --i-data ./quality_filtered_seqs.qza \
-     --o-visualization ./quality_filtered_seqs.qzv
-
-We can use the ``qiime metadata tabulate`` command to summarize the statistics and help us understand how many sequences were lost during quality filtering and where they were lost.
-
-.. command-block::
-
-   qiime metadata tabulate \
-     --m-input-file ./quality_filter_stats.qza \
-     --o-visualization ./quality_filter_stats.qzv
-
-.. question::
-
-   In how many samples were there reads exceeding the maximum number of ambiguous bases?
-
-Denoising
----------
-
-Next, we’ll apply the Deblur algorithm with the ``qiime deblur denoise-16S`` command.
-
-The method requires the use of an additional parameter: ``p-trim-length``. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
-
-.. note:: The command is expected to take about 3-4 minutes to run.
-
-.. command-block::
-
-   qiime deblur denoise-16S \
+   qiime dada2 denoise-single \
      --i-demultiplexed-seqs ./quality_filtered_seqs.qza \
-     --p-trim-length 150 \
-     --p-sample-stats \
-     --o-table ./deblur_table.qza \
-     --o-representative-sequences ./deblur_rep_set.qza \
-     --o-stats ./deblur_stats.qza
+     --p-trunc-length 150 \
+     --o-table ./dada2_table.qza \
+     --o-representative-sequences ./dada2_rep_set.qza \
+     --o-stats ./dada2_stats.qza
 
-We can also review the deblur stats using the ``qiime deblur visualize-stats`` command.
+We can also review the denoising statitics using the ``qiime metadata tabulate`` command.
 
 .. command-block::
 
-    qiime deblur visualize-stats \
-      --i-deblur-stats ./deblur_stats.qza  \
-      --o-visualization ./deblur_stats.qzv
+    qiime metadata tabulate \
+      --i-deblur-stats ./dada2_stats.qza  \
+      --o-visualization ./dada2_stats.qzv
 
 Feature Table Summary
 ---------------------
@@ -267,16 +225,21 @@ After we finish denoising the data, we can check the quality filtering results. 
 .. command-block::
 
    qiime feature-table summarize \
-     --i-table ./deblur_table.qza \
-     --o-visualization ./deblur_table.qzv
+     --i-table ./dada2_table.qza \
+     --o-visualization ./dada2_table.qzv
 
 .. question::
 
+   First, look at the feature table summary. 
+
    1. How many features remain after denoising?
-   2. Which sample has the fewest sequences? How many does it have?
    3. Which sample has the most? How many sequences does that sample have?
-   4. If we chose to filter the data to retain only samples with 2500 sequences, how many samples would we lose?
+   4. If we chose to filter the data to retain only samples with 4250 sequences, how many samples would we lose?
    5. Which features are observed in at least 47 samples?
+   2. Which sample has the fewest sequences? How many does it have?
+
+   Now, open the ``dada2_stats.qzv`` file. At which stage in the denoising process are the sequences lost from the low-abundance sample?
+
 
 Generating a Phylogenetic Tree for Diversity Analysis
 =====================================================
@@ -285,12 +248,13 @@ QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics
 
 QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
-.. note:: This command takes approximately 10 minutes to run when ``-p-n-threads`` is set to ``1``. If your computation environment supports it, we suggest including an appropriately-set ``--p-n-threads`` parameter.*
+.. note:: 
+   This command takes approximately 10 minutes to run when ``-p-n-threads`` is set to ``1``. If your computation environment supports it, we suggest including an appropriately-set ``--p-n-threads`` parameter.
 
 .. command-block::
 
    qiime fragment-insertion sepp \
-     --i-representative-sequences ./deblur_rep_set.qza \
+     --i-representative-sequences ./dada2_rep_set.qza \
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza \
      --p-threads 1
@@ -312,7 +276,7 @@ It’s worth noting that Naive Bayes classifiers perform best when they’re tra
 .. command-block::
 
    qiime feature-classifier classify-sklearn \
-     --i-reads ./deblur_rep_set.qza \
+     --i-reads ./dada2_rep_set.qza \
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
 
@@ -331,8 +295,10 @@ Let’s also tabulate the representative sequences. Tabulating the representativ
 .. command-block::
 
    qiime feature-table tabulate-seqs \
-     --i-data ./deblur_rep_set.qza \
-     --o-visualization ./deblur_rep_set.qzv
+     --i-data ./dada2_rep_set.qza \
+     --o-visualization ./dada2_rep_set.qzv
+
+.. to update with Dada2 -- jwd 20190521
 
 .. question::
 
@@ -358,11 +324,12 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
 .. command-block::
 
    qiime diversity alpha-rarefaction \
-     --i-table ./deblur_table.qza \
+     --i-table ./dada2_table.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./alpha_rarefaction_curves.qzv \
      --p-min-depth 10 \
-     --p-max-depth 2500
+     --p-max-depth 2000 \
+     --p-threads 1
 
 The visualization file will give us two curves. The top curve will give the alpha diversity (observed OTUs or shannon) as a function of the sequencing depth. This is used to determine whether the richness or evenness has saturated based on the sequencing depth. The rarefaction curve should “level out” as you approach a sequencing depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
@@ -385,13 +352,15 @@ If you’re still unsure whether the rarefaction depth, you can also use the sam
    1. What percentage of samples are lost if we set the rarefaction depth to 1250 sequences per sample?
    2. Which mice did the missing samples come from?
 
-After we've looked through the data, we need to select a rarefaction depth.
+After we've looked through the data, we need to select a rarefaction depth. In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
 
 .. checkpoint::
 
-   **Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?**
+   *Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?*
 
-   In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+   In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample. 
+
+
 
 
 Diversity Analysis
@@ -426,7 +395,7 @@ One important consideration for diversity calculations is the Rarefaction depth.
 .. command-block::
 
    qiime diversity core-metrics-phylogenetic \
-     --i-table ./deblur_table.qza \
+     --i-table ./dada2_table.qza \
      --i-phylogeny ./tree.qza \
      --m-metadata-file ./metadata.tsv \
      --p-sampling-depth 1000 \
@@ -539,7 +508,7 @@ For this example, we need to filter out samples with fewer sequences than our ra
 .. command-block::
 
    qiime feature-table filter-samples \
-     --i-table ./deblur_table.qza \
+     --i-table ./dada2_table.qza \
      --p-min-frequency 1000 \
      --o-filtered-table ./table_1k.qza
 
