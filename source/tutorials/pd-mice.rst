@@ -207,7 +207,7 @@ The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len
 .. command-block::
 
    qiime dada2 denoise-single \
-     --i-demultiplexed-seqs ./quality_filtered_seqs.qza \
+     --i-demultiplexed-seqs ./demux_seqs.qza \
      --o-table ./dada2_table.qza \
      --o-representative-sequences ./dada2_rep_set.qza \
      --o-denoising-stats ./dada2_stats.qza \
