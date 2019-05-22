@@ -713,7 +713,7 @@ Now, let’s look at the results of the models.
 
    Open the distance volatility plot (``./from_first_unifrac_vol.qzv``) using the qiime 2 viewer. Based on the volatility plot, does one donor change more over time than the other? What about by genotype? Cage?
 
-   Now, let’s open the linear mixed effects model (``./from_first_unifrac_lme.qzv``). Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
+   Now, let’s open the linear mixed effects model. Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
 
 Synthesis
 =========
