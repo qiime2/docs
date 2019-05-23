@@ -207,18 +207,17 @@ The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len
 .. command-block::
 
    qiime dada2 denoise-single \
-     --i-demultiplexed-seqs ./quality_filtered_seqs.qza \
-     --p-trunc-length 150 \
+     --i-demultiplexed-seqs ./demux_seqs.qza \
+     --p-trunc-len 150 \
      --o-table ./dada2_table.qza \
      --o-representative-sequences ./dada2_rep_set.qza \
-     --o-stats ./dada2_stats.qza
+     --o-denoising-stats ./dada2_stats.qza
 
 We can also review the denoising statitics using the ``qiime metadata tabulate`` command.
 
 .. command-block::
 
     qiime metadata tabulate \
-      --i-deblur-stats ./dada2_stats.qza  \
       --m-input-file ./dada2_stats.qza  \
       --o-visualization ./dada2_stats.qzv
 
@@ -345,7 +344,6 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./alpha_rarefaction_curves.qzv \
      --p-min-depth 10 \
-     --p-threads 1
      --p-max-depth 4250
 
 The visualization file will give us two curves. The top curve will give the alpha diversity (observed OTUs or shannon) as a function of the sequencing depth. This is used to determine whether the richness or evenness has saturated based on the sequencing depth. The rarefaction curve should “level out” as you approach a sequencing depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
@@ -542,14 +540,14 @@ For this example, we need to filter out samples with fewer sequences than our ra
    qiime feature-table filter-samples \
      --i-table ./dada2_table.qza \
      --p-min-frequency 2000 \
-     --o-filtered-table ./table_1k.qza
+     --o-filtered-table ./table_2k.qza
 
 Now, let’s use the filtered table to build an interactive barplot of the taxonomy in the sample.
 
 .. command-block::
 
    qiime taxa barplot \
-     --i-table ./table_1k.qza \
+     --i-table ./table_2k.qza \
      --i-taxonomy ./taxonomy.qza \
      --m-metadata-file ./metadata.tsv \
      --o-visualization ./taxa_barplot.qzv
@@ -573,7 +571,7 @@ Before we being, we're going to filter out low abundance/low prevelance ASVs. Fi
      --i-table ./table_2k.qza \
      --p-min-frequency 50 \
      --p-min-samples 4 \
-     --o-filtered-table ./table_1k_abund.qza
+     --o-filtered-table ./table_2k_abund.qza
 
 ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` object, creating a ``FeatureTable[Composition]`` in its place.
 
