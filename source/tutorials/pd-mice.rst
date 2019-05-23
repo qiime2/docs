@@ -502,6 +502,34 @@ Let’s also check whether there’s a relationship between cage where a mouse l
      --o-visualization core-metrics-results/weighted-unifrac-cage-significance.qzv \
      --p-pairwise
 
+.. question::
+   Is there a significant effect of donor?
+
+   From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
+
+
+.. Yep, donor is a significant and large effect, as we expected from the PCoA
+.. Overall, cage is significant but some of this is drive by between donor differences. 
+
+
+A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistical significant difference even if its caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest. 
+
+We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on cage ID to check whether are cage-related differences are due to large within-cage variance.
+
+..command-block::
+   qiime diversity beta-group-significance \
+     --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column cage-id \
+     --o-visualization core-metrics-results/unweighted-unifrac-cage-significance_disp.qzv \
+     --p-method permdisp
+
+.. question::
+   Is there a significant difference in variance for any of the cages?
+
+.. No! Whoo! p ~ 0.2
+
+
 We can use the adonis function to look at a multivariate model. Let’s look at the intersection between donor and genotype.
 
 .. command-block::
@@ -521,8 +549,6 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
-.. Yep, donor is a significant and large effect, as we expected from the PCoA
-.. Overall, cage is significant but some of this is drive by between donor differences. 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
 
 
@@ -750,3 +776,4 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
 .. _Google Sheet: https://data.qiime2.org/2019.7/tutorials/pd-mice/sample_metadata
+.. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
