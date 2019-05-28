@@ -1,5 +1,5 @@
 Parkinson’s Mouse Tutorial
-------------------------------------
+--------------------------
 
 This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from humanized mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
@@ -15,7 +15,6 @@ Hypothesis
 ==========
 
 This tutorial will explore the hypothesis that the genetic background of a humanized mouse influences the microbial community. However, we'll also need to consider other confounders which might drive the shape of the microbiome instead of the mouse genotype.
-
 
 Set up
 ======
@@ -168,7 +167,7 @@ Before running the command, let’s review the help documentation to make sure w
 
    qiime demux summarize --help
 
-Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``.
+Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SampleData[SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``.
 
 The help documentation is a good reference for any command, and the first place to look if you’re getting errors, especially errors about parameters.
 
@@ -190,7 +189,6 @@ You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and dr
 .. median length: 150 nt
 .. median qual score at 125: 38
 
-
 Sequence quality control and feature table
 ==========================================
 
@@ -200,7 +198,7 @@ ASVs are a more recent development and provide better resolution in features tha
 
 It is worth noting in either case that denoising to ASVs and clustering to OTUs are seperate, but parallel steps. A choice should be made for a single pathway: either denoising or OTU based clustering; it is not recommended to combine the steps.
 
-In this tutorial, we’ll denoise using Dada2 with single end sequences. The :doc:`Atacama soil tutorial <atacama-soils>` describes Dada2 on paired end sequences. Those interested in Deblur can refer to the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Alternative methods of read joining <read-joining/>` tutorial for running Deblur on single and paired end sequences, respectively. 
+In this tutorial, we’ll denoise using Dada2 with single end sequences. The :doc:`Atacama soil tutorial <atacama-soils>` describes Dada2 on paired end sequences. Those interested in Deblur can refer to the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Alternative methods of read joining <read-joining/>` tutorial for running Deblur on single and paired end sequences, respectively.
 
 The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len`` paramter. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
@@ -235,7 +233,7 @@ After we finish denoising the data, we can check the quality filtering results. 
 
 .. question::
 
-   Start with the feature table summary. 
+   Start with the feature table summary.
 
    1. How many features remain after denoising?
    2. Which sample has the most? How many sequences does that sample have?
@@ -243,9 +241,9 @@ After we finish denoising the data, we can check the quality filtering results. 
    4. Which features are observed in at least 47 samples?
    5. Which sample has the fewest sequences? How many does it have?
 
-   If you open the denoising summary, can you find the step where the sample with the fewest sequences fails? 
+   If you open the denoising summary, can you find the step where the sample with the fewest sequences fails?
 
-.. JWD: Adding answers for my own reference 
+.. JWD: Adding answers for my own reference
 .. After denoising: 287 features
 .. Most sequences: recip.539.ASO.PD4.D14, 4996
 .. With 4250 seqs/sample, we retain 26 of 48 samples => 22 samples remain
@@ -260,7 +258,7 @@ QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics
 
 QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
-.. note:: 
+.. note::
    This command can take a fair bit of time to run. If your computation environment supports it, we suggest including an appropriately-set ``--p-threads`` parameter.
 
 .. command-block::
@@ -270,7 +268,6 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza \
      --p-threads 1
-
 
 Taxonomic Classification
 ========================
@@ -291,8 +288,6 @@ It’s worth noting that Naive Bayes classifiers perform best when they’re tra
      --i-reads ./dada2_rep_set.qza \
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
-
-.. TODO: add clawback?
 
 Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` method.
 
@@ -318,12 +313,11 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
 
    Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
 
-.. 1. 07f183edd4e4d8aef1dcb2ab24dd7745 maps k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Christensenellaceae; g__; s__	with a confidence of 0.990905. This is an update because 
+.. 1. 07f183edd4e4d8aef1dcb2ab24dd7745 maps k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Christensenellaceae; g__; s__ with a confidence of 0.990905. This is an update because
 .. 2. Two sequences map to g__Akkermansia
-.. 3. They both should blast. ...Potentially tricky here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily. 
+.. 3. They both should blast. ...Potentially tricky here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily.
 
-You might notice that some features do not have taxonomic assignments which for Greengenes is indicates by a blank string at the level (i.e. ``"g__"``). These indicate that there is not enough information to provide a deeper classification of the sequence, either due to ambiguity in the database or because the 16s region being sequenced doesn't provide the resolution to distingish members of that clade. 
-
+You might notice that some features do not have taxonomic assignments which for Greengenes is indicates by a blank string at the level (i.e. ``"g__"``). These indicate that there is not enough information to provide a deeper classification of the sequence, either due to ambiguity in the database or because the 16s region being sequenced doesn't provide the resolution to distingish members of that clade.
 
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
@@ -379,10 +373,9 @@ After we've looked through the data, we need to select a rarefaction depth. In g
 
    *Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?*
 
-   In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample. 
+   In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
 
    Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
-
 
 Diversity Analysis
 ==================
@@ -463,7 +456,7 @@ Next, we’ll compare the structure of the microbiome communities using beta div
 
    One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
 
-.. The major seperation in unweighted UniFrac dhsould be due to donor. 
+.. The major seperation in unweighted UniFrac dhsould be due to donor.
 .. we see some clustering by cage, but the points are mixed
 
 Now, let’s analyze the statistical trends using `PERMANOVA`_. Permanova tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
@@ -507,12 +500,10 @@ Let’s also check whether there’s a relationship between cage where a mouse l
 
    From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
-
 .. Yep, donor is a significant and large effect, as we expected from the PCoA
-.. Overall, cage is significant but some of this is drive by between donor differences. 
+.. Overall, cage is significant but some of this is drive by between donor differences.
 
-
-A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistical significant difference even if its caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest. 
+A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistical significant difference even if its caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
 
 We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on cage ID to check whether are cage-related differences are due to large within-cage variance.
 
@@ -528,7 +519,6 @@ We can specify that we want to use permdisp using the ``--p-method`` flag in ``q
    Is there a significant difference in variance for any of the cages?
 
 .. No! Whoo! p ~ 0.2
-
 
 We can use the adonis function to look at a multivariate model. Let’s look at the intersection between donor and genotype.
 
@@ -550,7 +540,6 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
    If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
-
 
 Taxonomy Barchart
 =================
@@ -582,14 +571,14 @@ Now, let’s use the filtered table to build an interactive barplot of the taxon
 
    Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprising you? Why or why not?
 
-.. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance. 
+.. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance.
 
 Differential Abundance with ANCOM
 =================================
 
 Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as trade off between the model, computation, and statistical 
+Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as trade off between the model, computation, and statistical.
 
 .. command-block::
 
@@ -657,8 +646,7 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
 .. No clear pattern based on animations
 
-
-A volitility plot will let us look at patterns of variation variation along principle coordinate axes starting from same point. This can be helpful since inter-individual variation can be large and instead lets of focus instead of the changes. 
+A volitility plot will let us look at patterns of variation variation along principle coordinate axes starting from same point. This can be helpful since inter-individual variation can be large and instead lets of focus instead of the changes.
 
 Let's use the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC. The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
 
@@ -758,7 +746,7 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 .. Next steps?
 .. ===========
 
-.. Refereences
+.. References
 
 .. _Sampson et al, 2016:  https://www.ncbi.nlm.nih.gov/pubmed/27912057
 .. _PRJEB17694: https://www.ebi.ac.uk/ena/data/view/PRJEB17694
