@@ -310,19 +310,19 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
      --i-data ./dada2_rep_set.qza \
      --o-visualization ./dada2_rep_set.qzv
 
-.. to update with Dada2 -- jwd 20190521
-
 .. question::
 
-   Find the feature, ``59196a586276f0be745d0e334fc071c6``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
+   Find the feature, ``07f183edd4e4d8aef1dcb2ab24dd7745``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
 
    How many sequences are mapped to g__Akkermansia?
 
    Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
 
-.. 1. 59196a586276f0be745d0e334fc071c6 maps to k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Lachnospiraceae; g__Blautia; s__ with a confidence of 0.99928
+.. 1. 07f183edd4e4d8aef1dcb2ab24dd7745 maps k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Christensenellaceae; g__; s__	with a confidence of 0.990905. This is an update because 
 .. 2. Two sequences map to g__Akkermansia
-.. 3. They both should blast. ...Potentially tricky note here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily. 
+.. 3. They both should blast. ...Potentially tricky here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily. 
+
+You might notice that some features do not have taxonomic assignments which for Greengenes is indicates by a blank string at the level (i.e. ``"g__"``). These indicate that there is not enough information to provide a deeper classification of the sequence, either due to ambiguity in the database or because the 16s region being sequenced doesn't provide the resolution to distingish members of that clade. 
 
 
 Alpha Rarefaction and Selecting a Rarefaction Depth
