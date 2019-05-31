@@ -256,7 +256,7 @@ Generating a Phylogenetic Tree for Diversity Analysis
 
 QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics such as PD whole tree and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
 
-QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` object) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
+QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` Artifact) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
 .. note::
    This command can take a fair bit of time to run. If your computation environment supports it, we suggest including an appropriately-set ``--p-threads`` parameter.
@@ -274,7 +274,7 @@ Taxonomic Classification
 
 Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
 
-For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the object that does the classification.
+For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the Artifact that does the classification.
 
 .. download::
    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
@@ -588,7 +588,7 @@ Before we being, we're going to filter out low abundance/low prevelance ASVs. Fi
      --p-min-samples 4 \
      --o-filtered-table ./table_2k_abund.qza
 
-ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` object, creating a ``FeatureTable[Composition]`` in its place.
+ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
 
 .. command-block::
 
