@@ -1,20 +1,18 @@
 Parkinson’s Mouse Tutorial
 --------------------------
 
-This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from humanized mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
+This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from `humanized`_ mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
-To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples.
+To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60 years old, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples. Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson’s disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson’s disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson’s disease.
 
-Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson’s disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson’s disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson’s disease.
-
-We’ll look a subset of data from two human donors (one healthy and one with PD) whose samples were transplanted into two cages of mice from the susceptible genotype.
-
-For this tutorial, a subset of the metadata has been pulled from the full file, and the sequences have also been subsampled down to around 5000 sequences per sample from a much larger distribution to allow the tutorial to run in a short time. The sequences for the full study were deposited in EBI with accession `PRJEB17694`_; processed tables can be downloaded from the `qiita`_  database from study 10483.
+We’ll look a subset of data from two human donors (one healthy and one with PD) whose samples were each transplanted into three separate cages of mice from the susceptible genotype. For this tutorial, a subset of the metadata has been prepared, and the sequences have been subsampled to approximately 5000 sequences per sample to allow the tutorial to run in a short time. The sequences for the full study are accessible at EBI with accession `PRJEB17694`_; processed tables from the full study can be downloaded from the `Qiita`_  database from study 10483.
 
 Hypothesis
 ==========
 
 This tutorial will explore the hypothesis that the genetic background of a humanized mouse influences the microbial community. However, we'll also need to consider other confounders which might drive the shape of the microbiome instead of the mouse genotype.
+
+.. end L2 Hypothesis
 
 Set up
 ======
@@ -29,6 +27,8 @@ Before running the tutorial, you will need to make a directory for the tutorial 
    mkdir ./mouse_tutorial
    cd ./mouse_tutorial
 
+.. end L2 Set up
+
 Metadata
 ========
 
@@ -40,49 +40,49 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 | sample-id               | unique sample      | —               | unique for each  |
 |                         | identifier         |                 | sample           |
 +-------------------------+--------------------+-----------------+------------------+
-| mouse_id                | the unique         | categorical     | ``"435"``;       |
-|                         | identifier for     |                 | ``"437"``;       |
-|                         | each mouse         |                 | ``"456"``;       |
-|                         |                    |                 | ``"457"``;       |
-|                         |                    |                 | ``"468"``;       |
-|                         |                    |                 | ``"469"``;       |
-|                         |                    |                 | ``"536"``;       |
-|                         |                    |                 | ``"537"``;       |
-|                         |                    |                 | ``"538"``;       |
-|                         |                    |                 | ``"539"``;       |
-|                         |                    |                 | ``"546"``;       |
-|                         |                    |                 | ``"547"``        |
+| mouse_id                | the unique         | categorical     | ``435``;         |
+|                         | identifier for     |                 | ``437``;         |
+|                         | each mouse         |                 | ``456``;         |
+|                         |                    |                 | ``457``;         |
+|                         |                    |                 | ``468``;         |
+|                         |                    |                 | ``469``;         |
+|                         |                    |                 | ``536``;         |
+|                         |                    |                 | ``537``;         |
+|                         |                    |                 | ``538``;         |
+|                         |                    |                 | ``539``;         |
+|                         |                    |                 | ``546``;         |
+|                         |                    |                 | ``547``          |
 +-------------------------+--------------------+-----------------+------------------+
-| genotype                | the genetic        | categorical     | ``"wild_type"``; |
-|                         | background of      |                 | ``"susceptible"``|
+| genotype                | the genetic        | categorical     | ``wild_type``;   |
+|                         | background of      |                 | ``susceptible``  |
 |                         | the mouse. The     |                 |                  |
 |                         | Thy1-aSyn          |                 |                  |
-|                         | (``"susceptible``) |                 |                  |
+|                         | (``susceptible``)  |                 |                  |
 |                         | mice are           |                 |                  |
 |                         | genetically        |                 |                  |
 |                         | predisposed to     |                 |                  |
 |                         | disease;           |                 |                  |
-|                         | ``"wild_type"``    |                 |                  |
+|                         | ``wild_type``      |                 |                  |
 |                         | from the BDF1      |                 |                  |
 |                         | background do      |                 |                  |
 |                         | not have any       |                 |                  |
 |                         | additional risk    |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| cage_id                 | the unique         | categorical     | ``"C31"``;       |
-|                         | identifier for     |                 | ``"C35"``;       |
-|                         | each cage of       |                 | ``"C42"``;       |
-|                         | mice               |                 | ``"C43"``;       |
-|                         |                    |                 | ``"C44"``;       |
-|                         |                    |                 | ``"C49"``        |
+| cage_id                 | the unique         | categorical     | ``C31``;         |
+|                         | identifier for     |                 | ``C35``;         |
+|                         | each cage of       |                 | ``C42``;         |
+|                         | mice               |                 | ``C43``;         |
+|                         |                    |                 | ``C44``;         |
+|                         |                    |                 | ``C49``          |
 +-------------------------+--------------------+-----------------+------------------+
-| donor                   | A unique           | categorical     | ``"hc_1"``       |
-|                         | identifier for     |                 | ``"pd_1"``       |
+| donor                   | A unique           | categorical     | ``hc_1``         |
+|                         | identifier for     |                 | ``pd_1``         |
 |                         | the human who      |                 |                  |
 |                         | donated the        |                 |                  |
 |                         | feces              |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
-| donor_status            | whether the        | categorical     | ``"Healthy"``;   |
-|                         | donor has          |                 | ``"PD"``         |
+| donor_status            | whether the        | categorical     | ``Healthy``;     |
+|                         | donor has          |                 | ``PD``           |
 |                         | Parkinson's        |                 |                  |
 |                         | disease or not     |                 |                  |
 |                         | (Donor             |                 |                  |
@@ -100,74 +100,77 @@ Before starting any analysis, it's important to be familiar with the metadata. I
 |                         | humanized          |                 |                  |
 +-------------------------+--------------------+-----------------+------------------+
 
+Even though the mouse ID looks like a number, we will specify that it is categorical using the ``#q2_type`` directive.
 
-Even though the mouse ID looks like a number, we will specify the type using the ``#q2_type`` column in the data.
-
-The metadata is avaliable as a `Google Sheet`_, or ou can download it directly from and save it as a tsv.
+The metadata is avaliable as a `Google Sheet`_, or you can download it directly and save it as a TSV (tab-separated values) file.
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/sample_metadata.tsv
    :saveas: metadata.tsv
 
-The sample metadata will be used through out the tutorial.
+The sample metadata will be used throughout the tutorial. Let's run our first QIIME 2 command, to summarize and explore the metadata.
 
-Loading the data into QIIME 2
-=============================
+.. command-block::
 
-In QIIME 2, all data is structured as an Artifact of a specific semantic type. The artifacts contain the data as well as information about the data, including a record of the original data, the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and types of artifacts :doc:`here <../semantic-types/>`.
+   qiime metadata tabulate \
+     --m-input-file metadata.tsv \
+     --o-visualization metadata.qzv
 
-Our samples were amplified using the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable
-region covered by the primers we used 290bp and so with 150bp reads, our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc: `moving pictures tutorial <moving-pictures>` describes how to demultiplex your sequences if they were sequenced using the Earth Microbiome Project protocol.
+.. end L2 Metadata
 
-We will import the sequences as ``SampleData[SequencesWithQuality]``, which is the single end sequence demultiplexed format. If we wanted to import paired sequences, we would choose the ``SampleData[PairedEndSequencesWithQuality]`` type. We will import the sequences using the sample manifest format. This is one of the most versatile ways to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path to the sequence file. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id\tabsolute-filepath``. The sample order after the header line does not matter.
+Importing data into QIIME 2
+===========================
 
-.. My vote is to merge the manifest with the sample metadata
+In QIIME 2, all data is structured as an Artifact of a specific semantic type. Artifacts contain the data as well as information about the data, including a record of the original data and the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and semantic types :doc:`here <../semantic-types/>`.
+
+Our samples were amplified using the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable region covered by the primers we used is 290bp long, so with 150bp reads our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc:`Moving Pictures tutorial <moving-pictures>` describes how to demultiplex sequences if they were sequenced using the Earth Microbiome Project protocol.
+
+We will import the sequences as ``SampleData[SequencesWithQuality]``, which is the demultiplexed single-end sequence format. If we wanted to import paired-sequences, we would specify the semantic type ``SampleData[PairedEndSequencesWithQuality]``. We will import the sequences using the sample manifest format, a versatile way to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path of the sequence file. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id<TAB>absolute-filepath``. The sample order after the header line does not matter.
 
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/manifest
-   :saveas: manifest
+   :saveas: manifest.tsv
 
 .. download::
    :url: https://data.qiime2.org/2019.7/tutorials/pd-mice/demultiplexed_seqs.zip
    :saveas: demuliplexed_seqs.zip
 
-You'll need to unzip the directory of sequences.
+You'll need to unzip sequence archive you just downloaded:
 
 .. command-block::
 
    unzip demuliplexed_seqs.zip
 
-You can use the ``head`` command to check the first five lines of the sample manifest.
+You can use the ``head`` command to check the first few lines of the sample manifest.
 
 .. command-block::
    :no-exec:
 
-   head -n 6 manifest
+   head manifest.tsv
 
-When using the manifest formats, a sample name can only appear in one line and can only map to one sequencing file per column (one column for single-end, two columns for paired-end). The **absolute-filepath** for each sample must be an `absolute path`_, which specifies the "full" location of the file. We do that here using the ``$PWD`` variable, which uses the local absolute directory.
+When using this manifest format, a sample name can only appear in one line and can only map to one sequencing file per column (one column for single-end, two columns for paired-end). The **absolute-filepath** for each sample must be an `absolute path`_, which specifies the "complete" location of the file. We do that here using the ``$PWD`` variable, which expands the current directory in absolute terms.
 
-We’ll use the manifest to import our data.
+We'll use the manifest to import our data.
 
 .. command-block::
 
    qiime tools import \
      --type "SampleData[SequencesWithQuality]" \
      --input-format SingleEndFastqManifestPhred33V2 \
-     --input-path ./manifest \
+     --input-path ./manifest.tsv \
      --output-path ./demux_seqs.qza
 
-Let’s check the sequences and the sequencing depth of the samples using the ``qiime demux summarize`` command. It provides information about the number of sequences in each sample, as well as the quality of the sequences.
+Let's check the sequences and the sequencing depth of the samples using the ``qiime demux summarize`` command. It provides information about the number of sequences in each sample, as well as the quality of the sequences.
 
-Before running the command, let’s review the help documentation to make sure we understand the arguments.
+Before running the command, let’s review the help documentation to make sure we understand the arguments for the command.
 
 .. command-block::
-   :no-exec:
 
    qiime demux summarize --help
 
-Based on the documentation, we should pass the demultiplexed sequences that we imported as the ``--i-data`` argument, since this takes a ``SampleData[SequencesWithQuality]`` semantic type, and that’s the type of data we imported. We’ll specify the location we want the visualization by passing the output path to ``--o-visualization``.
+Based on the documentation, we should specify the file (Artifact) with the demultiplexed sequences for the ``--i-data`` argument, since this expects data of semantic type ``SampleData[SequencesWithQuality]``. We’ll specify the location we want to save the visualization to by specifying the output path to ``--o-visualization``.
 
 The help documentation is a good reference for any command, and the first place to look if you’re getting errors, especially errors about parameters.
 
@@ -177,30 +180,36 @@ The help documentation is a good reference for any command, and the first place 
      --i-data ./demux_seqs.qza \
      --o-visualization ./demux_seqs.qzv
 
-You can view the .qzv visualization file at `view.qiime2.org`_. Just drag and drop the file into the viewer window.
-
 .. question::
 
    1. After demultiplexing, which sample has the lowest sequencing depth?
    2. What is the median sequence length?
    3. What is the median quality score at position 125?
+   4. If you are working on this tutorial alongside someone else, why does your plot look slightly different from your neighbors? If you aren't working alongside someone else, try running this command a few times and compare the results.
+
+
+.. checkpoint::
+
+   What are good positions to consider trimming and/or truncating at?
 
 .. lowest sequecing depth: 4237 seqs, recip.460.WT.HC3.D14
 .. median length: 150 nt
 .. median qual score at 125: 38
 
+.. end of L2 Importing data into QIIME 2
+
 Sequence quality control and feature table
 ==========================================
 
-There are several ways to construct a feature table in QIIME 2. The first major separation is between Operational Taxonomic Units (OTUs) and Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME 2 offers clustering through :doc:`q2-vsearch<otu-clustering>` and `q2-dbOTU_` plug-ins, currently.
+There are several ways to construct a feature table in QIIME 2. The first major choice to make is to work with Operational Taxonomic Units (OTUs) or Absolute Sequence Variants (ASVs). OTUs have been widely used in microbiome research since the mid 2010s, and assign sequences to taxonomic clusters either based on a reference database or de novo assignment. QIIME 2 offers clustering through :doc:`q2-vsearch<otu-clustering>` and `q2-dbOTU`_ plug-ins, currently.
 
-ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `Dada2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithms and motivation for denoising are nicely described in `Nearing et al, 2018`_.
+ASVs are a more recent development and provide better resolution in features than traditional OTU-based methods. ASVs can separate features based on differences of a single nucleotide in sequences of 400 bp or more, a resolution not possibly even with 99% identity OTU clustering. QIIME 2 currently offers denoising via `DADA2`_ (``q2-dada2``) and `Deblur`_ (``q2-deblur``). The major differences in the algorithms and motivation for denoising are nicely described in `Nearing et al, 2018`_.
 
 It is worth noting in either case that denoising to ASVs and clustering to OTUs are seperate, but parallel steps. A choice should be made for a single pathway: either denoising or OTU based clustering; it is not recommended to combine the steps.
 
-In this tutorial, we’ll denoise using Dada2 with single end sequences. The :doc:`Atacama soil tutorial <atacama-soils>` describes Dada2 on paired end sequences. Those interested in Deblur can refer to the :doc:`moving pictures tutorial  <moving-pictures/>` and :doc:`Alternative methods of read joining <read-joining/>` tutorial for running Deblur on single and paired end sequences, respectively.
+In this tutorial, we’ll denoise with DADA2 (using single-end sequences). Please see the :doc:`Atacama Soil tutorial <atacama-soils>` for an example of using DADA2 on paired-end sequences. For those interested in using Deblur, you can refer to the :doc:`Moving Pictures tutorial  <moving-pictures>` and :doc:`Alternative methods of read joining <read-joining>` tutorial for running Deblur on single- and paired-end sequences, respectively.
 
-The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len`` paramter. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
+The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len`` parameter. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
 .. command-block::
 
@@ -219,10 +228,10 @@ We can also review the denoising statitics using the ``qiime metadata tabulate``
       --m-input-file ./dada2_stats.qza  \
       --o-visualization ./dada2_stats.qzv
 
-Feature Table Summary
+Feature table summary
 +++++++++++++++++++++
 
-After we finish denoising the data, we can check the quality filtering results. We can use two commands to explore the sequence data. First, we’ll look at the summary of the feature table. This will provide us with the counts associated with each sequence and each feature, as well as a histogram of the features.
+After we finish denoising the data, we can check the results by looking at the summary of the feature table. This will provide us with the counts associated with each sequence and each feature, as well as othe useful plots and metrics.
 
 .. command-block::
 
@@ -233,17 +242,14 @@ After we finish denoising the data, we can check the quality filtering results. 
 
 .. question::
 
-   Start with the feature table summary.
-
-   1. How many features remain after denoising?
-   2. Which sample has the most? How many sequences does that sample have?
-   3. If we chose to filter the data to retain only samples with 4250 sequences, how many samples would we lose?
+   1. How many total features remain after denoising?
+   2. Which sample has the highest total count of features? How many sequences did that sample have prior to DADA2 denoising?
+   3. How many samples have fewer than 4250 total features?
    4. Which features are observed in at least 47 samples?
-   5. Which sample has the fewest sequences? How many does it have?
+   5. Which sample has the fewest features? How many does it have?
 
    If you open the denoising summary, can you find the step where the sample with the fewest sequences fails?
 
-.. JWD: Adding answers for my own reference
 .. After denoising: 287 features
 .. Most sequences: recip.539.ASO.PD4.D14, 4996
 .. With 4250 seqs/sample, we retain 26 of 48 samples => 22 samples remain
@@ -251,15 +257,17 @@ After we finish denoising the data, we can check the quality filtering results. 
 .. Sample recip.460.WT.HC3.D49 has the lowest final depth with 347 sequences
 .. the sample fails in the denoising stage
 
-Generating a Phylogenetic Tree for Diversity Analysis
+.. end of L2 Sequence quality control and feature table
+
+Generating a phylogenetic tree for diversity analysis
 =====================================================
 
-QIIME 2 analysis allows the use of phylogenetic trees for both diversity metrics such as PD whole tree and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
+QIIME 2 analysis allows the use of phylogenetic trees for diversity metrics such as Faith's Phylogenetic Diversity and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
 
-QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to use a fragment insertion tree using the ``fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will take the representative sequences (a ``FeatureData[Sequence]`` Artifact) we generated during deblurring and return a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
+QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to create a fragment insertion tree using the ``q2-fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will use the representative sequences (a ``FeatureData[Sequence]`` artifact) we generated during denoising to create a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
 .. note::
-   This command can take a fair bit of time to run. If your computation environment supports it, we suggest including an appropriately-set ``--p-threads`` parameter.
+   This command is resource intensive - if your computation environment supports it, we suggest including an appropriately-set ``--p-threads`` parameter.
 
 .. command-block::
 
@@ -267,14 +275,16 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
      --i-representative-sequences ./dada2_rep_set.qza \
      --o-tree ./tree.qza \
      --o-placements ./tree_placements.qza \
-     --p-threads 1
+     --p-threads 1  # update to a higher number if you can
 
-Taxonomic Classification
+.. end L2 Generating a phylogenetic tree for diversity analysis
+
+Taxonomic classification
 ========================
 
-Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to somehow determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
+Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
 
-For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is a specific semantic type, ``TaxonomicClassifier``, and it is actually the Artifact that does the classification.
+For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is of type ``TaxonomicClassifier``, and it is what "does" the classification.
 
 .. download::
    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
@@ -307,29 +317,33 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
 
 .. question::
 
-   Find the feature, ``07f183edd4e4d8aef1dcb2ab24dd7745``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
-
-   How many sequences are mapped to g__Akkermansia?
-
-   Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier?
+   1. Find the feature, ``07f183edd4e4d8aef1dcb2ab24dd7745``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
+   2. How many features are classified as ``g__Akkermansia``?
+   3. Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier as you obtained with q2-feature-classifier?
 
 .. 1. 07f183edd4e4d8aef1dcb2ab24dd7745 maps k__Bacteria; p__Firmicutes; c__Clostridia; o__Clostridiales; f__Christensenellaceae; g__; s__ with a confidence of 0.990905. This is an update because
 .. 2. Two sequences map to g__Akkermansia
 .. 3. They both should blast. ...Potentially tricky here is that it's hard to cross ref the ID with the taxa viewer. Can't visualized easily.
 
-You might notice that some features do not have taxonomic assignments which for Greengenes is indicates by a blank string at the level (i.e. ``"g__"``). These indicate that there is not enough information to provide a deeper classification of the sequence, either due to ambiguity in the database or because the 16s region being sequenced doesn't provide the resolution to distingish members of that clade.
+.. _`why-classification-underlines-only`:
+
+.. note::
+
+   You might notice that some features do not have taxonomic assignments which for Greengenes is indicates by a blank string at the level (i.e. ``"g__"``). These indicate that there is not enough information to provide a deeper classification of the sequence, either due to ambiguity in the database or because the 16s region being sequenced doesn't provide the resolution to distingish members of that clade.
+
+.. end L2 Taxonomic classification
 
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
 
 Although sequencing depth in a microbiome sample does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
-Current best practices suggest the use of rarefaction, a normalizational via sub-sampling without replacement. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
+Current best practices suggest the use of rarefaction, a normalizational via sub-sampling without replacement. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
 
 We’ll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the deblurred table has 85 sequences and that the sample with the most has 4996 sequences. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we’ll be looking at information from  22 samples. So, let’s set this as our maximum sequencing depth.
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the denoised table has 85 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we’ll be looking at information from  22 samples. So, let’s set this as our maximum sequencing depth.
 
-At each sampling depth, 10 rarified tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by passing the metadata file into the ``--m-metadata-file`` parameter.
+At each sampling depth, 10 rarified tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
 
 .. command-block::
 
@@ -340,21 +354,19 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
      --p-min-depth 10 \
      --p-max-depth 4250
 
-The visualization file will give us two curves. The top curve will give the alpha diversity (observed OTUs or shannon) as a function of the sequencing depth. This is used to determine whether the richness or evenness has saturated based on the sequencing depth. The rarefaction curve should “level out” as you approach a sequencing depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
+The visualization file will display two plots. The upper plot will display the alpha diversity (observed OTUs or shannon) as a function of the sampling depth. This is used to determine whether the richness or evenness has saturated based on the sampling depth. The rarefaction curve should “level out” as you approach the maximum sampling depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
-The second curve shows the number of samples in each group at each sequencing depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata column group values. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata columns.
+The second plot shows the number of samples in each metadata category group at each sampling depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata column group values. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata columns.
 
 If you’re still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
 
-*Hint*: We generated this after we built the feature table.
-
 .. question::
 
-   Start by opening the rarefaction curves.
+   Start by opening the alpha rarefaction visualization.
 
    1. Are all metadata columns represented in the visualization? If not, which columns were excluded and why?
    2. Which metric shows saturation and stabilization of the diversity?
-   3. Which mouse genetic background has higher diversity, based on the curve? Which has shallower sequencing depth?
+   3. Which mouse genetic background has higher diversity, based on the curve? Which has shallower sampling depth?
 
    Now, let's check the feature table summary.
 
@@ -367,15 +379,13 @@ If you’re still unsure of the rarefaction depth, you can also use the sample s
 .. 4. we lose 8% of samples (4 samples).
 .. 5. The samples come from mouse 457, 469, 537, and 538.
 
-After we've looked through the data, we need to select a rarefaction depth. In general, rarefaction depth is a place where an analyst needs to use their discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+After we've looked through the data, we need to select a rarefaction depth. In general, selecting a rarefaction depth is a step that requires that analyst's discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
 
 .. checkpoint::
 
-   *Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?*
-
-   In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
-
-   Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
+   1 .Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?
+   2. In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
+   3. Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
 
 Diversity Analysis
 ==================
@@ -748,13 +758,14 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 
 .. References
 
-.. _Sampson et al, 2016:  https://www.ncbi.nlm.nih.gov/pubmed/27912057
+.. _humanized: https://en.wikipedia.org/wiki/Humanized_mouse
+.. _Sampson et al, 2016: https://www.ncbi.nlm.nih.gov/pubmed/27912057
 .. _PRJEB17694: https://www.ebi.ac.uk/ena/data/view/PRJEB17694
-.. _qiita: www.qiita.ucsd.edu
+.. _Qiita: https://qiita.ucsd.edu
 .. _EMP 515f-806r: http://www.earthmicrobiome.org/protocols-and-standards/16s/
 .. _absolute path: https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths
 .. _q2-dbOTU: https://library.qiime2.org/plugins/q2-dbotu/4/
-.. _Dada2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
+.. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Deblur: https://www.ncbi.nlm.nih.gov/pubmed/28289731
 .. _Nearing et al, 2018: https://www.ncbi.nlm.nih.gov/pubmed/30123705
 .. _Bokulich et al, 2013: https://www.ncbi.nlm.nih.gov/pubmed/23202435
