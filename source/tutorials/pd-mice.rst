@@ -1,11 +1,11 @@
-Parkinson’s Mouse Tutorial
+Parkinson's Mouse Tutorial
 --------------------------
 
-This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from `humanized`_ mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson’s Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
+This tutorial will demonstrate a "typical" QIIME 2 analysis, using a set of fecal samples from `humanized`_ mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson's Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
-To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60 years old, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples. Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson’s disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson’s disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson’s disease.
+To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60 years old, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples. Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson's disease and six age- and sex-matched neurologically health controls, and then transplanted into mice who were either predisposed to developing Parkinson's disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in seperate cages, but mix from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson's disease.
 
-We’ll look a subset of data from two human donors (one healthy and one with PD) whose samples were each transplanted into three separate cages of mice from the susceptible genotype. For this tutorial, a subset of the metadata has been prepared, and the sequences have been subsampled to approximately 5000 sequences per sample to allow the tutorial to run in a short time. The sequences for the full study are accessible at EBI with accession `PRJEB17694`_; processed tables from the full study can be downloaded from the `Qiita`_  database from study 10483.
+We'll look a subset of data from two human donors (one healthy and one with PD) whose samples were each transplanted into three separate cages of mice from the susceptible genotype. For this tutorial, a subset of the metadata has been prepared, and the sequences have been subsampled to approximately 5000 sequences per sample to allow the tutorial to run in a short time. The sequences for the full study are accessible at EBI with accession `PRJEB17694`_; processed tables from the full study can be downloaded from the `Qiita`_  database from study 10483.
 
 Hypothesis
 ==========
@@ -123,9 +123,9 @@ Importing data into QIIME 2
 
 In QIIME 2, all data is structured as an Artifact of a specific semantic type. Artifacts contain the data as well as information about the data, including a record of the original data and the tools used to process it. This allows for better tracking of how you actually got to where you are in your analysis. You can learn more about common QIIME 2 Artifacts and semantic types :doc:`here <../semantic-types/>`.
 
-Our samples were amplified using the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable region covered by the primers we used is 290bp long, so with 150bp reads our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we’re going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc:`Moving Pictures tutorial <moving-pictures>` describes how to demultiplex sequences if they were sequenced using the Earth Microbiome Project protocol.
+Our samples were amplified using the `EMP 515f-806r`_ primers and sequenced on an Illumina MiSeq with a 2x150bp kit. The hypervariable region covered by the primers we used is 290bp long, so with 150bp reads our sequences will be slightly too short to be able to do paired-end analysis downstream. Therefore, we're going to work with single-end sequences. We will work with a version of the samples which have already been demultiplexed, for example, by the sequencing center. If you need to demultiplex your sequences, the doc:`Moving Pictures tutorial <moving-pictures>` describes how to demultiplex sequences if they were sequenced using the Earth Microbiome Project protocol.
 
-We will import the sequences as ``SampleData[SequencesWithQuality]``, which is the demultiplexed single-end sequence format. If we wanted to import paired-sequences, we would specify the semantic type ``SampleData[PairedEndSequencesWithQuality]``. We will import the sequences using the sample manifest format, a versatile way to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path of the sequence file. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn’t contain a ``#`` is the header line and must be ``sample-id<TAB>absolute-filepath``. The sample order after the header line does not matter.
+We will import the sequences as ``SampleData[SequencesWithQuality]``, which is the demultiplexed single-end sequence format. If we wanted to import paired-sequences, we would specify the semantic type ``SampleData[PairedEndSequencesWithQuality]``. We will import the sequences using the sample manifest format, a versatile way to import demultiplexed data in QIIME 2. We create a tab-separated sample manifest file that maps the sample name we want to use in QIIME 2 to the path of the sequence file. The benefit is that the demultiplexed sequence files can be named anything you want; there are not fixed assumptions about the conventions, and the file names do not dictate the final name. When QIIME 2 reads the file, it ignores any line prefixed with the ``#`` symbol. The first line that doesn't contain a ``#`` is the header line and must be ``sample-id<TAB>absolute-filepath``. The sample order after the header line does not matter.
 
 Let's start by downloading the manifest and corresponding sequences.
 
@@ -164,15 +164,15 @@ We'll use the manifest to import our data.
 
 Let's check the sequences and the sequencing depth of the samples using the ``qiime demux summarize`` command. It provides information about the number of sequences in each sample, as well as the quality of the sequences.
 
-Before running the command, let’s review the help documentation to make sure we understand the arguments for the command.
+Before running the command, let's review the help documentation to make sure we understand the arguments for the command.
 
 .. command-block::
 
    qiime demux summarize --help
 
-Based on the documentation, we should specify the file (Artifact) with the demultiplexed sequences for the ``--i-data`` argument, since this expects data of semantic type ``SampleData[SequencesWithQuality]``. We’ll specify the location we want to save the visualization to by specifying the output path to ``--o-visualization``.
+Based on the documentation, we should specify the file (Artifact) with the demultiplexed sequences for the ``--i-data`` argument, since this expects data of semantic type ``SampleData[SequencesWithQuality]``. We'll specify the location we want to save the visualization to by specifying the output path to ``--o-visualization``.
 
-The help documentation is a good reference for any command, and the first place to look if you’re getting errors, especially errors about parameters.
+The help documentation is a good reference for any command, and the first place to look if you're getting errors, especially errors about parameters.
 
 .. command-block::
 
@@ -207,9 +207,9 @@ ASVs are a more recent development and provide better resolution in features tha
 
 It is worth noting in either case that denoising to ASVs and clustering to OTUs are seperate, but parallel steps. A choice should be made for a single pathway: either denoising or OTU based clustering; it is not recommended to combine the steps.
 
-In this tutorial, we’ll denoise with DADA2 (using single-end sequences). Please see the :doc:`Atacama Soil tutorial <atacama-soils>` for an example of using DADA2 on paired-end sequences. For those interested in using Deblur, you can refer to the :doc:`Moving Pictures tutorial  <moving-pictures>` and :doc:`Alternative methods of read joining <read-joining>` tutorial for running Deblur on single- and paired-end sequences, respectively.
+In this tutorial, we'll denoise with DADA2 (using single-end sequences). Please see the :doc:`Atacama Soil tutorial <atacama-soils>` for an example of using DADA2 on paired-end sequences. For those interested in using Deblur, you can refer to the :doc:`Moving Pictures tutorial  <moving-pictures>` and :doc:`Alternative methods of read joining <read-joining>` tutorial for running Deblur on single- and paired-end sequences, respectively.
 
-The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len`` parameter. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we’ll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
+The ``qiime dada2 denoise-single`` method requires us to set the ``--p-trunc-len`` parameter. This controls the length of the sequences and should be selected based on a drop in quality scores. In our dataset, the quality scores are relatively evenly distributed along the sequencing run, so we'll use the full 150 bp sequences. However, the selection of the trim length is a relatively subjective measurement and relies on the decision making capacity of the analyst.
 
 .. command-block::
 
@@ -264,7 +264,7 @@ Generating a phylogenetic tree for diversity analysis
 
 QIIME 2 analysis allows the use of phylogenetic trees for diversity metrics such as Faith's Phylogenetic Diversity and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
 
-QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we’re going to create a fragment insertion tree using the ``q2-fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will use the representative sequences (a ``FeatureData[Sequence]`` artifact) we generated during denoising to create a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
+QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we're going to create a fragment insertion tree using the ``q2-fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will use the representative sequences (a ``FeatureData[Sequence]`` artifact) we generated during denoising to create a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
 .. note::
    This command is resource intensive - if your computation environment supports it, we suggest including an appropriately-set ``--p-threads`` parameter.
@@ -282,7 +282,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
 Taxonomic classification
 ========================
 
-Let’s do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to determine taxonomy. To do this, we’ll use the ``q2-feature-classifier`` plugin.
+Let's do one more preparation step before we dig into the analysis! To be able to identify ASVs and give them "names", we need to determine taxonomy. To do this, we'll use the ``q2-feature-classifier`` plugin.
 
 For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). The classifier is of type ``TaxonomicClassifier``, and it is what "does" the classification.
 
@@ -290,7 +290,7 @@ For this analysis, we'll use a pretrained classifier using 99% Greengenes 13_8 r
    :url: https://data.qiime2.org/2019.4/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
-It’s worth noting that Naive Bayes classifiers perform best when they’re trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
+It's worth noting that Naive Bayes classifiers perform best when they're trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database and region of interest.
 
 .. command-block::
 
@@ -299,7 +299,7 @@ It’s worth noting that Naive Bayes classifiers perform best when they’re tra
      --i-classifier ./gg-13-8-99-515-806-nb-classifier.qza \
      --o-classification ./taxonomy.qza
 
-Now, let’s review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` method.
+Now, let's review the taxonomy associated with the sequences using the ``qiime metadata tabulate`` method.
 
 .. command-block::
 
@@ -307,7 +307,7 @@ Now, let’s review the taxonomy associated with the sequences using the ``qiime
      --m-input-file ./taxonomy.qza \
      --o-visualization ./taxonomy.qzv
 
-Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). Tabulating the representative sequences will allow us to see the sequence assigned to the identifier and interactively blast the sequence against the NCBI database.
+Let's also tabulate the representative sequences (``FeatureData[Sequence]``). Tabulating the representative sequences will allow us to see the sequence assigned to the identifier and interactively blast the sequence against the NCBI database.
 
 .. command-block::
 
@@ -317,7 +317,7 @@ Let’s also tabulate the representative sequences (``FeatureData[Sequence]``). 
 
 .. question::
 
-   1. Find the feature, ``07f183edd4e4d8aef1dcb2ab24dd7745``. What is the taxonomic classification of this sequence? What’s the confidence for the assignment?
+   1. Find the feature, ``07f183edd4e4d8aef1dcb2ab24dd7745``. What is the taxonomic classification of this sequence? What's the confidence for the assignment?
    2. How many features are classified as ``g__Akkermansia``?
    3. Use the tabulated representative sequences to look up these features. If you blast them against NCBI, do you get the same taxonomic identifier as you obtained with q2-feature-classifier?
 
@@ -338,10 +338,10 @@ Alpha Rarefaction and Selecting a Rarefaction Depth
 
 Although sequencing depth in a microbiome sample does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
-Current best practices suggest the use of rarefaction, a normalizational via sub-sampling without replacement. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It’s both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
+Current best practices suggest the use of rarefaction, a normalizational via sub-sampling without replacement. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It's both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
 
-We’ll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the denoised table has 85 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we’ll be looking at information from  22 samples. So, let’s set this as our maximum sequencing depth.
+We'll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table,  we found that the sample with the fewest sequences in the denoised table has 85 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from  22 samples. So, let's set this as our maximum sequencing depth.
 
 At each sampling depth, 10 rarified tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
 
@@ -354,11 +354,11 @@ At each sampling depth, 10 rarified tables are usually calculated to provide an 
      --p-min-depth 10 \
      --p-max-depth 4250
 
-The visualization file will display two plots. The upper plot will display the alpha diversity (observed OTUs or shannon) as a function of the sampling depth. This is used to determine whether the richness or evenness has saturated based on the sampling depth. The rarefaction curve should “level out” as you approach the maximum sampling depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith’s PD diversity, may indicate that the richness in the samples has not been fully saturated.
+The visualization file will display two plots. The upper plot will display the alpha diversity (observed OTUs or shannon) as a function of the sampling depth. This is used to determine whether the richness or evenness has saturated based on the sampling depth. The rarefaction curve should “level out” as you approach the maximum sampling depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith's PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
 The second plot shows the number of samples in each metadata category group at each sampling depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata column group values. Remember that rarefaction is a two step process and samples which do not meet the rarefaction depth are filtered out of the table. So, we can use the curves to look at the number of samples by different metadata columns.
 
-If you’re still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
+If you're still unsure of the rarefaction depth, you can also use the sample summary to look at which samples are lost by supplying sample metadata to the feature table summary.
 
 .. question::
 
@@ -379,7 +379,7 @@ If you’re still unsure of the rarefaction depth, you can also use the sample s
 .. 4. we lose 8% of samples (4 samples).
 .. 5. The samples come from mouse 457, 469, 537, and 538.
 
-After we've looked through the data, we need to select a rarefaction depth. In general, selecting a rarefaction depth is a step that requires that analyst's discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it’s important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
+After we've looked through the data, we need to select a rarefaction depth. In general, selecting a rarefaction depth is a step that requires that analyst's discretion. Selecting a rarefaction depth is an exercise in minimizing sequence loss while maximizing the sequences retained for diversity analysis. For high biomass samples (fecal, oral, etc), a general best estimate is a rarefaction depth of no less than 1000 sequences per sample. In low biomass samples where sequencing is shallower, a lower rarefaction depth may be selected although it's important to keep in mind that the diversity measurements on these samples will be quite noisy and the overall quality will be low.
 
 .. checkpoint::
 
@@ -392,14 +392,14 @@ Diversity analysis
 
 The first step in hypothesis testing in microbial ecology is typically to look at within- (alpha) and between sample (beta) diversity. We can calculate diversity metrics, apply appropriate statistical tests, and visualize the data using the ``q2-diversity`` plugin.
 
-We’ll start by using the ``qiime diversity core-metrics-phylogenetic`` method which ratifies the input feature table, calculates several commonly used alpha and beta diversity metrics, and produces PCoA visualizations in Emperor for the beta diversity metrics. By default, the metrics computed are:
+We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method which ratifies the input feature table, calculates several commonly used alpha and beta diversity metrics, and produces PCoA visualizations in Emperor for the beta diversity metrics. By default, the metrics computed are:
 
 -  **Alpha Diversity**
 
-   -  Shannon’s diversity index
+   -  Shannon's diversity index
    -  Observed OTUs
-   -  Faith’s phylogenetic diversity
-   -  Pielou’s evenness
+   -  Faith's phylogenetic diversity
+   -  Pielou's evenness
 
 -  **Beta Diversity**
 
@@ -410,9 +410,9 @@ We’ll start by using the ``qiime diversity core-metrics-phylogenetic`` method 
 
 There is a very good discussion of diversity metrics and their meanings in a `forum post by Stephanie Orchanian`_.
 
-The ``qiime diversity core-metrics-phylogenetic`` method wraps several other methods, and it’s worthwhile to note that the steps can also be executed independently.
+The ``qiime diversity core-metrics-phylogenetic`` method wraps several other methods, and it's worthwhile to note that the steps can also be executed independently.
 
-One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 2020 sequences per sample.
+One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we'll use a depth of 2020 sequences per sample.
 
 .. command-block::
 
@@ -461,7 +461,7 @@ If we had a continuous covariate that we thought was associated with the alpha d
 Beta diversity
 ++++++++++++++
 
-Next, we’ll compare the structure of the microbiome communities using beta diversity. Start by making a visual inspection of the principle coordinates plots (PCoA) plots that were generated by ``q2-emperor`` and ``core-metrics-results/weighted_unifrac_emperor.qzv``.
+Next, we'll compare the structure of the microbiome communities using beta diversity. Start by making a visual inspection of the principle coordinates plots (PCoA) plots that were generated by ``q2-emperor`` and ``core-metrics-results/weighted_unifrac_emperor.qzv``.
 
 .. question::
 
@@ -471,9 +471,9 @@ Next, we’ll compare the structure of the microbiome communities using beta div
 .. The major seperation in unweighted UniFrac dhsould be due to donor.
 .. we see some clustering by cage, but the points are mixed
 
-Now, let’s analyze the statistical trends using `PERMANOVA`_. PERMANOVA tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
+Now, let's analyze the statistical trends using `PERMANOVA`_. PERMANOVA tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we'd expect the within-group distances to be smaller than the between group distance.
 
-Let’s use the command to test whether the donor identity (which we identified as a major separator in PCoA space) is associated with significant differences in weighted and unweighted UniFrac distance.
+Let's use the command to test whether the donor identity (which we identified as a major separator in PCoA space) is associated with significant differences in weighted and unweighted UniFrac distance.
 
 .. command-block::
 
@@ -489,7 +489,7 @@ Let’s use the command to test whether the donor identity (which we identified 
      --m-metadata-column donor \
      --o-visualization core-metrics-results/weighted-unifrac-donor-significance.qzv
 
-Let’s also check whether there’s a relationship between cage where a mouse lives and the beta diversity, since this is often an important technical effect to consider. Since we have several cages, we’ll use the ``--p-pairwise`` parameter that will let us check whether there are individual differences between the cages driving the difference. This may be useful, since if we check the metadata, we may find that cage is nested by donor.
+Let's also check whether there's a relationship between cage where a mouse lives and the beta diversity, since this is often an important technical effect to consider. Since we have several cages, we'll use the ``--p-pairwise`` parameter that will let us check whether there are individual differences between the cages driving the difference. This may be useful, since if we check the metadata, we may find that cage is nested by donor.
 
 .. command-block::
 
@@ -534,7 +534,7 @@ We can specify that we want to use permdisp using the ``--p-method`` flag in ``q
 
 .. No! Whoo! p ~ 0.2
 
-We can use the adonis function to look at a multivariate model. Let’s look at the intersection between donor and genotype.
+We can use the adonis function to look at a multivariate model. Let's look at the intersection between donor and genotype.
 
 .. command-block::
 
@@ -557,7 +557,7 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
 Taxonomy barchart
 =================
 
-Since we see a difference in diversity, we may want to look at the taxonomy associated with the features. Now, let’s build a taxonomic barchart of the samples we analyzed in the diversity dataset.
+Since we see a difference in diversity, we may want to look at the taxonomy associated with the features. Now, let's build a taxonomic barchart of the samples we analyzed in the diversity dataset.
 
 Before doing this, we will first filter out any samples with fewer features than our rarefaction threshold (``2020``). We can filter samples using the ``q2-feature-table`` plugin with the ``filter-samples`` method. This lets us filter our table based on a variety of criteria such as the number of counts (frequency, ``--p-min-frequency`` and ``--p-max-frequency``), number of features (``--p-min-features`` and ``--p-max-features``), or sample metadata (``--p-where``).
 
@@ -570,7 +570,7 @@ For this example, we need to filter out samples with fewer sequences than our ra
      --p-min-frequency 2020 \
      --o-filtered-table ./table_2k.qza
 
-Now, let’s use the filtered table to build an interactive barplot of the taxonomy in the sample.
+Now, let's use the filtered table to build an interactive barplot of the taxonomy in the sample.
 
 .. command-block::
 
@@ -591,7 +591,7 @@ Now, let’s use the filtered table to build an interactive barplot of the taxon
 Differential abundance with ANCOM
 =================================
 
-Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
+Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you're unfamiliar with the technique, it's worthwhile to review the `ANCOM paper`_ to better understand the method.
 
 Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as a trade off between the model, computation, and statistical.
 
@@ -603,7 +603,7 @@ Before we being, we're going to filter out low abundance/low prevelance ASVs. Fi
      --p-min-samples 4 \
      --o-filtered-table ./table_2k_abund.qza
 
-ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can’t take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
+ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on the frequencies of features on a per-sample basis. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can't take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
 
 .. command-block::
 
@@ -611,7 +611,7 @@ ANCOM fundamentally operates on a ``FeatureTable[Frequency]`` which is based on 
      --i-table ./table_2k_abund.qza \
      --o-composition-table ./table2k_abund_comp.qza
 
-Let’s use ANCOM to check whether there is a difference in the mice based on their donor and then by their genetic background. The test will calculate the number of ratios between pairs of ASVs are significantly different with fdr-corrected p < 0.05.
+Let's use ANCOM to check whether there is a difference in the mice based on their donor and then by their genetic background. The test will calculate the number of ratios between pairs of ASVs are significantly different with fdr-corrected p < 0.05.
 
 .. command-block::
 
@@ -627,7 +627,7 @@ Let’s use ANCOM to check whether there is a difference in the mice based on th
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
 
-When you open the ANCOM visualizations, you’ll see a `volcano plot`_ on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
+When you open the ANCOM visualizations, you'll see a `volcano plot`_ on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
 
 .. question::
 
@@ -648,7 +648,7 @@ When you open the ANCOM visualizations, you’ll see a `volcano plot`_ on top wh
 Longitudinal analysis
 =====================
 
-This study includes a longitudinal component; samples from each mouse were collected 7, 14, 21, and 49 days post fecal transplant. We can use the ``q2-longitudinal`` plug-in to explore the hypothesis that a mouse’s genetic background affected the change in the microbial community of each mouse. For this longitudinal analysis, we’re going to focus on beta diversity. Alpha diversity changes wildly in infants, but it’s often stable in adults over short time periods. We’re dealing with an adult fecal community over a relatively short time period, and there is no difference in alpha diversity with time. The :doc:`longitudinal analysis tutorial <longitudinal>` is an excellent resource for exploring changes samples.
+This study includes a longitudinal component; samples from each mouse were collected 7, 14, 21, and 49 days post fecal transplant. We can use the ``q2-longitudinal`` plug-in to explore the hypothesis that a mouse's genetic background affected the change in the microbial community of each mouse. For this longitudinal analysis, we're going to focus on beta diversity. Alpha diversity changes wildly in infants, but it's often stable in adults over short time periods. We're dealing with an adult fecal community over a relatively short time period, and there is no difference in alpha diversity with time. The :doc:`longitudinal analysis tutorial <longitudinal>` is an excellent resource for exploring changes samples.
 
 PCoA-based analyses
 +++++++++++++++++++
@@ -684,9 +684,9 @@ Let's use the ``q2-longitudinal`` plugin to look at how samples from an individu
 Distance-based analysis
 +++++++++++++++++++++++
 
-Now, let’s try looking directly at the distance. Here, we’ll test the hypothesis that genotype affects the magnitude of the change in the distance from the first sample (7 days post transplant). We assume that given the rate of turn over in a microbial community, we might expect to see a change in the community over time. However, here we’ll ask if the genotype changes things.
+Now, let's try looking directly at the distance. Here, we'll test the hypothesis that genotype affects the magnitude of the change in the distance from the first sample (7 days post transplant). We assume that given the rate of turn over in a microbial community, we might expect to see a change in the community over time. However, here we'll ask if the genotype changes things.
 
-We’ll start this analysis by looking at how much the microbial community of each mouse changes from the the first sample (7 days post transplant).
+We'll start this analysis by looking at how much the microbial community of each mouse changes from the the first sample (7 days post transplant).
 
 .. command-block::
 
@@ -715,13 +715,13 @@ We can again use volatility analysis to visualize the change in beta diversity b
 
 .. samples from the hc change more over time; cage42 shows a lot of volitility. there isnt as much temporal change by genotype but there is some seperation
 
-A linear mixed effects (LME) model lets us test whether there’s a relationship between a dependent variable and one or more independent variables in an experiment using repeated measures. Since we’re interested in genotype, we should use this as an independent predictor.
+A linear mixed effects (LME) model lets us test whether there's a relationship between a dependent variable and one or more independent variables in an experiment using repeated measures. Since we're interested in genotype, we should use this as an independent predictor.
 
-For our experiment, we’re currently interested in the change in distance from the initial timepoint, so we’ll use this as our outcome variable (given by ``--p-metric``).
+For our experiment, we're currently interested in the change in distance from the initial timepoint, so we'll use this as our outcome variable (given by ``--p-metric``).
 
 The ``linear-mixed-effects`` method also requires a state column (``--p-state-column``) which designates the time component in the metadata, and an individual identifier (``--p-individual-id-column``). Which columns should we use in our data?
 
-We can build a model either using the ``--p-formula`` parameter or the ``--p-group-columns`` parameter. For this analysis, we’re interested in whether genotype affects the longitudinal change in the microbial community. However, we also know from our cross sectional analysis that donor plays a large role in shaping the fecal community. So, we should also probably include that in this analysis. We may also want to consider cage effect in our experiment, since this is a common confounder in rodent studies. However, the original experimental design here was clever: although cages were grouped by donor (mice are coprophagic), they were of mixed genotype. This partial randomization helps limit some of the cage effects we might otherwise see.
+We can build a model either using the ``--p-formula`` parameter or the ``--p-group-columns`` parameter. For this analysis, we're interested in whether genotype affects the longitudinal change in the microbial community. However, we also know from our cross sectional analysis that donor plays a large role in shaping the fecal community. So, we should also probably include that in this analysis. We may also want to consider cage effect in our experiment, since this is a common confounder in rodent studies. However, the original experimental design here was clever: although cages were grouped by donor (mice are coprophagic), they were of mixed genotype. This partial randomization helps limit some of the cage effects we might otherwise see.
 
 Based on the experimental design, what group columns should we choose?
 
@@ -736,7 +736,7 @@ Based on the experimental design, what group columns should we choose?
      --p-group-columns genotype,donor \
      --o-visualization ./from_first_unifrac_lme.qzv
 
-Now, let’s look at the results of the models.
+Now, let's look at the results of the models.
 
 .. question::
 
@@ -758,7 +758,7 @@ We found that the donor is the primary driver of alpha diversity.
 
 But, we saw differences by donor and genotype based on beta diversity. Using the PCoA, we can see clear separation between the mice from the two donors (this recapitulates the results of the original paper). After adjusting for the donor, we saw a significant difference between the genotypes.
 
-Although there wasn’t a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes at using ANCOM. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is seperate from the difference due to donor.
+Although there wasn't a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes at using ANCOM. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is seperate from the difference due to donor.
 
 The volatility plots and temporal analysis showed the microbiome in different genetic backgrounds changed differently over time.
 
