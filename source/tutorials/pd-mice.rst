@@ -387,10 +387,10 @@ After we've looked through the data, we need to select a rarefaction depth. In g
    2. In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
    3. Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
 
-Diversity Analysis
+Diversity analysis
 ==================
 
-The first step in hypothesis testing in microbial ecology should be looking at within- (alpha) and between sample (beta) diversity. We can calculate diversity metrics, apply appropriate statistical tests, and visualize the data using the ``q2-diversity`` plug in.
+The first step in hypothesis testing in microbial ecology is typically to look at within- (alpha) and between sample (beta) diversity. We can calculate diversity metrics, apply appropriate statistical tests, and visualize the data using the ``q2-diversity`` plugin.
 
 We’ll start by using the ``qiime diversity core-metrics-phylogenetic`` method which ratifies the input feature table, calculates several commonly used alpha and beta diversity metrics, and produces PCoA visualizations in Emperor for the beta diversity metrics. By default, the metrics computed are:
 
@@ -398,8 +398,8 @@ We’ll start by using the ``qiime diversity core-metrics-phylogenetic`` method 
 
    -  Shannon’s diversity index
    -  Observed OTUs
-   -  Faith’s phylogenetic Diversity
-   -  Pielou’s Evenness
+   -  Faith’s phylogenetic diversity
+   -  Pielou’s evenness
 
 -  **Beta Diversity**
 
@@ -408,11 +408,11 @@ We’ll start by using the ``qiime diversity core-metrics-phylogenetic`` method 
    -  Unweighted UniFrac distance
    -  Weighted UniFrac distance
 
-There is a very good discussion of diversity metrics and their meanings in a `qiime forum by Stephanie Orchanian`_.
+There is a very good discussion of diversity metrics and their meanings in a `forum post by Stephanie Orchanian`_.
 
-This method wraps several other methods, and it’s worthwhile to note that the steps in ``qiime diversity core-metrics-phylogenetic`` can be executed independently.
+The ``qiime diversity core-metrics-phylogenetic`` method wraps several other methods, and it’s worthwhile to note that the steps can also be executed independently.
 
-One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 1000 sequences per sample.
+One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we’ll use a depth of 2020 sequences per sample.
 
 .. command-block::
 
@@ -420,15 +420,19 @@ One important consideration for diversity calculations is the rarefaction depth.
      --i-table ./dada2_table.qza \
      --i-phylogeny ./tree.qza \
      --m-metadata-file ./metadata.tsv \
-     --p-sampling-depth 2000 \
+     --p-sampling-depth 2020 \
      --output-dir ./core-metrics-results
 
-Alpha Diversity
+.. question::
+
+   Where did we get the value ``2020`` from? Why did we pick that?
+
+Alpha diversity
 +++++++++++++++
 
 Alpha diversity asks whether the distribution of features within a sample differ between different conditions. The comparison makes no assumptions about the features that are shared between samples; two samples can have the same alpha diversity and not share any features. The rarified alpha diversity produced by ``q2-diversity`` is a univariate, continuous value and can be tested using common non-parametric statistical tests.
 
-Let’s test the relationship between the phylogenetic alpha diversity and evenness and our covariates of interest.
+We can test our covariates of interest against Faith's phylogenetic diversity and pielou's eveness value by running:
 
 .. command-block::
 
@@ -446,30 +450,28 @@ Let’s test the relationship between the phylogenetic alpha diversity and evenn
 
 .. question::
 
-   For this exercise, we'll look at the group significance results for Faith's phylogenetic diversity and evenness.
-
-   Based on the group significance test, is there a difference in phylogenetic diversity by genotype? Is there a difference based on the donor?
+   1. Is there a difference in **evenness** between genotype? Is there a difference in **phylogenetic diversity** between genotype?
+   2. Based on the group significance test, is there a difference in phylogenetic diversity by genotype? Is there a difference based on the donor?
 
 .. There is no difference in evenness by genotype, but hte difference in phylogenetic diversity is borderline signfiicant (p=0.0508)
 .. there is a difference in both evenness and PD by donor
 
-If we had a continuous covariate that we thought was associated with the alpha diversity, we could test that using ``qiime diversity alpha-correlation``. However, the only continuous variable in this dataset is the days since transplant.
+If we had a continuous covariate that we thought was associated with the alpha diversity, we could test that using ``qiime diversity alpha-correlation``. However, the only continuous variable in this dataset is the ``days_since_transplant``.
 
-Beta Diversity
+Beta diversity
 ++++++++++++++
 
-Next, we’ll compare the structure of the microbiome communities using beta diversity. Start by making a visual inspection of the principle coordinates plots (PCoA) plots that were generated by emperor and ``core-metrics-results/weighted_unifrac_emperor.qzv``.
+Next, we’ll compare the structure of the microbiome communities using beta diversity. Start by making a visual inspection of the principle coordinates plots (PCoA) plots that were generated by ``q2-emperor`` and ``core-metrics-results/weighted_unifrac_emperor.qzv``.
 
 .. question::
 
-   Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
-
-   One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
+   1. Open the unweighted UniFrac emperor plot (``core-metrics-results/unweighted_unifrac_emperor.qzv``) first. Can you find separation in the data? If so, can you find a metadata factor that reflects the seperation? What if you used weighted UniFrac distance (``core-metrics-results/weighted_unifrac_emperor.qzv``)?
+   2. One of the major concerns in mouse studies is that sometimes differences in communities are due to natural variation in cages. Do you see clustering by cage?
 
 .. The major seperation in unweighted UniFrac dhsould be due to donor.
 .. we see some clustering by cage, but the points are mixed
 
-Now, let’s analyze the statistical trends using `PERMANOVA`_. Permanova tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
+Now, let’s analyze the statistical trends using `PERMANOVA`_. PERMANOVA tests the hypothesis that samples within a group are more similar to each other than they are to samples in another group. To put it another way, it tests whether the within-group distances from each group are different from the between group distance. We expect samples that are similar to have smaller distances from each other, so if our hypothesis that one group is different from another is true, we’d expect the within-group distances to be smaller than the between group distance.
 
 Let’s use the command to test whether the donor identity (which we identified as a major separator in PCoA space) is associated with significant differences in weighted and unweighted UniFrac distance.
 
@@ -506,18 +508,19 @@ Let’s also check whether there’s a relationship between cage where a mouse l
      --p-pairwise
 
 .. question::
-   Is there a significant effect of donor?
 
-   From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
+   1. Is there a significant effect of donor?
+   2. From the metadata, we know that cage C31, C32, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
 .. Yep, donor is a significant and large effect, as we expected from the PCoA
 .. Overall, cage is significant but some of this is drive by between donor differences.
 
-A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistical significant difference even if its caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
+A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistically significant difference even if its caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
 
-We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on cage ID to check whether are cage-related differences are due to large within-cage variance.
+We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on ``cage_id`` to check whether are cage-related differences are due to large within-cage variance.
 
-..command-block::
+.. command-block::
+
    qiime diversity beta-group-significance \
      --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
      --m-metadata-file metadata.tsv \
@@ -526,6 +529,7 @@ We can specify that we want to use permdisp using the ``--p-method`` flag in ``q
      --p-method permdisp
 
 .. question::
+
    Is there a significant difference in variance for any of the cages?
 
 .. No! Whoo! p ~ 0.2
@@ -540,23 +544,22 @@ We can use the adonis function to look at a multivariate model. Let’s look at 
      --o-visualization core-metrics-results/unweighted_adonis.qzv \
      --p-formula genotype+donor
 
-.. do we also want permadisp here?
-
 .. question::
-   Is there a significant effect of donor?
 
-   From the metadata, we know that cage C31, C32, and C42 all belong to the same donor, and that cages C43, C44, and C49 belong to the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
-
-   If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
+   1. Is there a significant effect of donor?
+   2. From the metadata, we know that cage C31, C32, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
+   3. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
 
-Taxonomy Barchart
+.. end L2 Diversity analysis
+
+Taxonomy barchart
 =================
 
 Since we see a difference in diversity, we may want to look at the taxonomy associated with the features. Now, let’s build a taxonomic barchart of the samples we analyzed in the diversity dataset.
 
-To do this, we first need to filter out any samples with fewer sequences than our rarefaction threshold. We can filter samples using the ``q2-feature-table`` plugin with the ``filter-samples`` method. This is a dynamic function that lets us filter our table based on a variety of criteria such as the number of counts (frequency, ``--p-min-frequency`` and ``--p-max-frequency``), number of features (``--p-min-features`` and ``--p-max-features``), on sample metadata (``--p-where``).
+Before doing this, we will first filter out any samples with fewer features than our rarefaction threshold (``2020``). We can filter samples using the ``q2-feature-table`` plugin with the ``filter-samples`` method. This lets us filter our table based on a variety of criteria such as the number of counts (frequency, ``--p-min-frequency`` and ``--p-max-frequency``), number of features (``--p-min-features`` and ``--p-max-features``), or sample metadata (``--p-where``).
 
 For this example, we need to filter out samples with fewer sequences than our rarefaction depth.
 
@@ -564,7 +567,7 @@ For this example, we need to filter out samples with fewer sequences than our ra
 
    qiime feature-table filter-samples \
      --i-table ./dada2_table.qza \
-     --p-min-frequency 2000 \
+     --p-min-frequency 2020 \
      --o-filtered-table ./table_2k.qza
 
 Now, let’s use the filtered table to build an interactive barplot of the taxonomy in the sample.
@@ -583,12 +586,14 @@ Now, let’s use the filtered table to build an interactive barplot of the taxon
 
 .. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance.
 
-Differential Abundance with ANCOM
+.. end L2 Taxonomy barchart
+
+Differential abundance with ANCOM
 =================================
 
 Microbiome data is inherently sparse (has a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with such as anova or t-test are not appropriate for the data and lead to a high false positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as trade off between the model, computation, and statistical.
+Before we being, we're going to filter out low abundance/low prevelance ASVs. Filtering can provide better resolution and limit FDR penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in htat sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stocahastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample further disrupting the relationship. Here, the filtering is performed as a trade off between the model, computation, and statistical.
 
 .. command-block::
 
@@ -622,7 +627,7 @@ Let’s use ANCOM to check whether there is a difference in the mice based on th
      --m-metadata-column genotype \
      --o-visualization ./ancom_genotype.qzv
 
-When you open the ANCOM visualizations, you’ll see a volcano plot on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
+When you open the ANCOM visualizations, you’ll see a `volcano plot`_ on top which relates the ANCOM W statistical to the CLR (center log transform) for the groups. The W statistic is the number of tests whether the ratio between a given pair of ASVs is significant at the test threshold (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
 
 .. question::
 
@@ -638,7 +643,9 @@ When you open the ANCOM visualizations, you’ll see a volcano plot on top which
 .. There are three 3 features that are differentially abundant. All three are more abundant in WT mice
 .. ac5402de1ddf427ab8d2b0a8a0a44f19: g__Bacteriodetes; 79280cea51a6fe8a3432b2f266dd34db: g__Faecalibacterium (prausnitzii); 3017f87a3b0f5200ed54eca17eef3cbb: f__[Mogibacteriaceae]
 
-Longitudinal Analysis
+.. end L2 Differential abundance with ANCOM
+
+Longitudinal analysis
 =====================
 
 This study includes a longitudinal component; samples from each mouse were collected 7, 14, 21, and 49 days post fecal transplant. We can use the ``q2-longitudinal`` plug-in to explore the hypothesis that a mouse’s genetic background affected the change in the microbial community of each mouse. For this longitudinal analysis, we’re going to focus on beta diversity. Alpha diversity changes wildly in infants, but it’s often stable in adults over short time periods. We’re dealing with an adult fecal community over a relatively short time period, and there is no difference in alpha diversity with time. The :doc:`longitudinal analysis tutorial <longitudinal>` is an excellent resource for exploring changes samples.
@@ -650,15 +657,14 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 
 .. question::
 
-   Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
-
-   What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
+   1. Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
+   2. What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
 
 .. No clear pattern based on animations
 
 A volitility plot will let us look at patterns of variation variation along principle coordinate axes starting from same point. This can be helpful since inter-individual variation can be large and instead lets of focus instead of the changes.
 
-Let's use the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC. The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (which we’ll use later), or a ``PCoA`` artifact.
+Let's use the ``q2-longitudinal`` plugin to look at how samples from an individual move along each PC. The ``--m-metadata-file`` column can take several types, including a metadata file (like our ``metadata.tsv``) as well as a ``SampleData[AlphaDiversity]``, ``SampleData[Distance]`` (files "viewable" as metadata), or a ``PCoA`` artifact.
 
 .. command-block::
 
@@ -713,7 +719,7 @@ A linear mixed effects (LME) model lets us test whether there’s a relationship
 
 For our experiment, we’re currently interested in the change in distance from the initial timepoint, so we’ll use this as our outcome variable (given by ``--p-metric``).
 
-``q2-longitudinal`` also requires a state column (``--p-state-column``) which designates the time component in the metadata, and an individual identifier (``--p-individual-id-column``). Which columns should we use in our data?
+The ``linear-mixed-effects`` method also requires a state column (``--p-state-column``) which designates the time component in the metadata, and an individual identifier (``--p-individual-id-column``). Which columns should we use in our data?
 
 We can build a model either using the ``--p-formula`` parameter or the ``--p-group-columns`` parameter. For this analysis, we’re interested in whether genotype affects the longitudinal change in the microbial community. However, we also know from our cross sectional analysis that donor plays a large role in shaping the fecal community. So, we should also probably include that in this analysis. We may also want to consider cage effect in our experiment, since this is a common confounder in rodent studies. However, the original experimental design here was clever: although cages were grouped by donor (mice are coprophagic), they were of mixed genotype. This partial randomization helps limit some of the cage effects we might otherwise see.
 
@@ -734,9 +740,14 @@ Now, let’s look at the results of the models.
 
 .. question::
 
-   Now, let’s open the linear mixed effects model. Is there a significant association between the genotype and temporal change? Which genotype is more stable (has lower variation)? Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results? Can you find an interaction between the donor and genotype?
+   1. Is there a significant association between the genotype and temporal change?
+   2. Which genotype is more stable (has lower variation)?
+   3. Is there a temporal change associated with the donor? Did you expect or not expect this based on the volatility plot results?
+   4. Can you find an interaction between the donor and genotype?
 
 .. yes, there's a significant association. The susceptable mice are more stable. There isn't a statistically significant difference based on donor though. the interaction between donor and genotype is significant.
+
+.. end L2 Longitudinal analysis
 
 Synthesis
 =========
@@ -753,9 +764,6 @@ The volatility plots and temporal analysis showed the microbiome in different ge
 
 This suggests that there is an effect on the microbiome of mice receiving fecal transplants due to genotype.
 
-.. Next steps?
-.. ===========
-
 .. References
 
 .. _humanized: https://en.wikipedia.org/wiki/Humanized_mouse
@@ -770,9 +778,10 @@ This suggests that there is an effect on the microbiome of mice receiving fecal 
 .. _Nearing et al, 2018: https://www.ncbi.nlm.nih.gov/pubmed/30123705
 .. _Bokulich et al, 2013: https://www.ncbi.nlm.nih.gov/pubmed/23202435
 .. _Weiss et al, 2017: https://www.ncbi.nlm.nih.gov/pubmed/28253908
-.. _qiime forum by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282/
+.. _forum post by Stephanie Orchanian: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282/
 .. _view.qiime2.org: http://www.view.qiime2.org/
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
 .. _Google Sheet: https://data.qiime2.org/2019.7/tutorials/pd-mice/sample_metadata
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
+.. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
