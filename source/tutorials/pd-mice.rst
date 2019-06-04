@@ -383,9 +383,11 @@ After we've looked through the data, we need to select a rarefaction depth. In g
 
 .. checkpoint::
 
-   1 .Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?
-   2. In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
-   3. Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
+   *Based on the current rarefaction curve and sample summary, what sequencing depth would you pick? Why?*
+
+   In this case, we can retain 47 samples with a rarefaction depth of 2000 sequences/sample.
+
+   Based on the sequencing depth and distribution of samples, we'll use 2000 sequences/sample for this analysis. This will let us keep 47 of 48 high quality samples (discarding the one sample with sequencing depth below 1000 sequences/sample).
 
 Diversity analysis
 ==================
@@ -412,7 +414,7 @@ There is a very good discussion of diversity metrics and their meanings in a `fo
 
 The ``qiime diversity core-metrics-phylogenetic`` method wraps several other methods, and it's worthwhile to note that the steps can also be executed independently.
 
-One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we'll use a depth of 2020 sequences per sample.
+One important consideration for diversity calculations is the rarefaction depth. Above, we used the alpha rarefaction visualization and the sample summary visualization to pick a rarefaction depth. So, for these analyses, we'll use a depth of 2000 sequences per sample.
 
 .. command-block::
 
@@ -420,12 +422,12 @@ One important consideration for diversity calculations is the rarefaction depth.
      --i-table ./dada2_table.qza \
      --i-phylogeny ./tree.qza \
      --m-metadata-file ./metadata.tsv \
-     --p-sampling-depth 2020 \
+     --p-sampling-depth 2000 \
      --output-dir ./core-metrics-results
 
 .. question::
 
-   Where did we get the value ``2020`` from? Why did we pick that?
+   Where did we get the value ``2000`` from? Why did we pick that?
 
 Alpha diversity
 +++++++++++++++
@@ -559,7 +561,7 @@ Taxonomy barchart
 
 Since we see a difference in diversity, we may want to look at the taxonomy associated with the features. Now, let's build a taxonomic barchart of the samples we analyzed in the diversity dataset.
 
-Before doing this, we will first filter out any samples with fewer features than our rarefaction threshold (``2020``). We can filter samples using the ``q2-feature-table`` plugin with the ``filter-samples`` method. This lets us filter our table based on a variety of criteria such as the number of counts (frequency, ``--p-min-frequency`` and ``--p-max-frequency``), number of features (``--p-min-features`` and ``--p-max-features``), or sample metadata (``--p-where``).
+Before doing this, we will first filter out any samples with fewer features than our rarefaction threshold (``2000``). We can filter samples using the ``q2-feature-table`` plugin with the ``filter-samples`` method. This lets us filter our table based on a variety of criteria such as the number of counts (frequency, ``--p-min-frequency`` and ``--p-max-frequency``), number of features (``--p-min-features`` and ``--p-max-features``), or sample metadata (``--p-where``).
 
 For this example, we need to filter out samples with fewer sequences than our rarefaction depth.
 
@@ -567,7 +569,7 @@ For this example, we need to filter out samples with fewer sequences than our ra
 
    qiime feature-table filter-samples \
      --i-table ./dada2_table.qza \
-     --p-min-frequency 2020 \
+     --p-min-frequency 2000 \
      --o-filtered-table ./table_2k.qza
 
 Now, let's use the filtered table to build an interactive barplot of the taxonomy in the sample.
