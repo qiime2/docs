@@ -6,21 +6,21 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 .. danger:: Pre-trained classifiers that can be used with ``q2-feature-classifier`` currently present a security risk. If using a pre-trained classifier such as the ones provided here, you should trust the person who trained the classifier and the person who provided you with the qza file. This security risk will be addressed in a future version of ``q2-feature-classifier``.
 
-.. warning:: These classifiers were trained using scikit-learn 0.20.2, and therefore can only be used with scikit-learn 0.20.2. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2019.7 virtual machine, scikit-learn 0.20.2 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
+.. warning:: These classifiers were trained using scikit-learn 0.21.1, and therefore can only be used with scikit-learn 0.21.1. If you are using a native installation of QIIME, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2019.7 virtual machine, scikit-learn 0.21.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
 
    .. command-block::
       :no-exec:
 
-      conda install --override-channels -c defaults scikit-learn=0.20.2
+      conda install --override-channels -c defaults scikit-learn=0.21.1
 
 .. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers (for example, from the marker gene reference databases below).
 
 Naive Bayes classifiers trained on:
 
-- `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2019.7/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``a4d0da77c39da87ee1affa06b61d1224``)
-- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.7/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``9f50514214ffb6fee9d2f87a47a51076``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2019.7/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``581f97e4294cce93102b00ffaf8a1d9a``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.7/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``3afcc86150423263b3a7d983789ad0a3``)
+- `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2019.7/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``478d371357c47d51af5241a4343b240f``)
+- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.7/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``76c857bfc7b2aa5245d830d2642abb6e``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2019.7/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``e71c35f23d8565478639a3eb1ae0c5ae``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2019.7/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``6431bc685af62048cce0db237df0d092``)
 
 .. _`marker gene db`:
 
@@ -37,7 +37,7 @@ Greengenes (16S rRNA)
 - `12_10 <ftp://greengenes.microbio.me/greengenes_release/gg_12_10/gg_12_10_otus.tar.gz>`_
 - `February 4th, 2011 <http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz>`_
 
-Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_ and `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_ papers.
+Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_ and `McDonald (21.1) <https://www.nature.com/articles/ismej2011139>`_ papers.
 
 Silva (16S/18S rRNA)
 ````````````````````
