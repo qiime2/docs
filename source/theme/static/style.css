@@ -67,6 +67,13 @@ div.admonition.question {
     border: 1px solid #D6E9C6;
 }
 
+/* `checkpoint` directive extension */
+div.admonition.checkpoint {
+    color: #E90056;
+    background-color: #FFEAF2;
+    border: 1px solid #E90056;
+}
+
 /* `qiime1` directive extension */
 div.admonition.qiime1 {
     color: #8A6D3B;
