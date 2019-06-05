@@ -68,6 +68,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         'no-exec': docutils.parsers.rst.directives.flag,
         'url': docutils.parsers.rst.directives.unchanged_required,
         'saveas': docutils.parsers.rst.directives.unchanged_required,
+        'stdout': docutils.parsers.rst.directives.flag,
+        'stderr': docutils.parsers.rst.directives.flag,
     }
 
     def run(self):
@@ -101,14 +103,21 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         env = self._get_env()
         if not ((env.config.command_block_no_exec
                  and env.config.debug_page != env.docname) or
-                'no-exec' in self.options):
+                'no-exec' in opts):
             working_dir = os.path.join(env.app.command_block_working_dir.name,
                                        env.docname)
             os.makedirs(working_dir, exist_ok=True)
 
-            self._execute_commands(commands, working_dir)
+            completed_processes = self._execute_commands(commands, working_dir)
 
             if command_mode:
+                for stream_type in ['stdout', 'stderr']:
+                    if stream_type in opts:
+                        node = self._get_stream_node(completed_processes,
+                                                     stream_type)
+                        if node is not None:
+                            nodes.extend(node)
+
                 artifacts, visualizations = self._get_output_paths(working_dir)
                 if artifacts or visualizations:
                     nodes.append(
@@ -138,6 +147,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                            stderr=subprocess.PIPE,
                                            cwd=working_dir,
                                            shell=True,
+                                           encoding='utf-8',
                                            universal_newlines=True)
             except OSError as e:
                 raise sphinx.errors.ExtensionError("Unable to execute "
@@ -153,6 +163,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                      comp_proc.stderr)
                 )
                 raise sphinx.errors.ExtensionError(msg)
+
+            return comp_proc
 
     def _get_output_paths(self, working_dir):
         env = self._get_env()
@@ -219,6 +231,14 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         self.state.nested_parse(content, 0, node)
 
         return node
+
+    def _get_stream_node(self, comp_proc, stream_type):
+        content = getattr(comp_proc, stream_type)
+        if content:
+            subtitle = '%s:' % (stream_type,)
+            subtitle_node = docutils.nodes.subtitle(subtitle, subtitle)
+            pre_node = docutils.nodes.literal_block(content, content)
+            return [subtitle_node, pre_node]
 
     def _get_output_links(self, output_paths, name):
         content = []

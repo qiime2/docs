@@ -146,7 +146,7 @@ You'll need to unzip sequence archive you just downloaded:
 You can use the ``head`` command to check the first few lines of the sample manifest.
 
 .. command-block::
-   :no-exec:
+   :stdout:
 
    head manifest.tsv
 
