@@ -784,7 +784,7 @@ As an alternative (or complementary) approach to the methods we have used in thi
 
     qiime sample-classifier classify-samples \
       --i-table ./dada2_table.qza \
-      --m-metadata-file ./metadata1.tsv \
+      --m-metadata-file ./metadata.tsv \
       --m-metadata-column genotype_and_donor_status \
       --p-random-state 666 \
       --p-n-jobs 1 \
@@ -805,7 +805,7 @@ Looks like we did pretty well! So we can see what features are most predictive o
     qiime sample-classifier heatmap \
       --i-table ./dada2_table.qza \
       --i-importance ./sample-classifier-results/feature_importance.qza \
-      --m-metadata-file ./metadata1.tsv \
+      --m-metadata-file ./metadata.tsv \
       --m-metadata-column genotype_and_donor_status \
       --p-group-samples \
       --p-feature-count 100 \
