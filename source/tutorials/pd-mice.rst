@@ -827,7 +827,7 @@ Based on the results of the analysis, we can say that there is a difference in t
 
 We found that the donor is the primary driver of alpha diversity.
 
-But, we saw differences by donor and genotype based on beta diversity. Using the PCoA emperor plots, we can see clear separation between the mice from the two donors (this recapitulates the results of the original paper). After adjusting for the donor, we saw a significant difference between the genotypes.
+But, we saw differences by donor and genotype based on beta diversity. Using the PCoA emperor plots, we can see clear separation between the mice from the two donors. After adjusting for the donor, we saw a significant difference between the genotypes.
 
 Although there wasn't a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes using ANCOM and Random Forest classification. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is separate from the difference due to donor.
 
