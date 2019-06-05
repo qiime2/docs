@@ -692,8 +692,8 @@ Let's use the ``q2-longitudinal`` plugin to look at how samples from an individu
      --m-metadata-file ./core-metrics-results/unweighted_unifrac_pcoa_results.qza \
      --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
-     --p-default-group-column 'donor_status'\
-     --p-default-metric 'Axis 2'\
+     --p-default-group-column 'donor_status' \
+     --p-default-metric 'Axis 2' \
      --o-visualization ./pc_vol.qzv
 
 .. question::
@@ -729,7 +729,7 @@ We can again use volatility analysis to visualize the change in beta diversity b
      --p-state-column days_post_transplant \
      --p-individual-id-column mouse_id \
      --p-default-metric Distance \
-     --p-default-group-column 'donor_status'\
+     --p-default-group-column 'donor_status' \
      --o-visualization ./from_first_unifrac_vol.qzv
 
 .. question::
