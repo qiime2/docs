@@ -14,6 +14,7 @@ import subprocess
 import tempfile
 import urllib.parse
 import functools
+import sys
 
 import docutils.nodes
 import docutils.parsers.rst
@@ -65,6 +66,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
     has_content = True
 
     option_spec = {
+        'runtime': docutils.parsers.rst.directives.unchanged_required,
         'no-exec': docutils.parsers.rst.directives.flag,
         'url': docutils.parsers.rst.directives.unchanged_required,
         'saveas': docutils.parsers.rst.directives.unchanged_required,
@@ -75,6 +77,13 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
     def run(self):
         command_mode = True if self.name == 'command-block' else False
         opts = self.options
+        if 'runtime' not in opts:
+            opts['runtime'] = 'shell'
+        if opts['runtime'] not in ('shell', 'python'):
+            raise sphinx.errors.ExtensionError('Invalid runtime specified (%s'
+                                               '). Please choose `shell` or '
+                                               '`python`, instead.' %
+                                               (opts['runtime'],))
         download_opts = [k in opts for k in ['url', 'saveas']]
 
         if command_mode:
@@ -85,7 +94,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                                    'options: `url`, `saveas`.')
             commands = functools.reduce(self._parse_multiline_commands,
                                         self.content, [])
-            nodes = [self._get_literal_block_node(self.content)]
+            nodes = [self._get_literal_block_node(
+                self.content, opts['runtime'])]
         else:
             if self.content:
                 raise sphinx.errors.ExtensionError('Content block not '
@@ -108,7 +118,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                                        env.docname)
             os.makedirs(working_dir, exist_ok=True)
 
-            completed_processes = self._execute_commands(commands, working_dir)
+            completed_processes = self._execute_commands(
+                commands, working_dir, opts['runtime'])
 
             if command_mode:
                 for stream_type in ['stdout', 'stderr']:
@@ -128,13 +139,26 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
     def _get_env(self):
         return self.state.document.settings.env
 
-    def _get_literal_block_node(self, commands):
+    def _get_literal_block_node(self, commands, runtime):
         content = '\n'.join(commands)
         node = docutils.nodes.literal_block(content, content)
-        node['language'] = 'shell'
+        node['language'] = runtime
         return node
 
-    def _execute_commands(self, commands, working_dir):
+    def _execute_commands(self, commands, working_dir, runtime):
+        return {
+            'shell': self._execute_sh_commands,
+            'python': self._execute_py_commands,
+        }[runtime](commands, working_dir)
+
+    def _execute_py_commands(self, commands, working_dir):
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8') as fh:
+            for command in commands:
+                fh.write('%s\n' % command)
+            return self._execute_sh_commands(
+                ['%s %s' % (sys.executable, str(fh.name))], working_dir)
+
+    def _execute_sh_commands(self, commands, working_dir):
         for command in commands:
             command = command.strip()
             if not command:
