@@ -2,3 +2,4 @@
 Sphinx
 Jinja2
 sphinxcontrib-bibtex
+lxml
