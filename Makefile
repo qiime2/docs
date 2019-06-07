@@ -65,3 +65,12 @@ dummy:
 	$(SPHINXBUILD) -b dummy -D command_block_no_exec=1 $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+.PHONY: build-workshop-tutorial-check
+build-workshop-tutorial-check:
+	@if test -z "$(WORKSHOP_SLUG)"; then echo "missing argument WORKSHOP_SLUG="; exit 2; fi
+	@if test -z "$(WORKSHOP_TITLE)"; then echo "missing argument WORKSHOP_TITLE="; exit 3; fi
+	@if test -z "$(TUTORIAL_NAME)"; then echo "missing argument TUTORIAL_NAME="; exit 4; fi
+
+build-workshop-tutorial: build-workshop-tutorial-check
+	python bin/workshop.py
