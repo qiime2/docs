@@ -24,3 +24,4 @@ Tutorials
    chimera
    read-joining
    otu-clustering
+   utilities
