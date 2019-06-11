@@ -14,9 +14,10 @@ tutorial_name = os.environ['TUTORIAL_NAME']
 
 tutorial_data_url = ('https://docs.qiime2.org/%s/data/tutorials/%s' %
                      (qiime2.__release__,  tutorial_name))
-tutorial_url = ('https://docs.qiime2.org/%s/tutorials/%s' %
-                (qiime2.__release__,  tutorial_name))
-s3_url = ('https://s3-us-west-2.amazonaws.com/qiime2-workshops/%s/data' %
+tutorials_url = ('https://docs.qiime2.org/%s/tutorials/' %
+                 (qiime2.__release__,))
+tutorial_url = ''.join([tutorials_url, tutorial_name])
+s3_url = ('https://s3-us-west-2.amazonaws.com/qiime2-data/workshops/%s/data/' %
           (workshop_slug, ))
 
 base_fp = os.path.join('.', 'build', 'preview', 'tutorials', tutorial_name,
@@ -91,7 +92,7 @@ for node in tree.xpath('//a'):
 for node in tree.xpath('//a'):
     if node.attrib['href'].startswith('../'):
         node.attrib['href'] = node.attrib['href'].replace('../',
-                                                          tutorial_url, 1)
+                                                          tutorials_url, 1)
 
 built_data_fp = os.path.join('.', 'build', 'html', 'data', 'tutorials',
                              tutorial_name)
