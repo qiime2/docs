@@ -1,7 +1,7 @@
 Sequence alignment and phylogenetic inference with q2-phylogeny
 ===============================================================
 
-..Note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_ documentation and have at least worked through some of the other `Tutorials`_..
+..note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_ documentation and have at least worked through some of the other `Tutorials`_..
 
 Inferring phylogenies
 ---------------------
@@ -59,6 +59,28 @@ For our purposes, we'll assume that we have ambiguously aligned columns in the M
    --i-alignment aligned-rep-seqs.qza \
    --o-masked-alignment masked-aligned-rep-seqs.qza
 
+*Reference based alignments*
+There are a variety of tools such as `PyNAST`_) (using `NAST`_), `Infernal`_, and `SINA`_, etc., that attempt to reduce the amount of ambiguously aligned regions by using curated reference alignments (e.g. `SILVA`_. Reference alignments are particularly powerful for rRNA gene sequence data, as knowledge of secondary structure is incorporated into the curation process, thus increasing alignment quality. For a more in-depth and eloquent overview of reference-based alignment approaches, check out the great `SINA community tutorial`_).
+
+
+.. note:: 
+Alignments constructed using reference based alignment approaches can be masked too, just like the above MAFFT example. Also, the reference alignment approach we are discussing here is distinct from the reference phylogeny approach (i.e. `q2-fragment-insertion`_) we mentioned earlier. That is, we are not inserting our data into an existing tree, but simply trying to create a more robust alignment for making a better *de novo* phylogeny.
+
+
+Construct a phylogeny
+---------------------
+As with MSA algorithms, phylogenetic inference tools are also legion. Fortunately, there are many great resources to learn about phylogentics. Below are just a few introductory resources to get you started:
+
+1. `Phylogeny for the faint of heart - a tutorial`_
+2. `Molecular phylogenetics - principles and practice`_
+3. `Phylogenetics - An Introduction`_
+
+Via the `q2-phylogeny`_ plugin of :qiime2:, there are several methods for phylogenetic inference based on the following tools: 
+ 1. `FastTree`_
+ 2. `RAxML`_
+ 3. `IQ-TREE`_
+and this plugin pipeline:
+ 1. `align-to-tree-mafft-fasttree`_
 
 
 .. _QIIME 2 Overview: https://docs.qiime2.org/2019.7/tutorials/overview
@@ -66,7 +88,7 @@ For our purposes, we'll assume that we have ambiguously aligned columns in the M
 .. _OTUs: https://en.wikipedia.org/wiki/Operational_taxonomic_unit
 .. _ESVs: https://doi.org/10.1038/ismej.2019.119
 .. _fragment insertion: https://doi.org/10.1128/mSystems.00021-18
-.. _fragment insetsion examples: https://github.com/biocore/q2-fragment-insertion
+.. _fragment insertion examples: https://github.com/biocore/q2-fragment-insertion
 .. _import: https://docs.qiime2.org/2019.7/tutorials/importing/
 .. _export: https://docs.qiime2.org/2019.7/tutorials/exporting/
 .. _filtering: https://docs.qiime2.org/2019.7/tutorials/filtering/
@@ -85,3 +107,18 @@ For our purposes, we'll assume that we have ambiguously aligned columns in the M
 .. _Tan *et al*. 2015: https://doi.org/10.1093/sysbio/syv033
 .. _Rajan 2015: https://doi.org/10.1093/molbev/mss264
 .. _alignment mask plugin: https://docs.qiime2.org/2019.7/plugins/available/alignment/mask/
+.. _PyNAST: https://doi.org/10.1093/bioinformatics/btp636
+.. _NAST: https://doi.org/10.1093/nar/gkl244
+.. _Infernal: https://doi.org/10.1093/bioinformatics/btt509
+.. _SINA: https://doi.org/10.1093/bioinformatics/bts252
+.. _SILVA: https://www.arb-silva.de/
+.. _SILVA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
+.. _q2-fragment-insertion: https://github.com/biocore/q2-fragment-insertion
+.. _Phylogeny for the faint of heart - a tutorial: http://doi.org/10.1016/S0168-9525(03)00112-4
+.. _Molecular phylogenetics - principles and practice: http://dx.doi.org/10.1038/nrg3186
+.. _Phylogenetics - An Introduction: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics
+.. _q2-phylogeny: https://docs.qiime2.org/2019.7/plugins/available/phylogeny/
+.. _FastTree: https://doi.org/10.1371/journal.pone.0009490
+.. _RAxML: https://doi.org/10.1093/bioinformatics/btu033
+.. _IQ-TREE: https://doi.org/10.1093/molbev/msu300
+.. _align-to-tree-mafft-fasttree: https://docs.qiime2.org/2019.11/plugins/available/phylogeny/align-to-tree-mafft-fasttree/
