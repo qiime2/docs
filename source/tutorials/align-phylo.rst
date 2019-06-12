@@ -37,6 +37,7 @@ The number of algorithms to construct a MSA are legion. We will make use of `MAF
    :saveas: rep-seqs.qza
 
 **Run MAFFT**
+
 .. command-block::
    qiime alignment mafft \
       --i-sequences rep-seqs.qza \
