@@ -48,8 +48,7 @@ Reducing alignment ambiguity: masking and reference alignments.
 *Why mask an alignment?*
 Masking helps to eliminate alignment columns that are phylogenetically uninformative or misleading before phylogenetic analysis. Much of the time alignment errors can introduce noise and confound phylogenetic inference. It is common practice to mask (remove) these ambiguously aligned regions prior to performing phylogenetic inference. In particular, `David Lane's (1991)`_ chapter `16S/23S rRNA sequencing`_ proposed masking SSU data prior to phylogenetic analysis.  However, knowing how to deal with ambiguously aligned regions and when to apply masks largely depends on the marker genes being analyzed and the question being asked of the data.
 
-.. note::
-Keep in mind that this is still an active area of discussion, as highlighted by the following non-exhaustive list of articles: `Wu *et al*. 2012`_, `Ashkenazy *et al*. 2018`_, `Schloss 2010`_, `Tan *et al*. 2015`_, `Rajan 2015`_.
+.. note:: Keep in mind that this is still an active area of discussion, as highlighted by the following non-exhaustive list of articles: `Wu *et al*. 2012`_, `Ashkenazy *et al*. 2018`_, `Schloss 2010`_, `Tan *et al*. 2015`_, `Rajan 2015`_.
 
 
 *How to mask alignment.*
@@ -64,8 +63,7 @@ For our purposes, we'll assume that we have ambiguously aligned columns in the M
 There are a variety of tools such as `PyNAST`_) (using `NAST`_), `Infernal`_, and `SINA`_, etc., that attempt to reduce the amount of ambiguously aligned regions by using curated reference alignments (e.g. `SILVA`_. Reference alignments are particularly powerful for rRNA gene sequence data, as knowledge of secondary structure is incorporated into the curation process, thus increasing alignment quality. For a more in-depth and eloquent overview of reference-based alignment approaches, check out the great `SINA community tutorial`_).
 
 
-.. note:: 
-Alignments constructed using reference based alignment approaches can be masked too, just like the above MAFFT example. Also, the reference alignment approach we are discussing here is distinct from the reference phylogeny approach (i.e. `q2-fragment-insertion`_) we mentioned earlier. That is, we are not inserting our data into an existing tree, but simply trying to create a more robust alignment for making a better *de novo* phylogeny.
+.. note:: Alignments constructed using reference based alignment approaches can be masked too, just like the above MAFFT example. Also, the reference alignment approach we are discussing here is distinct from the reference phylogeny approach (i.e. `q2-fragment-insertion`_) we mentioned earlier. That is, we are not inserting our data into an existing tree, but simply trying to create a more robust alignment for making a better *de novo* phylogeny.
 
 
 Construct a phylogeny
@@ -95,8 +93,7 @@ FastTree is able to construct phylogenies from large sequence alignments quite r
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree fasttree-tree.qza --verbose
 
-.. tip::
-For an easy and direct way to view your ``tree.qza`` files, upload them to `iTOL`_. Here, you caninteractively view and manipulate your phylogeny. Even better, while viewing the tree topology in "Normal mode", you can drag and drop your associated ``alignment.qza`` (the one you used to build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree visualization. This will allow you to directly view the sequence alignment or taxonomy alongside the phylogeny. :sunglasses:
+.. tip:: For an easy and direct way to view your ``tree.qza`` files, upload them to `iTOL`_. Here, you caninteractively view and manipulate your phylogeny. Even better, while viewing the tree topology in "Normal mode", you can drag and drop your associated ``alignment.qza`` (the one you used to build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree visualization. This will allow you to directly view the sequence alignment or taxonomy alongside the phylogeny. :sunglasses:
 
 
 raxml
@@ -142,17 +139,15 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
       --o-tree raxml-cat-bootstrap-tree.qza \
       --verbose
 
-.. tip::
-**RAxML Run Time**
+.. tip:: RAxML Run Time.
 You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
 
 1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions). 
 2. These instructions will substantially accelerate the likelihood and parsimony computations. SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version.
 
-.. tip::
-Additionally, for larger sequence alignments, you can:
+.. tip:: Larger sequence alignments.
  1. Make use of multiple cores / threads as outlined earlier. Keep in mind that using more cores / threads is `not necessarily always better`_. Additionally, the RAxML manual suggests 1 core per ~500 DNA alignment patterns. This is usually visible on screen, when the ``--verbose`` option is used.
-2. Try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
+ 2. Try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
 
 iqtree
 ------
