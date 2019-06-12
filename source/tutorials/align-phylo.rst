@@ -83,6 +83,85 @@ Via the `q2-phylogeny`_ plugin of :qiime2:, there are several methods for phylog
 and this plugin pipeline:
  1. `align-to-tree-mafft-fasttree`_
 
+Methods 
+=======
+
+fasttree
+------------
+FastTree is able to construct phylogenies from large sequence alignments quite rapidly. It does this by using the using a `CAT-like`_ rate category  approximation, which is also available through RAxML (discussed below). Check out the `FastTree online manual`_ for more information.
+
+.. code-block::
+   qiime phylogeny fasttree \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree fasttree-tree.qza --verbose
+
+.. tip::
+For an easy and direct way to view your ``tree.qza`` files, upload them to `iTOL`_. Here, you caninteractively view and manipulate your phylogeny. Even better, while viewing the tree topology in "Normal mode", you can drag and drop your associated ``alignment.qza`` (the one you used to build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree visualization. This will allow you to directly view the sequence alignment or taxonomy alongside the phylogeny. :sunglasses:
+
+
+raxml
+-----
+Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and return a tree. Note, the default model for ``raxml`` is ``--p-substitution-model GTRGAMMA``. If you'd like to construct a tree using the CAT model like ``fasttree``, simply replace ``GTRGAMMA`` with ``GTRCAT`` as shown below:
+
+.. code-block::
+   qiime phylogeny raxml \
+      --p-substitution-model GTRCAT \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree raxml-cat-tree.qza
+
+Perform multiple searches using raxml
+.....................................
+If you'd like to perform a more thorough search of "tree space" you can instruct ``raxml`` to perform multiple independent searches on the full alignment by using ``--p-n-searches 5``. Once these 5 independent searches are completed, only the single best scoring tree will be returned. *Note, we are not bootstrapping here, we'll do that in a later example.* Let's set ``--p-substitution-model GTRCAT``. Finally, let's also manually set a seed via ``--p-seed``. By setting our seed, we allow other users the ability to reproduce our phylogeny. That is, anyone using the same sequence alignment and substitution model, will generate the same tree as long as they set the same seed value. Although, ``--p-seed`` is not a required argument, it is generally a good idea to set this value.
+
+.. code-block::
+   qiime phylogeny raxml \
+      --p-substitution-model GTRCAT \
+      --p-seed 1723 \
+      --p-n-searches 5 \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree raxml-cat-searches-tree.qza \
+      --verbose
+
+raxml-rapid-bootstrap
+.....................
+In phylogenetics, it is good practice to check how well the `splits / bipartitions`_ in your phylogeny are supported. Often one is interested in which clades are robustly separated from other clades in the phylogeny. One way, of doing this is via bootstrapping (See the *Bootstrapping* section of the first introductory link above). In QIIME 2, we've provided access to the RAxML `rapid bootsrap`_ feature. The only difference between this command and the previous are the additional flags ``--p-bootstrap-replicates`` and ``--p-rapid-bootstrap-seed``. It is quite common to perform anywhere from 100 - 1000 bootstrap replicates. The ``--p-rapid-bootstrap-seed`` works very much like the ``--p-seed`` argument from above except that it allows anyone to reproduce the bootstrapping process and the associated supports for your splits.
+
+As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid bootstrapping command that we will execute below will do the following:
+
+1. Bootstrap the input alignment 100 times and perform a Maximum Likelihood (ML) search on each. 
+2. Find best scoring ML tree through multiple independent searches using the original input alignment. The number of independent searches is determined by the number of bootstrap replicates set in the 1st step. That is, your search becomes more thorough with increasing bootstrap replicates. The ML optimization of RAxML uses every 5th bootstrap tree as the starting tree for an ML search on the original alignment.
+3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML tree (2nd step).
+
+.. code-block::
+   qiime phylogeny raxml-rapid-bootstrap \
+      --p-seed 1723 \
+      --p-rapid-bootstrap-seed 9384 \
+      --p-bootstrap-replicates 100 \
+      --p-substitution-model GTRCAT \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree raxml-cat-bootstrap-tree.qza \
+      --verbose
+
+.. tip::
+**RAxML Run Time**
+You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
+
+1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions). 
+2. These instructions will substantially accelerate the likelihood and parsimony computations. SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version.
+
+.. tip::
+Additionally, for larger sequence alignments, you can:
+ 1. Make use of multiple cores / threads as outlined earlier. Keep in mind that using more cores / threads is `not necessarily always better`_. Additionally, the RAxML manual suggests 1 core per ~500 DNA alignment patterns. This is usually visible on screen, when the ``--verbose`` option is used.
+2. Try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
+
+iqtree
+------
+
+
+
+
+
+
 
 .. _QIIME 2 Overview: https://docs.qiime2.org/2019.7/tutorials/overview
 .. _Tutorials: https://docs.qiime2.org/2019.7/tutorials
@@ -123,3 +202,16 @@ and this plugin pipeline:
 .. _RAxML: https://doi.org/10.1093/bioinformatics/btu033
 .. _IQ-TREE: https://doi.org/10.1093/molbev/msu300
 .. _align-to-tree-mafft-fasttree: https://docs.qiime2.org/2019.11/plugins/available/phylogeny/align-to-tree-mafft-fasttree/
+.. _CAT-like: https://doi.org/10.1109/IPDPS.2006.1639535
+.. _FastTree online manual: http://www.microbesonline.org/fasttree/
+.. _iTOL: https://itol.embl.de/
+.. _splits / bipartitions: https://en.wikipedia.org/wiki/Split_(phylogenetics)
+.. _rapid bootstrap: http://dx.doi.org/10.1080/10635150802429642
+.. _RAxML online documentation: https://sco.h-its.org/exelixis/web/software/raxml/hands_on.html
+.. _Raxml manual: https://sco.h-its.org/exelixis/resource/download/NewManual.pdf
+.. _not necessarily always better: https://groups.google.com/d/msg/raxml/v5k3usO_p38/_9A11D5_QAwJ
+.. _CAT paper: https://doi.org/10.1109/IPDPS.2006.1639535
+.. _10,000 or more taxa: https://doi.org/10.1186/1471-2105-12-470
+.. _CAT-like model of FastTree2: https://doi.org/10.1371/journal.pone.0009490
+
+
