@@ -88,7 +88,7 @@ fasttree
 ------------
 FastTree is able to construct phylogenies from large sequence alignments quite rapidly. It does this by using the using a `CAT-like`_ rate category  approximation, which is also available through RAxML (discussed below). Check out the `FastTree online manual`_ for more information.
 
-.. code-block::
+.. command-block::
    qiime phylogeny fasttree \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree fasttree-tree.qza --verbose
@@ -100,7 +100,7 @@ raxml
 -----
 Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and return a tree. Note, the default model for ``raxml`` is ``--p-substitution-model GTRGAMMA``. If you'd like to construct a tree using the CAT model like ``fasttree``, simply replace ``GTRGAMMA`` with ``GTRCAT`` as shown below:
 
-.. code-block::
+.. command-block::
    qiime phylogeny raxml \
       --p-substitution-model GTRCAT \
       --i-alignment masked-aligned-rep-seqs.qza \
@@ -110,7 +110,7 @@ Perform multiple searches using raxml
 .....................................
 If you'd like to perform a more thorough search of "tree space" you can instruct ``raxml`` to perform multiple independent searches on the full alignment by using ``--p-n-searches 5``. Once these 5 independent searches are completed, only the single best scoring tree will be returned. *Note, we are not bootstrapping here, we'll do that in a later example.* Let's set ``--p-substitution-model GTRCAT``. Finally, let's also manually set a seed via ``--p-seed``. By setting our seed, we allow other users the ability to reproduce our phylogeny. That is, anyone using the same sequence alignment and substitution model, will generate the same tree as long as they set the same seed value. Although, ``--p-seed`` is not a required argument, it is generally a good idea to set this value.
 
-.. code-block::
+.. command-block::
    qiime phylogeny raxml \
       --p-substitution-model GTRCAT \
       --p-seed 1723 \
@@ -129,7 +129,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
 2. Find best scoring ML tree through multiple independent searches using the original input alignment. The number of independent searches is determined by the number of bootstrap replicates set in the 1st step. That is, your search becomes more thorough with increasing bootstrap replicates. The ML optimization of RAxML uses every 5th bootstrap tree as the starting tree for an ML search on the original alignment.
 3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML tree (2nd step).
 
-.. code-block::
+.. command-block::
    qiime phylogeny raxml-rapid-bootstrap \
       --p-seed 1723 \
       --p-rapid-bootstrap-seed 9384 \
@@ -151,9 +151,15 @@ You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAx
 
 iqtree
 ------
+Similar to the ``raxml`` and ``raxml-rapid-bootstrap`` methods above, we provide similar functionality for `IQ-TREE`_: ``iqtree`` and ``iqtree-ultrafast-bootstrap``. IQ-TREE is unique compared to the ``fastree`` and ``raxml`` options, in that it provides access to 286 `models of nucleotide substitution`_! IQ-TREE can also determine which of these models best fits your dataset prior to constructing your tree via its built-in `ModelFinder`_ algorithm. This is the default in QIIME 2, but do not worry, you can set any one of the 286 models of nucleotide substitution via the ``--p-substitution-model`` flag, e.g. you can set the model as ``HKY+I+G`` instead of the default ``MFP`` (a basic short-hand for: "build a phylogeny after determining the best fit model as determined by ModelFinder"). Keep in mind the additional computational time required for model testing via ModelFinder.
 
+The simplest way to run the `iqtree command`_ with default settings and automatic model selection (``MFP``) is like so:
 
-
+.. command-block::
+   qiime phylogeny iqtree \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-tree.qza \
+      --verbose
 
 
 
@@ -208,5 +214,7 @@ iqtree
 .. _CAT paper: https://doi.org/10.1109/IPDPS.2006.1639535
 .. _10,000 or more taxa: https://doi.org/10.1186/1471-2105-12-470
 .. _CAT-like model of FastTree2: https://doi.org/10.1371/journal.pone.0009490
-
+.. _models of nucleotide substitution : https://doi.org/10.1016/j.dci.2004.07.007
+.. _ModelFinder: https://doi.org/10.1038/nmeth.4285
+.. _iqtree command: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/iqtree/ 
 
