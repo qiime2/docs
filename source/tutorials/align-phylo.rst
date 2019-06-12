@@ -161,6 +161,133 @@ The simplest way to run the `iqtree command`_ with default settings and automati
       --o-tree iqt-tree.qza \
       --verbose
 
+Specifying a substitution model
+...............................
+We can also set a substitution model of our choosing. You may have noticed while watching the onscreen output of the previous command that the best fitting model selected by ModelFinder is noted. For the sake of argument, let's say the best selected model was shown as  ``GTR+F+I+G4``. The ``F`` is only a notation to let us know that *if* a given model supports *unequal base frequencies*, then the *empirical base frequencies* will be used by default. Using empirical base frequencies (``F``), rather than estimating them, greatly reduces computational time. The ``iqtree`` plugin will not accept ``F`` within the model notation supplied at the command line, as this will always be implied automatically for the appropriate model. Also, the ``iqtree`` plugin only accepts ``G`` *not* ``G4`` to be specified within the model notation. The ``4`` is simply another explicit notation  to remind us that four rate categories are being assumed by default. The notation approach used by the plugin simply helps to retain simplicity and familiarity when supplying model notations on the command line. So, in brief, we only have to type ``GTR+I+G`` as our input model:
+
+.. command-block::
+   qiime phylogeny iqtree \
+      --p-substitution-model 'GTR+I+G' \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-gtrig-tree.qza \
+      --verbose
+
+Let's rerun the command above and add the ``--p-fast`` option. This option, only compatible with the ``iqtree`` method, resembles the fast search performed by ``fasttree``. :racing_car: :dash: Secondly, let's also perform multiple tree searches and keep the best of those trees (as we did earlier with the ``raxml --p-n-searches ...`` command):
+
+.. command-block::
+   qiime phylogeny iqtree \
+      --p-substitution-model 'GTR+I+G' \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-gtrig-fast-ms-tree.qza \
+      --p-fast \
+      --p-n-runs 10 \
+      --verbose
+
+Single branch tests
+...................
+IQ-TREE provides access to a few `single branch testing methods`_ 
+1. `SH-aLRT`_ via ``--p-alrt [INT >= 1000]``
+2. `aBayes`_ via ``--p-abayes [TRUE | FALSE]``
+3. `local bootstrap test` via ``--p-lbp [INT >= 1000]`` 
+
+Single branch tests are commonly used as an alternative to the bootstrapping approach we've discussed above, as they are substantially faster and `often recommended`_ when constructing large phylogenies (e.g. >10,000 taxa). All three of these methods can be applied simultaneously and viewed within `iTOL`_ as separate bootstrap support values. These values are always in listed in the following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the branch tests in our next command, while specifying the same substitution model as above. Feel free to combine this with the ``--p-fast`` option. :wink:   
+
+.. command-block::
+   qiime phylogeny iqtree \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-sbt-tree.qza \
+      --p-alrt 1000 \
+      --p-abayes \
+      --p-lbp 1000 \
+      --p-substitution-model 'GTR+I+G' \
+      --verbose
+
+.. tip:: IQ-TREE search settings
+There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use. 
+
+.. command-block::
+   qiime phylogeny iqtree \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-nnisi-fast-tree.qza \
+      --p-perturb-nni-strength 0.2 \
+      --p-stop-iter 200 \
+      --p-n-cores 0 \
+      --p-fast \
+      --verbose
+
+iqtree-ultrafast-bootstrap
+--------------------------
+As per our discussion in the ``raxml-rapid-bootstrap`` section above, we can also use IQ-TREE to evaluate how well our splits / bipartitions are supported within our phylogeny via the `ultrafast bootstrap algorithm`_. Below, we'll apply the plugin's `ultrafast bootstrap command`_: automatic model selection (``MFP``), perform ``1000`` bootstrap replicates (minimum required), set the same generally suggested parameters for constructing a phylogeny from short sequences, and automatically determine the optimal number of CPU cores to use:
+
+.. command-block::
+   qiime phylogeny iqtree-ultrafast-bootstrap \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-nnisi-bootstrap-tree.qza \
+      --p-perturb-nni-strength 0.2 \
+      --p-stop-iter 200 \
+      --p-n-cores 0 \
+      --verbose
+
+Perform single branch tests alongside ufboot
+................................................
+We can also apply single branch test methods concurrently with ultrafast bootstrapping. The support values will always be represented in the following order: *alrt / lbp / abayes / ufboot*. Again, these values can be seen as separately listed bootstrap values in `iTOL`_. We'll also specify a model as we did earlier.
+
+.. command-block::
+   qiime phylogeny iqtree-ultrafast-bootstrap \
+      --i-alignment masked-aligned-rep-seqs.qza \
+      --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
+      --p-perturb-nni-strength 0.2 \
+      --p-stop-iter 200 \
+      --p-n-cores 0 \
+      --p-alrt 1000 \
+      --p-abayes \
+      --p-lbp 1000 \
+      --p-substitution-model 'GTR+I+G' \
+      --verbose
+
+.. tip:: If there is a need to reduce the impact of `potential model violations`_ that occur during a `UFBoot search`_, and / or would simply like to be more rigorous, we can add the ``--p-bnni`` option to any of the ``iqtree-ultrafast-bootstrap`` commands above.
+
+Root the phylogeny
+------------------
+In order to make proper use of diversity metrics such as UniFrac, the phylogeny must be `rooted`_. Typically an `outgroup`_ is chosen when rooting a tree. In general, phylogenetic inference tools using Maximum Likelihood often return an unrooted tree by default.
+
+QIIME 2 provides a way to `mid-point root`_ our phylogeny. Other rooting options may be available in the future. For now, we'll root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
+
+.. command-block::
+   qiime phylogeny midpoint-root \
+      --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
+      --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
+
+.. tip:: iTOL viewing Reminder. We can view our tree and its associated alignment via `iTOL`_. All you need to do is upload the `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file onto the visualization. Now you can view the phylogeny alongside the alignment. :sparkler: Below is a link to an example screen-shot of the tree & sequence alignment visualization from iTOL:
+.. download::
+   :no-exec: 
+   :url: https://www.dropbox.com/s/6syenmg8rzx22l6/iTOL_seqaln.pdf?dl=1
+   :saveas: itol-tree-align.pdf
+
+Pipelines
+---------
+Here we will outline the use of the phylogeny pipeline `align-to-tree-mafft-fasttree`_
+
+One advantage of pipelines is that they combine ordered sets of commonly used commands, into one condensed simple command. To keep these "convenience" pipelines easy to use, it is quite common to only expose a few options to the user. That is, most of the commands executed via pipelines are often configured to use default option settings. However, options that are deemed important enough for the user to consider setting, are made available. The options exposed via a given pipeline will largely depend upon what it is doing. Pipelines are also a great way for new users to get started, as it helps to lay a foundation of good practices in setting up standard operating procedures.
+
+Rather than run one or more of the following QIIME 2 commands listed below:
+
+1. ``qiime alignment mafft ...``
+2. ``qiime alignment mask ...``
+3. ``qiime phylogeny fasttree ...``
+4. ``qiime phylogeny midpoint-root  ...``
+
+We can make use of the pipeline `align-to-tree-mafft-fasttree`_ to automate the above four steps in one go. Here is the description taken from the pipeline help doc:
+> This pipeline will start by creating a sequence alignment using MAFFT, after which any alignment columns that are phylogenetically uninformative or ambiguously aligned will be removed (masked). The resulting masked alignment will be used to infer a phylogenetic tree and then subsequently rooted at its midpoint. Output files from each step of the pipeline will be saved. This includes both the unmasked and masked MAFFT alignment from q2-alignment methods, and both the rooted and unrooted phylogenies from q2-phylogeny methods.
+
+This can all be accomplished by simply running the following:
+.. command-block::
+   qiime phylogeny align-to-tree-mafft-fasttree \
+      --i-sequences rep-seqs.qza  \
+      --output-dir mafft-fasttree-output
+
+
+**Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
 
 
@@ -217,4 +344,22 @@ The simplest way to run the `iqtree command`_ with default settings and automati
 .. _models of nucleotide substitution : https://doi.org/10.1016/j.dci.2004.07.007
 .. _ModelFinder: https://doi.org/10.1038/nmeth.4285
 .. _iqtree command: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/iqtree/ 
+.. _single branch testing methods: http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-single-branch-tests
+.. _SH-aLRT: https://doi.org/10.1093/sysbio/syq010
+.. _aBayes: https://doi.org/10.1093/sysbio/syr041
+.. _local bootstrap test: https://doi.org/10.1007/BF0249864
+.. _often recommended: http://www.iqtree.org/doc/Command-Reference#single-branch-tests
+.. _best practice: https://groups.google.com/forum/#!searchin/iqtree/iterations|sort:date/iqtree/0mwGhDokNns/vlBryIwXHAAJ
+.. _IQ-TREE command reference: http://www.iqtree.org/doc/Command-Reference
+.. _ultrafast bootstrap algorithm: https://doi.org/10.1093/molbev/msx281
+.. _ultrafast bootstrap command: https://docs.qiime2.org/2019.7/plugins/available/phylogeny/iqtree-ultrafast-bootstrap/
+.. _potential model violations: http://www.iqtree.org/doc/Tutorial#reducing-impact-of-severe-model-violations-with-ufboot
+.. _UFBoot search: https://doi.org/10.1093/molbev/msx281
+.. _rooted: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics/what-phylogeny/aspects-phylogenies/nodes/root
+.. _outgroup: http://phylobotanist.blogspot.com/2015/01/how-to-root-phylogenetic-tree-outgroup.html
+.. _mid-point root: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/midpoint-root/
+
+
+
+
 
