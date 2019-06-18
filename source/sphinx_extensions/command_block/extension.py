@@ -126,11 +126,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
             if command_mode:
                 for stream_type in ['stdout', 'stderr']:
                     if stream_type in opts:
-                        if len(completed_processes) > 1:
-                            raise sphinx.errors.ExtensionError(
-                                "Cannot capture stdio from multiple commands"
-                                " in a single command block")
-                        node = self._get_stream_node(completed_processes[0],
+                        node = self._get_stream_node(completed_processes,
                                                      stream_type)
                         if node is not None:
                             nodes.extend(node)
@@ -250,12 +246,17 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         return node
 
     def _get_stream_node(self, comp_proc, stream_type):
-        content = getattr(comp_proc, stream_type)
-        if content:
-            subtitle = '%s:' % (stream_type,)
-            subtitle_node = docutils.nodes.subtitle(subtitle, subtitle)
-            pre_node = docutils.nodes.literal_block(content, content)
-            return [subtitle_node, pre_node]
+        subtitle = '%s:' % (stream_type,)
+        subtitle_node = docutils.nodes.subtitle(subtitle, subtitle)
+
+        merged_content = []
+        for process in comp_proc:
+            content = getattr(process, stream_type)
+            if content:
+                merged_content.append(content)
+        merged_content = '\n'.join(merged_content)
+        pre_node = docutils.nodes.literal_block(merged_content, merged_content)
+        return [subtitle_node, pre_node]
 
     def _get_output_links(self, output_paths, name):
         content = []
