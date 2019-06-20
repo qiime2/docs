@@ -10,6 +10,7 @@ Tutorials
    qiime2-for-experienced-microbiome-researchers
    moving-pictures
    fmt
+   fmt-cdiff
    atacama-soils
    pd-mice
    gneiss
