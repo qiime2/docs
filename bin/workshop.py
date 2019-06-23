@@ -17,7 +17,7 @@ tutorial_data_url = ('https://docs.qiime2.org/%s/data/tutorials/%s' %
 tutorials_url = ('https://docs.qiime2.org/%s/tutorials/' %
                  (qiime2.__release__,))
 tutorial_url = ''.join([tutorials_url, tutorial_name])
-s3_url = ('https://s3-us-west-2.amazonaws.com/qiime2-data/workshops/%s/data/' %
+s3_url = ('https://s3-us-west-2.amazonaws.com/qiime2-data/workshops/%s/data' %
           (workshop_slug, ))
 
 base_fp = os.path.join('.', 'build', 'preview', 'tutorials', tutorial_name,

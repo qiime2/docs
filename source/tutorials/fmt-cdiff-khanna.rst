@@ -29,7 +29,7 @@ Before starting the analysis, explore the sample metadata to familiarize yoursel
 Obtaining and importing data
 ----------------------------
 
-Next, you’ll download the demultiplexed reads in a per sample FASTQ forward and reverse format. These files contain a subset of the reads (10%) in the full data set generated for this study, which allows for the following commands to be run relatively quickly. If you are only planning to run through the commands presented here to get experience, you can use the `1% subsample data set`_ (in qza format) so that the commands will run quickly. If you’re planning to work through the questions presented at the end of this document to gain more experience with QIIME analysis and data interpretation, you should use the `10% subsample data set`_ set so that the analysis results will be supported by more sequence data.
+Next, you’ll download the demultiplexed reads in a per sample FASTQ forward and reverse format. These files contain a subset of the reads (10%) in the full data set generated for this study, which allows for the following commands to be run relatively quickly.
 
 You will download two files. A `manifest.csv` and a zip file with a folder (`sequence_files`) that contains our forward and reverse reads for each of our samples.
 
@@ -509,8 +509,6 @@ We're also often interested in performing a differential abundance test at a spe
 Congratulations! You made it to the end of the tutorial, as a next step we suggest reviewing :ref:`all sorts of downstream analyses <Fun>`.
 
 .. _Khanna et al. (2017): https://www.ncbi.nlm.nih.gov/pubmed/28506317
-.. _1% subsample data set: https://data.qiime2.org/2019.4/tutorials/fmt-cdiff-khanna/demux-1p.qza
-.. _10% subsample data set: https://data.qiime2.org/2019.4/tutorials/fmt-cdiff-khanna/demux-10p.qza
 .. _sample metadata: https://data.qiime2.org/2019.4/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
