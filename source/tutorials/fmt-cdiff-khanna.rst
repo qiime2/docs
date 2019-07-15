@@ -419,7 +419,7 @@ We’ll start by using the ``first-distances`` method to examine how FMT reshape
     --p-replicate-handling random \
     --o-first-distances core-metrics-results/unweighted_unifrac_first_distances.qza
 
-Next, we will use the ``volatility`` visualizer to interactively examine temporal changes in distance from donor, alpha diversity, and PCoA ordinations for each subject. We will drop two samples that were collected long before FMT treatment.
+Next, we will use the ``volatility`` visualizer to interactively examine temporal changes in distance from donor, alpha diversity, and PCoA ordinations for each subject. We will use ``egrep`` to drop two samples that were collected long before FMT treatment, so that we focus on time points around FMT treatment in this analysis.
 
 .. command-block::
 
@@ -591,7 +591,7 @@ We're also often interested in performing a differential abundance test at a spe
 Using q2-sample-classifier to predict sample characteristics
 ------------------------------------------------------------
 
-Looks like CDI leads to a state of microbial dysbiosis. Could we use features of that dysbiosis state to diagnose CDI? Let's use :doc:`q2-sample-classifier <sample-classifier>` to find out. We will train a Random Forest classifier on a subset of our samples, and test the predictive accuracy of this model using another subset of our samples to determine how well this model generalizes to unseen samples. We will train our model to distinguish between pre- and post-FMT samples as a proxy measurement of current CDI:
+Looks like CDI leads to a state of microbial dysbiosis. Could we use features of that dysbiosis state to diagnose CDI? Let's use :doc:`q2-sample-classifier <sample-classifier>` to find out. We will train a Random Forest classifier on a subset of our samples, and test the predictive accuracy of this model using another subset of our samples to determine how well this model generalizes to unseen samples. We will train our model to distinguish between pre- and post-FMT samples as a proxy measurement of current CDI. See the :doc:`q2-sample-classifier tutorial <sample-classifier>` for more information about the different parameter settings that are used here:
 
 .. command-block::
 
@@ -604,7 +604,7 @@ Looks like CDI leads to a state of microbial dysbiosis. Could we use features of
     --output-dir sample-classifier
 
 
-This action outputs a bunch of artifacts and visualizations, but we will focus on ``accuracy_results.qzv`` for now; this visualization shows us how frequently our trained classifier predicted CDI (or more precisely, how well it could distinguish sample pre- and post-FMT). We see an overall accuracy rate of 86.6%, much better than the error rate achieved by random guessing (53.3%). So this method is useful for differentiating pre- and post-FMT samples (and identifying differential features, as we will test below), but probably still not good enough to be considered a useful diagnostic tool!
+This action outputs a bunch of artifacts and visualizations, but we will focus on ``accuracy_results.qzv`` for now (see the :doc:`q2-sample-classifier tutorial <sample-classifier>` for details on the other outputs); this visualization shows us how frequently our trained classifier predicted CDI (or more precisely, how well it could distinguish sample pre- and post-FMT). We see an overall accuracy rate of 86.6%, much better than the error rate achieved by random guessing (53.3%). So this method is useful for differentiating pre- and post-FMT samples (and identifying differential features, as we will test below), but probably still not good enough to be considered a useful diagnostic tool!
 
 Random Forest models are very useful for feature selection, identifying features that are differentially abundant between sample classes. Features are assigned "importance" scores indicating their relative predictive value in the trained model. Let's check out the features that are most predictive of FMT status; we will make a heatmap of the abundance of the top 50 most important features, and tabulate their taxonomy:
 
@@ -629,9 +629,9 @@ Using these actions, we see that:
 
 1. Once we have selected the most important features, samples cluster quite strongly by pre- and post-FMT (-1 and 7 days since FMT, respectively). A few samples cluster with the wrong group, perhaps mislabeled samples or an unsuccessful FMT?
 
-2. Several features are clearly associated with the pre-FMT samples. These include several ASVs identified as `Enterobacteriaceae`, an unknown `Megasphaera` species, and `Lactobacillus zeae`.
+2. Several features are clearly associated with the pre-FMT samples (this cluster of features is more abundant in the pre-FMT samples and almost absent in post-FMT samples). These include several ASVs identified as `Enterobacteriaceae`, an unknown `Megasphaera` species, and `Lactobacillus zeae`.
 
-3. Most other features are clearly associated with post-FMT samples. Looks like a lot of different ASVs identified as `Bacteroides`, `Roseburia`, and similar bacteria.
+3. Most other features are clearly associated with post-FMT samples (they are more abundant in the post-FMT samples and almost absent in pre-FMT samples). Looks like a lot of different ASVs identified as `Bacteroides`, `Roseburia`, and similar bacteria.
 
 
 Not surprisingly, many of the differentially abundant features identified by ANCOM were also assigned top importance scores by Random Forest feature selection.
