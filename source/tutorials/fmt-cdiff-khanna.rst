@@ -386,8 +386,8 @@ Finally, ordination is a popular approach for exploring microbial community comp
 .. question::
     What differences do you observe between the unweighted UniFrac and Bray-Curtis PCoA plots?
 
-Visualizing Longitudinal Variation
-----------------------------------
+Visualizing Longitudinal Variation with Emperor
+-----------------------------------------------
 
 For longitudinal studies, we've found great use in visualizing the temporal variability using animated traces in Emperor. By doing this, you can follow the longitudinal dynamics sample by sample and subject by subject. In order to do so, you need two metadata categories one to order the samples (*Gradient category*) and one to group the samples (*Trajectory category*). For this dataset we can use the `animations_gradient` as the category that orders the samples, and the `animations_subject` as the category that groups our samples.
 
@@ -399,6 +399,87 @@ For more information about animated ordinations, visit Emperor's `documentation`
 
 
 .. _`fmt cdiff taxonomy`:
+
+
+Longitudinal analysis
+---------------------
+
+For longitudinal studies, we can use the :doc:`q2-longitudinal plugin <longitudinal>` to evaluate the association between experimental observations, treatments, and time.
+
+We’ll start by using the ``first-distances`` method to examine how FMT reshapes an individual's gut microbiome to resemble that of the donor.
+
+.. command-block::
+
+  qiime longitudinal first-distances \
+    --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+    --m-metadata-file sample_metadata.tsv \
+    --p-state-column timepoint \
+    --p-individual-id-column donor_group \
+    --p-baseline -99 \
+    --p-replicate-handling random \
+    --o-first-distances core-metrics-results/unweighted_unifrac_first_distances.qza
+
+Next, we will use the ``volatility`` visualizer to interactively examine temporal changes in distance from donor, alpha diversity, and PCoA ordinations for each subject. We will use ``egrep`` to drop two samples that were collected long before FMT treatment, so that we focus on time points around FMT treatment in this analysis.
+
+.. command-block::
+
+  egrep -v '(10057.227.3|10057.227.2)' sample_metadata.tsv | grep 'atient' > sample_metadata_select.tsv
+
+  qiime longitudinal volatility \
+    --m-metadata-file sample_metadata_select.tsv \
+    --m-metadata-file core-metrics-results/unweighted_unifrac_first_distances.qza \
+    --m-metadata-file core-metrics-results/observed_otus_vector.qza \
+    --m-metadata-file core-metrics-results/unweighted_unifrac_pcoa_results.qza \
+    --p-state-column timepoint --p-default-group-column ibd_or_not \
+    --p-default-metric Distance \
+    --p-individual-id-column subject_code \
+    --o-visualization volatility.qzv
+
+
+In the interactive visualization, use the "Metric column" widget found in the toolbar on the right-hand side of the line plot to toggle between metrics displayed on the y-axis. Focus on "Distance" (UniFrac distance from donor), "observed_otus", and "Axis 1" (PCoA axis 1 ordinations). From these metrics, we see that 1) each subject's stool microbiota become more similar to the donor's after FMT; 2) FMT increases observed richness; and 3) FMT causes all samples to shift along PC axis 1, indicating a common shift in the microbial composition of those samples. We can test the significance of all of these effects using q2-longitudinal.
+
+The effects of FMT do not appear to be gradual, so we will bypass other approaches in q2-longitudinal for repeated measurements (see the :doc:`q2-longitudinal tutorial <longitudinal>` for more details on other methods in this plugin). Instead, we will focus just on changes in the microbiome pre- and post-FMT. We will use the ``pairwise-differences`` visualizer to perform Wilcoxon signed-rank tests of paired differences between each subject's samples pre- and post-FMT:
+
+.. command-block::
+
+  qiime longitudinal pairwise-differences \
+    --m-metadata-file sample_metadata_select.tsv \
+    --m-metadata-file core-metrics-results/unweighted_unifrac_first_distances.qza \
+    --p-state-column day_since_fmt \
+    --p-state-1 -1 \
+    --p-state-2 7 \
+    --p-metric Distance \
+    --p-individual-id-column subject_code \
+    --o-visualization does-fmt-make-the-stool-microbiome-resemble-donor.qzv
+
+  qiime longitudinal pairwise-differences \
+    --m-metadata-file sample_metadata_select.tsv \
+    --m-metadata-file core-metrics-results/observed_otus_vector.qza \
+    --p-state-column day_since_fmt \
+    --p-state-1 -1 \
+    --p-state-2 7 \
+    --p-metric observed_otus \
+    --p-individual-id-column subject_code \
+    --o-visualization does-fmt-increase-alpha-diversity.qzv
+
+  qiime longitudinal pairwise-differences \
+    --m-metadata-file sample_metadata_select.tsv \
+    --m-metadata-file core-metrics-results/unweighted_unifrac_pcoa_results.qza \
+    --p-state-column day_since_fmt \
+    --p-state-1 -1 \
+    --p-state-2 7 \
+    --p-metric 'Axis 1' \
+    --p-individual-id-column subject_code \
+    --o-visualization does-fmt-cause-a-directional-shift-in-pc1.qzv
+
+So that's neat; using these tests we have confirmed that following FMT:
+
+1. Each subject's stool microbiota become more similar to the donor's.
+
+2. Stool bacterial richness increases.
+
+3. All samples shift along PC axis 1, indicating a common change in microbial composition post-FMT.
+
 
 Taxonomic analysis
 ------------------
@@ -505,6 +586,58 @@ We're also often interested in performing a differential abundance test at a spe
 
 .. question::
    Which genera differ in abundance across Subject? In which subject is each genus more abundant?
+
+
+Using q2-sample-classifier to predict sample characteristics
+------------------------------------------------------------
+
+Looks like CDI leads to a state of microbial dysbiosis. Could we use features of that dysbiosis state to diagnose CDI? Let's use :doc:`q2-sample-classifier <sample-classifier>` to find out. We will train a Random Forest classifier on a subset of our samples, and test the predictive accuracy of this model using another subset of our samples to determine how well this model generalizes to unseen samples. We will train our model to distinguish between pre- and post-FMT samples as a proxy measurement of current CDI. See the :doc:`q2-sample-classifier tutorial <sample-classifier>` for more information about the different parameter settings that are used here:
+
+.. command-block::
+
+  qiime sample-classifier classify-samples \
+    --i-table disease-table.qza \
+    --m-metadata-file sample_metadata.tsv \
+    --m-metadata-column day_since_fmt \
+    --p-n-estimators 200 \
+    --p-random-state 666 \
+    --output-dir sample-classifier
+
+
+This action outputs a bunch of artifacts and visualizations, but we will focus on ``accuracy_results.qzv`` for now (see the :doc:`q2-sample-classifier tutorial <sample-classifier>` for details on the other outputs); this visualization shows us how frequently our trained classifier predicted CDI (or more precisely, how well it could distinguish sample pre- and post-FMT). We see an overall accuracy rate of 86.6%, much better than the error rate achieved by random guessing (53.3%). So this method is useful for differentiating pre- and post-FMT samples (and identifying differential features, as we will test below), but probably still not good enough to be considered a useful diagnostic tool!
+
+Random Forest models are very useful for feature selection, identifying features that are differentially abundant between sample classes. Features are assigned "importance" scores indicating their relative predictive value in the trained model. Let's check out the features that are most predictive of FMT status; we will make a heatmap of the abundance of the top 50 most important features, and tabulate their taxonomy:
+
+.. command-block::
+
+  qiime sample-classifier heatmap \
+     --i-table disease-table.qza \
+     --i-importance sample-classifier/feature_importance.qza \
+     --m-metadata-file sample_metadata.tsv \
+     --m-metadata-column day_since_fmt \
+     --p-cluster both \
+     --o-heatmap sample-classifier/heatmap.qzv \
+     --o-filtered-table sample-classifier/filtered-table.qza
+
+  qiime metadata tabulate \
+     --m-input-file sample-classifier/feature_importance.qza \
+     --m-input-file taxonomy.qza \
+     --o-visualization sample-classifier/top-features.qzv
+
+
+Using these actions, we see that:
+
+1. Once we have selected the most important features, samples cluster quite strongly by pre- and post-FMT (-1 and 7 days since FMT, respectively). A few samples cluster with the wrong group, perhaps mislabeled samples or an unsuccessful FMT?
+
+2. Several features are clearly associated with the pre-FMT samples (this cluster of features is more abundant in the pre-FMT samples and almost absent in post-FMT samples). These include several ASVs identified as `Enterobacteriaceae`, an unknown `Megasphaera` species, and `Lactobacillus zeae`.
+
+3. Most other features are clearly associated with post-FMT samples (they are more abundant in the post-FMT samples and almost absent in pre-FMT samples). Looks like a lot of different ASVs identified as `Bacteroides`, `Roseburia`, and similar bacteria.
+
+
+Not surprisingly, many of the differentially abundant features identified by ANCOM were also assigned top importance scores by Random Forest feature selection.
+
+See the :doc:`q2-sample-classifier tutorial <sample-classifier>` for more details on what is going on under the hood, a full description of the various outputs, and the other fun actions available in this plugin.
+
 
 Congratulations! You made it to the end of the tutorial, as a next step we suggest reviewing :ref:`all sorts of downstream analyses <Fun>`.
 
