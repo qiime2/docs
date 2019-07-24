@@ -38,7 +38,7 @@ Next, we will train and test a classifier that predicts which body site a sample
 
 3. K-fold `cross-validation`_ is performed during automatic feature selection and parameter optimization steps to tune the model. Five-fold cross-validation is performed by default, and this value can be adjusted using the ``--p-cv`` parameter.
 
-4. The trained model is used to predict the target values for each test sample, based on the feature data associated with that sample.
+4. The trained model is used to predict the target values for each test sample, based on the feature data associated with that sample, and predict class probabilities for each sample. Class probabilities are the likelihood that a sample belongs to each class (i.e., group of samples with the same ``target`` value).
 
 5. Model accuracy is calculated by comparing each test sample's predicted value to the true value for that sample.
 
@@ -61,7 +61,7 @@ Next, we will train and test a classifier that predicts which body site a sample
      --output-dir moving-pictures-classifier
 
 
-This pipeline produces several outputs. First let's check out ``accuracy_results.qzv``, which presents classification accuracy results in the form of a confusion matrix. This matrix indicates how frequently a sample is classified with the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class).
+This pipeline produces several outputs. First let's check out ``accuracy_results.qzv``, which presents classification accuracy results in the form of a confusion matrix, as well as `Receiver Operating Characteristic (ROC) curves`_. This matrix indicates how frequently a sample is classified with the correct class vs. all other classes. The confusion matrix is displayed at the top of the visualization in the form of a heatmap, and below that as a table containing overall accuracy (the fraction of times that test samples are assigned the correct class). ROC curves are another graphical representation of the classification accuracy of a machine-learning model. The ROC curve plots the relationship between the true positive rate (TPR, on the y-axis) and the false positive rate (FPR, on the x-axis) at various threshold settings. Thus, the top-left corner of the plot represents the "optimal" performance position, indicating a FPR of zero and a TPR of one. This "optimal" scenario is unlikely to occur in practice, but a greater area under the curve (AUC) indicates better performance.
 
 .. question::
    What other metadata can we predict with ``classify-samples``? Take a look at the metadata columns in the ``sample-metadata`` and try some other categorical columns. Not all metadata can be easily learned by the classifier!
@@ -73,6 +73,15 @@ This pipeline also reports the actual predictions made for each test sample in t
    qiime metadata tabulate \
      --m-input-file moving-pictures-classifier/predictions.qza \
      --o-visualization moving-pictures-classifier/predictions.qzv
+
+
+In addition to the predicted class information, the model also reports the individual class probabilities in ``probabilities.qza``. This is a ``SampleData[Probabilities]`` artifact, and is also viewable as metadata, so let's take a peak with ``metadata tabulate``:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/probabilities.qza \
+     --o-visualization moving-pictures-classifier/probabilities.qzv
 
 
 Another really useful output of supervised learning methods is *feature selection*, i.e., they report which features (e.g., ASVs or taxa) are most predictive. A list of all features, and their relative importances (or feature weights or model coefficients, depending on the learning model used), will be reported in ``feature_importance.qza``. Features with higher importance scores were more useful for distinguishing classes. Feature importance scores are assigned directly by the scikit-learn learning estimator that was used; more details on individual estimators and their importance scores should refer to the `scikit-learn documentation`_. Note that some estimators — notably K-nearest neighbors models — do not report feature importance scores, so this output will be meaningless if you are using such an estimator. Feature importances are of the semantic type ``FeatureData[Importance]``, and can be interpreted as (feature) metadata so we can take a look at these feature importances (and/or :ref:`merge with other feature metadata <exploring feature metadata>`) using ``metadata tabulate``:
@@ -124,14 +133,16 @@ Finally, the trained classification model is saved for convenient re-use in the 
    qiime sample-classifier predict-classification \
      --i-table moving-pictures-table.qza \
      --i-sample-estimator moving-pictures-classifier/sample_estimator.qza \
-     --o-predictions moving-pictures-classifier/new_predictions.qza
+     --o-predictions moving-pictures-classifier/new_predictions.qza \
+     --o-probabilities moving-pictures-classifier/new_probabilities.qza
 
-We can view these ``new_predictions.qza`` using ``metadata tabulate``, as described above... or if these aren't actually "unknown" samples we can re-test model accuracy using this new batch of samples:
+We can view these ``new_predictions.qza`` (and ``new_probabilities.qza``) using ``metadata tabulate``, as described above... or if these aren't actually "unknown" samples we can re-test model accuracy using this new batch of samples:
 
 .. command-block::
 
    qiime sample-classifier confusion-matrix \
      --i-predictions moving-pictures-classifier/new_predictions.qza \
+     --i-probabilities moving-pictures-classifier/new_probabilities.qza \
      --m-truth-file moving-pictures-sample-metadata.tsv \
      --m-truth-column body-site \
      --o-visualization moving-pictures-classifier/new_confusion_matrix.qzv
@@ -198,7 +209,7 @@ In the examples above, we split the data sets into training and test sets for mo
 
 :ref:`Figure key<key>`
 
-Under the hood, NCV works a lot like the k-fold cross validation used in ``classify-samples`` and ``regress-samples`` for model optimization, but a second layer of cross validation (an "outer loop") is incorporated to split the dataset into training and test sets K times such that each sample ends up in a test set exactly once. During each iteration of the "outer loop", the training set is split again K times (in an "inner loop") to optimize parameter settings for estimation of that fold. The end result: K different final models are trained, each sample receives a predicted value, and feature importance scores are averaged across each iteration. Overall accuracy can be calculated by comparing these predicted values to their true values, as shown below, but for those interested in accuracy variance across each fold, mean accuracy ± SD is printed to the standard output.
+Under the hood, NCV works a lot like the k-fold cross validation used in ``classify-samples`` and ``regress-samples`` for model optimization, but a second layer of cross validation (an "outer loop") is incorporated to split the dataset into training and test sets K times such that each sample ends up in a test set exactly once. During each iteration of the "outer loop", the training set is split again K times (in an "inner loop") to optimize parameter settings for estimation of that fold. The end result: K different final models are trained, each sample receives a predicted value (and class probabilities if ``classify-samples-ncv`` is used for prediction of discrete classes), and feature importance scores are averaged across each iteration. Overall accuracy can be calculated by comparing these predicted values to their true values, as shown below, but for those interested in accuracy variance across each fold, mean accuracy ± SD is printed to the standard output.
 
 There are NCV methods in ``q2-sample-classifier`` for both classification and regression problems. Let's give both a spin, followed by visualizers to calculate and view aggregated model accuracy results.
 
@@ -212,6 +223,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
      --p-n-estimators 20 \
      --p-random-state 123 \
      --o-predictions body-site-predictions-ncv.qza \
+     --o-probabilities body-site-probabilities-ncv.qza \
      --o-feature-importance body-site-importance-ncv.qza
 
 
@@ -219,6 +231,7 @@ There are NCV methods in ``q2-sample-classifier`` for both classification and re
 
    qiime sample-classifier confusion-matrix \
      --i-predictions body-site-predictions-ncv.qza \
+     --i-probabilities body-site-probabilities-ncv.qza \
      --m-truth-file moving-pictures-sample-metadata.tsv \
      --m-truth-column body-site \
      --o-visualization ncv_confusion_matrix.qzv
@@ -270,6 +283,7 @@ As this tutorial has demonstrated, q2-sample-classifier can be extremely powerfu
 .. _approximately 50 samples: http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html
 .. _convert your observation tables to biom format: http://biom-format.org/documentation/biom_conversion.html
 .. _ECAM study: https://doi.org/10.1126/scitranslmed.aad7121
+.. _Receiver Operating Characteristic (ROC) curves: https://en.wikipedia.org/wiki/Receiver_operating_characteristic
 .. _scikit-learn documentation: http://scikit-learn.org/stable/supervised_learning.html
 .. _estimator selection flowchart: http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html
 .. _recursive feature elimination: http://scikit-learn.org/stable/modules/feature_selection.html#recursive-feature-elimination
