@@ -359,25 +359,8 @@ BIOM v1.0.0
 Format description
 ******************
 
-See the `BIOM v1.0.0 format specification`_ for details.
-
-Obtaining example data
-``````````````````````
-
-.. download::
-   :url: https://data.qiime2.org/2019.7/tutorials/importing/feature-table-v100.biom
-   :saveas: feature-table-v100.biom
-
-Importing data
-**************
-
-.. command-block::
-
-   qiime tools import \
-     --input-path feature-table-v100.biom \
-     --type 'FeatureTable[Frequency]' \
-     --input-format BIOMV100Format \
-     --output-path feature-table-1.qza
+This format must first be `converted`_ to BIOM v2.1.0 format before importing
+into QIIME 2. See the `BIOM v1.0.0 format specification`_ for details.
 
 BIOM v2.1.0
 ~~~~~~~~~~~
@@ -458,6 +441,8 @@ If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 .. _Casava 1.8 demultiplexed:  http://illumina.bioinfo.ucr.edu/ht/documentation/data-analysis-docs/CASAVA-FASTQ.pdf/view
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
+
+.. _converted: http://biom-format.org/documentation/biom_conversion.html
 
 .. _BIOM v1.0.0 format specification: http://biom-format.org/documentation/format_versions/biom-1.0.html
 
