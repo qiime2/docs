@@ -110,13 +110,15 @@ We can also use the ``heatmap`` pipeline to generate an abundance heatmap of the
    qiime sample-classifier heatmap \
      --i-table moving-pictures-table.qza \
      --i-importance moving-pictures-classifier/feature_importance.qza \
-     --m-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-metadata-column body-site \
+     --m-sample-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-sample-metadata-column body-site \
      --p-group-samples \
      --p-feature-count 30 \
      --o-filtered-table moving-pictures-classifier/important-feature-table-top-30.qza \
      --o-heatmap moving-pictures-classifier/important-feature-heatmap.qzv
 
+
+.. note:: In the command above, we annotated the heatmap with ``sample-metadata``. It is also possible to annotate these heatmaps with ``feature-metadata``, e.g., to label the feature axis with species classifications.
 
 This pipeline also produces a visualization containing a summary of the model parameters used by the supervised learning estimator in ``model_summary.qzv``. If ``--p-optimize-feature-selection`` is enabled, the visualization will also display a `recursive feature elimination`_ plot, which illustrates how model accuracy changes as a function of feature count. The combination of features that maximize accuracy are automatically selected for the final model, which is used for sample prediction results that are displayed in the other outputs.
 
