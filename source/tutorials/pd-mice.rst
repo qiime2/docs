@@ -664,6 +664,128 @@ When you open the ANCOM visualizations, you'll see a `volcano plot`_ on top, whi
 
 .. end L2 Differential abundance with ANCOM
 
+Taxonomic classification again
+==============================
+
+It is possible to `increase taxonomic classification accuracy`_ by showing the taxonomic classifier what a typical animal stool sample looks like before attempting classification. To do that we will have to retrain the naive Bayes classifier. Fortunately, a representation of a typical stool sample that is derived from `Qiita`_ data is available from the `readytowear collection`_.
+
+If you feel that these samples are not typical stool samples, it is possible to, for instance, assemble data on just mouse or just human (or just human and mouse) stool samples using `q2-clawback`_. We will not attempt that here because it takes a while to run, but details are available in the `tutorial`_.
+
+Start by downloading the stool data, along with the 99% Greengene 13_8 reference data.
+
+.. download::
+   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-seqs-v4.qza?raw=true
+   :saveas: ref-seqs-v4.qza
+
+.. download::
+   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-tax.qza?raw=true
+   :saveas: ref-tax.qza
+
+.. download::
+   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/animal-distal-gut.qza?raw=true
+   :saveas: animal-distal-gut.qza
+
+Next retrain the classifier.
+
+.. command-block::
+
+   qiime feature-classifier fit-classifier-naive-bayes \
+     --i-reference-reads ref-seqs-v4.qza \
+     --i-reference-taxonomy ref-tax.qza \
+     --i-class-weight animal-distal-gut.qza \
+     --o-classifier bespoke.qza
+
+We can use the new classifier in exactly the same way as the standard classifier that we downloaded above.
+
+.. command-block::
+
+   qiime feature-classifier classify-sklearn \
+     --i-reads ./dada2_rep_set.qza \
+     --i-classifier ./bespoke.qza \
+     --o-classification ./bespoke-taxonomy.qza
+
+   qiime metadata tabulate \
+     --m-input-file ./bespoke-taxonomy.qza \
+     --o-visualization ./bespoke-taxonomy.qzv
+
+.. question::
+
+   Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke-taxonomy.qzv`` visualization.
+
+   1. Search for "ovatus" in both. Is there an ASV in the new taxonomy that wasn't present in the original?
+   2. Revisit the ``ancom_donor.qzv`` visualization. Can you find that ASV?
+
+.. c162a4f3943238810eba8a25f0563cca
+.. it's differentially abundant (W=87)
+
+When analyzing ANCOM results, it is possible to trace the ASVs that we found using the taxonomies that we have created. It is also possible to run ANCOM directly on taxonomic groups that we have discovered in our samples by counting features according to taxonomic classification. This has the advantage of pooling feature counts across taxonomically similar ASVs, for instance allowing exact species substitution between samples. The output is also more readable. On the down side, it has all the inaccuracies that come with automated taxonomic classification.
+
+We will run through the pipeline twice, once with our original taxonomy and once with the new taxonomy, for the purpose of comparison. First using the original taxonomy:
+
+.. command-block::
+
+  qiime taxa collapse \
+    --i-table table_2k.qza \
+    --i-taxonomy taxonomy.qza \
+    --o-collapsed-table uniform-table.qza \
+    --p-level 7  # means that we group at species level
+
+  qiime feature-table filter-features \
+    --i-table uniform-table.qza \
+    --p-min-frequency 50 \
+    --p-min-samples 4 \
+    --o-filtered-table filtered-uniform-table.qza
+
+   qiime composition add-pseudocount \
+     --i-table filtered-uniform-table.qza \
+     --o-composition-table cfu-table.qza
+
+   qiime composition ancom \
+     --i-table cfu-table.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column donor \
+     --o-visualization ancom-donor-uniform.qzv
+
+Now redo with the new taxonomy:
+
+.. command-block::
+
+   qiime taxa collapse \
+     --i-table table_2k.qza \
+     --i-taxonomy bespoke-taxonomy.qza \
+     --p-level 7 \
+     --o-collapsed-table bespoke-table.qza
+   
+   qiime feature-table filter-features \
+     --i-table bespoke-table.qza \
+     --p-min-frequency 50 \
+     --p-min-samples 4 \
+     --o-filtered-table filtered-bespoke-table.qza
+
+   qiime composition add-pseudocount \
+     --i-table filtered-bespoke-table.qza \
+     --o-composition-table cfb-table.qza
+
+   qiime composition ancom \
+     --i-table cfb-table.qza \
+     --m-metadata-file metadata.tsv \
+     --m-metadata-column donor \
+     --o-visualization ancom-donor-bespoke.qzv
+
+.. question::
+
+   Compare final ANCOM visualizations. They are fairly similar, which is good.
+
+   1. Is Bacteroides ovatus present in the ANCOM results derived from our original taxonomy?
+   2. Is B. ovatus present in the new ANCOM results?
+   3. Why is that?
+
+.. no
+.. yes
+.. The original taxonomy lumped it in with g__Bacteroides; __ and the effect was washed out.
+
+.. end L2 Taxonomic classification again
+
 Longitudinal analysis
 =====================
 
@@ -805,8 +927,8 @@ Looks like we did pretty well! So we can see what features are most predictive o
     qiime sample-classifier heatmap \
       --i-table ./dada2_table.qza \
       --i-importance ./sample-classifier-results/feature_importance.qza \
-      --m-sample-metadata-file ./metadata.tsv \
-      --m-sample-metadata-column genotype_and_donor_status \
+      --m-metadata-file ./metadata.tsv \
+      --m-metadata-column genotype_and_donor_status \
       --p-group-samples \
       --p-feature-count 100 \
       --o-heatmap ./sample-classifier-results/heatmap.qzv \
@@ -860,3 +982,7 @@ This suggests that there is a genotype-specific effect on the microbiome of mice
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
 .. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
 .. _confusion matrix: https://en.wikipedia.org/wiki/Confusion_matrix
+.. _readytowear collection: https://github.com/BenKaehler/readytowear
+.. _q2-clawback: https://library.qiime2.org/plugins/q2-clawback/7/
+.. _increase taxonomic classification accuracy: https://www.biorxiv.org/content/10.1101/406611v2
+.. _tutorial: https://forum.qiime2.org/t/using-q2-clawback-to-assemble-taxonomic-weights/5859

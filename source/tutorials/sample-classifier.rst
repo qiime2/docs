@@ -110,8 +110,8 @@ We can also use the ``heatmap`` pipeline to generate an abundance heatmap of the
    qiime sample-classifier heatmap \
      --i-table moving-pictures-table.qza \
      --i-importance moving-pictures-classifier/feature_importance.qza \
-     --m-sample-metadata-file moving-pictures-sample-metadata.tsv \
-     --m-sample-metadata-column body-site \
+     --m-metadata-file moving-pictures-sample-metadata.tsv \
+     --m-metadata-column body-site \
      --p-group-samples \
      --p-feature-count 30 \
      --o-filtered-table moving-pictures-classifier/important-feature-table-top-30.qza \
