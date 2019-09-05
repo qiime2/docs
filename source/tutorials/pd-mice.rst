@@ -673,27 +673,29 @@ If you feel that these samples are not typical stool samples, it is possible to,
 
 Start by downloading the stool data, along with the 99% Greengene 13_8 reference data.
 
+.. TODO: update these URLs
+
 .. download::
    :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-seqs-v4.qza?raw=true
-   :saveas: ref-seqs-v4.qza
+   :saveas: ref_seqs_v4.qza
 
 .. download::
    :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-tax.qza?raw=true
-   :saveas: ref-tax.qza
+   :saveas: ref_tax.qza
 
 .. download::
    :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/animal-distal-gut.qza?raw=true
-   :saveas: animal-distal-gut.qza
+   :saveas: animal_distal_gut.qza
 
 Next retrain the classifier.
 
 .. command-block::
 
    qiime feature-classifier fit-classifier-naive-bayes \
-     --i-reference-reads ref-seqs-v4.qza \
-     --i-reference-taxonomy ref-tax.qza \
-     --i-class-weight animal-distal-gut.qza \
-     --o-classifier bespoke.qza
+     --i-reference-reads ./ref_seqs_v4.qza \
+     --i-reference-taxonomy ./ref_tax.qza \
+     --i-class-weight ./animal_distal_gut.qza \
+     --o-classifier ./bespoke.qza
 
 We can use the new classifier in exactly the same way as the standard classifier that we downloaded above.
 
@@ -702,15 +704,15 @@ We can use the new classifier in exactly the same way as the standard classifier
    qiime feature-classifier classify-sklearn \
      --i-reads ./dada2_rep_set.qza \
      --i-classifier ./bespoke.qza \
-     --o-classification ./bespoke-taxonomy.qza
+     --o-classification ./bespoke_taxonomy.qza
 
    qiime metadata tabulate \
-     --m-input-file ./bespoke-taxonomy.qza \
-     --o-visualization ./bespoke-taxonomy.qzv
+     --m-input-file ./bespoke_taxonomy.qza \
+     --o-visualization ./bespoke_taxonomy.qzv
 
 .. question::
 
-   Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke-taxonomy.qzv`` visualization.
+   Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke_taxonomy.qzv`` visualization.
 
    1. Search for "ovatus" in both. Is there an ASV in the new taxonomy that wasn't present in the original?
    2. Revisit the ``ancom_donor.qzv`` visualization. Can you find that ASV?
@@ -724,60 +726,60 @@ We will run through the pipeline twice, once with our original taxonomy and once
 
 .. command-block::
 
-  qiime taxa collapse \
-    --i-table table_2k.qza \
-    --i-taxonomy taxonomy.qza \
-    --o-collapsed-table uniform-table.qza \
-    --p-level 7  # means that we group at species level
+   qiime taxa collapse \
+     --i-table ./table_2k.qza \
+     --i-taxonomy ./taxonomy.qza \
+     --o-collapsed-table ./uniform_table.qza \
+     --p-level 7 # means that we group at species level
 
-  qiime feature-table filter-features \
-    --i-table uniform-table.qza \
-    --p-min-frequency 50 \
-    --p-min-samples 4 \
-    --o-filtered-table filtered-uniform-table.qza
+   qiime feature-table filter-features \
+     --i-table ./uniform_table.qza \
+     --p-min-frequency 50 \
+     --p-min-samples 4 \
+     --o-filtered-table ./filtered_uniform_table.qza
 
    qiime composition add-pseudocount \
-     --i-table filtered-uniform-table.qza \
-     --o-composition-table cfu-table.qza
+     --i-table ./filtered_uniform_table.qza \
+     --o-composition-table ./cfu_table.qza
 
    qiime composition ancom \
-     --i-table cfu-table.qza \
-     --m-metadata-file metadata.tsv \
+     --i-table ./cfu_table.qza \
+     --m-metadata-file ./metadata.tsv \
      --m-metadata-column donor \
-     --o-visualization ancom-donor-uniform.qzv
+     --o-visualization ./ancom_donor_uniform.qzv
 
 Now redo with the new taxonomy:
 
 .. command-block::
 
    qiime taxa collapse \
-     --i-table table_2k.qza \
-     --i-taxonomy bespoke-taxonomy.qza \
+     --i-table ./table_2k.qza \
+     --i-taxonomy ./bespoke_taxonomy.qza \
      --p-level 7 \
-     --o-collapsed-table bespoke-table.qza
-   
+     --o-collapsed-table ./bespoke_table.qza
+
    qiime feature-table filter-features \
-     --i-table bespoke-table.qza \
+     --i-table ./bespoke_table.qza \
      --p-min-frequency 50 \
      --p-min-samples 4 \
-     --o-filtered-table filtered-bespoke-table.qza
+     --o-filtered-table ./filtered_bespoke_table.qza
 
    qiime composition add-pseudocount \
-     --i-table filtered-bespoke-table.qza \
-     --o-composition-table cfb-table.qza
+     --i-table ./filtered-bespoke_table.qza \
+     --o-composition-table ./cfb_table.qza
 
    qiime composition ancom \
-     --i-table cfb-table.qza \
-     --m-metadata-file metadata.tsv \
+     --i-table ./cfb_table.qza \
+     --m-metadata-file ./metadata.tsv \
      --m-metadata-column donor \
-     --o-visualization ancom-donor-bespoke.qzv
+     --o-visualization ./ancom_donor_bespoke.qzv
 
 .. question::
 
    Compare final ANCOM visualizations. They are fairly similar, which is good.
 
-   1. Is Bacteroides ovatus present in the ANCOM results derived from our original taxonomy?
-   2. Is B. ovatus present in the new ANCOM results?
+   1. Is *Bacteroides ovatus* present in the ANCOM results derived from our original taxonomy?
+   2. Is *B. ovatus* present in the new ANCOM results?
    3. Why is that?
 
 .. no
