@@ -673,18 +673,16 @@ If you feel that these samples are not typical stool samples, it is possible to,
 
 Start by downloading the stool data, along with the 99% Greengene 13_8 reference data.
 
-.. TODO: update these URLs
-
 .. download::
-   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-seqs-v4.qza?raw=true
+   :url: https://data.qiime2.org/2019.10/tutorials/pd-mice/ref_seqs_v4.qza
    :saveas: ref_seqs_v4.qza
 
 .. download::
-   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/ref-tax.qza?raw=true
+   :url: https://data.qiime2.org/2019.10/tutorials/pd-mice/ref_tax.qza
    :saveas: ref_tax.qza
 
 .. download::
-   :url: https://github.com/BenKaehler/readytowear/blob/master/data/gg_13_8/515f-806r/animal-distal-gut.qza?raw=true
+   :url: https://data.qiime2.org/2019.10/tutorials/pd-mice/animal_distal_gut.qza
    :saveas: animal_distal_gut.qza
 
 Next retrain the classifier.
