@@ -927,8 +927,8 @@ Looks like we did pretty well! So we can see what features are most predictive o
     qiime sample-classifier heatmap \
       --i-table ./dada2_table.qza \
       --i-importance ./sample-classifier-results/feature_importance.qza \
-      --m-metadata-file ./metadata.tsv \
-      --m-metadata-column genotype_and_donor_status \
+      --m-sample-metadata-file ./metadata.tsv \
+      --m-sample-metadata-column genotype_and_donor_status \
       --p-group-samples \
       --p-feature-count 100 \
       --o-heatmap ./sample-classifier-results/heatmap.qzv \
