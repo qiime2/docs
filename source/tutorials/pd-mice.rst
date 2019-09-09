@@ -763,7 +763,7 @@ Now redo with the new taxonomy:
      --o-filtered-table ./filtered_bespoke_table.qza
 
    qiime composition add-pseudocount \
-     --i-table ./filtered-bespoke_table.qza \
+     --i-table ./filtered_bespoke_table.qza \
      --o-composition-table ./cfb_table.qza
 
    qiime composition ancom \
