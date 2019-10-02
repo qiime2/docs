@@ -11,8 +11,8 @@ Exact Sequence Variants (`ESVs`_) being investigated.
 
 *But how do we proceed to construct a phylogeny from our sequence data?*
  Well, there are two phylogeny-based approaches we can use. Deciding upon which to use is largely dependent on your study questions:
-1)  A reference-based `fragment insertion`_ approach. Which, is likely the ideal choice. Especially, if your reference phylogeny (and associated representative sequences) encompass neighboring relatives of which your sequences can be reliably inserted. Any sequences that do not match well enough to the reference are not inserted. This may or may not have implications for your study questions. For more information, check out these great `fragment insertion examples`_.
-2) A *de novo* approach. Marker genes that can be globally aligned across divergent taxa, are usually amenable to sequence alignment and phylogenetic investigation through this approach. This community tutorial will focus on the *de novo* approaches.
+	1)  A reference-based `fragment insertion`_ approach. Which, is likely the ideal choice. Especially, if your reference phylogeny (and associated representative sequences) encompass neighboring relatives of which your sequences can be reliably inserted. Any sequences that do not match well enough to the reference are not inserted. This may or may not have implications for your study questions. For more information, check out these great `fragment insertion examples`_.
+	2) A *de novo* approach. Marker genes that can be globally aligned across divergent taxa, are usually amenable to sequence alignment and phylogenetic investigation through this approach. This community tutorial will focus on the *de novo* approaches.
 
 
 **Here, you will learn how to make use of _de novo_ phylogenetic approaches to**:
@@ -32,7 +32,7 @@ The number of algorithms to construct a MSA are legion. We will make use of `MAF
 
 **Input: unaligned representative sequences from the [Atacama soil microbiome tutorial](https://docs.qiime2.org/2019.7/tutorials/atacama-soils/):**
 .. download::
-   :no-exec: 
+   :no-exec:
    :url: https://docs.qiime2.org/2019.7/data/tutorials/atacama-soils/rep-seqs.qza
    :saveas: rep-seqs.qza
 
@@ -74,14 +74,14 @@ As with MSA algorithms, phylogenetic inference tools are also legion. Fortunatel
 2. `Molecular phylogenetics - principles and practice`_
 3. `Phylogenetics - An Introduction`_
 
-Via the `q2-phylogeny`_ plugin of :qiime2:, there are several methods for phylogenetic inference based on the following tools: 
+Via the `q2-phylogeny`_ plugin of :qiime2:, there are several methods for phylogenetic inference based on the following tools:
  1. `FastTree`_
  2. `RAxML`_
  3. `IQ-TREE`_
 and this plugin pipeline:
  1. `align-to-tree-mafft-fasttree`_
 
-Methods 
+Methods
 =======
 
 fasttree
@@ -125,7 +125,7 @@ In phylogenetics, it is good practice to check how well the `splits / bipartitio
 
 As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid bootstrapping command that we will execute below will do the following:
 
-1. Bootstrap the input alignment 100 times and perform a Maximum Likelihood (ML) search on each. 
+1. Bootstrap the input alignment 100 times and perform a Maximum Likelihood (ML) search on each.
 2. Find best scoring ML tree through multiple independent searches using the original input alignment. The number of independent searches is determined by the number of bootstrap replicates set in the 1st step. That is, your search becomes more thorough with increasing bootstrap replicates. The ML optimization of RAxML uses every 5th bootstrap tree as the starting tree for an ML search on the original alignment.
 3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML tree (2nd step).
 
@@ -142,7 +142,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
 .. tip:: RAxML Run Time.
 You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
 
-1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions). 
+1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions).
 2. These instructions will substantially accelerate the likelihood and parsimony computations. SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version.
 
 .. tip:: Larger sequence alignments.
@@ -185,12 +185,12 @@ Let's rerun the command above and add the ``--p-fast`` option. This option, only
 
 Single branch tests
 ...................
-IQ-TREE provides access to a few `single branch testing methods`_ 
+IQ-TREE provides access to a few `single branch testing methods`_
 1. `SH-aLRT`_ via ``--p-alrt [INT >= 1000]``
 2. `aBayes`_ via ``--p-abayes [TRUE | FALSE]``
-3. `local bootstrap test` via ``--p-lbp [INT >= 1000]`` 
+3. `local bootstrap test` via ``--p-lbp [INT >= 1000]``
 
-Single branch tests are commonly used as an alternative to the bootstrapping approach we've discussed above, as they are substantially faster and `often recommended`_ when constructing large phylogenies (e.g. >10,000 taxa). All three of these methods can be applied simultaneously and viewed within `iTOL`_ as separate bootstrap support values. These values are always in listed in the following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the branch tests in our next command, while specifying the same substitution model as above. Feel free to combine this with the ``--p-fast`` option. :wink:   
+Single branch tests are commonly used as an alternative to the bootstrapping approach we've discussed above, as they are substantially faster and `often recommended`_ when constructing large phylogenies (e.g. >10,000 taxa). All three of these methods can be applied simultaneously and viewed within `iTOL`_ as separate bootstrap support values. These values are always in listed in the following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the branch tests in our next command, while specifying the same substitution model as above. Feel free to combine this with the ``--p-fast`` option. :wink:
 
 .. command-block::
    qiime phylogeny iqtree \
@@ -203,7 +203,7 @@ Single branch tests are commonly used as an alternative to the bootstrapping app
       --verbose
 
 .. tip:: IQ-TREE search settings
-There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use. 
+There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use.
 
 .. command-block::
    qiime phylogeny iqtree \
@@ -260,7 +260,7 @@ QIIME 2 provides a way to `mid-point root`_ our phylogeny. Other rooting options
 
 .. tip:: iTOL viewing Reminder. We can view our tree and its associated alignment via `iTOL`_. All you need to do is upload the `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file onto the visualization. Now you can view the phylogeny alongside the alignment. :sparkler: Below is a link to an example screen-shot of the tree & sequence alignment visualization from iTOL:
 .. download::
-   :no-exec: 
+   :no-exec:
    :url: https://www.dropbox.com/s/6syenmg8rzx22l6/iTOL_seqaln.pdf?dl=1
    :saveas: itol-tree-align.pdf
 
@@ -343,7 +343,7 @@ This can all be accomplished by simply running the following:
 .. _CAT-like model of FastTree2: https://doi.org/10.1371/journal.pone.0009490
 .. _models of nucleotide substitution : https://doi.org/10.1016/j.dci.2004.07.007
 .. _ModelFinder: https://doi.org/10.1038/nmeth.4285
-.. _iqtree command: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/iqtree/ 
+.. _iqtree command: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/iqtree/
 .. _single branch testing methods: http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-single-branch-tests
 .. _SH-aLRT: https://doi.org/10.1093/sysbio/syq010
 .. _aBayes: https://doi.org/10.1093/sysbio/syr041
@@ -358,8 +358,3 @@ This can all be accomplished by simply running the following:
 .. _rooted: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics/what-phylogeny/aspects-phylogenies/nodes/root
 .. _outgroup: http://phylobotanist.blogspot.com/2015/01/how-to-root-phylogenetic-tree-outgroup.html
 .. _mid-point root: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/midpoint-root/
-
-
-
-
-
