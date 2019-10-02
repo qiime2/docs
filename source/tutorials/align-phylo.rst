@@ -31,17 +31,20 @@ Prior to constructing a `phylogeny`_ we must generate a multiple sequence alignm
 The number of algorithms to construct a MSA are legion. We will make use of `MAFFT`_ (Multiple Alignment using Fast Fourier Transform)) via the `q2-alignment`_ plugin. For more information checkout the `MAFFT paper`_.
 
 **Input: unaligned representative sequences from the [Atacama soil microbiome tutorial](https://docs.qiime2.org/2019.7/tutorials/atacama-soils/):**
+
 .. download::
-:no-exec:
-:url: https://docs.qiime2.org/2019.7/data/tutorials/atacama-soils/rep-seqs.qza
-:saveas: rep-seqs.qza
+   :url: https://docs.qiime2.org/2019.7/data/tutorials/atacama-soils/rep-seqs.qza
+   :saveas: rep-seqs.qza
+
 
 **Run MAFFT**
 
 .. command-block::
+
    qiime alignment mafft \
       --i-sequences rep-seqs.qza \
       --o-alignment aligned-rep-seqs.qza
+
 
 Reducing alignment ambiguity: masking and reference alignments.
 ...............................................................
@@ -55,9 +58,11 @@ Masking helps to eliminate alignment columns that are phylogenetically uninforma
 For our purposes, we'll assume that we have ambiguously aligned columns in the MAFFT alignment we produced above. The default settings for the ``--p-min-conservation`` of the `alignment mask plugin`_ approximates the Lane mask filtering of QIIME 1. Keep an eye out for updates to the alignment plugin.
 
 .. command-block::
+
    qiime alignment mask \
    --i-alignment aligned-rep-seqs.qza \
    --o-masked-alignment masked-aligned-rep-seqs.qza
+
 
 *Reference based alignments*
 There are a variety of tools such as `PyNAST`_) (using `NAST`_), `Infernal`_, and `SINA`_, etc., that attempt to reduce the amount of ambiguously aligned regions by using curated reference alignments (e.g. `SILVA`_. Reference alignments are particularly powerful for rRNA gene sequence data, as knowledge of secondary structure is incorporated into the curation process, thus increasing alignment quality. For a more in-depth and eloquent overview of reference-based alignment approaches, check out the great `SINA community tutorial`_).
@@ -89,9 +94,11 @@ fasttree
 FastTree is able to construct phylogenies from large sequence alignments quite rapidly. It does this by using the using a `CAT-like`_ rate category  approximation, which is also available through RAxML (discussed below). Check out the `FastTree online manual`_ for more information.
 
 .. command-block::
+
    qiime phylogeny fasttree \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree fasttree-tree.qza --verbose
+
 
 .. tip:: For an easy and direct way to view your ``tree.qza`` files, upload them to `iTOL`_. Here, you caninteractively view and manipulate your phylogeny. Even better, while viewing the tree topology in "Normal mode", you can drag and drop your associated ``alignment.qza`` (the one you used to build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree visualization. This will allow you to directly view the sequence alignment or taxonomy alongside the phylogeny. :sunglasses:
 
@@ -101,16 +108,19 @@ raxml
 Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and return a tree. Note, the default model for ``raxml`` is ``--p-substitution-model GTRGAMMA``. If you'd like to construct a tree using the CAT model like ``fasttree``, simply replace ``GTRGAMMA`` with ``GTRCAT`` as shown below:
 
 .. command-block::
+
    qiime phylogeny raxml \
       --p-substitution-model GTRCAT \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree raxml-cat-tree.qza
+
 
 Perform multiple searches using raxml
 .....................................
 If you'd like to perform a more thorough search of "tree space" you can instruct ``raxml`` to perform multiple independent searches on the full alignment by using ``--p-n-searches 5``. Once these 5 independent searches are completed, only the single best scoring tree will be returned. *Note, we are not bootstrapping here, we'll do that in a later example.* Let's set ``--p-substitution-model GTRCAT``. Finally, let's also manually set a seed via ``--p-seed``. By setting our seed, we allow other users the ability to reproduce our phylogeny. That is, anyone using the same sequence alignment and substitution model, will generate the same tree as long as they set the same seed value. Although, ``--p-seed`` is not a required argument, it is generally a good idea to set this value.
 
 .. command-block::
+
    qiime phylogeny raxml \
       --p-substitution-model GTRCAT \
       --p-seed 1723 \
@@ -118,6 +128,7 @@ If you'd like to perform a more thorough search of "tree space" you can instruct
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree raxml-cat-searches-tree.qza \
       --verbose
+
 
 raxml-rapid-bootstrap
 .....................
@@ -130,6 +141,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
 3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML tree (2nd step).
 
 .. command-block::
+
    qiime phylogeny raxml-rapid-bootstrap \
       --p-seed 1723 \
       --p-rapid-bootstrap-seed 9384 \
@@ -138,6 +150,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree raxml-cat-bootstrap-tree.qza \
       --verbose
+
 
 .. tip:: RAxML Run Time.
 
@@ -150,6 +163,7 @@ You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAx
  1. Make use of multiple cores / threads as outlined earlier. Keep in mind that using more cores / threads is `not necessarily always better`_. Additionally, the RAxML manual suggests 1 core per ~500 DNA alignment patterns. This is usually visible on screen, when the ``--verbose`` option is used.
  2. Try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
 
+
 iqtree
 ------
 Similar to the ``raxml`` and ``raxml-rapid-bootstrap`` methods above, we provide similar functionality for `IQ-TREE`_: ``iqtree`` and ``iqtree-ultrafast-bootstrap``. IQ-TREE is unique compared to the ``fastree`` and ``raxml`` options, in that it provides access to 286 `models of nucleotide substitution`_! IQ-TREE can also determine which of these models best fits your dataset prior to constructing your tree via its built-in `ModelFinder`_ algorithm. This is the default in QIIME 2, but do not worry, you can set any one of the 286 models of nucleotide substitution via the ``--p-substitution-model`` flag, e.g. you can set the model as ``HKY+I+G`` instead of the default ``MFP`` (a basic short-hand for: "build a phylogeny after determining the best fit model as determined by ModelFinder"). Keep in mind the additional computational time required for model testing via ModelFinder.
@@ -157,25 +171,30 @@ Similar to the ``raxml`` and ``raxml-rapid-bootstrap`` methods above, we provide
 The simplest way to run the `iqtree command`_ with default settings and automatic model selection (``MFP``) is like so:
 
 .. command-block::
+
    qiime phylogeny iqtree \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-tree.qza \
       --verbose
+
 
 Specifying a substitution model
 ...............................
 We can also set a substitution model of our choosing. You may have noticed while watching the onscreen output of the previous command that the best fitting model selected by ModelFinder is noted. For the sake of argument, let's say the best selected model was shown as  ``GTR+F+I+G4``. The ``F`` is only a notation to let us know that *if* a given model supports *unequal base frequencies*, then the *empirical base frequencies* will be used by default. Using empirical base frequencies (``F``), rather than estimating them, greatly reduces computational time. The ``iqtree`` plugin will not accept ``F`` within the model notation supplied at the command line, as this will always be implied automatically for the appropriate model. Also, the ``iqtree`` plugin only accepts ``G`` *not* ``G4`` to be specified within the model notation. The ``4`` is simply another explicit notation  to remind us that four rate categories are being assumed by default. The notation approach used by the plugin simply helps to retain simplicity and familiarity when supplying model notations on the command line. So, in brief, we only have to type ``GTR+I+G`` as our input model:
 
 .. command-block::
+
    qiime phylogeny iqtree \
       --p-substitution-model 'GTR+I+G' \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-gtrig-tree.qza \
       --verbose
 
+
 Let's rerun the command above and add the ``--p-fast`` option. This option, only compatible with the ``iqtree`` method, resembles the fast search performed by ``fasttree``. :racing_car: :dash: Secondly, let's also perform multiple tree searches and keep the best of those trees (as we did earlier with the ``raxml --p-n-searches ...`` command):
 
 .. command-block::
+
    qiime phylogeny iqtree \
       --p-substitution-model 'GTR+I+G' \
       --i-alignment masked-aligned-rep-seqs.qza \
@@ -183,6 +202,7 @@ Let's rerun the command above and add the ``--p-fast`` option. This option, only
       --p-fast \
       --p-n-runs 10 \
       --verbose
+
 
 Single branch tests
 ...................
@@ -194,6 +214,7 @@ IQ-TREE provides access to a few `single branch testing methods`_
 Single branch tests are commonly used as an alternative to the bootstrapping approach we've discussed above, as they are substantially faster and `often recommended`_ when constructing large phylogenies (e.g. >10,000 taxa). All three of these methods can be applied simultaneously and viewed within `iTOL`_ as separate bootstrap support values. These values are always in listed in the following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the branch tests in our next command, while specifying the same substitution model as above. Feel free to combine this with the ``--p-fast`` option. :wink:
 
 .. command-block::
+
    qiime phylogeny iqtree \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-sbt-tree.qza \
@@ -203,10 +224,12 @@ Single branch tests are commonly used as an alternative to the bootstrapping app
       --p-substitution-model 'GTR+I+G' \
       --verbose
 
+
 .. tip:: IQ-TREE search settings.
  There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use.
 
 .. command-block::
+
    qiime phylogeny iqtree \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-nnisi-fast-tree.qza \
@@ -216,11 +239,13 @@ Single branch tests are commonly used as an alternative to the bootstrapping app
       --p-fast \
       --verbose
 
+
 iqtree-ultrafast-bootstrap
 --------------------------
 As per our discussion in the ``raxml-rapid-bootstrap`` section above, we can also use IQ-TREE to evaluate how well our splits / bipartitions are supported within our phylogeny via the `ultrafast bootstrap algorithm`_. Below, we'll apply the plugin's `ultrafast bootstrap command`_: automatic model selection (``MFP``), perform ``1000`` bootstrap replicates (minimum required), set the same generally suggested parameters for constructing a phylogeny from short sequences, and automatically determine the optimal number of CPU cores to use:
 
 .. command-block::
+
    qiime phylogeny iqtree-ultrafast-bootstrap \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-nnisi-bootstrap-tree.qza \
@@ -229,11 +254,13 @@ As per our discussion in the ``raxml-rapid-bootstrap`` section above, we can als
       --p-n-cores 0 \
       --verbose
 
+
 Perform single branch tests alongside ufboot
 ................................................
 We can also apply single branch test methods concurrently with ultrafast bootstrapping. The support values will always be represented in the following order: *alrt / lbp / abayes / ufboot*. Again, these values can be seen as separately listed bootstrap values in `iTOL`_. We'll also specify a model as we did earlier.
 
 .. command-block::
+
    qiime phylogeny iqtree-ultrafast-bootstrap \
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
@@ -246,6 +273,7 @@ We can also apply single branch test methods concurrently with ultrafast bootstr
       --p-substitution-model 'GTR+I+G' \
       --verbose
 
+
 .. tip:: If there is a need to reduce the impact of `potential model violations`_ that occur during a `UFBoot search`_, and / or would simply like to be more rigorous, we can add the ``--p-bnni`` option to any of the ``iqtree-ultrafast-bootstrap`` commands above.
 
 Root the phylogeny
@@ -255,13 +283,14 @@ In order to make proper use of diversity metrics such as UniFrac, the phylogeny 
 QIIME 2 provides a way to `mid-point root`_ our phylogeny. Other rooting options may be available in the future. For now, we'll root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
 
 .. command-block::
+
    qiime phylogeny midpoint-root \
       --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
       --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
 
+
 .. tip:: iTOL viewing Reminder. We can view our tree and its associated alignment via `iTOL`_. All you need to do is upload the `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file onto the visualization. Now you can view the phylogeny alongside the alignment. :sparkler: Below is a link to an example screen-shot of the tree & sequence alignment visualization from iTOL:
 .. download::
-   :no-exec:
    :url: https://www.dropbox.com/s/6syenmg8rzx22l6/iTOL_seqaln.pdf?dl=1
    :saveas: itol-tree-align.pdf
 
@@ -284,9 +313,11 @@ We can make use of the pipeline `align-to-tree-mafft-fasttree`_ to automate the 
 This can all be accomplished by simply running the following:
 
 .. command-block::
+
    qiime phylogeny align-to-tree-mafft-fasttree \
       --i-sequences rep-seqs.qza  \
       --output-dir mafft-fasttree-output
+
 
 **Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
