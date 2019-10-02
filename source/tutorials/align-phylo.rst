@@ -32,9 +32,9 @@ The number of algorithms to construct a MSA are legion. We will make use of `MAF
 
 **Input: unaligned representative sequences from the [Atacama soil microbiome tutorial](https://docs.qiime2.org/2019.7/tutorials/atacama-soils/):**
 .. download::
-   :no-exec:
-   :url: https://docs.qiime2.org/2019.7/data/tutorials/atacama-soils/rep-seqs.qza
-   :saveas: rep-seqs.qza
+:no-exec:
+:url: https://docs.qiime2.org/2019.7/data/tutorials/atacama-soils/rep-seqs.qza
+:saveas: rep-seqs.qza
 
 **Run MAFFT**
 
@@ -121,7 +121,7 @@ If you'd like to perform a more thorough search of "tree space" you can instruct
 
 raxml-rapid-bootstrap
 .....................
-In phylogenetics, it is good practice to check how well the `splits / bipartitions`_ in your phylogeny are supported. Often one is interested in which clades are robustly separated from other clades in the phylogeny. One way, of doing this is via bootstrapping (See the *Bootstrapping* section of the first introductory link above). In QIIME 2, we've provided access to the RAxML `rapid bootsrap`_ feature. The only difference between this command and the previous are the additional flags ``--p-bootstrap-replicates`` and ``--p-rapid-bootstrap-seed``. It is quite common to perform anywhere from 100 - 1000 bootstrap replicates. The ``--p-rapid-bootstrap-seed`` works very much like the ``--p-seed`` argument from above except that it allows anyone to reproduce the bootstrapping process and the associated supports for your splits.
+In phylogenetics, it is good practice to check how well the `splits / bipartitions`_ in your phylogeny are supported. Often one is interested in which clades are robustly separated from other clades in the phylogeny. One way, of doing this is via bootstrapping (See the *Bootstrapping* section of the first introductory link above). In QIIME 2, we've provided access to the RAxML `rapid bootstrap`_ feature. The only difference between this command and the previous are the additional flags ``--p-bootstrap-replicates`` and ``--p-rapid-bootstrap-seed``. It is quite common to perform anywhere from 100 - 1000 bootstrap replicates. The ``--p-rapid-bootstrap-seed`` works very much like the ``--p-seed`` argument from above except that it allows anyone to reproduce the bootstrapping process and the associated supports for your splits.
 
 As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid bootstrapping command that we will execute below will do the following:
 
@@ -140,6 +140,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
       --verbose
 
 .. tip:: RAxML Run Time.
+
 You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
 
 1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions).
@@ -202,8 +203,8 @@ Single branch tests are commonly used as an alternative to the bootstrapping app
       --p-substitution-model 'GTR+I+G' \
       --verbose
 
-.. tip:: IQ-TREE search settings
-There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use.
+.. tip:: IQ-TREE search settings.
+ There are quite a few adjustable parameters available for ``iqtree`` that can be modified improve searches through "tree space" and prevent the search algorithms from getting stuck in local optima. One particular `best practice`_ to aid in this regard, is to adjust the following parameters: ``--p-perturb-nni-strength`` and ``--p-stop-iter`` (each respectively maps to the ``-pers`` and ``-nstop`` flags of ``iqtree`` ). In brief, the larger the value for NNI (nearest-neighbor interchange) perturbation, the larger the jumps in "tree space". This value should be set high enough to allow the search algorithm to avoid being trapped in local optima, but not to high that the search is haphazardly jumping around "tree space". That is, like Goldilocks and the three :bear:s you need to find a setting that is "just right", or at least within a set of reasonable bounds. One way of assessing this, is to do a few short trial runs using the ``--verbose`` flag. If you see that the likelihood values are jumping around to much, then lowering the value for ``--p-perturb-nni-strength`` may be warranted. As for the stopping criteria, i.e. ``--p-stop-iter``, the higher this value, the more thorough your search in "tree space". Be aware, increasing this value may also increase the run time. That is, the search will continue until it has sampled a number of trees, say 100 (default), without finding a better scoring tree. If a better tree is found, then the counter resets, and the search continues. These two parameters deserve special consideration when a given data set contains many short sequences, quite common for microbiome survey data. We can modify our original command to include these extra parameters with the recommended modifications for short sequences, i.e. a lower value for perturbation strength (shorter reads do not contain as much phylogenetic information, thus we should limit how far we jump around in "tree space") and a larger number of stop iterations. See the `IQ-TREE command reference`_ for more details about default parameter settings. Finally, we'll let ``iqtree`` run in fast mode, perform the model testing, and automatically determine the optimal number of CPU cores to use.
 
 .. command-block::
    qiime phylogeny iqtree \
@@ -281,11 +282,11 @@ We can make use of the pipeline `align-to-tree-mafft-fasttree`_ to automate the 
 > This pipeline will start by creating a sequence alignment using MAFFT, after which any alignment columns that are phylogenetically uninformative or ambiguously aligned will be removed (masked). The resulting masked alignment will be used to infer a phylogenetic tree and then subsequently rooted at its midpoint. Output files from each step of the pipeline will be saved. This includes both the unmasked and masked MAFFT alignment from q2-alignment methods, and both the rooted and unrooted phylogenies from q2-phylogeny methods.
 
 This can all be accomplished by simply running the following:
+
 .. command-block::
    qiime phylogeny align-to-tree-mafft-fasttree \
       --i-sequences rep-seqs.qza  \
       --output-dir mafft-fasttree-output
-
 
 **Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
@@ -320,7 +321,7 @@ This can all be accomplished by simply running the following:
 .. _Infernal: https://doi.org/10.1093/bioinformatics/btt509
 .. _SINA: https://doi.org/10.1093/bioinformatics/bts252
 .. _SILVA: https://www.arb-silva.de/
-.. _SILVA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
+.. _SINA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
 .. _q2-fragment-insertion: https://github.com/biocore/q2-fragment-insertion
 .. _Phylogeny for the faint of heart - a tutorial: http://doi.org/10.1016/S0168-9525(03)00112-4
 .. _Molecular phylogenetics - principles and practice: http://dx.doi.org/10.1038/nrg3186
