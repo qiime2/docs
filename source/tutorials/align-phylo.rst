@@ -199,9 +199,10 @@ Let's rerun the command above and add the ``--p-fast`` option. This option, only
 Single branch tests
 ...................
 IQ-TREE provides access to a few `single branch testing methods`_
+
 1. `SH-aLRT`_ via ``--p-alrt [INT >= 1000]``
 2. `aBayes`_ via ``--p-abayes [TRUE | FALSE]``
-3. `local bootstrap test` via ``--p-lbp [INT >= 1000]``
+3. `local bootstrap test`_ via ``--p-lbp [INT >= 1000]``
 
 Single branch tests are commonly used as an alternative to the bootstrapping approach we've discussed above, as they are substantially faster and `often recommended`_ when constructing large phylogenies (e.g. >10,000 taxa). All three of these methods can be applied simultaneously and viewed within `iTOL`_ as separate bootstrap support values. These values are always in listed in the following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the branch tests in our next command, while specifying the same substitution model as above. Feel free to combine this with the ``--p-fast`` option. :wink:
 
