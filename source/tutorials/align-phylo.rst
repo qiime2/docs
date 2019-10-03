@@ -152,14 +152,8 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
       --verbose
 
 
-.. tip:: RAxML Run Time.
-You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
-1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions).
-2. These instructions will substantially accelerate the likelihood and parsimony computations. SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version.
-
-.. tip:: Larger sequence alignments.
- 1. Make use of multiple cores / threads as outlined earlier. Keep in mind that using more cores / threads is `not necessarily always better`_. Additionally, the RAxML manual suggests 1 core per ~500 DNA alignment patterns. This is usually visible on screen, when the ``--verbose`` option is used.
- 2. Try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
+.. tip:: **Optimizing RAxML Run Time.**
+  You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation: Firstly, most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions). Secondly, these instructions will substantially accelerate the likelihood and parsimony computations. In general, SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version. Additionally, keep in mind that using more cores / threads is `not necessarily better`_. The RAxML manual suggests using 1 core per ~500 DNA alignment patterns. Alignment pattern information is usually visible on screen, when the ``--verbose`` option is used. Additionally, try using a rate category (CAT model; via ``--p-substitution-model``), which results in equally good trees as the GAMMA models and is approximately 4 times faster. See the `CAT paper`_. The CAT approximation is also Ideal for alignments containing `10,000 or more taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
 
 
 iqtree
@@ -367,7 +361,7 @@ This can all be accomplished by simply running the following:
 .. _rapid bootstrap: http://dx.doi.org/10.1080/10635150802429642
 .. _RAxML online documentation: https://sco.h-its.org/exelixis/web/software/raxml/hands_on.html
 .. _Raxml manual: https://sco.h-its.org/exelixis/resource/download/NewManual.pdf
-.. _not necessarily always better: https://groups.google.com/d/msg/raxml/v5k3usO_p38/_9A11D5_QAwJ
+.. _not necessarily better: https://groups.google.com/d/msg/raxml/v5k3usO_p38/_9A11D5_QAwJ
 .. _CAT paper: https://doi.org/10.1109/IPDPS.2006.1639535
 .. _10,000 or more taxa: https://doi.org/10.1186/1471-2105-12-470
 .. _CAT-like model of FastTree2: https://doi.org/10.1371/journal.pone.0009490
