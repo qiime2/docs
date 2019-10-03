@@ -153,9 +153,7 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid boot
 
 
 .. tip:: RAxML Run Time.
-
 You may gave noticed that we've added the flag ``--p-raxml-version`` to both RAxML methods. Here, we are providing a means to simply access versions of RAxML that have optimized vector instructions for various modern x86 processor architectures. Paraphrased from the RAxML manual and help documentation:
-
 1. Most recent processors will support SSE3 vector instructions (i.e. will likely support the faster AVX2 vector instructions).
 2. These instructions will substantially accelerate the likelihood and parsimony computations. SSE3 versions will run approximately 40% faster than the standard version. The AVX2 version will run 10-30% faster than the SSE3 version.
 
