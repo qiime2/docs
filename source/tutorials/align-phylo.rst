@@ -1,7 +1,7 @@
 Sequence alignment and phylogenetic inference with q2-phylogeny
 ===============================================================
 
-..note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_ documentation and have at least worked through some of the other `Tutorials`_..
+.. note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_ documentation and have at least worked through some of the other `Tutorials`_..
 
 Inferring phylogenies
 ---------------------
