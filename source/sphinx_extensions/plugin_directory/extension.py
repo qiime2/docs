@@ -46,6 +46,16 @@ def generate_rst(app):
         fh.write(rendered)
 
     for plugin in plugins.values():
+        transformers_list = []
+
+        for from_type, to_type in plugin.transformers:
+            from_type = repr(from_type).split('.')[-1].replace("'>", '')
+            to_type = repr(to_type).split('.')[-1].replace("'>", '')
+
+            transformers_list.append((from_type, to_type))
+
+        transformers_list.sort(key=lambda element: (element[0], element[1]))
+
         plugin_cli_name = plugin.name.replace('_', '-')
         plugin_dir = os.path.join(rst_dir, plugin_cli_name)
         os.mkdir(plugin_dir)
@@ -53,7 +63,8 @@ def generate_rst(app):
         index_path = os.path.join(plugin_dir, 'index.rst')
         with open(index_path, 'w') as fh:
             template = env.get_template('plugin.rst')
-            rendered = template.render(title=plugin_cli_name, plugin=plugin)
+            rendered = template.render(title=plugin_cli_name, plugin=plugin,
+                                       transformers_list=transformers_list)
             fh.write(rendered)
 
         if plugin.citations:
