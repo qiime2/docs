@@ -14,6 +14,7 @@ import textwrap
 
 import jinja2
 import qiime2.sdk
+import qiime2.core
 
 from sphinx.util import logging
 logger = logging.getLogger(__name__)
@@ -49,10 +50,8 @@ def generate_rst(app):
         transformers_list = []
 
         for from_type, to_type in plugin.transformers:
-            from_type = repr(from_type) \
-                .replace("<class '", "").replace("'>", "").split('.')[-1]
-            to_type = repr(to_type) \
-                .replace("<class '", "").replace("'>", "").split('.')[-1]
+            from_type = qiime2.core.util.get_view_name(from_type)
+            to_type = qiime2.core.util.get_view_name(to_type)
 
             transformers_list.append((from_type, to_type))
 
