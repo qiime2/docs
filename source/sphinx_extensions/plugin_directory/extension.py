@@ -49,12 +49,18 @@ def generate_rst(app):
         transformers_list = []
 
         for from_type, to_type in plugin.transformers:
-            from_type = repr(from_type).split('.')[-1].replace("'>", '')
-            to_type = repr(to_type).split('.')[-1].replace("'>", '')
+            from_type = repr(from_type) \
+                .replace("<class '", "").replace("'>", "").split('.')[-1]
+            to_type = repr(to_type) \
+                .replace("<class '", "").replace("'>", "").split('.')[-1]
 
             transformers_list.append((from_type, to_type))
 
-        transformers_list.sort(key=lambda element: (element[0], element[1]))
+        # .upper() because Python sorts all capitalized elements above all
+        # lowercase ones, and I figured we didn't want 'dict' sorting under
+        # 'TaxonomicClassifierDirFmt'
+        transformers_list.sort(
+            key=lambda element: (element[0].upper(), element[1].upper()))
 
         plugin_cli_name = plugin.name.replace('_', '-')
         plugin_dir = os.path.join(rst_dir, plugin_cli_name)
