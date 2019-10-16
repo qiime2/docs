@@ -1,4 +1,4 @@
-Sequence alignment and phylogenetic inference with q2-phylogeny
+Phylogenetic inference with q2-phylogeny
 ===============================================================
 
 .. note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_ documentation and have at least worked through some of the other `Tutorials`_..
@@ -11,8 +11,8 @@ Exact Sequence Variants (`ESVs`_) being investigated.
 
 *But how do we proceed to construct a phylogeny from our sequence data?*
  Well, there are two phylogeny-based approaches we can use. Deciding upon which to use is largely dependent on your study questions:
-	1)  A reference-based `fragment insertion`_ approach. Which, is likely the ideal choice. Especially, if your reference phylogeny (and associated representative sequences) encompass neighboring relatives of which your sequences can be reliably inserted. Any sequences that do not match well enough to the reference are not inserted. This may or may not have implications for your study questions. For more information, check out these great `fragment insertion examples`_.
-	2) A *de novo* approach. Marker genes that can be globally aligned across divergent taxa, are usually amenable to sequence alignment and phylogenetic investigation through this approach. This community tutorial will focus on the *de novo* approaches.
+	1)  A reference-based `fragment insertion`_ approach. Which, is likely the ideal choice. Especially, if your reference phylogeny (and associated representative sequences) encompass neighboring relatives of which your sequences can be reliably inserted. Any sequences that do not match well enough to the reference are not inserted. For example, this approach may not work well if your data contain sequences that are not well represented within your reference phylogeny (e.g. missing clades, etc.). For more information, check out these great `fragment insertion examples`_.
+	2) A *de novo* approach. Marker genes that can be globally aligned across divergent taxa, are usually amenable to sequence alignment and phylogenetic investigation through this approach. Be  mindful of the length of your sequences when constructing a *de novo* phylogeny, short reads many not have enough phylogenetic information to capture a meaningful phylogeny. This community tutorial will focus on the *de novo* approaches.
 
 
 **Here, you will learn how to make use of _de novo_ phylogenetic approaches to**:
