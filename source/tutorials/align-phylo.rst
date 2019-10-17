@@ -79,7 +79,7 @@ As with MSA algorithms, phylogenetic inference tools are also legion. Fortunatel
 2. `Molecular phylogenetics - principles and practice`_
 3. `Phylogenetics - An Introduction`_
 
-Via the `q2-phylogeny`_ plugin of :qiime2:, there are several methods / pipelines for phylogenetic inference based on the following tools:
+There are several methods / pipelines available through the `q2-phylogeny`_ plugin of :qiime2:. These are based on the following tools:
  1. `FastTree`_
  2. `RAxML`_
  3. `IQ-TREE`_
