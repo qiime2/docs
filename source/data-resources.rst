@@ -60,3 +60,11 @@ Public microbiome data
 ----------------------
 
 `Qiita <https://qiita.ucsd.edu/>`_ provides access to many public microbiome datasets. If you're looking for microbiome data for testing or for meta-analyses, Qiita is a good place to start.
+
+SEPP reference databases
+------------------------
+
+Lorem ipsum.
+
+- `Silva 128 99% OTUs full-length sequences <https://data.qiime2.org/2019.10/common/sepp-refs-silva-128.qza>`_ (MD5: ``TODO``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2019.10/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``TODO``)

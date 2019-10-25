@@ -276,7 +276,7 @@ Now go forth an have fun! 💃
 .. _check out our benchmarks: https://doi.org/10.1186/s40168-018-0470-z
 .. _UniFrac distance: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1317376/
 .. _q2-phylogeny tutorial: https://forum.qiime2.org/t/q2-phylogeny-community-tutorial/4455
-.. _q2-fragment-insertion tutorial: https://github.com/biocore/q2-fragment-insertion
+.. _q2-fragment-insertion tutorial: https://library.qiime2.org/plugins/q2-fragment-insertion/16/
 .. _diversity metrics: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
 .. _q2-feature-table: https://docs.qiime2.org/2019.10/plugins/available/feature-table/
 .. _many different useful actions: https://docs.qiime2.org/2019.10/plugins/available/diversity/
