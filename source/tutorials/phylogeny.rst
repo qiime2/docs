@@ -4,9 +4,6 @@ Phylogenetic inference with q2-phylogeny
 .. contents:: Phylogenetic inference with q2-phylogeny
    :depth: 4
 
-.. TODO: create data.qiime2.org url/urls
-.. TODO: monospace where necessary (command names)
-
 .. note:: This tutorial assumes, you've read through the :doc:`QIIME 2 Overview
    <overview>` documentation and have at least worked through some of the other
    :doc:`Tutorials <index>`.
@@ -38,7 +35,7 @@ sequences when constructing a *de novo* phylogeny, short reads many not have
 enough phylogenetic information to capture a meaningful phylogeny. This
 community tutorial will focus on the *de novo* approaches.
 
-**Here, you will learn how to make use of _de novo_ phylogenetic approaches
+**Here, you will learn how to make use of *de novo* phylogenetic approaches
 to**:
 
 1. generate a sequence alignment within QIIME 2
@@ -64,10 +61,17 @@ The number of algorithms to construct a MSA are legion. We will make use of
 :doc:`q2-alignment <../plugins/available/alignment/index>` plugin. For more
 information checkout the `MAFFT paper`_.
 
-.. TODO: create a little working dir
+Let's start by creating a directory to work in:
+
+.. command-block::
+
+   mkdir qiime2-phylogeny-tutorial
+   cd qiime2-phylogeny-tutorial
+
+Next, download the data:
 
 .. download::
-   :url: https://docs.qiime2.org/2019.7/data/tutorials/otu-clustering/rep-seqs-dn-99.qza
+   :url: https://data.qiime2.org/2019.10/tutorials/phylogeny/rep-seqs.qza
    :saveas: rep-seqs.qza
 
 **Run MAFFT**
