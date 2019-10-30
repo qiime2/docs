@@ -4,8 +4,6 @@ Phylogenetic inference with q2-phylogeny
 .. contents:: Phylogenetic inference with q2-phylogeny
    :depth: 4
 
-.. TODO: check spacing
-.. TODO: command indentation
 .. TODO: check command threading/perf options
 .. TODO: double check dropbox link
 .. TODO: create data.qiime2.org url/urls
@@ -37,7 +35,7 @@ out these great `fragment insertion examples`_.
 
 2. A *de novo* approach. Marker genes that can be globally aligned across
 divergent taxa, are usually amenable to sequence alignment and phylogenetic
-investigation through this approach. Be  mindful of the length of your
+investigation through this approach. Be mindful of the length of your
 sequences when constructing a *de novo* phylogeny, short reads many not have
 enough phylogenetic information to capture a meaningful phylogeny. This
 community tutorial will focus on the *de novo* approaches.
@@ -79,8 +77,8 @@ information checkout the `MAFFT paper`_.
 .. command-block::
 
    qiime alignment mafft \
-      --i-sequences rep-seqs.qza \
-      --o-alignment aligned-rep-seqs.qza
+     --i-sequences rep-seqs.qza \
+     --o-alignment aligned-rep-seqs.qza
 
 Reducing alignment ambiguity: masking and reference alignments
 --------------------------------------------------------------
@@ -93,7 +91,7 @@ alignment errors can introduce noise and confound phylogenetic inference. It is
 common practice to mask (remove) these ambiguously aligned regions prior to
 performing phylogenetic inference. In particular, `David Lane's (1991)`_
 chapter `16S/23S rRNA sequencing`_ proposed masking SSU data prior to
-phylogenetic analysis.  However, knowing how to deal with ambiguously aligned
+phylogenetic analysis. However, knowing how to deal with ambiguously aligned
 regions and when to apply masks largely depends on the marker genes being
 analyzed and the question being asked of the data.
 
@@ -114,8 +112,8 @@ plugin.
 .. command-block::
 
    qiime alignment mask \
-   --i-alignment aligned-rep-seqs.qza \
-   --o-masked-alignment masked-aligned-rep-seqs.qza
+     --i-alignment aligned-rep-seqs.qza \
+     --o-masked-alignment masked-aligned-rep-seqs.qza
 
 *Reference based alignments*
 
@@ -132,10 +130,10 @@ tutorial`_).
    be masked too, just like the above MAFFT example. Also, the reference
    alignment approach we are discussing here is distinct from the reference
    phylogeny approach (i.e.
-   :doc:`q2-fragment-insertion <../plugins/available/fragment-insertion/index>`) we
-   mentioned earlier. That is, we are not inserting our data into an existing
-   tree, but simply trying to create a more robust alignment for making a
-   better *de novo* phylogeny.
+   :doc:`q2-fragment-insertion <../plugins/available/fragment-insertion/index>`)
+   we mentioned earlier. That is, we are not inserting our data into an
+   existing tree, but simply trying to create a more robust alignment for
+   making a better *de novo* phylogeny.
 
 Construct a phylogeny
 ---------------------
@@ -170,12 +168,12 @@ out the `FastTree online manual`_ for more information.
 .. command-block::
 
    qiime phylogeny fasttree \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree fasttree-tree.qza --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree fasttree-tree.qza --verbose
 
 .. tip:: For an easy and direct way to view your ``tree.qza`` files, upload
    them to `iTOL`_. Here, you can interactively view and manipulate your
-   phylogeny.  Even better, while viewing the tree topology in "Normal mode",
+   phylogeny. Even better, while viewing the tree topology in "Normal mode",
    you can drag and drop your associated ``alignment.qza`` (the one you used to
    build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree
    visualization. This will allow you to directly view the sequence alignment
@@ -184,7 +182,7 @@ out the `FastTree online manual`_ for more information.
 raxml
 -----
 
-Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and
+Like ``fasttree``, ``raxml`` will perform a single phylogentic inference and
 return a tree. Note, the default model for ``raxml`` is
 ``--p-substitution-model GTRGAMMA``. If you'd like to construct a tree using
 the CAT model like ``fasttree``, simply replace ``GTRGAMMA`` with ``GTRCAT`` as
@@ -193,9 +191,9 @@ shown below:
 .. command-block::
 
    qiime phylogeny raxml \
-      --p-substitution-model GTRCAT \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree raxml-cat-tree.qza
+     --p-substitution-model GTRCAT \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree raxml-cat-tree.qza
 
 
 Perform multiple searches using raxml
@@ -216,12 +214,12 @@ a good idea to set this value.
 .. command-block::
 
    qiime phylogeny raxml \
-      --p-substitution-model GTRCAT \
-      --p-seed 1723 \
-      --p-n-searches 5 \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree raxml-cat-searches-tree.qza \
-      --verbose
+     --p-substitution-model GTRCAT \
+     --p-seed 1723 \
+     --p-n-searches 5 \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree raxml-cat-searches-tree.qza \
+     --verbose
 
 raxml-rapid-bootstrap
 ---------------------
@@ -243,26 +241,26 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid
 bootstrapping command that we will execute below will do the following:
 
 1. Bootstrap the input alignment 100 times and perform a Maximum Likelihood
-   (ML) search on each.
+ (ML) search on each.
 2. Find best scoring ML tree through multiple independent searches using the
-   original input alignment. The number of independent searches is determined
-   by the number of bootstrap replicates set in the 1st step. That is, your
-   search becomes more thorough with increasing bootstrap replicates. The ML
-   optimization of RAxML uses every 5th bootstrap tree as the starting tree for
-   an ML search on the original alignment.
+ original input alignment. The number of independent searches is determined
+ by the number of bootstrap replicates set in the 1st step. That is, your
+ search becomes more thorough with increasing bootstrap replicates. The ML
+ optimization of RAxML uses every 5th bootstrap tree as the starting tree for
+ an ML search on the original alignment.
 3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML
-   tree (2nd step).
+ tree (2nd step).
 
 .. command-block::
 
    qiime phylogeny raxml-rapid-bootstrap \
-      --p-seed 1723 \
-      --p-rapid-bootstrap-seed 9384 \
-      --p-bootstrap-replicates 100 \
-      --p-substitution-model GTRCAT \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree raxml-cat-bootstrap-tree.qza \
-      --verbose
+     --p-seed 1723 \
+     --p-rapid-bootstrap-seed 9384 \
+     --p-bootstrap-replicates 100 \
+     --p-substitution-model GTRCAT \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree raxml-cat-bootstrap-tree.qza \
+     --verbose
 
 
 .. tip:: **Optimizing RAxML Run Time.**
@@ -309,9 +307,9 @@ settings and automatic model selection (``MFP``) is like so:
 .. command-block::
 
    qiime phylogeny iqtree \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-tree.qza \
-      --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-tree.qza \
+     --verbose
 
 Specifying a substitution model
 ...............................
@@ -319,7 +317,7 @@ Specifying a substitution model
 We can also set a substitution model of our choosing. You may have noticed
 while watching the onscreen output of the previous command that the best
 fitting model selected by ModelFinder is noted. For the sake of argument, let's
-say the best selected model was shown as  ``GTR+F+I+G4``. The ``F`` is only a
+say the best selected model was shown as ``GTR+F+I+G4``. The ``F`` is only a
 notation to let us know that *if* a given model supports *unequal base
 frequencies*, then the *empirical base frequencies* will be used by default.
 Using empirical base frequencies (``F``), rather than estimating them, greatly
@@ -327,7 +325,7 @@ reduces computational time. The ``iqtree`` plugin will not accept ``F`` within
 the model notation supplied at the command line, as this will always be implied
 automatically for the appropriate model. Also, the ``iqtree`` plugin only
 accepts ``G`` *not* ``G4`` to be specified within the model notation. The ``4``
-is simply another explicit notation  to remind us that four rate categories are
+is simply another explicit notation to remind us that four rate categories are
 being assumed by default. The notation approach used by the plugin simply helps
 to retain simplicity and familiarity when supplying model notations on the
 command line. So, in brief, we only have to type ``GTR+I+G`` as our input
@@ -336,11 +334,10 @@ model:
 .. command-block::
 
    qiime phylogeny iqtree \
-      --p-substitution-model 'GTR+I+G' \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-gtrig-tree.qza \
-      --verbose
-
+     --p-substitution-model 'GTR+I+G' \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-gtrig-tree.qza \
+     --verbose
 
 Let's rerun the command above and add the ``--p-fast`` option. This option,
 only compatible with the ``iqtree`` method, resembles the fast search performed
@@ -351,13 +348,12 @@ keep the best of those trees (as we did earlier with the
 .. command-block::
 
    qiime phylogeny iqtree \
-      --p-substitution-model 'GTR+I+G' \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-gtrig-fast-ms-tree.qza \
-      --p-fast \
-      --p-n-runs 10 \
-      --verbose
-
+     --p-substitution-model 'GTR+I+G' \
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-gtrig-fast-ms-tree.qza \
+     --p-fast \
+     --p-n-runs 10 \
+     --verbose
 
 Single branch tests
 ...................
@@ -380,13 +376,13 @@ as above. Feel free to combine this with the ``--p-fast`` option. 😉
 .. command-block::
 
    qiime phylogeny iqtree \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-sbt-tree.qza \
-      --p-alrt 1000 \
-      --p-abayes \
-      --p-lbp 1000 \
-      --p-substitution-model 'GTR+I+G' \
-      --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-sbt-tree.qza \
+     --p-alrt 1000 \
+     --p-abayes \
+     --p-lbp 1000 \
+     --p-substitution-model 'GTR+I+G' \
+     --verbose
 
 .. tip:: IQ-TREE search settings.
    There are quite a few adjustable parameters available for ``iqtree`` that
@@ -423,12 +419,12 @@ as above. Feel free to combine this with the ``--p-fast`` option. 😉
 .. command-block::
 
    qiime phylogeny iqtree \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-nnisi-fast-tree.qza \
-      --p-perturb-nni-strength 0.2 \
-      --p-stop-iter 200 \
-      --p-n-cores 0 \
-      --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-nnisi-fast-tree.qza \
+     --p-perturb-nni-strength 0.2 \
+     --p-stop-iter 200 \
+     --p-n-cores 0 \
+     --verbose
 
 iqtree-ultrafast-bootstrap
 --------------------------
@@ -446,12 +442,12 @@ optimal number of CPU cores to use:
 .. command-block::
 
    qiime phylogeny iqtree-ultrafast-bootstrap \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-nnisi-bootstrap-tree.qza \
-      --p-perturb-nni-strength 0.2 \
-      --p-stop-iter 200 \
-      --p-n-cores 0 \
-      --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-nnisi-bootstrap-tree.qza \
+     --p-perturb-nni-strength 0.2 \
+     --p-stop-iter 200 \
+     --p-n-cores 0 \
+     --verbose
 
 Perform single branch tests alongside ufboot
 ............................................
@@ -465,16 +461,16 @@ did earlier.
 .. command-block::
 
    qiime phylogeny iqtree-ultrafast-bootstrap \
-      --i-alignment masked-aligned-rep-seqs.qza \
-      --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
-      --p-perturb-nni-strength 0.2 \
-      --p-stop-iter 200 \
-      --p-n-cores 0 \
-      --p-alrt 1000 \
-      --p-abayes \
-      --p-lbp 1000 \
-      --p-substitution-model 'GTR+I+G' \
-      --verbose
+     --i-alignment masked-aligned-rep-seqs.qza \
+     --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
+     --p-perturb-nni-strength 0.2 \
+     --p-stop-iter 200 \
+     --p-n-cores 0 \
+     --p-alrt 1000 \
+     --p-abayes \
+     --p-lbp 1000 \
+     --p-substitution-model 'GTR+I+G' \
+     --verbose
 
 .. tip:: If there is a need to reduce the impact of `potential model
    violations`_ that occur during a `UFBoot search`_, and / or would simply
@@ -497,8 +493,8 @@ root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
 .. command-block::
 
    qiime phylogeny midpoint-root \
-      --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
-      --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
+     --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
+     --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
 
 .. tip:: iTOL viewing Reminder. We can view our tree and its associated
    alignment via `iTOL`_. All you need to do is upload the
@@ -533,29 +529,29 @@ Rather than run one or more of the following QIIME 2 commands listed below:
 1. ``qiime alignment mafft ...``
 2. ``qiime alignment mask ...``
 3. ``qiime phylogeny fasttree ...``
-4. ``qiime phylogeny midpoint-root  ...``
+4. ``qiime phylogeny midpoint-root ...``
 
 We can make use of the pipeline
 :doc:`align-to-tree-mafft-fasttree <../plugins/available/phylogeny/align-to-tree-mafft-fasttree>`
 to automate the above four steps in one go. Here is the description taken from
 the pipeline help doc:
 
-    This pipeline will start by creating a sequence alignment using MAFFT,
-    after which any alignment columns that are phylogenetically uninformative
-    or ambiguously aligned will be removed (masked). The resulting masked
-    alignment will be used to infer a phylogenetic tree and then subsequently
-    rooted at its midpoint. Output files from each step of the pipeline will be
-    saved. This includes both the unmasked and masked MAFFT alignment from
-    q2-alignment methods, and both the rooted and unrooted phylogenies from
-    q2-phylogeny methods.
+ This pipeline will start by creating a sequence alignment using MAFFT,
+ after which any alignment columns that are phylogenetically uninformative
+ or ambiguously aligned will be removed (masked). The resulting masked
+ alignment will be used to infer a phylogenetic tree and then subsequently
+ rooted at its midpoint. Output files from each step of the pipeline will be
+ saved. This includes both the unmasked and masked MAFFT alignment from
+ q2-alignment methods, and both the rooted and unrooted phylogenies from
+ q2-phylogeny methods.
 
 This can all be accomplished by simply running the following:
 
 .. command-block::
 
    qiime phylogeny align-to-tree-mafft-fasttree \
-      --i-sequences rep-seqs.qza  \
-      --output-dir mafft-fasttree-output
+     --i-sequences rep-seqs.qza \
+     --output-dir mafft-fasttree-output
 
 **Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
