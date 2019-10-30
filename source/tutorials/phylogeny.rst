@@ -4,8 +4,6 @@ Phylogenetic inference with q2-phylogeny
 .. contents:: Phylogenetic inference with q2-phylogeny
    :depth: 4
 
-.. TODO: check command threading/perf options
-.. TODO: double check dropbox link
 .. TODO: create data.qiime2.org url/urls
 .. TODO: monospace where necessary (command names)
 
@@ -169,7 +167,7 @@ out the `FastTree online manual`_ for more information.
 
    qiime phylogeny fasttree \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree fasttree-tree.qza --verbose
+     --o-tree fasttree-tree.qza
 
 .. tip:: For an easy and direct way to view your ``tree.qza`` files, upload
    them to `iTOL`_. Here, you can interactively view and manipulate your
@@ -189,12 +187,13 @@ the CAT model like ``fasttree``, simply replace ``GTRGAMMA`` with ``GTRCAT`` as
 shown below:
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny raxml \
-     --p-substitution-model GTRCAT \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree raxml-cat-tree.qza
-
+     --p-substitution-model GTRCAT \
+     --o-tree raxml-cat-tree.qza \
+     --verbose
 
 Perform multiple searches using raxml
 .....................................
@@ -212,12 +211,13 @@ seed value. Although, ``--p-seed`` is not a required argument, it is generally
 a good idea to set this value.
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny raxml \
+     --i-alignment masked-aligned-rep-seqs.qza \
      --p-substitution-model GTRCAT \
      --p-seed 1723 \
      --p-n-searches 5 \
-     --i-alignment masked-aligned-rep-seqs.qza \
      --o-tree raxml-cat-searches-tree.qza \
      --verbose
 
@@ -241,24 +241,25 @@ As per the `RAxML online documentation`_ and the `RAxML manual`_, the rapid
 bootstrapping command that we will execute below will do the following:
 
 1. Bootstrap the input alignment 100 times and perform a Maximum Likelihood
- (ML) search on each.
+   (ML) search on each.
 2. Find best scoring ML tree through multiple independent searches using the
- original input alignment. The number of independent searches is determined
- by the number of bootstrap replicates set in the 1st step. That is, your
- search becomes more thorough with increasing bootstrap replicates. The ML
- optimization of RAxML uses every 5th bootstrap tree as the starting tree for
- an ML search on the original alignment.
+   original input alignment. The number of independent searches is determined
+   by the number of bootstrap replicates set in the 1st step. That is, your
+   search becomes more thorough with increasing bootstrap replicates. The ML
+   optimization of RAxML uses every 5th bootstrap tree as the starting tree for
+   an ML search on the original alignment.
 3. Map the bipartitions (bootstrap supports, 1st step) onto the best scoring ML
- tree (2nd step).
+   tree (2nd step).
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny raxml-rapid-bootstrap \
+     --i-alignment masked-aligned-rep-seqs.qza \
      --p-seed 1723 \
      --p-rapid-bootstrap-seed 9384 \
      --p-bootstrap-replicates 100 \
      --p-substitution-model GTRCAT \
-     --i-alignment masked-aligned-rep-seqs.qza \
      --o-tree raxml-cat-bootstrap-tree.qza \
      --verbose
 
@@ -305,6 +306,7 @@ The simplest way to run the
 settings and automatic model selection (``MFP``) is like so:
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree \
      --i-alignment masked-aligned-rep-seqs.qza \
@@ -332,10 +334,11 @@ command line. So, in brief, we only have to type ``GTR+I+G`` as our input
 model:
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree \
-     --p-substitution-model 'GTR+I+G' \
      --i-alignment masked-aligned-rep-seqs.qza \
+     --p-substitution-model 'GTR+I+G' \
      --o-tree iqt-gtrig-tree.qza \
      --verbose
 
@@ -346,13 +349,14 @@ keep the best of those trees (as we did earlier with the
 ``raxml --p-n-searches ...`` command):
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree \
-     --p-substitution-model 'GTR+I+G' \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree iqt-gtrig-fast-ms-tree.qza \
+     --p-substitution-model 'GTR+I+G' \
      --p-fast \
      --p-n-runs 10 \
+     --o-tree iqt-gtrig-fast-ms-tree.qza \
      --verbose
 
 Single branch tests
@@ -374,14 +378,15 @@ branch tests in our next command, while specifying the same substitution model
 as above. Feel free to combine this with the ``--p-fast`` option. 😉
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree iqt-sbt-tree.qza \
      --p-alrt 1000 \
      --p-abayes \
      --p-lbp 1000 \
      --p-substitution-model 'GTR+I+G' \
+     --o-tree iqt-sbt-tree.qza \
      --verbose
 
 .. tip:: IQ-TREE search settings.
@@ -417,13 +422,14 @@ as above. Feel free to combine this with the ``--p-fast`` option. 😉
    determine the optimal number of CPU cores to use.
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree iqt-nnisi-fast-tree.qza \
      --p-perturb-nni-strength 0.2 \
      --p-stop-iter 200 \
-     --p-n-cores 0 \
+     --p-n-cores 1 \
+     --o-tree iqt-nnisi-fast-tree.qza \
      --verbose
 
 iqtree-ultrafast-bootstrap
@@ -440,13 +446,14 @@ constructing a phylogeny from short sequences, and automatically determine the
 optimal number of CPU cores to use:
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree-ultrafast-bootstrap \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree iqt-nnisi-bootstrap-tree.qza \
      --p-perturb-nni-strength 0.2 \
      --p-stop-iter 200 \
-     --p-n-cores 0 \
+     --p-n-cores 1 \
+     --o-tree iqt-nnisi-bootstrap-tree.qza \
      --verbose
 
 Perform single branch tests alongside ufboot
@@ -459,17 +466,18 @@ separately listed bootstrap values in `iTOL`_. We'll also specify a model as we
 did earlier.
 
 .. command-block::
+   :stdout:
 
    qiime phylogeny iqtree-ultrafast-bootstrap \
      --i-alignment masked-aligned-rep-seqs.qza \
-     --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
      --p-perturb-nni-strength 0.2 \
      --p-stop-iter 200 \
-     --p-n-cores 0 \
+     --p-n-cores 1 \
      --p-alrt 1000 \
      --p-abayes \
      --p-lbp 1000 \
      --p-substitution-model 'GTR+I+G' \
+     --o-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
      --verbose
 
 .. tip:: If there is a need to reduce the impact of `potential model
@@ -501,12 +509,7 @@ root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
    `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree
    in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file
    onto the visualization. Now you can view the phylogeny alongside the
-   alignment. 🎇 Below is a link to an example screen-shot of the tree
-   & sequence alignment visualization from iTOL:
-
-.. download::
-   :url: https://www.dropbox.com/s/6syenmg8rzx22l6/iTOL_seqaln.pdf?dl=1
-   :saveas: itol-tree-align.pdf
+   alignment.
 
 Pipelines
 =========
