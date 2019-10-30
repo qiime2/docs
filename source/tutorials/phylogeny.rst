@@ -1,8 +1,10 @@
 Phylogenetic inference with q2-phylogeny
-========================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. contents:: Phylogenetic inference with q2-phylogeny
+   :depth: 4
 
 .. TODO: check emojis
-.. TODO: check header structure
 .. TODO: check spacing
 .. TODO: command indentation
 .. TODO: check command threading/perf options
@@ -15,7 +17,7 @@ Phylogenetic inference with q2-phylogeny
    :doc:`Tutorials <index>`.
 
 Inferring phylogenies
----------------------
+=====================
 Several downstream diversity metrics, available within QIIME, require that a
 phylogenetic tree be constructed using the Operational Taxonomic Units
 (`OTUs`_) or Exact Sequence Variants (`ESVs`_) being investigated.
@@ -55,7 +57,7 @@ tools external to QIIME 2, please see the :doc:`import <importing>`,
 where appropriate.
 
 Sequence Alignment
-..................
+------------------
 
 Prior to constructing a `phylogeny`_ we must generate a multiple sequence
 alignment (`MSA`_). When constructing a MSA we are making a statement about the
@@ -82,7 +84,7 @@ information checkout the `MAFFT paper`_.
       --o-alignment aligned-rep-seqs.qza
 
 Reducing alignment ambiguity: masking and reference alignments
-..............................................................
+--------------------------------------------------------------
 
 *Why mask an alignment?*
 
@@ -156,10 +158,10 @@ These are based on the following tools:
 3. `IQ-TREE`_
 
 Methods
--------
+=======
 
 fasttree
-........
+--------
 
 FastTree is able to construct phylogenies from large sequence alignments quite
 rapidly. It does this by using the using a `CAT-like`_ rate category
@@ -181,7 +183,7 @@ out the `FastTree online manual`_ for more information.
    or taxonomy alongside the phylogeny. :sunglasses:
 
 raxml
-.....
+-----
 
 Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and
 return a tree. Note, the default model for ``raxml`` is
@@ -198,7 +200,7 @@ shown below:
 
 
 Perform multiple searches using raxml
-+++++++++++++++++++++++++++++++++++++
+.....................................
 
 If you'd like to perform a more thorough search of "tree space" you can
 instruct ``raxml`` to perform multiple independent searches on the full
@@ -223,7 +225,7 @@ a good idea to set this value.
       --verbose
 
 raxml-rapid-bootstrap
-+++++++++++++++++++++
+---------------------
 
 In phylogenetics, it is good practice to check how well the `splits /
 bipartitions`_ in your phylogeny are supported. Often one is interested in
@@ -453,7 +455,7 @@ optimal number of CPU cores to use:
       --verbose
 
 Perform single branch tests alongside ufboot
-................................................
+............................................
 
 We can also apply single branch test methods concurrently with ultrafast
 bootstrapping. The support values will always be represented in the following
@@ -512,7 +514,7 @@ root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
    :saveas: itol-tree-align.pdf
 
 Pipelines
----------
+=========
 
 Here we will outline the use of the phylogeny pipeline
 :doc:`align-to-tree-mafft-fasttree <../plugins/available/phylogeny/align-to-tree-mafft-fasttree/>`
