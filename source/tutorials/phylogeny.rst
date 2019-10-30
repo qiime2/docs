@@ -4,7 +4,6 @@ Phylogenetic inference with q2-phylogeny
 .. contents:: Phylogenetic inference with q2-phylogeny
    :depth: 4
 
-.. TODO: check emojis
 .. TODO: check spacing
 .. TODO: command indentation
 .. TODO: check command threading/perf options
@@ -180,7 +179,7 @@ out the `FastTree online manual`_ for more information.
    you can drag and drop your associated ``alignment.qza`` (the one you used to
    build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree
    visualization. This will allow you to directly view the sequence alignment
-   or taxonomy alongside the phylogeny. :sunglasses:
+   or taxonomy alongside the phylogeny. 🕶️
 
 raxml
 -----
@@ -345,9 +344,9 @@ model:
 
 Let's rerun the command above and add the ``--p-fast`` option. This option,
 only compatible with the ``iqtree`` method, resembles the fast search performed
-by ``fasttree``. :racing_car: :dash: Secondly, let's also perform multiple tree
-searches and keep the best of those trees (as we did earlier with the ``raxml
---p-n-searches ...`` command):
+by ``fasttree``. 🏎️ Secondly, let's also perform multiple tree searches and
+keep the best of those trees (as we did earlier with the
+``raxml --p-n-searches ...`` command):
 
 .. command-block::
 
@@ -376,7 +375,7 @@ three of these methods can be applied simultaneously and viewed within `iTOL`_
 as separate bootstrap support values. These values are always in listed in the
 following order of *alrt / lbp / abayes*. We'll go ahead and apply all of the
 branch tests in our next command, while specifying the same substitution model
-as above. Feel free to combine this with the ``--p-fast`` option. :wink:
+as above. Feel free to combine this with the ``--p-fast`` option. 😉
 
 .. command-block::
 
@@ -400,7 +399,7 @@ as above. Feel free to combine this with the ``--p-fast`` option. :wink:
    the jumps in "tree space". This value should be set high enough to allow the
    search algorithm to avoid being trapped in local optima, but not to high
    that the search is haphazardly jumping around "tree space". That is, like
-   Goldilocks and the three :bear:s you need to find a setting that is "just
+   Goldilocks and the three 🐻s you need to find a setting that is "just
    right", or at least within a set of reasonable bounds. One way of assessing
    this, is to do a few short trial runs using the ``--verbose`` flag. If you
    see that the likelihood values are jumping around to much, then lowering the
@@ -506,7 +505,7 @@ root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
    `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree
    in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file
    onto the visualization. Now you can view the phylogeny alongside the
-   alignment.  :sparkler: Below is a link to an example screen-shot of the tree
+   alignment. 🎇 Below is a link to an example screen-shot of the tree
    & sequence alignment visualization from iTOL:
 
 .. download::
