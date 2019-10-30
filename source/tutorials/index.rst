@@ -24,4 +24,4 @@ Tutorials
    chimera
    read-joining
    otu-clustering
-   align-phylo
+   phylogeny
