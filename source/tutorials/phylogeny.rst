@@ -1,9 +1,18 @@
 Phylogenetic inference with q2-phylogeny
 ========================================
 
-.. note:: This tutorial assumes, you've read through the `QIIME 2 Overview`_
-   documentation and have at least worked through some of the other
-   `Tutorials`_..
+.. TODO: check emojis
+.. TODO: check header structure
+.. TODO: check spacing
+.. TODO: command indentation
+.. TODO: check command threading/perf options
+.. TODO: double check dropbox link
+.. TODO: create data.qiime2.org url/urls
+.. TODO: monospace where necessary (command names)
+
+.. note:: This tutorial assumes, you've read through the :doc:`QIIME 2 Overview
+   <overview>` documentation and have at least worked through some of the other
+   :doc:`Tutorials <index>`.
 
 Inferring phylogenies
 ---------------------
@@ -16,7 +25,7 @@ phylogenetic tree be constructed using the Operational Taxonomic Units
 Well, there are two phylogeny-based approaches we can use. Deciding upon which
 to use is largely dependent on your study questions:
 
-1)  A reference-based `fragment insertion`_ approach. Which, is likely the
+1. A reference-based `fragment insertion`_ approach. Which, is likely the
 ideal choice. Especially, if your reference phylogeny (and associated
 representative sequences) encompass neighboring relatives of which your
 sequences can be reliably inserted. Any sequences that do not match well enough
@@ -25,27 +34,29 @@ if your data contain sequences that are not well represented within your
 reference phylogeny (e.g. missing clades, etc.). For more information, check
 out these great `fragment insertion examples`_.
 
-2) A *de novo* approach. Marker genes that can be globally aligned across
+2. A *de novo* approach. Marker genes that can be globally aligned across
 divergent taxa, are usually amenable to sequence alignment and phylogenetic
 investigation through this approach. Be  mindful of the length of your
 sequences when constructing a *de novo* phylogeny, short reads many not have
 enough phylogenetic information to capture a meaningful phylogeny. This
 community tutorial will focus on the *de novo* approaches.
 
-
 **Here, you will learn how to make use of _de novo_ phylogenetic approaches
 to**:
-1) generate a sequence alignment within QIIME
-2) mask the alignment if needed
-3) construct a phylogenetic tree
-4) root the phylogenetic tree
+
+1. generate a sequence alignment within QIIME 2
+2. mask the alignment if needed
+3. construct a phylogenetic tree
+4. root the phylogenetic tree
 
 If you would like to substitute any of the steps outlined here by making use of
-tools external to QIIME 2, please see the `import`_, `export`_, and
-`filtering`_ documentation where appropriate.
+tools external to QIIME 2, please see the :doc:`import <importing>`,
+:doc:`export <exporting>`, and :doc:`filtering <filtering>` documentation
+where appropriate.
 
 Sequence Alignment
 ..................
+
 Prior to constructing a `phylogeny`_ we must generate a multiple sequence
 alignment (`MSA`_). When constructing a MSA we are making a statement about the
 `putative homology`_ of the aligned residues (columns of the MSA) by virtue of
@@ -53,15 +64,14 @@ their `sequence similarity`_.
 
 The number of algorithms to construct a MSA are legion. We will make use of
 `MAFFT`_ (Multiple Alignment using Fast Fourier Transform)) via the
-`q2-alignment`_ plugin. For more information checkout the `MAFFT paper`_.
+:doc:`q2-alignment <../plugins/available/alignment/index>` plugin. For more
+information checkout the `MAFFT paper`_.
 
-**Input: unaligned representative sequences from the [Atacama soil microbiome
-tutorial](https://docs.qiime2.org/2019.7/tutorials/atacama-soils/):**
+.. TODO: create a little working dir
 
 .. download::
    :url: https://docs.qiime2.org/2019.7/data/tutorials/otu-clustering/rep-seqs-dn-99.qza
    :saveas: rep-seqs.qza
-
 
 **Run MAFFT**
 
@@ -71,10 +81,11 @@ tutorial](https://docs.qiime2.org/2019.7/tutorials/atacama-soils/):**
       --i-sequences rep-seqs.qza \
       --o-alignment aligned-rep-seqs.qza
 
+Reducing alignment ambiguity: masking and reference alignments
+..............................................................
 
-Reducing alignment ambiguity: masking and reference alignments.
-...............................................................
 *Why mask an alignment?*
+
 Masking helps to eliminate alignment columns that are phylogenetically
 uninformative or misleading before phylogenetic analysis. Much of the time
 alignment errors can introduce noise and confound phylogenetic inference. It is
@@ -90,12 +101,14 @@ analyzed and the question being asked of the data.
    2012`_, `Ashkenazy *et al*. 2018`_, `Schloss 2010`_, `Tan *et al*. 2015`_,
    `Rajan 2015`_.
 
-
 *How to mask alignment.*
+
 For our purposes, we'll assume that we have ambiguously aligned columns in the
 MAFFT alignment we produced above. The default settings for the
-``--p-min-conservation`` of the `alignment mask plugin`_ approximates the Lane
-mask filtering of QIIME 1. Keep an eye out for updates to the alignment plugin.
+``--p-min-conservation`` of the
+:doc:`alignment mask <../plugins/available/alignment/mask/>` approximates the
+Lane mask filtering of QIIME 1. Keep an eye out for updates to the alignment
+plugin.
 
 .. command-block::
 
@@ -103,8 +116,8 @@ mask filtering of QIIME 1. Keep an eye out for updates to the alignment plugin.
    --i-alignment aligned-rep-seqs.qza \
    --o-masked-alignment masked-aligned-rep-seqs.qza
 
-
 *Reference based alignments*
+
 There are a variety of tools such as `PyNAST`_) (using `NAST`_), `Infernal`_,
 and `SINA`_, etc., that attempt to reduce the amount of ambiguously aligned
 regions by using curated reference alignments (e.g. `SILVA`_. Reference
@@ -114,18 +127,18 @@ increasing alignment quality. For a more in-depth and eloquent overview of
 reference-based alignment approaches, check out the great `SINA community
 tutorial`_).
 
-
 .. note:: Alignments constructed using reference based alignment approaches can
    be masked too, just like the above MAFFT example. Also, the reference
    alignment approach we are discussing here is distinct from the reference
-   phylogeny approach (i.e. `q2-fragment-insertion`_) we mentioned earlier.
-   That is, we are not inserting our data into an existing tree, but simply
-   trying to create a more robust alignment for making a better *de novo*
-   phylogeny.
-
+   phylogeny approach (i.e.
+   :doc:`q2-fragment-insertion <../plugins/available/fragment-insertion/index>`) we
+   mentioned earlier. That is, we are not inserting our data into an existing
+   tree, but simply trying to create a more robust alignment for making a
+   better *de novo* phylogeny.
 
 Construct a phylogeny
 ---------------------
+
 As with MSA algorithms, phylogenetic inference tools are also legion.
 Fortunately, there are many great resources to learn about phylogentics. Below
 are just a few introductory resources to get you started:
@@ -134,17 +147,20 @@ are just a few introductory resources to get you started:
 2. `Molecular phylogenetics - principles and practice`_
 3. `Phylogenetics - An Introduction`_
 
-There are several methods / pipelines available through the `q2-phylogeny`_
-plugin of :qiime2:. These are based on the following tools:
+There are several methods / pipelines available through the
+:doc:`q2-phylogeny <../plugins/available/phylogeny/index>` plugin of :qiime2:.
+These are based on the following tools:
+
 1. `FastTree`_
 2. `RAxML`_
 3. `IQ-TREE`_
 
 Methods
-=======
+-------
 
 fasttree
-------------
+........
+
 FastTree is able to construct phylogenies from large sequence alignments quite
 rapidly. It does this by using the using a `CAT-like`_ rate category
 approximation, which is also available through RAxML (discussed below). Check
@@ -156,18 +172,17 @@ out the `FastTree online manual`_ for more information.
       --i-alignment masked-aligned-rep-seqs.qza \
       --o-tree fasttree-tree.qza --verbose
 
-
 .. tip:: For an easy and direct way to view your ``tree.qza`` files, upload
-   them to `iTOL`_. Here, you caninteractively view and manipulate your
+   them to `iTOL`_. Here, you can interactively view and manipulate your
    phylogeny.  Even better, while viewing the tree topology in "Normal mode",
    you can drag and drop your associated ``alignment.qza`` (the one you used to
    build the phylogeny) or a relevent ``taxonomy.qza`` file onto the iTOL tree
    visualization. This will allow you to directly view the sequence alignment
    or taxonomy alongside the phylogeny. :sunglasses:
 
-
 raxml
------
+.....
+
 Like ``fasttree``,  ``raxml`` will perform a single phylogentic inference and
 return a tree. Note, the default model for ``raxml`` is
 ``--p-substitution-model GTRGAMMA``. If you'd like to construct a tree using
@@ -183,7 +198,8 @@ shown below:
 
 
 Perform multiple searches using raxml
-.....................................
++++++++++++++++++++++++++++++++++++++
+
 If you'd like to perform a more thorough search of "tree space" you can
 instruct ``raxml`` to perform multiple independent searches on the full
 alignment by using ``--p-n-searches 5``. Once these 5 independent searches are
@@ -206,9 +222,9 @@ a good idea to set this value.
       --o-tree raxml-cat-searches-tree.qza \
       --verbose
 
-
 raxml-rapid-bootstrap
-.....................
++++++++++++++++++++++
+
 In phylogenetics, it is good practice to check how well the `splits /
 bipartitions`_ in your phylogeny are supported. Often one is interested in
 which clades are robustly separated from other clades in the phylogeny. One
@@ -268,9 +284,9 @@ bootstrapping command that we will execute below will do the following:
    CAT approximation is also Ideal for alignments containing `10,000 or more
    taxa`_, and is very much similar the `CAT-like model of FastTree2`_.
 
-
 iqtree
 ------
+
 Similar to the ``raxml`` and ``raxml-rapid-bootstrap`` methods above, we
 provide similar functionality for `IQ-TREE`_: ``iqtree`` and
 ``iqtree-ultrafast-bootstrap``. IQ-TREE is unique compared to the ``fastree``
@@ -285,8 +301,9 @@ after determining the best fit model as determined by ModelFinder"). Keep in
 mind the additional computational time required for model testing via
 ModelFinder.
 
-The simplest way to run the `iqtree command`_ with default settings and
-automatic model selection (``MFP``) is like so:
+The simplest way to run the
+:doc:`iqtree command <../plugins/available/phylogeny/iqtree/>` with default
+settings and automatic model selection (``MFP``) is like so:
 
 .. command-block::
 
@@ -295,9 +312,9 @@ automatic model selection (``MFP``) is like so:
       --o-tree iqt-tree.qza \
       --verbose
 
-
 Specifying a substitution model
 ...............................
+
 We can also set a substitution model of our choosing. You may have noticed
 while watching the onscreen output of the previous command that the best
 fitting model selected by ModelFinder is noted. For the sake of argument, let's
@@ -343,6 +360,7 @@ searches and keep the best of those trees (as we did earlier with the ``raxml
 
 Single branch tests
 ...................
+
 IQ-TREE provides access to a few `single branch testing methods`_
 
 1. `SH-aLRT`_ via ``--p-alrt [INT >= 1000]``
@@ -368,7 +386,6 @@ as above. Feel free to combine this with the ``--p-fast`` option. :wink:
       --p-lbp 1000 \
       --p-substitution-model 'GTR+I+G' \
       --verbose
-
 
 .. tip:: IQ-TREE search settings.
    There are quite a few adjustable parameters available for ``iqtree`` that
@@ -412,16 +429,18 @@ as above. Feel free to combine this with the ``--p-fast`` option. :wink:
       --p-n-cores 0 \
       --verbose
 
-
 iqtree-ultrafast-bootstrap
 --------------------------
+
 As per our discussion in the ``raxml-rapid-bootstrap`` section above, we can
 also use IQ-TREE to evaluate how well our splits / bipartitions are supported
 within our phylogeny via the `ultrafast bootstrap algorithm`_. Below, we'll
-apply the plugin's `ultrafast bootstrap command`_: automatic model selection
-(``MFP``), perform ``1000`` bootstrap replicates (minimum required), set the
-same generally suggested parameters for constructing a phylogeny from short
-sequences, and automatically determine the optimal number of CPU cores to use:
+apply the plugin's
+:doc:`ultrafast bootstrap command <../plugins/available/phylogeny/iqtree-ultrafast-bootstrap/>`:
+automatic model selection (``MFP``), perform ``1000`` bootstrap replicates
+(minimum required), set the same generally suggested parameters for
+constructing a phylogeny from short sequences, and automatically determine the
+optimal number of CPU cores to use:
 
 .. command-block::
 
@@ -433,9 +452,9 @@ sequences, and automatically determine the optimal number of CPU cores to use:
       --p-n-cores 0 \
       --verbose
 
-
 Perform single branch tests alongside ufboot
 ................................................
+
 We can also apply single branch test methods concurrently with ultrafast
 bootstrapping. The support values will always be represented in the following
 order: *alrt / lbp / abayes / ufboot*. Again, these values can be seen as
@@ -456,7 +475,6 @@ did earlier.
       --p-substitution-model 'GTR+I+G' \
       --verbose
 
-
 .. tip:: If there is a need to reduce the impact of `potential model
    violations`_ that occur during a `UFBoot search`_, and / or would simply
    like to be more rigorous, we can add the ``--p-bnni`` option to any of the
@@ -464,21 +482,22 @@ did earlier.
 
 Root the phylogeny
 ------------------
+
 In order to make proper use of diversity metrics such as UniFrac, the phylogeny
 must be `rooted`_. Typically an `outgroup`_ is chosen when rooting a tree. In
 general, phylogenetic inference tools using Maximum Likelihood often return an
 unrooted tree by default.
 
-QIIME 2 provides a way to `mid-point root`_ our phylogeny. Other rooting
-options may be available in the future. For now, we'll root our bootstrap tree
-from ``iqtree-ultrafast-bootstrap`` like so:
+QIIME 2 provides a way to
+:doc:`mid-point root <../plugins/available/phylogeny/midpoint-root/>` our
+phylogeny. Other rooting options may be available in the future. For now, we'll
+root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
 
 .. command-block::
 
    qiime phylogeny midpoint-root \
       --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
       --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
-
 
 .. tip:: iTOL viewing Reminder. We can view our tree and its associated
    alignment via `iTOL`_. All you need to do is upload the
@@ -494,8 +513,9 @@ from ``iqtree-ultrafast-bootstrap`` like so:
 
 Pipelines
 ---------
+
 Here we will outline the use of the phylogeny pipeline
-`align-to-tree-mafft-fasttree`_
+:doc:`align-to-tree-mafft-fasttree <../plugins/available/phylogeny/align-to-tree-mafft-fasttree/>`
 
 One advantage of pipelines is that they combine ordered sets of commonly used
 commands, into one condensed simple command. To keep these "convenience"
@@ -514,19 +534,19 @@ Rather than run one or more of the following QIIME 2 commands listed below:
 3. ``qiime phylogeny fasttree ...``
 4. ``qiime phylogeny midpoint-root  ...``
 
-We can make use of the pipeline `align-to-tree-mafft-fasttree`_ to automate the
-above four steps in one go. Here is the description taken from the pipeline
-help doc:
+We can make use of the pipeline
+:doc:`align-to-tree-mafft-fasttree <../plugins/available/phylogeny/align-to-tree-mafft-fasttree>`
+to automate the above four steps in one go. Here is the description taken from
+the pipeline help doc:
 
-> This pipeline will start by creating a sequence alignment using MAFFT, after
-which any alignment columns that are phylogenetically uninformative or
-ambiguously aligned will be removed (masked). The resulting masked alignment
-will be used to infer a phylogenetic tree and then subsequently rooted at its
-midpoint. Output files from each step of the pipeline will be saved. This
-includes both the unmasked and masked MAFFT alignment from q2-alignment
-methods, and both the rooted and unrooted phylogenies from q2-phylogeny
-methods.
-
+    This pipeline will start by creating a sequence alignment using MAFFT,
+    after which any alignment columns that are phylogenetically uninformative
+    or ambiguously aligned will be removed (masked). The resulting masked
+    alignment will be used to infer a phylogenetic tree and then subsequently
+    rooted at its midpoint. Output files from each step of the pipeline will be
+    saved. This includes both the unmasked and masked MAFFT alignment from
+    q2-alignment methods, and both the rooted and unrooted phylogenies from
+    q2-phylogeny methods.
 
 This can all be accomplished by simply running the following:
 
@@ -536,26 +556,17 @@ This can all be accomplished by simply running the following:
       --i-sequences rep-seqs.qza  \
       --output-dir mafft-fasttree-output
 
-
 **Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
-
-
-.. _QIIME 2 Overview: https://docs.qiime2.org/2019.7/tutorials/overview
-.. _Tutorials: https://docs.qiime2.org/2019.7/tutorials
 .. _OTUs: https://en.wikipedia.org/wiki/Operational_taxonomic_unit
 .. _ESVs: https://doi.org/10.1038/ismej.2019.119
 .. _fragment insertion: https://doi.org/10.1128/mSystems.00021-18
-.. _fragment insertion examples: https://github.com/biocore/q2-fragment-insertion
-.. _import: https://docs.qiime2.org/2019.7/tutorials/importing/
-.. _export: https://docs.qiime2.org/2019.7/tutorials/exporting/
-.. _filtering: https://docs.qiime2.org/2019.7/tutorials/filtering/
+.. _fragment insertion examples: https://library.qiime2.org/plugins/q2-fragment-insertion/16/
 .. _phylogeny: https://simple.wikipedia.org/wiki/Phylogeny
 .. _MSA: https://en.wikipedia.org/wiki/Multiple_sequence_alignment
 .. _putative homology: http://doi.org/10.1006/mpev.2000.0785
 .. _sequence similarity: http://doi.org/10.1002/0471250953.bi0301s42
 .. _MAFFT: https://en.wikipedia.org/wiki/MAFFT
-.. _q2-alignment: https://docs.qiime2.org/2018.11/plugins/available/alignment/
 .. _MAFFT paper: http://doi.org/10.1093/molbev/mst010
 .. _David Lane's (1991): http://www.worldcat.org/title/nucleic-acid-techniques-in-bacterial-systematics/oclc/22310197
 .. _16S/23S rRNA sequencing: http://catdir.loc.gov/catdir/toc/onix05/90012998.html
@@ -564,22 +575,18 @@ This can all be accomplished by simply running the following:
 .. _Schloss 2010: https://doi.org/10.1371/journal.pcbi.1000844
 .. _Tan *et al*. 2015: https://doi.org/10.1093/sysbio/syv033
 .. _Rajan 2015: https://doi.org/10.1093/molbev/mss264
-.. _alignment mask plugin: https://docs.qiime2.org/2019.7/plugins/available/alignment/mask/
 .. _PyNAST: https://doi.org/10.1093/bioinformatics/btp636
 .. _NAST: https://doi.org/10.1093/nar/gkl244
 .. _Infernal: https://doi.org/10.1093/bioinformatics/btt509
 .. _SINA: https://doi.org/10.1093/bioinformatics/bts252
 .. _SILVA: https://www.arb-silva.de/
 .. _SINA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
-.. _q2-fragment-insertion: https://github.com/biocore/q2-fragment-insertion
 .. _Phylogeny for the faint of heart - a tutorial: http://doi.org/10.1016/S0168-9525(03)00112-4
 .. _Molecular phylogenetics - principles and practice: http://dx.doi.org/10.1038/nrg3186
 .. _Phylogenetics - An Introduction: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics
-.. _q2-phylogeny: https://docs.qiime2.org/2019.7/plugins/available/phylogeny/
 .. _FastTree: https://doi.org/10.1371/journal.pone.0009490
 .. _RAxML: https://doi.org/10.1093/bioinformatics/btu033
 .. _IQ-TREE: https://doi.org/10.1093/molbev/msu300
-.. _align-to-tree-mafft-fasttree: https://docs.qiime2.org/2019.11/plugins/available/phylogeny/align-to-tree-mafft-fasttree/
 .. _CAT-like: https://doi.org/10.1109/IPDPS.2006.1639535
 .. _FastTree online manual: http://www.microbesonline.org/fasttree/
 .. _iTOL: https://itol.embl.de/
@@ -592,7 +599,6 @@ This can all be accomplished by simply running the following:
 .. _CAT-like model of FastTree2: https://doi.org/10.1371/journal.pone.0009490
 .. _models of nucleotide substitution : https://doi.org/10.1016/j.dci.2004.07.007
 .. _ModelFinder: https://doi.org/10.1038/nmeth.4285
-.. _iqtree command: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/iqtree/
 .. _single branch testing methods: http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-single-branch-tests
 .. _SH-aLRT: https://doi.org/10.1093/sysbio/syq010
 .. _aBayes: https://doi.org/10.1093/sysbio/syr041
@@ -601,9 +607,7 @@ This can all be accomplished by simply running the following:
 .. _best practice: https://groups.google.com/forum/#!searchin/iqtree/iterations|sort:date/iqtree/0mwGhDokNns/vlBryIwXHAAJ
 .. _IQ-TREE command reference: http://www.iqtree.org/doc/Command-Reference
 .. _ultrafast bootstrap algorithm: https://doi.org/10.1093/molbev/msx281
-.. _ultrafast bootstrap command: https://docs.qiime2.org/2019.7/plugins/available/phylogeny/iqtree-ultrafast-bootstrap/
 .. _potential model violations: http://www.iqtree.org/doc/Tutorial#reducing-impact-of-severe-model-violations-with-ufboot
 .. _UFBoot search: https://doi.org/10.1093/molbev/msx281
 .. _rooted: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics/what-phylogeny/aspects-phylogenies/nodes/root
 .. _outgroup: http://phylobotanist.blogspot.com/2015/01/how-to-root-phylogenetic-tree-outgroup.html
-.. _mid-point root: https://docs.qiime2.org/2018.11/plugins/available/phylogeny/midpoint-root/
