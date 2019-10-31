@@ -10,7 +10,7 @@ Phylogenetic inference with q2-phylogeny
 
 Inferring phylogenies
 =====================
-Several downstream diversity metrics, available within QIIME, require that a
+Several downstream diversity metrics, available within QIIME 2, require that a
 phylogenetic tree be constructed using the Operational Taxonomic Units
 (`OTUs`_) or Exact Sequence Variants (`ESVs`_) being investigated.
 
@@ -35,8 +35,8 @@ sequences when constructing a *de novo* phylogeny, short reads many not have
 enough phylogenetic information to capture a meaningful phylogeny. This
 community tutorial will focus on the *de novo* approaches.
 
-**Here, you will learn how to make use of *de novo* phylogenetic approaches
-to**:
+Here, you will learn how to make use of *de novo* phylogenetic approaches
+to:
 
 1. generate a sequence alignment within QIIME 2
 2. mask the alignment if needed
@@ -98,8 +98,8 @@ regions and when to apply masks largely depends on the marker genes being
 analyzed and the question being asked of the data.
 
 .. note:: Keep in mind that this is still an active area of discussion, as
-   highlighted by the following non-exhaustive list of articles: `Wu *et al*.
-   2012`_, `Ashkenazy *et al*. 2018`_, `Schloss 2010`_, `Tan *et al*. 2015`_,
+   highlighted by the following non-exhaustive list of articles: |Wu et al.
+   2012|_, |Ashkenazy et al. 2018|_, `Schloss 2010`_, |Tan et al. 2015|_,
    `Rajan 2015`_.
 
 *How to mask alignment.*
@@ -269,8 +269,8 @@ bootstrapping command that we will execute below will do the following:
 
 
 .. tip:: **Optimizing RAxML Run Time.**
-   You may gave noticed that we've added the flag ``--p-raxml-version`` to both
-   RAxML methods. Here, we are providing a means to simply access versions of
+   You may gave noticed that we haven't added the flag ``--p-raxml-version`` to
+   the RAxML methods. This parameter provides a means to access versions of
    RAxML that have optimized vector instructions for various modern x86
    processor architectures. Paraphrased from the RAxML manual and help
    documentation: Firstly, most recent processors will support SSE3 vector
@@ -393,7 +393,7 @@ as above. Feel free to combine this with the ``--p-fast`` option. 😉
      --o-tree iqt-sbt-tree.qza \
      --verbose
 
-.. tip:: IQ-TREE search settings.
+.. tip:: **IQ-TREE search settings**.
    There are quite a few adjustable parameters available for ``iqtree`` that
    can be modified improve searches through "tree space" and prevent the search
    algorithms from getting stuck in local optima. One particular `best
@@ -508,7 +508,7 @@ root our bootstrap tree from ``iqtree-ultrafast-bootstrap`` like so:
      --i-tree iqt-nnisi-bootstrap-sbt-gtrig-tree.qza \
      --o-rooted-tree iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza
 
-.. tip:: iTOL viewing Reminder. We can view our tree and its associated
+.. tip:: **iTOL viewing Reminder**. We can view our tree and its associated
    alignment via `iTOL`_. All you need to do is upload the
    `iqt-nnisi-bootstrap-sbt-gtrig-tree-rooted.qza` tree file. Display the tree
    in `Normal` mode. Then drag and drop the `masked-aligned-rep-seqs.qza` file
@@ -574,10 +574,13 @@ This can all be accomplished by simply running the following:
 .. _MAFFT paper: http://doi.org/10.1093/molbev/mst010
 .. _David Lane's (1991): http://www.worldcat.org/title/nucleic-acid-techniques-in-bacterial-systematics/oclc/22310197
 .. _16S/23S rRNA sequencing: http://catdir.loc.gov/catdir/toc/onix05/90012998.html
-.. _Wu *et al*. 2012: https://doi.org/10.1371/journal.pone.0030288
-.. _Ashkenazy *et al*. 2018: https://doi.org/10.1093/sysbio/syy036
+.. |Wu et al. 2012| replace:: Wu *et al*. 2012
+.. _Wu et al. 2012: https://doi.org/10.1371/journal.pone.0030288
+.. |Ashkenazy et al. 2018| replace:: Ashkenazy *et al*. 2018
+.. _Ashkenazy et al. 2018: https://doi.org/10.1093/sysbio/syy036
 .. _Schloss 2010: https://doi.org/10.1371/journal.pcbi.1000844
-.. _Tan *et al*. 2015: https://doi.org/10.1093/sysbio/syv033
+.. |Tan et al. 2015| replace:: Tan *et al*. 2015
+.. _Tan et al. 2015: https://doi.org/10.1093/sysbio/syv033
 .. _Rajan 2015: https://doi.org/10.1093/molbev/mss264
 .. _PyNAST: https://doi.org/10.1093/bioinformatics/btp636
 .. _NAST: https://doi.org/10.1093/nar/gkl244
