@@ -64,7 +64,9 @@ Public microbiome data
 SEPP reference databases
 ------------------------
 
-The following databases are intended for use with q2-fragment-insertion, and are built off of the `SEPP-Refs project <https://github.com/smirarab/sepp-refs/>`.
+The following databases are intended for use with q2-fragment-insertion, and
+are constructed directly from the
+`SEPP-Refs project <https://github.com/smirarab/sepp-refs/>`_.
 
-- `Silva 128 99% OTUs SEPP reference database <https://data.qiime2.org/2019.10/common/sepp-refs-silva-128.qza>`_ (MD5: ``aaf0e79afb74e6bdb4b4b2e15d6eab55``)
-- `Greengenes 13_8 99% OTUs SEPP reference database <https://data.qiime2.org/2019.10/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``bf9302fae1915b63f9dff5a1abe86742``)
+- `Silva 128 SEPP reference database <https://data.qiime2.org/2019.10/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
+- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2019.10/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
