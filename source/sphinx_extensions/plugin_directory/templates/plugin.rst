@@ -112,30 +112,3 @@ Visualizers
    {{ id.replace('_', '-') }}
    {% endfor %}
 {% endif %}
-
-{% if plugin.types %}
-Types
------
-
-{% for id, _ in plugin.types|dictsort %}
-- {{ id }}
-{% endfor %}
-{% endif %}
-
-{% if plugin.formats %}
-Formats
--------
-
-{% for id, _ in plugin.formats|dictsort %}
-- {{ id }}
-{% endfor %}
-{% endif %}
-
-{% if plugin.transformers %}
-Transformers
-------------
-
-{% for from, to in transformers_list %}
-- {{ from }} -> {{ to }}
-{% endfor %}
-{% endif %}

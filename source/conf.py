@@ -55,7 +55,10 @@ extensions = [
     'sphinx_extensions.command_block',
     'sphinx_extensions.plugin_directory',
     'sphinx_extensions.external_links',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
+    'sphinx_extensions.types',
+    'sphinx_extensions.formats',
+    'sphinx_extensions.transformers'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
