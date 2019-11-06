@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 import os
+import shutil
 
 import jinja2
 import qiime2.sdk
@@ -22,6 +23,13 @@ def generate_rst(app):
     loader = jinja2.PackageLoader('sphinx_extensions.formats', 'templates')
     env = jinja2.Environment(loader=loader)
 
+    rst_dir = os.path.join(app.env.srcdir, 'formats-list')
+    app.formats_rst_dir = rst_dir
+    cleanup_rst(app, None)
+    os.mkdir(rst_dir)
+
+    index_path = os.path.join(rst_dir, 'formats-list.rst')
+
     importable_formats = [
         repr(importable_format) for importable_format in pm._importable]
     importable_formats.sort()
@@ -35,12 +43,18 @@ def generate_rst(app):
     all_formats = [repr(format) for format in all_formats_set]
     all_formats.sort()
 
-    template = env.get_template('format-list.rst')
-    with open(os.path.join(app.env.srcdir, 'formats-list.rst'), 'w') as fh:
+    template = env.get_template('formats-list.rst')
+    with open(index_path, 'w') as fh:
         rendered = template.render(format_list=all_formats,
                                    importable_formats=importable_formats,
                                    exportable_formats=exportable_formats)
         fh.write(rendered)
+
+
+def cleanup_rst(app, exception):
+    if hasattr(app, 'formats_rst_dir') and \
+            os.path.exists(app.formats_rst_dir):
+        shutil.rmtree(app.formats_rst_dir)
 
 
 def setup(app):

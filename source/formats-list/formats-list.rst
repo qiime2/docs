@@ -1,6 +1,8 @@
 Formats List
 ============
 
+All Formats
+-----------
 
 - "<class 'q2_demux._demux.BarcodePairedSequenceFastqIterator'>"
 

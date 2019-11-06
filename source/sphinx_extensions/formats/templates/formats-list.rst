@@ -1,6 +1,8 @@
 Formats List
 ============
 
+All Formats
+-----------
 {% for format in format_list %}
 - {{ format }}
 {% endfor %}

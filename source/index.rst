@@ -22,9 +22,9 @@ Table of contents
    interfaces/index
    plugins/index
    semantic-types
-   types-list
-   formats-list
-   transformers
+   types-list/types-list
+   formats-list/formats-list
+   transformers-list/transformers-list
    community
    data-resources
    supplementary-resources
