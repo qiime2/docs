@@ -6,12 +6,11 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-import os
-import shutil
-
 import jinja2
 import qiime2.sdk
 import qiime2.core
+import os
+import shutil
 
 from sphinx.util import logging
 logger = logging.getLogger(__name__)
@@ -21,15 +20,35 @@ def generate_rst(app):
     pm = qiime2.sdk.PluginManager()
 
     loader = jinja2.PackageLoader(
-        'sphinx_extensions.transformers', 'templates')
+        'sphinx_extensions.types-formats-transformers', 'templates')
     env = jinja2.Environment(loader=loader)
 
-    rst_dir = os.path.join(app.env.srcdir, 'transformers-list')
-    app.transformers_rst_dir = rst_dir
+    rst_dir = os.path.join(app.env.srcdir, 'types-formats-transformers-list')
+    app.types_rst_dir = rst_dir
     cleanup_rst(app, None)
     os.mkdir(rst_dir)
 
-    index_path = os.path.join(rst_dir, 'transformers-list.rst')
+    index_path = os.path.join(rst_dir, 'types-formats-transformers-list.rst')
+
+    type_list = []
+    for type in pm.get_semantic_types():
+        type_list.append(repr(type))
+
+    importable_formats = [
+        repr(importable_format) for importable_format
+        in pm.get_formats(importable=True)]
+    importable_formats.sort()
+
+    exportable_formats = [
+        repr(exportable_format) for exportable_format
+        in pm.get_formats(exportable=True)]
+    exportable_formats.sort()
+
+    all_formats_set = {*importable_formats, *exportable_formats,
+                       *[repr(format) for format
+                         in pm.get_formats(include_all=True)]}
+    all_formats = [repr(format) for format in all_formats_set]
+    all_formats.sort()
 
     transformers_list = []
     for from_type in pm.transformers:
@@ -57,20 +76,25 @@ def generate_rst(app):
     reverse_transformers_list.sort(
         key=lambda element: (element[0].upper(), element[1].upper()))
 
-    template = env.get_template('transformers-list.rst')
+    type_list.sort()
+    template = env.get_template('types-formats-transformers-list.rst')
     with open(index_path, 'w') as fh:
         rendered = template.render(
+            type_list=type_list, format_list=all_formats,
+            importable_formats=importable_formats,
+            exportable_formats=exportable_formats,
             transformers_list=transformers_list,
             reverse_transformers_list=reverse_transformers_list)
         fh.write(rendered)
 
 
 def cleanup_rst(app, exception):
-    if hasattr(app, 'transformers_rst_dir') and \
-            os.path.exists(app.transformers_rst_dir):
-        shutil.rmtree(app.transformers_rst_dir)
+    if hasattr(app, 'types_rst_dir') and \
+            os.path.exists(app.types_rst_dir):
+        shutil.rmtree(app.types_rst_dir)
 
 
 def setup(app):
     app.connect('builder-inited', generate_rst)
+    app.connect('build-finished', cleanup_rst)
     return {'version': '0.0.1'}
