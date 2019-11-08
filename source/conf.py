@@ -117,6 +117,7 @@ language = None
 exclude_patterns = [
     'sphinx_extensions/plugin_directory/templates',
     'sphinx_extensions/command_block/templates',
+    'sphinx_extensions/types-formats-transformers/templates'
 ]
 
 # The reST default role (used for this markup: `text`) to use for all
