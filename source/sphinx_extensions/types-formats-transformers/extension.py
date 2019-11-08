@@ -33,6 +33,7 @@ def generate_rst(app):
     type_list = []
     for type in pm.get_semantic_types():
         type_list.append(repr(type))
+    type_list.sort()
 
     importable_formats = [
         repr(importable_format) for importable_format
@@ -66,13 +67,9 @@ def generate_rst(app):
         for from_type in pm.transformers[to_type]:
             reverse_transformers_list.append((repr(from_type), repr(to_type)))
 
-    # .upper() because Python sorts all capitalized elements above all
-    # lowercase ones, and I figured we didn't want 'dict' sorting under
-    # 'TaxonomicClassifierDirFmt'
     reverse_transformers_list.sort(
         key=lambda element: (element[0].upper(), element[1].upper()))
 
-    type_list.sort()
     template = env.get_template('types-formats-transformers-list.rst')
     with open(index_path, 'w') as fh:
         rendered = template.render(
