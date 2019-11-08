@@ -59,7 +59,7 @@ def generate_rst(app):
     # lowercase ones, and I figured we didn't want 'dict' sorting under
     # 'TaxonomicClassifierDirFmt'
     transformers_list.sort(
-        key=lambda element: (element[0], element[1]))
+        key=lambda element: (element[0].upper(), element[1].upper()))
 
     reverse_transformers_list = []
     for to_type in pm._reverse_transformers:
