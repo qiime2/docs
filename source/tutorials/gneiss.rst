@@ -103,6 +103,99 @@ An alternative to ``correlation-clustering`` is to create a tree based on a nume
 An important consideration for downstream analyses is the problem of overfitting. When using ``gradient-clustering``, you are creating a tree to best highlight compositional differences along the metadata category of your choice, and it is possible to get false positives. Use ``gradient-clustering`` with caution.
 
 
+Building linear models using balances
+---------------------------------------------------------------
+Now that we have a tree that defines our partitions, we can perform the isometric log ratio (ILR) transform.  The ILR transform computes the log ratios between groups at each node in the tree.
+
+.. command-block::
+
+   qiime gneiss ilr-hierarchical \
+     --i-table table.qza \
+     --i-tree hierarchy.qza \
+     --o-balances balances.qza
+
+Now that we have the log ratios of each node of our tree, we can run linear regression on the balances. The linear regression that we will be running is called a `multivariate response linear regression`_, which boils down to performing a linear regression on each balance separately.
+
+We can use this to attempt to associate microbial abundances with environmental variables. Running these models has multiple advantages over standard univariate regression, as it avoids many of the issues associated with overfitting, and can allow us to gain perspective about community-wide perturbations based on environmental parameters.
+
+Since the microbial abundances can be mapped directly to balances, we can perform the multivariate regression directly on the balances.  The model that we will be building is represented as follows
+
+.. math::
+
+   \vec{y} = \vec{\beta_0} + \vec{\beta_{Subject}}\vec{X_{subject}} + \vec{\beta_{sex}}\vec{X_{sex}} + \vec{\beta_{age}}\vec{X_{Age}} + \vec{\beta_{sCD14ugml}}\vec{X_{sCD14ugml}} + \vec{\beta_{LBPugml}}\vec{X_{LBPugml}}
+
+Where :math:`\vec{y}` represents the matrix of balances to be predicted, :math:`\vec{\beta_i}` represents a vector of coefficients for covariate :math:`i` and :math:`\vec{X_i}` represents the measures for covariate :math:`i`.
+
+Remember that ANOVA is a special case of linear regression - every problem that can be solved by ANOVA can be reformulated as a linear regression.  See `this post`_ for more details.  So we can still answer the same sort of differential abundance questions using this technique, and we can start asking more precise questions, controlling for different potential confounding variables or even interaction effects.
+
+.. command-block::
+
+   qiime gneiss ols-regression \
+     --p-formula "Subject+Sex+Age+BMI+sCD14ugml+LBPugml+LPSpgml" \
+     --i-table balances.qza \
+     --i-tree hierarchy.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --o-visualization regression_summary.qzv
+
+Now we have a summary of the regression model.  Specifically we want to see which covariates impact the model the most, which balances are meaningful, and how much potential overfitting is going on.
+
+There are a few things to note in the regression summary.  There is an :math:`R^2` in the summary, which gives information about how much of the variance in the community is explained by the regression model.  From what we can see, the regression can explain about 10% of the community variation.  This is typical for what we see in human gut microbiomes, since there is a very high amount of confounding variation due to genetics, diet, environment, etc.
+
+To evaluate the explanatory model of a single covariate, a leave-one-variable-out approach is used.  One variable is left out, and the change in :math:`R^2` is calculated.  The larger the change is, the stronger the effect of the covariate is.  In this case,  Subject is the largest explanatory factor, explaining 2% of the variation.
+
+To make sure that we aren't overfitting, 10-fold cross validation is performed.  This will split the data into 10 partitions, build the model on 9 of the those partitions and use the remaining partition to measure the prediction accuracy.  This process is repeat 10 times, once for each round of cross-validation.  The within model error (``mse``), :math:`R^2` and the prediction accuracy (``pred_mse``) are reported for each round of cross validation.  Here, the prediction accuracy is less than the within model error, suggesting that over fitting is not happening.
+
+Next, we have a heatmap visualizing all of the coefficient p-values for each of the balances.  The columns of the heatmap represent balances, and the rows of the heatmap represent covariates.  The heatmap is colored by the negative log of the p-value, highlighting potentially significant p-values.  A hover tool is enabled to allow for specific coefficient values and their corresponding p-values to be obtained, and zooming is enabled to allow for navigation of interesting covariates and balances.
+
+Next are the prediction and residual plots.  Here, only the top two balances are plotted, and the prediction residuals from the model are projected onto these two balances.  From these plots we can see that the predicted points lie within the same region as the original communities.  However, we can see that the residuals have roughly the same variance as the predictions.  This is a little unsettling - but note that we can only explain 10% of the community variance, so these sorts of calculations aren't completely unexpected.
+
+The branch lengths in the visualized tree are also scaled by the explained sum of squares in the models.  The longest branch lengths correspond to the most informative balances.  This can allow us to get a high-level overview of the most important balances in the model.  From this plot and the above heatmap, we can see that balance :math:`y0` is important.  These balances not only have very small p-values (with :math:`p < 0.05`) for differentiating subjects, but they also have the largest branch lengths in the tree diagram.  This suggests that this partition of microbes could differentiate the CFS patients from the controls.
+
+We can visualize these balances on a heatmap to see which groups of taxa they represent.  By default, the values within the feature table are log-scaled, with the sample means centered around zero.
+
+.. command-block::
+
+   qiime gneiss dendrogram-heatmap \
+     --i-table table.qza \
+     --i-tree hierarchy.qza \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-column Subject \
+     --p-color-map seismic \
+     --o-visualization heatmap.qzv
+
+As noted in the legend, the numerators for each balance are highlighted in light red, while the denominators are highlighted in dark red. From here, we can see that the denominator of :math:`y0` has few OTUs compared to the numerator of :math:`y0`.  These taxa in the denominator could be interesting, so let's investigate the taxonomies making up this balance with ``balance_taxonomy``.
+
+Specifically we'll plot a boxplot and identify taxa that could be explaining the differences between the control and patient groups.
+
+.. command-block::
+
+   qiime gneiss balance-taxonomy \
+     --i-table table.qza \
+     --i-tree hierarchy.qza \
+     --i-taxonomy taxa.qza \
+     --p-taxa-level 2 \
+     --p-balance-name 'y0' \
+     --m-metadata-file sample-metadata.tsv \
+     --m-metadata-column Subject \
+     --o-visualization y0_taxa_summary.qzv
+
+In this particular case, the log ratio is lower in the patient group compared to the control group.  In essence, this means that the taxa in the :math:`y0_{numerator}` on average are more abundant than the taxa in :math:`y0_{denominator}` in the healthy control group compared to the patient group.
+
+Remember, based on the toy examples given in the beginning of this tutorial, it is not possible to infer absolute changes of microbes in a given sample.  Balances will not be able to provide this sort of answer, but it can limit the number of possible scenarios.  Specifically, one of the five following scenarios could have happened.
+
+1) The taxa in the :math:`y0_{numerator}` on average have increased between patient group and the healthy control.
+
+2) The taxa in the :math:`y0_{denominator}` on average have decreased between patient group and the healthy control.
+
+3) A combination of the above occurred
+
+4) Taxa abundances in both :math:`y0_{numerator}` and :math:`y0_{denominator}` both increased, but taxa abundances in :math:`y0_{numerator}` increased more compared to :math:`y0_{denominator}`
+
+5) Taxa abundances in both :math:`y0_{numerator}` and :math:`y0_{denominator}` both decreased, but taxa abundances in :math:`y0_{denominator}` increased more compared to :math:`y0_{numerator}`
+
+To further narrow down these hypothesis,  biological prior knowledge or experimental validation will be required.
+
+
 .. _Giloteaux et al (2016): https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-016-0171-4
 .. _Earth Microbiome Project: http://earthmicrobiome.org/
 .. _multivariate response linear regression: http://www.public.iastate.edu/~maitra/stat501/lectures/MultivariateRegression.pdf
