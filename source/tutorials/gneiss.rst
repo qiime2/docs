@@ -165,6 +165,23 @@ We can visualize these balances on a heatmap to see which groups of taxa they re
 
 As noted in the legend, the numerators for each balance are highlighted in light red, while the denominators are highlighted in dark red. From here, we can see that the denominator of :math:`y0` has few OTUs compared to the numerator of :math:`y0`.  These taxa in the denominator could be interesting, so let's investigate the taxonomies making up this balance with ``balance_taxonomy``.
 
+Conclusion
+----------
+
+Remember, based on the toy examples given in the beginning of this tutorial, it is not possible to infer absolute changes of microbes in a given sample.  Balances will not be able to provide this sort of answer, but it can limit the number of possible scenarios.  Specifically, one of the five following scenarios could have happened.
+
+1) The taxa in the :math:`y0_{numerator}` on average have increased between patient group and the healthy control.
+
+2) The taxa in the :math:`y0_{denominator}` on average have decreased between patient group and the healthy control.
+
+3) A combination of the above occurred
+
+4) Taxa abundances in both :math:`y0_{numerator}` and :math:`y0_{denominator}` both increased, but taxa abundances in :math:`y0_{numerator}` increased more compared to :math:`y0_{denominator}`
+
+5) Taxa abundances in both :math:`y0_{numerator}` and :math:`y0_{denominator}` both decreased, but taxa abundances in :math:`y0_{denominator}` increased more compared to :math:`y0_{numerator}`
+
+To further narrow down these hypothesis,  biological prior knowledge or experimental validation will be required.
+
 
 .. _Giloteaux et al (2016): https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-016-0171-4
 .. _Earth Microbiome Project: http://earthmicrobiome.org/
