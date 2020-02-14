@@ -3,6 +3,8 @@
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
+.. note:: This guide uses QIIME 2-specific terminology, please see the :doc:`glossary <../glossary>` for more details.
+
 In this tutorial you'll use QIIME 2 to perform an analysis of human microbiome samples from two individuals at four body sites at five timepoints, the first of which immediately followed antibiotic usage. A study based on these samples was originally published in `Caporaso et al. (2011)`_. The data used in this tutorial were sequenced on an Illumina HiSeq using the `Earth Microbiome Project`_ hypervariable region 4 (V4) 16S rRNA sequencing protocol.
 
 .. qiime1-users::
@@ -22,7 +24,7 @@ Sample metadata
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2019.7/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2020.2/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
@@ -39,11 +41,11 @@ Download the sequence reads that we'll use in this analysis. In this tutorial we
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2019.7/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2020.2/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2019.7/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2020.2/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -374,7 +376,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 
 .. download::
-   :url: https://data.qiime2.org/2019.7/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2020.2/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
@@ -472,7 +474,7 @@ We're also often interested in performing a differential abundance test at a spe
    Which genera differ in abundance across subject? In which subject is each genus more abundant?
 
 
-.. _sample metadata: https://data.qiime2.org/2019.7/tutorials/moving-pictures/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2020.2/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb

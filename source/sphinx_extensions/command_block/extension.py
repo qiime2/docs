@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2016-2019, QIIME 2 development team.
+# Copyright (c) 2016-2020, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -148,6 +148,7 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         return node
 
     def _execute_commands(self, commands, working_dir):
+        comp_procs = []
         for command in commands:
             command = command.strip()
             if not command:
@@ -185,7 +186,8 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
                 )
                 raise sphinx.errors.ExtensionError(msg)
 
-            return comp_proc
+            comp_procs.append(comp_proc)
+        return comp_procs
 
     def _get_output_paths(self, working_dir):
         env = self._get_env()
@@ -244,12 +246,17 @@ class CommandBlockDirective(docutils.parsers.rst.Directive):
         return node
 
     def _get_stream_node(self, comp_proc, stream_type):
-        content = getattr(comp_proc, stream_type)
-        if content:
-            subtitle = '%s:' % (stream_type,)
-            subtitle_node = docutils.nodes.subtitle(subtitle, subtitle)
-            pre_node = docutils.nodes.literal_block(content, content)
-            return [subtitle_node, pre_node]
+        subtitle = '%s:' % (stream_type,)
+        subtitle_node = docutils.nodes.subtitle(subtitle, subtitle)
+
+        merged_content = []
+        for process in comp_proc:
+            content = getattr(process, stream_type)
+            if content:
+                merged_content.append(content)
+        merged_content = '\n'.join(merged_content)
+        pre_node = docutils.nodes.literal_block(merged_content, merged_content)
+        return [subtitle_node, pre_node]
 
     def _get_output_links(self, output_paths, name):
         content = []

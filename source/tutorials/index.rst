@@ -25,3 +25,4 @@ Tutorials
    read-joining
    otu-clustering
    utilities
+   phylogeny

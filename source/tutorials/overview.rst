@@ -93,7 +93,7 @@ This flowchart describes all demultiplexing steps that are currently possible in
 
 Read more about demultiplexing and give it a spin with the :ref:`moving pictures tutorial <moving pics demux>` (for single-end data) and :ref:`Atacama soils tutorial <atacama demux>` (for paired-end data). Those tutorials cover EMP format data (as described in the :ref:`importing docs <importing seqs>`). Have barcodes and primers in-line in your reads? See the `cutadapt tutorials`_ for using the demux methods in ``q2-cutadapt``. Have dual-indexed reads or mixed-orientation reads or some other unusual format? Pray hard 🙏. Then check out the QIIME 2 forum to see if someone has found a workaround. 😉
 
-Paired-end reads need to be joined at some point in the analysis. If you followed the :ref:`Atacama soils tutorial <atacama demux>`, you will see that this happens automatically during denoising with ``q2-dada2``. However, if you want to use ``q2-debur`` or an OTU clustering method (as described in more detail below), use ``q2-vsearch`` to join these reads before proceeding, as shown in the :ref:`demultiplexing workflow <derep-denoise>`. To learn more about read joining, see the :doc:`read joining tutorial <read-joining>`.👯
+Paired-end reads need to be joined at some point in the analysis. If you followed the :ref:`Atacama soils tutorial <atacama demux>`, you will see that this happens automatically during denoising with ``q2-dada2``. However, if you want to use ``q2-deblur`` or an OTU clustering method (as described in more detail below), use ``q2-vsearch`` to join these reads before proceeding, as shown in the :ref:`demultiplexing workflow <derep-denoise>`. To learn more about read joining, see the :doc:`read joining tutorial <read-joining>`.👯
 
 If you are beginning to pull your hair and foam at the mouth, do not despair: QIIME 2 tends to get easier the further we travel in the :ref:`"general overview" <overview>`. Importing and demultiplexing raw sequencing data happens to be the most frustrating part for most new users 😤. But once you get the hang of it, it's a piece of cake. 🍰
 
@@ -276,10 +276,10 @@ Now go forth an have fun! 💃
 .. _check out our benchmarks: https://doi.org/10.1186/s40168-018-0470-z
 .. _UniFrac distance: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1317376/
 .. _q2-phylogeny tutorial: https://forum.qiime2.org/t/q2-phylogeny-community-tutorial/4455
-.. _q2-fragment-insertion tutorial: https://github.com/biocore/q2-fragment-insertion
+.. _q2-fragment-insertion tutorial: https://library.qiime2.org/plugins/q2-fragment-insertion/16/
 .. _diversity metrics: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
-.. _q2-feature-table: https://docs.qiime2.org/2019.7/plugins/available/feature-table/
-.. _many different useful actions: https://docs.qiime2.org/2019.7/plugins/available/diversity/
+.. _q2-feature-table: https://docs.qiime2.org/2020.2/plugins/available/feature-table/
+.. _many different useful actions: https://docs.qiime2.org/2020.2/plugins/available/diversity/
 .. _Principal coordinates analysis: https://mb3is.megx.net/gustame/dissimilarity-based-methods/principal-coordinates-analysis
 .. _longitudinal experiments: https://en.wikipedia.org/wiki/Longitudinal_study
 .. _predict cancer susceptibility: https://dx.doi.org/10.1128%2FmSphere.00001-15
