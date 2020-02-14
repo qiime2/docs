@@ -165,21 +165,8 @@ We can visualize these balances on a heatmap to see which groups of taxa they re
 
 As noted in the legend, the numerators for each balance are highlighted in light red, while the denominators are highlighted in dark red. From here, we can see that the denominator of :math:`y0` has few OTUs compared to the numerator of :math:`y0`.  These taxa in the denominator could be interesting, so let's investigate the taxonomies making up this balance with ``balance_taxonomy``.
 
-Specifically we'll plot a boxplot and identify taxa that could be explaining the differences between the control and patient groups.
-
-.. command-block::
-
-   qiime gneiss balance-taxonomy \
-     --i-table table.qza \
-     --i-tree hierarchy.qza \
-     --i-taxonomy taxa.qza \
-     --p-taxa-level 2 \
-     --p-balance-name 'y0' \
-     --m-metadata-file sample-metadata.tsv \
-     --m-metadata-column Subject \
-     --o-visualization y0_taxa_summary.qzv
-
-In this particular case, the log ratio is lower in the patient group compared to the control group.  In essence, this means that the taxa in the :math:`y0_{numerator}` on average are more abundant than the taxa in :math:`y0_{denominator}` in the healthy control group compared to the patient group.
+Conclusion
+----------
 
 Remember, based on the toy examples given in the beginning of this tutorial, it is not possible to infer absolute changes of microbes in a given sample.  Balances will not be able to provide this sort of answer, but it can limit the number of possible scenarios.  Specifically, one of the five following scenarios could have happened.
 
