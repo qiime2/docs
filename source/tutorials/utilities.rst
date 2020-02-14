@@ -47,6 +47,20 @@ Now that we know how to use the command, we will run the following:
 As you can see, the citations for this particular visualization are presented
 above in `BibTeX format <http://www.bibtex.org/>`_.
 
+We can also see the citations for a specific plugin:
+
+.. command-block::
+   :stdout:
+
+   qiime vsearch --citations
+
+And also for a specific action of a plugin:
+
+.. command-block::
+   :stdout:
+
+   qiime vsearch cluster-features-open-reference --citations
+
 Viewing Visualizations
 ......................
 
