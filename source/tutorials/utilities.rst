@@ -1,6 +1,9 @@
 Utilities in QIIME 2
 ====================
 
+.. contents::
+   :depth: 3
+
 There are many non-plugin-based utilities available in QIIME 2. The following
 document attempts to demonstrate many of these functions. This document is
 divided by :doc:`interface <../interfaces/index>`, and attempts to cross-reference similar
@@ -47,7 +50,7 @@ Now that we know how to use the command, we will run the following:
 As you can see, the citations for this particular visualization are presented
 above in `BibTeX format <http://www.bibtex.org/>`_.
 
-We can also see the citations for a specific plugin:
+We can also :ref:`see the citations for a specific plugin<plugin-specific-citations>`:
 
 .. command-block::
    :stdout:

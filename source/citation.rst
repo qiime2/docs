@@ -18,6 +18,7 @@ Citation information can be retrieved in two different ways: for specific plugin
 
 Both citation retrieval methods will list citations in BibTeX format, which should be importable by most citation management software.
 
+.. _plugin-specific-citations:
 
 Retrieving plugin-specific citations
 ````````````````````````````````````
