@@ -21,7 +21,7 @@ After installing Miniconda and opening a new terminal, make sure you're running 
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
-Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2020.2 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2020.2`` to indicate what QIIME 2 release is installed (i.e. ``2020.2``).
+Once you have Miniconda installed, create a ``conda`` environment and install the QIIME 2 Core 2020.5 distribution within the environment. We **highly** recommend creating a *new* environment specifically for the QIIME 2 release being installed, as there are many required dependencies that you may not want added to an existing environment. You can choose whatever name you'd like for the environment. In this example, we'll name the environment ``qiime2-2020.5`` to indicate what QIIME 2 release is installed (i.e. ``2020.5``).
 
 
 .. raw:: html
@@ -39,31 +39,31 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2020.2-py36-osx-conda.yml
-   conda env create -n qiime2-2020.2 --file qiime2-2020.2-py36-osx-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2020.5-py36-osx-conda.yml
+   conda env create -n qiime2-2020.5 --file qiime2-2020.5-py36-osx-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2020.2-py36-osx-conda.yml</pre>
+   rm qiime2-2020.5-py36-osx-conda.yml</pre>
             <div class="alert alert-warning">
                If you encounter this error with wget:
               <pre>Disabling SSL due to encountered errors.</pre>
                you can download the file by clicking directly on this link:<br>
-               <a href="https://data.qiime2.org/distro/core/qiime2-2020.2-py36-osx-conda.yml">
-                  https://data.qiime2.org/distro/core/qiime2-2020.2-py36-osx-conda.yml
+               <a href="https://data.qiime2.org/distro/core/qiime2-2020.5-py36-osx-conda.yml">
+                  https://data.qiime2.org/distro/core/qiime2-2020.5-py36-osx-conda.yml
                </a><br>
                Please note, depending on your browser, this might open immediately as a "Download" dialog. If it does not open that dialog you might need to "Save" the file manually.
             </div>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2020.2-py36-linux-conda.yml
-   conda env create -n qiime2-2020.2 --file qiime2-2020.2-py36-linux-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2020.5-py36-linux-conda.yml
+   conda env create -n qiime2-2020.5 --file qiime2-2020.5-py36-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2020.2-py36-linux-conda.yml</pre>
+   rm qiime2-2020.5-py36-linux-conda.yml</pre>
             <div class="alert alert-warning">
                If you encounter this error with wget:
               <pre>Disabling SSL due to encountered errors.</pre>
                you can download the file by clicking directly on this link:<br>
-               <a href="https://data.qiime2.org/distro/core/qiime2-2020.2-py36-linux-conda.yml">
-                  https://data.qiime2.org/distro/core/qiime2-2020.2-py36-linux-conda.yml
+               <a href="https://data.qiime2.org/distro/core/qiime2-2020.5-py36-linux-conda.yml">
+                  https://data.qiime2.org/distro/core/qiime2-2020.5-py36-linux-conda.yml
                </a><br>
                Please note, depending on your browser, this might open immediately as a "Download" dialog. If it does not open that dialog you might need to "Save" the file manually.
             </div>
@@ -72,7 +72,7 @@ Once you have Miniconda installed, create a ``conda`` environment and install th
    </div>
 
 
-.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2020.2`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
+.. tip:: If you receive errors during the installation process, such as ``gfortran`` errors, please ensure you are following the installation instructions that are compatible with your platform. Other errors are often resolved by running ``conda env remove -n qiime2-2020.5`` to remove the failed environments, then running ``conda clean -y --all`` to clean the local conda installation, and finally re-running the installation instructions above.
 
 
 Activate the ``conda`` environment
@@ -83,7 +83,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2020.2
+   source activate qiime2-2020.5
 
 To deactivate an environment, run ``source deactivate``.
 

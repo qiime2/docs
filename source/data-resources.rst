@@ -6,7 +6,7 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 .. danger:: Pre-trained classifiers that can be used with ``q2-feature-classifier`` currently present a security risk. If using a pre-trained classifier such as the ones provided here, you should trust the person who trained the classifier and the person who provided you with the qza file. This security risk will be addressed in a future version of ``q2-feature-classifier``.
 
-.. warning:: These classifiers were trained using scikit-learn 0.22.1, and therefore can only be used with scikit-learn 0.22.1. If you are using a native installation of QIIME 2, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2020.2 virtual machine, scikit-learn 0.21.2 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
+.. warning:: These classifiers were trained using scikit-learn 0.22.1, and therefore can only be used with scikit-learn 0.22.1. If you are using a native installation of QIIME 2, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2020.5 virtual machine, scikit-learn 0.21.2 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
 
    .. command-block::
       :no-exec:
@@ -17,10 +17,10 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-- `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2020.2/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``8c5371fb59740f57185f772e4cb77a5b``)
-- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.2/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``a0a71ceece385aae495c0ce798ceb6d1``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.2/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03cfed92bf2e5da2d1029b7c6b998e92``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.2/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``6df67fb01e2f3305e76c61a1c16136b4``)
+- `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2020.5/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``8c5371fb59740f57185f772e4cb77a5b``)
+- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.5/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``a0a71ceece385aae495c0ce798ceb6d1``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.5/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03cfed92bf2e5da2d1029b7c6b998e92``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.5/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``6df67fb01e2f3305e76c61a1c16136b4``)
 
 .. _`marker gene db`:
 
@@ -68,5 +68,5 @@ The following databases are intended for use with q2-fragment-insertion, and
 are constructed directly from the
 `SEPP-Refs project <https://github.com/smirarab/sepp-refs/>`_.
 
-- `Silva 128 SEPP reference database <https://data.qiime2.org/2020.2/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
-- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2020.2/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
+- `Silva 128 SEPP reference database <https://data.qiime2.org/2020.5/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
+- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2020.5/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
