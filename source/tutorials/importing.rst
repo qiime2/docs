@@ -157,7 +157,7 @@ Importing data
      --input-path sequences.fastq.gz \
      --output-path multiplexed-seqs.qza
 
-In this format, sequence data is still multiplexed (i.e. you have only one forward ``fastq.gz`` file containing raw data for all of your samples).
+In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples).
 
 Because you are importing a single file of sequences, your filenames may be whatever you prefer.
 
