@@ -133,6 +133,7 @@ Format description
 ******************
 
 Users with multiplexed single-ended barcode in sequence reads should have:
+
 1. one ``fastq.gz`` file, containing records from multiple samples,
 2. one :doc:`metadata <metadata>` file with a column of per-sample barcodes for use in FASTQ demultiplexing
 
@@ -170,6 +171,7 @@ Format description
 ******************
 
 Users with multiplexed paired-end barcode in sequence reads should have:
+
 1. one ``forward.fastq.gz`` file, containing forward reads from multiple samples,
 2. one ``reverse.fastq.gz`` file, containing reverse reads from the same samples,
 3. one :doc:`metadata <metadata>` file with a column of per-sample barcodes for use in FASTQ demultiplexing
