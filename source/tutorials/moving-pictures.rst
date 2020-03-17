@@ -62,6 +62,7 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
 It is possible to check the ID, type, and format of your newly-imported sequences, confirming that your import worked as expected:
 
 .. command-block::
+   :stdout:
 
    qiime tools peek emp-single-end-sequences.qza
 
