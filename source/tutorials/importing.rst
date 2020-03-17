@@ -142,11 +142,11 @@ Obtaining example data
 
 .. command-block::
 
-   mkdir muxed-se-barcode-in-seqs
+   mkdir muxed-se-barcode-in-seq
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-se-barcode-in-seqs.fastq.gz
-   :saveas: muxed-se-barcode-in-seqs/sequences.fastq.gz
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz
+   :saveas: muxed-se-barcode-in-seq/sequences.fastq.gz
 
 Importing data
 **************
@@ -187,15 +187,15 @@ Obtaining example data
 
 .. command-block::
 
-   mkdir muxed-pe-barcode-in-seqs
+   mkdir muxed-pe-barcode-in-seq
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seqs/forward.fastq.gz
-   :saveas: muxed-pe-barcode-in-seqs/forward.fastq.gz
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seq/forward.fastq.gz
+   :saveas: muxed-pe-barcode-in-seq/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seqs/reverse.fastq.gz
-   :saveas: muxed-pe-barcode-in-seqs/reverse.fastq.gz
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz
+   :saveas: muxed-pe-barcode-in-seq/reverse.fastq.gz
 
 Importing data
 **************
@@ -204,7 +204,7 @@ Importing data
 
    qiime tools import \
      --type MultiplexedPairedEndBarcodeInSequence \
-     --input-path muxed-pe-barcode-in-seqs \
+     --input-path muxed-pe-barcode-in-seq \
      --output-path multiplexed-seqs.qza
 
 .. _`casava import`:
