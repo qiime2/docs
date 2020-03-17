@@ -59,6 +59,13 @@ The semantic type of this QIIME 2 artifact is ``EMPSingleEndSequences``. ``EMPSi
      --input-path emp-single-end-sequences \
      --output-path emp-single-end-sequences.qza
 
+It is possible to check the UUID, type, and format of your newly-imported sequences, confirming that your import worked as expected:
+
+.. command-block::
+   :stdout:
+
+   qiime tools peek emp-single-end-sequences.qza
+
 .. tip::
    Links are included to view and download precomputed QIIME 2 artifacts and visualizations created by commands in the documentation. For example, the command above created a single ``emp-single-end-sequences.qza`` file, and a corresponding precomputed file is linked above. You can view precomputed QIIME 2 artifacts and visualizations without needing to install additional software (e.g. QIIME 2).
 
