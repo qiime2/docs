@@ -159,7 +159,7 @@ Importing data
 
 In this format, sequence data is still multiplexed (i.e. you have only one forward ``fastq.gz`` file containing raw data for all of your samples).
 
-Because you are importing a single sequence file, your filenames may be whatever you prefer.
+Because you are importing a single file of sequences, your filenames may be whatever you prefer.
 
 Each barcode need be represented only once in the metadata mapping file. Barcodes are not required to be in any specific order.
 
