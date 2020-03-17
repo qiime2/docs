@@ -192,7 +192,7 @@ Obtaining example data
    :saveas: muxed-pe-barcode-in-seqs/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcodes-in-seqs/reverse.fastq.gz
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seqs/reverse.fastq.gz
    :saveas: muxed-pe-barcode-in-seqs/reverse.fastq.gz
 
 Importing data
