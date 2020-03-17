@@ -188,7 +188,7 @@ Obtaining example data
    mkdir muxed-pe-barcode-in-seqs
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcodes-in-seqs/forward.fastq.gz
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seqs/forward.fastq.gz
    :saveas: muxed-pe-barcode-in-seqs/forward.fastq.gz
 
 .. download::
