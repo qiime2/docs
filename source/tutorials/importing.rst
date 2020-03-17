@@ -178,7 +178,7 @@ In this format, sequence data is still multiplexed (i.e. you have only one forwa
 
 Because you are importing a multi-file directory, the filenames `forward.fastq.gz` and `reverse.fastq.gz` are *required*.
 
-The order of the records in the ``fastq.gz`` files defines the association between forward and reverse sequence reads, and so a correct order must be preserved. Barcodes in the metadata mapping file are not required to be in any specific order.
+The order of the records in the ``fastq.gz`` files defines the association between forward and reverse sequence reads, so a correct order must be preserved. Barcodes in the metadata mapping file are not required to be in any specific order.
 
 Obtaining example data
 ``````````````````````
