@@ -286,7 +286,7 @@ Importing data
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your data is not multiplexed (i.e. you have no more than one sample per file) and you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the ``qiime tools import`` command with different specifications than in the EMP or Casava import commands.
+The examples above demonstrate how to import multiplexed data (i.e. EMP or FASTQ files with the barcodes in the sequence) and how to import demultiplexed data that follows some common formatting conventions (the Casava formats). If you don't have data that matches the above cases, you likely will need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the ``qiime tools import`` command with different specifications than in the EMP or Casava import commands.
 
 Format description
 ******************
