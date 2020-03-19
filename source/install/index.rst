@@ -9,6 +9,26 @@ QIIME 2 can be installed natively or using virtual machines. The following pages
    native
    virtual/index
 
+Recommendations
+---------------
+
+The :doc:`native conda installation <native>` is generally the recommended method of installation, but this isn't always available or a straight-forward option for all cases. In general we recommend the following:
+
+* `macOS`_ users
+
+  - A :doc:`native conda installation <native>` usually works well
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+
+* `Windows`_ users
+
+  - On newer versions of Windows, performing a :doc:`native conda installation <native>` (using the linux instructions) in the `Windows Subsystem for Linux`_ usually works well
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+
+* Linux users
+
+  - A :doc:`native conda installation <native>` usually works well
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+
 .. _core-distribution:
 
 QIIME 2 Core 2020.5 distribution
@@ -39,3 +59,7 @@ The QIIME 2 Core 2020.5 distribution includes the QIIME 2 framework, ``q2cli`` (
 - ``q2-vsearch``
 
 .. note:: The QIIME 2 Core 2020.5 distribution includes plugins and interfaces that are developed, maintained, tested, and distributed by the QIIME 2 development team. The Core distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation. Other types of distributions may be made available in the future in addition to Core.
+
+.. _macOS: https://www.apple.com/macos/
+.. _Windows: https://www.microsoft.com/en-us/windows
+.. _Windows Subsystem for Linux: https://docs.microsoft.com/en-us/windows/wsl/install-win10

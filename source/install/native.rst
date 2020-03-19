@@ -83,7 +83,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2020.5
+   conda activate qiime2-2020.5
 
 To deactivate an environment, run ``source deactivate``.
 
@@ -111,3 +111,20 @@ How do I update to the newest version of QIIME 2?
 -------------------------------------------------
 
 In order to to update/upgrade to the newest release, you simply install the newest version in a new conda environment by following the instructions above. Then you will have two conda environments, one with the older version of QIIME 2 and one with the newer version.
+
+(Re-)Activating QIIME 2
+-----------------------
+
+If at any point during the analysis the QIIME 2 conda environment is closed or deactivated, QIIME 2 2020.5 can be activated (or reactivated) by running the following command:
+
+.. command-block::
+   :no-exec:
+
+   conda activate qiime2-2020.5
+
+To determine the currently active conda environment, run the following command and look for the line that starts with "active environment":
+
+.. command-block::
+   :stdout:
+
+   conda info
