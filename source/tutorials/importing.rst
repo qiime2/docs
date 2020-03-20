@@ -45,10 +45,12 @@ Format description
 
 Single-end "`Earth Microbiome Project (EMP) protocol`_"  formatted reads should have two ``fastq.gz`` files total:
 
-1. one ``fastq.gz`` file that contains the single-end reads,
-2. and another that contains the associated barcode reads
+1. one ``forward.fastq.gz`` file that contains the single-end reads,
+2. one ``barcodes.fastq.gz`` file that contains the associated barcode reads
 
 In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples).
+
+Because you are importing multiple files in a directory, the filenames ``forward.fastq.gz`` and ``barcodes.fastq.gz`` are *required*.
 
 The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on).
 
