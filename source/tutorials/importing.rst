@@ -165,7 +165,7 @@ Because you are importing a single file of sequences, your filenames may be what
 There should be exactly one unique barcode for each sample you wish to demultiplex. Barcodes are not required to be in any specific order.
 
 Multiplexed paired-end FASTQ with barcodes in sequence
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Format description
 ******************
