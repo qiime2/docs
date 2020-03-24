@@ -1,7 +1,9 @@
 Installing QIIME 2
 ==================
 
-QIIME 2 can be installed natively or using virtual machines. The following pages describe how to install the :ref:`core-distribution` in either scenario.
+QIIME 2 can be installed natively or using virtual machines. The following
+pages describe how to install the :ref:`core-distribution` in either
+scenario.
 
 .. toctree::
    :maxdepth: 2
@@ -12,22 +14,29 @@ QIIME 2 can be installed natively or using virtual machines. The following pages
 Recommendations
 ---------------
 
-The :doc:`native conda installation <native>` is generally the recommended method of installation, but this isn't always available or a straight-forward option for all cases. In general we recommend the following:
+The :doc:`native conda installation <native>` is generally the recommended
+method of installation, but this isn't always available or a straight-forward
+option for all cases. In general we recommend the following:
 
 * `macOS`_ users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
+    are good backup options
 
 * `Windows`_ users
 
-  - On newer versions of Windows, performing a :doc:`native conda installation <native>` (using the linux instructions) in the `Windows Subsystem for Linux`_ usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+  - On newer versions of Windows, performing a :doc:`native conda
+    installation <native>` in the `Windows Subsystem for Linux`_ usually
+    works well
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
+    are good backup options
 
 * Linux users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>` are good backup options
+  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
+    are good backup options
 
 .. _core-distribution:
 
