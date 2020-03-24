@@ -31,8 +31,9 @@ Sequence data with sequence quality information (i.e. FASTQ)
 With QIIME 2, there are functions to import different types of FASTQ data:
 
 1. FASTQ data with the EMP Protocol format
-2. FASTQ data with the Casava 1.8 demultiplexed format
-3. Any other kind of FASTQ data
+2. Multiplexed FASTQ data with barcodes in sequences
+3. FASTQ data in the Casava 1.8 demultiplexed format
+4. Any FASTQ data not represented in the list items above
 
 .. _`emp import`:
 
@@ -44,10 +45,12 @@ Format description
 
 Single-end "`Earth Microbiome Project (EMP) protocol`_"  formatted reads should have two ``fastq.gz`` files total:
 
-1. one ``fastq.gz`` file that contains the single-end reads,
-2. and another that contains the associated barcode reads
+1. one ``forward.fastq.gz`` file that contains the single-end reads,
+2. one ``barcodes.fastq.gz`` file that contains the associated barcode reads
 
 In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples).
+
+Because you are importing multiple files in a directory, the filenames ``forward.fastq.gz`` and ``barcodes.fastq.gz`` are *required*.
 
 The order of the records in the two ``fastq.gz`` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on).
 
@@ -84,11 +87,13 @@ Format description
 
 Paired-end "`Earth Microbiome Project (EMP) protocol`_" formatted reads should have three ``fastq.gz`` files total:
 
-1. one ``fastq.gz`` file that contains the forward sequence reads,
-2. one ``fastq.gz`` file that contains the reverse sequence reads,
-3. and a third that contains the associated barcode reads
+1. one ``forward.fastq.gz`` file that contains the forward sequence reads,
+2. one ``reverse.fastq.gz`` file that contains the reverse sequence reads,
+3. one ``barcodes.fastq.gz`` file that contains the associated barcode reads
 
 In this format, sequence data is still multiplexed (i.e. you have only one forward and one reverse ``fastq.gz`` file containing raw data for all of your samples).
+
+Because you are importing multiple files in a directory, the filenames ``forward.fastq.gz``, ``reverse.fastq.gz``, and ``barcodes.fastq.gz`` are *required*.
 
 The order of the records in the ``fastq.gz`` files defines the association between a sequence read and its barcode read (i.e. the first barcode read corresponds to the first sequence read, the second barcode to the second read, and so on.)
 
@@ -120,6 +125,89 @@ Importing data
      --type EMPPairedEndSequences \
      --input-path emp-paired-end-sequences \
      --output-path emp-paired-end-sequences.qza
+
+.. _`multiplexed barcode in seq import`:
+
+Multiplexed single-end FASTQ with barcodes in sequence
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Format description
+******************
+
+Users with multiplexed single-ended barcodes in sequence reads should have:
+
+1. one ``fastq.gz`` file, containing records from multiple samples,
+2. one :doc:`metadata <metadata>` file with a column of per-sample barcodes for use in FASTQ demultiplexing
+
+Obtaining example data
+```````````````````````
+
+.. command-block::
+
+   mkdir muxed-se-barcode-in-seq
+
+.. download::
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz
+   :saveas: muxed-se-barcode-in-seq/sequences.fastq.gz
+
+Importing data
+**************
+
+.. command-block::
+
+   qiime tools import \
+     --type MultiplexedSingleEndBarcodeInSequence \
+     --input-path muxed-se-barcode-in-seq/sequences.fastq.gz \
+     --output-path multiplexed-seqs.qza
+
+In this format, sequence data is still multiplexed (i.e. you have only one ``fastq.gz`` file containing raw data for all of your samples).
+
+Because you are importing a single file of sequences, your filenames may be whatever you prefer.
+
+There should be exactly one unique barcode for each sample you wish to demultiplex. Barcodes are not required to be in any specific order.
+
+Multiplexed paired-end FASTQ with barcodes in sequence
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Format description
+******************
+
+Users with multiplexed paired-end barcodes in sequence reads should have:
+
+1. one ``forward.fastq.gz`` file, containing forward reads from multiple samples,
+2. one ``reverse.fastq.gz`` file, containing reverse reads from the same samples,
+3. one :doc:`metadata <metadata>` file with a column of per-sample barcodes for use in FASTQ demultiplexing (or two columns of dual-index barcodes)
+
+In this format, sequence data is still multiplexed (i.e. you have only one forward and one reverse ``fastq.gz`` file containing raw data for all of your samples).
+
+Because you are importing a multi-file directory, the filenames `forward.fastq.gz` and `reverse.fastq.gz` are *required*.
+
+The order of the records in the ``fastq.gz`` files defines the association between forward and reverse sequence reads, so a correct order must be preserved. Barcodes in the metadata mapping file are not required to be in any specific order.
+
+Obtaining example data
+``````````````````````
+
+.. command-block::
+
+   mkdir muxed-pe-barcode-in-seq
+
+.. download::
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seq/forward.fastq.gz
+   :saveas: muxed-pe-barcode-in-seq/forward.fastq.gz
+
+.. download::
+   :url: https://data.qiime2.org/2020.5/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz
+   :saveas: muxed-pe-barcode-in-seq/reverse.fastq.gz
+
+Importing data
+**************
+
+.. command-block::
+
+   qiime tools import \
+     --type MultiplexedPairedEndBarcodeInSequence \
+     --input-path muxed-pe-barcode-in-seq \
+     --output-path multiplexed-seqs.qza
 
 .. _`casava import`:
 
@@ -200,7 +288,7 @@ Importing data
 "Fastq manifest" formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you don't have either EMP or Casava format, you need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the ``qiime tools import`` command with different specifications than in the EMP or Casava import commands.
+The examples above demonstrate how to import multiplexed data (i.e. EMP or FASTQ files with the barcodes in the sequence) and how to import demultiplexed data that follows some common formatting conventions (the Casava formats). If you don't have data that matches the above cases, you likely will need to import your data into QIIME 2 manually by first creating a "manifest file" and then using the ``qiime tools import`` command with different specifications than in the EMP or Casava import commands.
 
 Format description
 ******************
