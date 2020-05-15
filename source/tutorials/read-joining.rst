@@ -188,7 +188,7 @@ Import reads
 ------------
 
 Next, use ``qiime tools import`` to import these data. The format that is
-currently used here is ``SingleEndFastqManifestPhred33`` - this will
+currently used here is ``SingleEndFastqManifestPhred33V2`` - this will
 likely be `updated in the future`_ to a format
 that clearly describes this as joined read data, but in the meantime you
 should follow the :doc:`formatting guidelines for the single-end "Fastq
@@ -200,7 +200,7 @@ Manifest" formats <importing>`.
      --input-path fj-joined/manifest \
      --output-path fj-joined-demux.qza \
      --type SampleData[JoinedSequencesWithQuality] \
-     --input-format SingleEndFastqManifestPhred33
+     --input-format SingleEndFastqManifestPhred33V2
 
 Viewing summary of imported data with read quality
 --------------------------------------------------
