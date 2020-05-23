@@ -99,7 +99,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 
    conda activate qiime2-2020.5
 
-To deactivate an environment, run ``source deactivate``.
+To deactivate an environment, run ``conda deactivate``.
 
 Test your installation
 ----------------------

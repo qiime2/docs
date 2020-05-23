@@ -12,7 +12,7 @@ Launching QIIME 2 Studio requires an active ``conda`` environment with QIIME 2 i
 .. command-block::
    :no-exec:
 
-   source activate qiime2-2020.5
+   conda activate qiime2-2020.5
 
 Please note, your ``conda`` environment might have a name other than ``qiime2-2020.5``, if you or your system administrator provided one during :doc:`installation of QIIME 2 <../install/index>`.
 
