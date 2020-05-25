@@ -478,7 +478,7 @@ Let's also check whether there's a relationship between the cage in which a mous
 .. question::
 
    1. Is there a significant effect of donor?
-   2. From the metadata, we know that cage C31, C32, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
+   2. From the metadata, we know that cage C31, C35, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C35? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
 
 .. Yep, donor is a significant and large effect, as we expected from the PCoA
 .. Overall, cage is significant but some of this is drive by between donor differences.
@@ -515,7 +515,7 @@ We can also use the adonis action to look at a multivariate model. The ``adonis`
 .. question::
 
    1. Is there a significant effect of donor?
-   2. From the metadata, we know that cage C31, C32, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C32? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
+   2. From the metadata, we know that cage C31, C35, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C35? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
    3. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
