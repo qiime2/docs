@@ -25,7 +25,7 @@ functionality! First, we will take a look at the taxonomic bar charts from the
 :doc:`PD Mice Tutorial <pd-mice>`:
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/utilities/taxa-barplot.qzv
+   :url: https://data.qiime2.org/2020.6/tutorials/utilities/taxa-barplot.qzv
    :saveas: taxa-barplot.qzv
 
 Retrieving Citations
@@ -91,7 +91,7 @@ Oftentimes we need to verify the ``type`` and ``uuid`` of an Artifact. We can us
 let's get some data to look at:
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/utilities/faith-pd-vector.qza
+   :url: https://data.qiime2.org/2020.6/tutorials/utilities/faith-pd-vector.qza
    :saveas: faith-pd-vector.qza
 
 Now that we have data, we can learn more about the file:
@@ -131,7 +131,7 @@ are in the file?
 We can demonstrate this by first downloading some sample metadata:
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/pd-mice/sample_metadata.tsv
+   :url: https://data.qiime2.org/2020.6/tutorials/pd-mice/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 Then, we can run the ``qiime tools inspect-metadata`` command:
@@ -151,7 +151,7 @@ This tool can be very helpful for learning about Metadata column names for
 files that are *viewable* as Metadata.
 
 .. download::
-   :url: https://data.qiime2.org/2020.5/tutorials/utilities/jaccard-pcoa.qza
+   :url: https://data.qiime2.org/2020.6/tutorials/utilities/jaccard-pcoa.qza
    :saveas: jaccard-pcoa.qza
 
 The file we just downloaded is a Jaccard PCoA (from the
