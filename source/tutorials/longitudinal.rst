@@ -131,7 +131,7 @@ In the resulting visualization, a line plot appears on the left-hand side of the
 6. Group mean lines and spaghetti can also be modified with the "scatter size" and "scatter opacity" slider bars in the "Plot Controls". These adjust the size and opacity of individual points. Maximize scatter opacity and minimize line opacity to transform these into longitudinal scatter plots!
 7. Relevant sample metadata at individual points can be viewed by hovering the mouse over a point of interest.
 
-If the interactive features of this visualization don't quite scratch your itch, click on the "Open in Vega Editor" button at the top of the "Plot Controls" and customize to your heart's content. This opens a window for manually editing plot characteristics in `Vega Editor`_, a visualization tool external to QIIME2.
+If the interactive features of this visualization don't quite scratch your itch, click on the "Open in Vega Editor" button at the top of the "Plot Controls" and customize to your heart's content. This opens a window for manually editing plot characteristics in `Vega Editor`_, a visualization tool external to QIIME2 (NOTE: This feature is temporarily disabled. Apologies for the inconvenience) .
 
 Buon appetito! 🍝
 
