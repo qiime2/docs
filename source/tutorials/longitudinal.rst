@@ -131,7 +131,7 @@ In the resulting visualization, a line plot appears on the left-hand side of the
 6. Group mean lines and spaghetti can also be modified with the "scatter size" and "scatter opacity" slider bars in the "Plot Controls". These adjust the size and opacity of individual points. Maximize scatter opacity and minimize line opacity to transform these into longitudinal scatter plots!
 7. Relevant sample metadata at individual points can be viewed by hovering the mouse over a point of interest.
 
-If the interactive features of this visualization don't quite scratch your itch, you can use the external vega editor to edit the plot. Click on the "View Source" button then copy the contents of that page and paste them into the left column of this webpage https://vega.github.io/editor/#/edited.
+If the interactive features of this visualization don't quite scratch your itch, you can use the external vega editor to edit the plot. Click on the "View Source" button then copy the contents of that page and paste them into the left column of this webpage https://vega.github.io/editor.
 
 Buon appetito! 🍝
 
