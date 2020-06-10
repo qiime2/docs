@@ -53,7 +53,7 @@ Dereplicating a ``SampleData[Sequences]`` artifact
 
 If you are beginning your analysis with demultiplexed, quality controlled
 sequences, such as those in a |QIIME1_file|_ your first step
-is to import that data into a QIIME 1 artifact. The semantic type used here is
+is to import that data into a QIIME 2 artifact. The semantic type used here is
 ``SampleData[Sequences]``, indicating that the data represents collections of
 sequences associated with one or more samples.
 
