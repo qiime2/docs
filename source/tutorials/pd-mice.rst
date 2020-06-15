@@ -354,7 +354,7 @@ We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method, w
 -  **Alpha Diversity**
 
    -  Shannon's diversity index
-   -  Observed OTUs
+   -  Observed Features
    -  Faith's phylogenetic diversity
    -  Pielou's evenness
 
