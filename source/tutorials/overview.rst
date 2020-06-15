@@ -1,9 +1,9 @@
 Overview of QIIME 2 Plugin Workflows
 ====================================
 
-.. note:: Abandon all hope, ye who enter. If you have not read the :doc:`glossary <../glossary>`. 👺
+.. note:: Abandon all hope, ye who enter, if you have not read the :doc:`glossary <../glossary>`. 👺
 
-.. note:: This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research. For experienced users who are already well versed in microbiome analysis, and those who are adverse to uncontrolled use of emoji, mosey on over to the :doc:`overview tutorial for experienced users <qiime2-for-experienced-microbiome-researchers>`.
+.. note:: This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research. For experienced users who are already well versed in microbiome analysis, and those who are averse to uncontrolled use of emoji, mosey on over to the :doc:`overview tutorial for experienced users <qiime2-for-experienced-microbiome-researchers>`.
 
 Welcome all newcomers 👋. This guide will give you an overview of many of the main plugins and actions available in QIIME 2, and guide you to the relevant tutorials for deeper exploration. In other words, it might not answer the question, "how do I use QIIME 2", but it will point you in the right direction. Consider this your treasure map: QIIME 2 actions are the stepping stones on your path to glory, and the flowcharts below will tell you where all the goodies are buried. 🗺️
 
@@ -19,14 +19,14 @@ Before we begin talking about specific plugins and actions, we will discuss a co
 .. image:: images/key.png
 
 
-Each type of data (i.e., Artifacts and Visualizations) and action (i.e., methods, visualizers, and pipelines) is represented by a different color-coded node. The edges connecting each node is either solid (representing either required input or output) or dashed (representing optional input). Don't know what these terms mean? Arrgh! Read the note at the top of this page.
+Each type of data (i.e., Artifacts and Visualizations) and action (i.e., methods, visualizers, and pipelines) is represented by a different color-coded node. The edges connecting each node are either solid (representing either required input or output) or dashed (representing optional input). Don't know what these terms mean? Arrgh! Read the note at the top of this page.
 
 In the flowcharts below:
 
 * Actions are labeled with the name of the plugin and the name of the action. To use that action, type "qiime" and then the text contained in that node. E.g., ``qiime demux emp-single``.
-* Note that pipelines are a special type of action, that actually runs multiple actions in a single command. Neat! In (some of) the flowcharts, the pipelines are displayed as boxes encompassing the actions that are run inside. 🌯
-* Artifacts are labeled with the :doc:`semantic type <../semantic-types>` of that file. Don't worry — you will not need to type out those long names unless if you need to :doc:`import <importing>` a file into that format.
-* Visualizations are variously labeled as "visualization", some name that represents the information shown in that visualization, or replaced with an image representing some of the tasty information you might find inside that visualization... 🍙
+* Note that pipelines are a special type of action that run multiple actions in a single command. Neat! In (some of) the flowcharts, the pipelines are displayed as boxes encompassing the actions that are run inside. 🌯
+* Artifacts are labeled with the :doc:`semantic type <../semantic-types>` of that file. Don't worry - you will not need to type out those long names unless you need to :doc:`import <importing>` a file into that format.
+* Visualizations are variously labeled as "visualization," some name that represents the information shown in that visualization, or replaced with an image representing some of the tasty information you might find inside that visualization... 🍙
 
 Useful points for beginners
 ---------------------------
