@@ -68,11 +68,18 @@ Viewing Visualizations
 ......................
 
 What if we want to view our taxa bar plots? One option is to load the visualization
-at https://view.qiime2.org. Another option is to use ``qiime tools view`` to
-accomplish the job
+at https://view.qiime2.org. All QIIME 2 Results may be opened this way.
+This will present the visualization (assuming the file is a ``.qzv``), Result
+details (e.g. filename, uuid, type, format, citations), and a provenance graph
+showing how the Visualization or Artifact was created.
 
 .. note::
    Provenance viewing is only available at https://view.qiime2.org.
+
+Another option is to use ``qiime tools view`` to accomplish the job. This command
+may only be used with Visualizations, and will not display Visualization details
+(see :ref:`Peek`) or provenence, but provides a quick and easy way to view your
+results from the command line.
 
 .. command-block::
    :no-exec:
@@ -82,6 +89,8 @@ accomplish the job
 This will open a browser window with your visualization loaded in it. When you
 are done, you can close the browser window and press ``ctrl-c`` on the
 keyboard to terminate the command.
+
+.. _Peek:
 
 Peeking at Results
 ..................
