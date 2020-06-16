@@ -6,21 +6,32 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 .. danger:: Pre-trained classifiers that can be used with ``q2-feature-classifier`` currently present a security risk. If using a pre-trained classifier such as the ones provided here, you should trust the person who trained the classifier and the person who provided you with the qza file. This security risk will be addressed in a future version of ``q2-feature-classifier``.
 
-.. warning:: These classifiers were trained using scikit-learn 0.22.1, and therefore can only be used with scikit-learn 0.22.1. If you are using a native installation of QIIME 2, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2020.6 virtual machine, scikit-learn 0.21.2 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
+.. warning:: These classifiers were trained using scikit-learn 0.23.1, and therefore can only be used with scikit-learn 0.23.1. If you are using a native installation of QIIME 2, before using these classifiers you should run the following to ensure that you are using the correct version of scikit-learn. If you are using a QIIME 2020.6 virtual machine, scikit-learn 0.23.1 will be installed and you do not need to run this command. The scikit-learn version restriction will be relaxed in a future version of ``q2-feature-classifier``.
 
    .. command-block::
       :no-exec:
 
-      conda install --override-channels -c defaults scikit-learn=0.22.1
+      conda install --override-channels -c defaults scikit-learn=0.23.1
 
 .. note:: Taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads. Therefore in general you should follow the instructions in :doc:`Training feature classifiers with q2-feature-classifier <../tutorials/feature-classifier>` to train your own taxonomic classifiers (for example, from the marker gene reference databases below).
 
 Naive Bayes classifiers trained on:
 
-- `Silva 132 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/silva-132-99-nb-classifier.qza>`_ (MD5: ``8c5371fb59740f57185f772e4cb77a5b``)
-- `Silva 132 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/silva-132-99-515-806-nb-classifier.qza>`_ (MD5: ``a0a71ceece385aae495c0ce798ceb6d1``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03cfed92bf2e5da2d1029b7c6b998e92``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``6df67fb01e2f3305e76c61a1c16136b4``)
+- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``ded341b2a9220f1c473072bc85f221f0``)
+- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``37d890e5860b23246181ea9d50c14555``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``57cfea6fa6c6bd7ca27cbd9ccd5038f7``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``28bf2739f48b4da34a326498126c456b``)
+
+
+Please cite the following references if you use any of these pre-trained classifiers:
+
+- Bokulich, N.A., Robeson, M., Dillon, M.R. bokulich-lab/RESCRIPt. Zenodo. http://doi.org/10.5281/zenodo.3891931
+- Bokulich, N.A., Kaehler, B.D., Rideout, J.R. et al. Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2’s q2-feature-classifier plugin. Microbiome 6, 90 (2018). https://doi.org/10.1186/s40168-018-0470-z
+- See the `SILVA website <https://www.arb-silva.de/>`_ and the latest `Greengenes publication <https://www.nature.com/articles/ismej2011139>`_ for the latest citation information for these reference databases.
+
+
+.. warning:: If using any of the pre-trained classifiers above, consult the  `Greengenes <https://greengenes.secondgenome.com/>`_ or `SILVA <https://www.arb-silva.de/silva-license-information/>`_ websites for licensing information.
+
 
 .. _`marker gene db`:
 
@@ -42,7 +53,21 @@ Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.o
 Silva (16S/18S rRNA)
 ````````````````````
 
-QIIME-compatible SILVA releases, as well as the licensing information for commercial and non-commercial use, are available at https://www.arb-silva.de/download/archive/qiime.
+QIIME-compatible SILVA releases (up to release 132), as well as the licensing information for commercial and non-commercial use, are available at https://www.arb-silva.de/download/archive/qiime.
+
+We also provide pre-formatted SILVA reference sequence and taxonomy files here.
+
+- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs.qza>`_ (MD5: ``7f3ec37359911f7d7d1a745dfe9c5ffe``)
+- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax.qza>`_ (MD5: ``d9d2ec745f25eca522a6fa32f56a2982``)
+- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``98ffd2cec2840df3c2211fc999887bb9``)
+- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``6c261dbb93d022b69da2dd3361744fcc``)
+
+
+Please cite the following references if you use any of these pre-formatted files:
+
+- Bokulich, N.A., Robeson, M., Dillon, M.R. bokulich-lab/RESCRIPt. Zenodo. http://doi.org/10.5281/zenodo.3891931
+- See the `SILVA website <https://www.arb-silva.de/>`_ for the latest citation information for SILVA.
+
 
 UNITE (fungal ITS)
 ``````````````````
