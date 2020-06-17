@@ -354,7 +354,7 @@ We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method, w
 -  **Alpha Diversity**
 
    -  Shannon's diversity index
-   -  Observed OTUs
+   -  Observed Features
    -  Faith's phylogenetic diversity
    -  Pielou's evenness
 
@@ -364,6 +364,8 @@ We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method, w
    -  Bray-Curtis distance
    -  Unweighted UniFrac distance
    -  Weighted UniFrac distance
+
+.. note:: 🏗👷 Some descriptions are changing in QIIME 2's ``diversity`` tools. The phrase **"observed otus" is being replaced with "observed features"**, because "features" better describes the different ways in which users work with non-taxonomic features. This will affect both documentation and (in places) the names of command arguments. You will see both phrases, but these measures of diversity are identical `under the hood <http://scikit-bio.org/docs/latest/generated/skbio.diversity.alpha.observed_otus.html#skbio.diversity.alpha.observed_otus>`_.
 
 There is a very good discussion of diversity metrics and their meanings in a `forum post by Stephanie Orchanian`_.
 
