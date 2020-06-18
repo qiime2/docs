@@ -17,10 +17,10 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``ded341b2a9220f1c473072bc85f221f0``)
-- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``37d890e5860b23246181ea9d50c14555``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``57cfea6fa6c6bd7ca27cbd9ccd5038f7``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``28bf2739f48b4da34a326498126c456b``)
+- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``fddefff8bfa2bbfa08b9cad36bcdf709``)
+- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``28105eb0f1256bf38b9bb310c701dc4e``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03078d15b265f3d2d73ce97661e370b1``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``682be39339ef36a622b363b8ee2ff88b``)
 
 
 Please cite the following references if you use any of these pre-trained classifiers:
@@ -55,12 +55,12 @@ Silva (16S/18S rRNA)
 
 QIIME-compatible SILVA releases (up to release 132), as well as the licensing information for commercial and non-commercial use, are available at https://www.arb-silva.de/download/archive/qiime.
 
-We also provide pre-formatted SILVA reference sequence and taxonomy files here.
+We also provide pre-formatted SILVA reference sequence and taxonomy files here that were processed using `RESCRIPt <https://github.com/bokulich-lab/RESCRIPt>`_.
 
-- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs.qza>`_ (MD5: ``7f3ec37359911f7d7d1a745dfe9c5ffe``)
-- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax.qza>`_ (MD5: ``d9d2ec745f25eca522a6fa32f56a2982``)
-- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``98ffd2cec2840df3c2211fc999887bb9``)
-- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``6c261dbb93d022b69da2dd3361744fcc``)
+- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs.qza>`_ (MD5: ``de8886bb2c059b1e8752255d271f3010``)
+- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax.qza>`_ (MD5: ``f12d5b78bf4b1519721fe52803581c3d``)
+- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``a914837bc3f8964b156a9653e2420d22``)
+- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``e2c40ae4c60cbf75e24312bb24652f2c``)
 
 
 Please cite the following references if you use any of these pre-formatted files:
