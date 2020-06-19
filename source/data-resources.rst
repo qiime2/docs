@@ -67,7 +67,7 @@ Please cite the following references if you use any of these pre-formatted files
 License Information:
 ^^^^^^^^^^^^^^^^^^^^
 
-SILVA 138 is released under a `Create Commons Attribution 4.0 License <https://creativecommons.org/licenses/by/4.0/>`_ (CC-BY 4.0). See the `SILVA license <https://www.arb-silva.de/silva-license-information/>`_ for more information.
+The pre-formatted SILVA reference sequence and taxonomy files above are available under a `Creative Commons Attribution 4.0 License <https://creativecommons.org/licenses/by/4.0/>`_ (CC-BY 4.0). See the `SILVA license <https://www.arb-silva.de/silva-license-information/>`_ for more information.
 
 The files above were downloaded and processed from the SILVA 138 release data using the `RESCRIPt plugin <https://github.com/bokulich-lab/RESCRIPt>`_ and `q2-feature-classifier <https://github.com/qiime2/q2-feature-classifier/>`_. Sequences were downloaded, reverse-transcribed, and filtered to remove sequences based on length, presence of ambiguous nucleotides and/or homopolymer. Taxonomy was parsed to generate even 7-level rank taxonomic labels, including species labels. Sequences and taxonomies were dereplicated using RESCRIPt. Sequences and taxonomies representing the 515F/806R region of the 16S SSU rRNA gene were extracted with q2-feature-classifier, followed by dereplication with RESCRIPt.
 
