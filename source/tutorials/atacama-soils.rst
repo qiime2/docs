@@ -110,7 +110,7 @@ for two reasons - one, to speed up the tutorial run time, and two, to
 demonstrate the functionality.
 
 .. warning:: The following example of subsampling reads is meant to
-   illustrate the subsampling capability of ``q2-demux``, if you are
+   illustrate the subsampling capability of ``q2-demux``. If you are
    considering subsampling the reads of a study, please make sure you have
    thought it through and have reasonable justification.
 
@@ -178,9 +178,9 @@ and ``--p-trunc-len-r``, but that is not a requirement.
      --o-representative-sequences rep-seqs.qza \
      --o-denoising-stats denoising-stats.qza
 
-At this stage, you will have artifacts containing the feature table and
-corresponding feature sequences. You can generate summaries of those as
-follows, as well as for the DADA2 denoising stats.
+At this stage, you will have artifacts containing the feature table,
+corresponding feature sequences, and DADA2 denoising stats. You
+can generate summaries of these as follows.
 
 .. command-block::
 
