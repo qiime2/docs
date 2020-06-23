@@ -53,56 +53,24 @@ Next, you'll download the multiplexed reads. You will download three
 ``fastq.gz`` files, corresponding to the forward, reverse, and barcode (i.e.,
 index) reads. These files contain a subset of the reads in the full data set
 generated for this study, which allows for the following commands to be run
-relatively quickly. If you are only planning to run through the commands
-presented here to get experience with the first steps of paired-end read
-analysis, you can use the 1% subsample data set so that the commands will run
-quickly. If you're planning to work through the questions presented at the
-end of this document to gain more experience with QIIME analysis and data
-interpretation, you should use the 10% subsample data set so that the
-analysis results will be supported by more sequence data.
-
-1% subsample data
-~~~~~~~~~~~~~~~~~
+relatively quickly, however, we will perform additional subsampling in this
+tutorial to further improve the run time.
 
 .. command-block::
 
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/1p/forward.fastq.gz
-   :saveas: emp-paired-end-sequences/forward.fastq.gz
-
-.. download::
-   :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/1p/reverse.fastq.gz
-   :saveas: emp-paired-end-sequences/reverse.fastq.gz
-
-.. download::
-   :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/1p/barcodes.fastq.gz
-   :saveas: emp-paired-end-sequences/barcodes.fastq.gz
-
-10% subsample data
-~~~~~~~~~~~~~~~~~~
-
-.. command-block::
-   :no-exec:
-
-   mkdir emp-paired-end-sequences
-
-.. download::
-   :no-exec:
    :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :no-exec:
    :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :no-exec:
    :url: https://data.qiime2.org/2020.6/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
-
 
 .. _`atacama demux`:
 
@@ -134,22 +102,61 @@ generate and view a summary of how many sequences were obtained per sample.
      --m-barcodes-column barcode-sequence \
      --p-rev-comp-mapping-barcodes \
      --i-seqs emp-paired-end-sequences.qza \
-     --o-per-sample-sequences demux.qza \
+     --o-per-sample-sequences demux-full.qza \
      --o-error-correction-details demux-details.qza
 
-   qiime demux summarize \
-     --i-data demux.qza \
-     --o-visualization demux.qzv
+Let's subsample the data. We will perform this subsampling in this tutorial
+for two reasons - one, to speed up the tutorial run time, and two, to
+demonstrate the functionality.
 
-After demultiplexing reads, we'll look at the sequence quality based on
-ten-thousand randomly selected reads, and then denoise the data. When you
-view the quality plots, note that in contrast to the corresponding plots in
-:doc:`the moving pictures tutorial <moving-pictures>`, there are now two
-interactive plots to be considered together. The plot on the left presents
-the quality scores for the forward reads, and the plot on the right presents
-the quality scores for the reverse reads. We'll use these plots to determine
-what trimming parameters we want to use for denoising with DADA2, and then
-denoise the reads using ``dada2 denoise-paired``.
+.. warning:: The following example of subsampling reads is meant to
+   illustrate the subsampling capability of ``q2-demux``, if you are
+   considering subsampling the reads of a study, please make sure you have
+   thought it through and have reasonable justification.
+
+.. command-block::
+
+   qiime demux subsample-paired \
+     --i-sequences demux-full.qza \
+     --p-fraction 0.3 \
+     --o-subsampled-sequences demux-subsample.qza
+
+   qiime demux summarize \
+     --i-data demux-subsample.qza \
+     --o-visualization demux-subsample.qzv
+
+Let's take a look at the summary in ``demux-subsample.qzv``. In the
+"Per-sample sequence counts" table on the "Overview" tab, there are 75
+samples in the data. If we look at the last 20 or so rows in the table,
+though, we will observe that many samples have fewer than 100 reads in them -
+let's filter those samples out of the data:
+
+.. warning:: The following example of filtering samples is meant to
+   illustrate the filtering capability of ``q2-demux``, if you are
+   considering filtering samples out of a study, please make sure you have
+   thought it through and have reasonable justification.
+
+.. command-block::
+
+   qiime tools export \
+     --input-path demux-subsample.qzv \
+     --output-path ./demux-subsample/
+
+   qiime demux filter-samples \
+     --i-demux demux-subsample.qza \
+     --m-metadata-file ./demux-subsample/per-sample-fastq-counts.tsv \
+     --p-where 'CAST([forward sequence count] AS INT) > 100' \
+     --o-filtered-demux demux.qza
+
+Next, we'll look at the sequence quality based on ten-thousand randomly
+selected reads from the subsampled and filtered data, and then denoise the
+data. When you view the quality plots, note that in contrast to the
+corresponding plots in :doc:`the moving pictures tutorial <moving-pictures>`,
+there are now two interactive plots to be considered together. The plot on
+the left presents the quality scores for the forward reads, and the plot on
+the right presents the quality scores for the reverse reads. We'll use these
+plots to determine what trimming parameters we want to use for denoising with
+DADA2, and then denoise the reads using ``dada2 denoise-paired``.
 
 In this example we have 150-base forward and reverse reads. Since we need the
 reads to be long enough to overlap when joining paired ends, the first
@@ -173,7 +180,7 @@ and ``--p-trunc-len-r``, but that is not a requirement.
 
 At this stage, you will have artifacts containing the feature table and
 corresponding feature sequences. You can generate summaries of those as
-follows.
+follows, as well as for the DADA2 denoising stats.
 
 .. command-block::
 
@@ -185,10 +192,6 @@ follows.
    qiime feature-table tabulate-seqs \
      --i-data rep-seqs.qza \
      --o-visualization rep-seqs.qzv
-
-As well, you can visualize the denoising stats by running:
-
-.. command-block::
 
    qiime metadata tabulate \
      --m-input-file denoising-stats.qza \
@@ -237,6 +240,9 @@ data.
    increasing average soil relative humidity?
 
 #. What phyla differ in abundance across vegetated and unvegetated sites?
+
+#. How do your conclusions differ if you skip the subsampling step above, if
+   at all?
 
 Acknowledgements
 ----------------
