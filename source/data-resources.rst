@@ -10,10 +10,10 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``fddefff8bfa2bbfa08b9cad36bcdf709``)
-- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``28105eb0f1256bf38b9bb310c701dc4e``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03078d15b265f3d2d73ce97661e370b1``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.6/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``682be39339ef36a622b363b8ee2ff88b``)
+- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2020.8/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``fddefff8bfa2bbfa08b9cad36bcdf709``)
+- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.8/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``28105eb0f1256bf38b9bb310c701dc4e``)
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2020.8/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``03078d15b265f3d2d73ce97661e370b1``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2020.8/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``682be39339ef36a622b363b8ee2ff88b``)
 
 
 Please cite the following references if you use any of these pre-trained classifiers:
@@ -53,10 +53,10 @@ QIIME-compatible SILVA releases (up to release 132), as well as the licensing in
 
 We also provide pre-formatted SILVA reference sequence and taxonomy files here that were processed using `RESCRIPt <https://github.com/bokulich-lab/RESCRIPt>`_. See licensing information below if you use these files.
 
-- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs.qza>`_ (MD5: ``de8886bb2c059b1e8752255d271f3010``)
-- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax.qza>`_ (MD5: ``f12d5b78bf4b1519721fe52803581c3d``)
-- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2020.6/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``a914837bc3f8964b156a9653e2420d22``)
-- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2020.6/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``e2c40ae4c60cbf75e24312bb24652f2c``)
+- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2020.8/common/silva-138-99-seqs.qza>`_ (MD5: ``de8886bb2c059b1e8752255d271f3010``)
+- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2020.8/common/silva-138-99-tax.qza>`_ (MD5: ``f12d5b78bf4b1519721fe52803581c3d``)
+- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2020.8/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``a914837bc3f8964b156a9653e2420d22``)
+- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2020.8/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``e2c40ae4c60cbf75e24312bb24652f2c``)
 
 
 Please cite the following references if you use any of these pre-formatted files:
@@ -97,5 +97,5 @@ The following databases are intended for use with q2-fragment-insertion, and
 are constructed directly from the
 `SEPP-Refs project <https://github.com/smirarab/sepp-refs/>`_.
 
-- `Silva 128 SEPP reference database <https://data.qiime2.org/2020.6/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
-- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2020.6/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
+- `Silva 128 SEPP reference database <https://data.qiime2.org/2020.8/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
+- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2020.8/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
