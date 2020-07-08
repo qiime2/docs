@@ -289,7 +289,7 @@ First, we will download the reference database:
 Alpha Rarefaction and Selecting a Rarefaction Depth
 ===================================================
 
-We now have a feature table (observation matrix) of ASVs in each sample, and a phylogenetic tree representing those ASVs, so are almost ready to perform various analyses of microbial diversity. However, first we must normalize our data to account for uneven sequencing depth between samples.
+We now have a feature table (observation matrix) of ASVs in each sample and a phylogenetic tree representing those ASVs, so we're almost ready to perform various analyses of microbial diversity. However, first we must normalize our data to account for uneven sequencing depth between samples.
 
 Although sequencing depth in a microbiome sample does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
@@ -298,7 +298,7 @@ Current best practices suggest the use of rarefaction, a normalization via sub-s
 We'll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
 ``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table, we found that the sample with the fewest sequences in the denoised table has 85 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from 22 samples. So, let's set this as our maximum sequencing depth.
 
-At each sampling depth, 10 rarefied tables are usually calculated to provide an error estimate, although this can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
+By default, 10 rarefied tables are calculated at each sampling depth to provide an error estimate. This can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
 
 .. command-block::
 
