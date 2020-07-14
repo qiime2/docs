@@ -16,6 +16,7 @@ install:
   - conda env create -q -n test-env --file qiime2-latest-py36-linux-conda.yml
   - conda activate test-env
   - pip install -r requirements.txt
+  - pip install https://github.com/qiime2/sphinx-ext-qiime2.git
   - pip install flake8
 script:
   - export SPHINXOPTS="-q"

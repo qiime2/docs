@@ -30,8 +30,6 @@ import sys
 
 import qiime2
 
-sys.path.insert(0, os.path.abspath('.'))
-
 
 # -- General configuration ------------------------------------------------
 
@@ -49,13 +47,13 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
-    'sphinx_extensions.question',
-    'sphinx_extensions.qiime1',
-    'sphinx_extensions.checkpoint',
-    'sphinx_extensions.command_block',
-    'sphinx_extensions.plugin_directory',
-    'sphinx_extensions.external_links',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
+    'q2doc.question',
+    'q2doc.qiime1',
+    'q2doc.checkpoint',
+    'q2doc.command_block',
+    'q2doc.plugin_directory',
+    'q2doc.external_links',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
