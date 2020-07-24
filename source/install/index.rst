@@ -52,6 +52,7 @@ The QIIME 2 Core 2020.8 distribution includes the QIIME 2 framework, ``q2cli`` (
 - ``q2-deblur``
 - ``q2-demux``
 - ``q2-diversity``
+- ``q2-diversity-lib``
 - ``q2-emperor``
 - ``q2-feature-classifier``
 - ``q2-feature-table``
