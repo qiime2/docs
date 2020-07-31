@@ -103,7 +103,7 @@ with different parameter settings.
 
 .. command-block::
 
-   qiime quality-filter q-score-joined \
+   qiime quality-filter q-score \
      --i-demux demux-joined.qza \
      --o-filtered-sequences demux-joined-filtered.qza \
      --o-filter-stats demux-joined-filter-stats.qza
