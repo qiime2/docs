@@ -235,7 +235,7 @@ Quality filtering
 **Relevant plugin**: :doc:`quality-filter <../plugins/available/quality-filter/index>`
 
 You can perform different types of quality filtering with the :doc:`quality filter <../plugins/available/quality-filter/index>` plugin.
-The `q-score` method is for single- or paired-end sequences (i.e. `SampleData[PairedEndSequencesWithQuality | SequencesWithQuality]`) while `q-score-joined` is for joined reads (i.e. `SampleData[JoinedSequencesWithQuality]` after merging).
+The `q-score` method is for single- or paired-end sequences as well as joined reads after merging (i.e. `SampleData[PairedEndSequencesWithQuality | SequencesWithQuality] | SampleData[JoinedSequencesWithQuality]`).
 The option descriptions for each method cover the different types of available quality filtering.
 
 Dereplicating sequences

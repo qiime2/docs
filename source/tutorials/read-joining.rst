@@ -118,7 +118,7 @@ If you are instead interested in experimenting with an analysis workflow that
 is more like QIIME 1 processing (for example, to compare your Deblur or DADA2
 result with a QIIME 1-like pipeline), you should next dereplicate and cluster
 your sequences. If you try this option, we strongly encourage you to call
-``qiime quality-filter q-score-joined`` with a higher ``min-quality`` threshold
+``qiime quality-filter q-score`` with a higher ``min-quality`` threshold
 - possibly ``--p-min-quality 20`` or ``--p-min-quality 30`` (see `Bokulich et
 al. 2013`_ for more details). You can then follow the steps in the `OTU
 clustering tutorial`_. After clustering, you will likely want to filter
