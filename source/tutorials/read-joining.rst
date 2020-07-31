@@ -96,10 +96,9 @@ Sequence quality control
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next we’ll apply quality control to our sequences using ``quality-filter
-q-score-joined``. This method is identical to ``quality-filter q-score``,
-except that it operated on joined reads. The parameters to this method have not
-been extensively benchmarked on joined read data, so we recommend experimenting
-with different parameter settings.
+q-score``. The parameters to this method have not been extensively benchmarked
+on joined read data, so we recommend experimenting with different parameter
+settings.
 
 .. command-block::
 
