@@ -96,14 +96,13 @@ Sequence quality control
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next we’ll apply quality control to our sequences using ``quality-filter
-q-score-joined``. This method is identical to ``quality-filter q-score``,
-except that it operated on joined reads. The parameters to this method have not
-been extensively benchmarked on joined read data, so we recommend experimenting
-with different parameter settings.
+q-score``. The parameters to this method have not been extensively benchmarked
+on joined read data, so we recommend experimenting with different parameter
+settings.
 
 .. command-block::
 
-   qiime quality-filter q-score-joined \
+   qiime quality-filter q-score \
      --i-demux demux-joined.qza \
      --o-filtered-sequences demux-joined-filtered.qza \
      --o-filter-stats demux-joined-filter-stats.qza
@@ -118,7 +117,7 @@ If you are instead interested in experimenting with an analysis workflow that
 is more like QIIME 1 processing (for example, to compare your Deblur or DADA2
 result with a QIIME 1-like pipeline), you should next dereplicate and cluster
 your sequences. If you try this option, we strongly encourage you to call
-``qiime quality-filter q-score-joined`` with a higher ``min-quality`` threshold
+``qiime quality-filter q-score`` with a higher ``min-quality`` threshold
 - possibly ``--p-min-quality 20`` or ``--p-min-quality 30`` (see `Bokulich et
 al. 2013`_ for more details). You can then follow the steps in the `OTU
 clustering tutorial`_. After clustering, you will likely want to filter
