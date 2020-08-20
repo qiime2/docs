@@ -255,8 +255,6 @@ QIIME 2's diversity analyses are available through the ``q2-diversity`` plugin, 
   * unweighted UniFrac distance (a qualitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
   * weighted UniFrac distance (a quantitative measure of community dissimilarity that incorporates phylogenetic relationships between the features)
 
-.. note:: 🏗👷 Some descriptions are changing in QIIME 2's ``diversity`` tools. The phrase **"observed otus" is being replaced with "observed features"**, because "features" better describes the different ways in which users work with non-taxonomic features. This will affect both documentation and (in places) the names of command arguments. You will see both phrases, but these measures of diversity are identical `under the hood <http://scikit-bio.org/docs/latest/generated/skbio.diversity.alpha.observed_otus.html#skbio.diversity.alpha.observed_otus>`_.
-
 An important parameter that needs to be provided to this script is ``--p-sampling-depth``, which is the even sampling (i.e. rarefaction) depth. Because most diversity metrics are sensitive to different sampling depths across different samples, this script will randomly subsample the counts from each sample to the value provided for this parameter. For example, if you provide ``--p-sampling-depth 500``, this step will subsample the counts in each sample without replacement so that each sample in the resulting table has a total count of 500. If the total count for any sample(s) are smaller than this value, those samples will be dropped from the diversity analysis. Choosing this value is tricky. We recommend making your choice by reviewing the information presented in the ``table.qzv`` file that was created above. Choose a value that is as high as possible (so you retain more sequences per sample) while excluding as few samples as possible.
 
 .. question::
@@ -368,10 +366,10 @@ The bottom plot in this visualization is important when grouping samples by meta
     The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
 
 .. question::
-    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_features" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
 
 .. question::
-    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_features" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
 
 
 .. _`moving pics taxonomy`:

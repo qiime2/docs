@@ -12,7 +12,7 @@ Inferring phylogenies
 =====================
 Several downstream diversity metrics, available within QIIME 2, require that a
 phylogenetic tree be constructed using the Operational Taxonomic Units
-(`OTUs`_) or Exact Sequence Variants (`ESVs`_) being investigated.
+(`OTUs`_) or Amplicon Sequence Variants (`ASVs`_) being investigated.
 
 *But how do we proceed to construct a phylogeny from our sequence data?*
 
@@ -563,7 +563,7 @@ This can all be accomplished by simply running the following:
 **Congratulations! You now know how to construct a phylogeny in QIIME 2!**
 
 .. _OTUs: https://en.wikipedia.org/wiki/Operational_taxonomic_unit
-.. _ESVs: https://doi.org/10.1038/ismej.2019.119
+.. _ASVs: https://doi.org/10.1128%2FmSystems.00191-16
 .. _fragment insertion: https://doi.org/10.1128/mSystems.00021-18
 .. _fragment insertion examples: https://library.qiime2.org/plugins/q2-fragment-insertion/16/
 .. _phylogeny: https://simple.wikipedia.org/wiki/Phylogeny
