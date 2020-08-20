@@ -366,10 +366,10 @@ The bottom plot in this visualization is important when grouping samples by meta
     The value that you provide for ``--p-max-depth`` should be determined by reviewing the "Frequency per sample" information presented in the ``table.qzv`` file that was created above. In general, choosing a value that is somewhere around the median frequency seems to work well, but you may want to increase that value if the lines in the resulting rarefaction plot don't appear to be leveling out, or decrease that value if you seem to be losing many of your samples due to low total frequencies closer to the minimum sampling depth than the maximum sampling depth.
 
 .. question::
-    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_features" metric, which body sites (if any) appear to exhibit sufficient diversity coverage (i.e., their rarefaction curves level off)? How many sequence variants appear to be present in those body sites?
 
 .. question::
-    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_otus" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
+    When grouping samples by "body-site" and viewing the alpha rarefaction plot for the "observed_features" metric, the line for the "right palm" samples appears to level out at about 40, but then jumps to about 140. What do you think is happening here? (Hint: be sure to look at both the top and bottom plots.)
 
 
 .. _`moving pics taxonomy`:

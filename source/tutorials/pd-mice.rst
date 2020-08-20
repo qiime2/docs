@@ -309,7 +309,7 @@ By default, 10 rarefied tables are calculated at each sampling depth to provide 
      --p-min-depth 10 \
      --p-max-depth 4250
 
-The visualization file will display two plots. The upper plot will display the alpha diversity (observed OTUs or shannon) as a function of the sampling depth. This is used to determine whether the richness or evenness has saturated based on the sampling depth. The rarefaction curve should “level out” as you approach the maximum sampling depth. Failure to do so, especially with a diversity-only metric such as observed OTUs or Faith's PD diversity, may indicate that the richness in the samples has not been fully saturated.
+The visualization file will display two plots. The upper plot will display the alpha diversity (observed features or shannon) as a function of the sampling depth. This is used to determine whether the richness or evenness has saturated based on the sampling depth. The rarefaction curve should “level out” as you approach the maximum sampling depth. Failure to do so, especially with a diversity-only metric such as observed features or Faith's PD diversity, may indicate that the richness in the samples has not been fully saturated.
 
 The second plot shows the number of samples in each metadata category group at each sampling depth. This is useful to determine the sampling depth where samples are lost, and whether this may be biased by metadata column group values. Remember that rarefaction is a two-step process and samples that do not meet the rarefaction depth are filtered out of the table. We can use the curves to look at the number of samples by different metadata columns.
 
