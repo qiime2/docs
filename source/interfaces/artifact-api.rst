@@ -51,12 +51,12 @@ A powerful feature of QIIME 2 is that you can export different types of views fr
 
    imported_artifact = Artifact.import_data("FeatureTable[Frequency]", df)
 
-The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugins. Here we'll compute the *Observed OTUs* alpha diversity metric using the ``q2-diversity`` plugin. The resulting ``Artifact`` will be of type ``SampleData[AlphaDiversity]``, and we can access a ``pd.Series`` as a view of this ``Artifact``.
+The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugins. Here we'll compute the *Observed Features* alpha diversity metric using the ``q2-diversity`` plugin. The resulting ``Artifact`` will be of type ``SampleData[AlphaDiversity]``, and we can access a ``pd.Series`` as a view of this ``Artifact``.
 
 .. code-block:: python
 
    >>> from qiime2.plugins import diversity
-   >>> alpha_result = diversity.methods.alpha(table=rarefied_table, metric='observed_otus')
+   >>> alpha_result = diversity.methods.alpha(table=rarefied_table, metric='observed_features')
    >>> alpha_diversity = alpha_result.alpha_diversity
    >>> alpha_diversity.view(pd.Series)
    L1S105    24
@@ -68,7 +68,7 @@ The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugin
    L1S76     20
    L1S8      17
    ...
-   Name: observed_otus, dtype: int64
+   Name: observed_features, dtype: int64
 
 Finally, we can save our ``Artifacts`` as ``.qza`` files and exit the interpreter as follows:
 
