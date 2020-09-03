@@ -349,7 +349,7 @@ Diversity analysis
 
 The first step in hypothesis testing in microbial ecology is typically to look at within- (alpha) and between-sample (beta) diversity. We can calculate diversity metrics, apply appropriate statistical tests, and visualize the data using the ``q2-diversity`` plugin.
 
-We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method, which ratifies the input feature table, calculates several commonly used alpha- and beta-diversity metrics, and produces principal coordinate analysis (PCoA) visualizations in Emperor for the beta diversity metrics. By default, the metrics computed are:
+We'll start by using the ``qiime diversity core-metrics-phylogenetic`` method, which rarifies the input feature table, calculates several commonly used alpha- and beta-diversity metrics, and produces principal coordinate analysis (PCoA) visualizations in Emperor for the beta diversity metrics. By default, the metrics computed are:
 
 -  **Alpha Diversity**
 
