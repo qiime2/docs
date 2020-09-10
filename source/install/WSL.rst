@@ -24,6 +24,7 @@ Restart the terminal to have changes take effect. Ensure you have the latest con
     conda create --name <name of new environment>
 
 Packages for your project can now be installed in this environment, keeping them separate from any other projects you may have, and ensuring that different dependencies do not clash. For instance, QIIME 2 can be installed into this environment as follows:
+
 Navigate to :doc:`Natively installing QIIME 2 <native>` in these docs to find the link for the latest version of QIIME 2. Use this to download QIIME 2:
 
 .. command-block::
@@ -32,7 +33,7 @@ Navigate to :doc:`Natively installing QIIME 2 <native>` in these docs to find th
     wget <link from QIIME 2 docs>
     conda env update --file <RELEASE-NAME>.yml
 
-Or you can install QIIME 2 into a new environment by as follows:
+Or install QIIME 2 into a new environment as follows:
 
 .. command-block::
     :no-exec:
