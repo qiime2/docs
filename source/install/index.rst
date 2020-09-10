@@ -9,12 +9,13 @@ scenario.
    :maxdepth: 2
 
    native
+   WSL
    virtual/index
 
 Recommendations
 ---------------
 
-The :doc:`native conda installation <native>` is generally the recommended
+The :doc: `native conda installation <native>`_ is generally the recommended
 method of installation, but this isn't always available or a straight-forward
 option for all cases. In general we recommend the following:
 
@@ -28,7 +29,7 @@ option for all cases. In general we recommend the following:
 
   - On newer versions of Windows, performing a :doc:`native conda
     installation <native>` in the `Windows Subsystem for Linux`_ usually
-    works well
+    works well. See :doc:`here <WSL>` for instructions on how to set up the Windows Subsystem.
   - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
     are good backup options
 
