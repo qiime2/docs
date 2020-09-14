@@ -608,7 +608,7 @@ Now, let's use the filtered table to build an interactive barplot of the taxonom
 
 .. question::
 
-   Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprising you? Why or why not?
+   Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprise you? Why or why not?
 
 .. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance.
 
@@ -927,7 +927,7 @@ This pipeline generates a number of output artifacts and visualizations. You can
 
 .. a whopping 90% accuracy rate for distinguishing 4 different class labels! Looks like BOTH genotype AND donor status are strong drivers of the microbiome.
 
-Looks like we did pretty well! So we can see what features are most predictive of each sample class (donor and genotype groups). The importance scores are stored in the ``./sample-classifier-results/feature_importance.qza`` artifact (pro tip: this can be view with the ``qiime metadata tabulate`` command we covered earlier). Here we will generate a heatmap showing the mean abundance of the 100 most important ASVs in each genotype and donor group.
+Looks like we did pretty well! So we can see what features are most predictive of each sample class (donor and genotype groups). The importance scores are stored in the ``./sample-classifier-results/feature_importance.qza`` artifact (pro tip: this can be viewed with the ``qiime metadata tabulate`` command we covered earlier). Here we will generate a heatmap showing the mean abundance of the 100 most important ASVs in each genotype and donor group.
 
 .. command-block::
 
