@@ -483,7 +483,7 @@ Let's also check whether there's a relationship between the cage in which a mous
 .. Yep, donor is a significant and large effect, as we expected from the PCoA
 .. Overall, cage is significant but some of this is drive by between donor differences.
 
-A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistically significant difference even if it's caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
+A significant difference in PERMANOVA can reflect a large difference between the groups or differences in variances within a group. This means that we might see a statistically significant difference even if it's caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
 
 We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on ``cage_id`` to check whether are cage-related differences are due to large within-cage variance.
 
@@ -514,9 +514,7 @@ We can also use the adonis action to look at a multivariate model. The ``adonis`
 
 .. question::
 
-   1. Is there a significant effect of donor?
-   2. From the metadata, we know that cage C31, C35, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C35? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
-   3. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
+   1. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
 
