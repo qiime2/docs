@@ -56,7 +56,7 @@ The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugin
 .. code-block:: python
 
    >>> from qiime2.plugins import diversity
-   >>> alpha_result = diversity.pipelines.alpha(table=rarefied_table, metric='observed_features')
+   >>> alpha_result = diversity.methods.alpha(table=rarefied_table, metric='observed_features')
    >>> alpha_diversity = alpha_result.alpha_diversity
    >>> alpha_diversity.view(pd.Series)
    L1S105    24
