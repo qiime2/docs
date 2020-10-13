@@ -76,7 +76,7 @@ Finally, we can save our ``Artifacts`` as ``.qza`` files and exit the interprete
 
    >>> rarefied_table.save('rare.qza')
    'rare.qza'
-   >>> alpha_diversity.save('oo.qza')
+   >>> alpha_diversity.save('obs_features.qza')
    'oo.qza'
    >>> exit
 
@@ -85,7 +85,7 @@ Another powerful feature of QIIME 2 is that you can combine interfaces. For exam
 .. command-block::
    :no-exec:
 
-   qiime diversity alpha-group-significance --i-alpha-diversity oo.qza --m-metadata-file sample-metadata.tsv  --o-visualization oo-group-significance.qzv
+   qiime diversity alpha-group-significance --i-alpha-diversity obs_features.qza --m-metadata-file sample-metadata.tsv  --o-visualization obs-f-group-significance.qzv
 
 The above command as an API call is:
 
