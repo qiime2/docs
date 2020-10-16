@@ -3,7 +3,7 @@ Artifact API
 
 .. note:: This guide assumes you have performed the steps in the :doc:`Moving Pictures tutorial <../tutorials/moving-pictures>`. The ``table.qza`` and ``sample-metadata.tsv`` files generated in that tutorial are used here.
 
-The Artifact API is a Python 3 application programmer interface (API) for QIIME 2. The Artifact API supports interactive computing with QIIME 2 using the Python 3 programming language. This API is intended for advanced/technical users. The API is automatically generated, and its availability depends on which QIIME 2 plugins are currently installed. It has been optimized for use in the `Jupyter Notebook`_, which is currently our primary target for use of this API. The Artifact API is a part of the QIIME 2 framework; no additional software needs to be installed to use it.
+The Artifact API is a Python 3 application programming interface (API) for QIIME 2. The Artifact API supports interactive computing with QIIME 2 using the Python 3 programming language. This API is intended for advanced/technical users. The API is automatically generated, and its availability depends on which QIIME 2 plugins are currently installed. It has been optimized for use in the `Jupyter Notebook`_, which is currently our primary target for use of this API. The Artifact API is a part of the QIIME 2 framework; no additional software needs to be installed to use it.
 
 We'll now explore some of the same methods and visualizers introduced in the :doc:`Moving Pictures tutorial <../tutorials/moving-pictures>`, this time in the Python interpreter instead of the command line interface. First, we'll load a QIIME 2 ``Artifact``, in this case a feature table. We'll then pass that to the ``q2-feature-table`` plugin's ``rarefy`` method, which will return a new Artifact.
 
@@ -56,7 +56,7 @@ The ``rarefied_table`` artifact can be passed to methods of other QIIME 2 plugin
 .. code-block:: python
 
    >>> from qiime2.plugins import diversity
-   >>> alpha_result = diversity.methods.alpha(table=rarefied_table, metric='observed_features')
+   >>> alpha_result = diversity.pipelines.alpha(table=rarefied_table, metric='observed_features')
    >>> alpha_diversity = alpha_result.alpha_diversity
    >>> alpha_diversity.view(pd.Series)
    L1S105    24
@@ -76,8 +76,8 @@ Finally, we can save our ``Artifacts`` as ``.qza`` files and exit the interprete
 
    >>> rarefied_table.save('rare.qza')
    'rare.qza'
-   >>> alpha_diversity.save('oo.qza')
-   'oo.qza'
+   >>> alpha_diversity.save('obs_features.qza')
+   'obs_features.qza'
    >>> exit
 
 Another powerful feature of QIIME 2 is that you can combine interfaces. For example, you could develop a Python script that automatically processes files for you to generate results as we just did, and then perform analysis of those files using the :doc:`command line interface <q2cli>` or the :doc:`QIIME 2 Studio <q2studio>`. For instance, you could now continue your analysis and view some results on the command line as follows:
@@ -85,7 +85,7 @@ Another powerful feature of QIIME 2 is that you can combine interfaces. For exam
 .. command-block::
    :no-exec:
 
-   qiime diversity alpha-group-significance --i-alpha-diversity oo.qza --m-metadata-file sample-metadata.tsv  --o-visualization oo-group-significance.qzv
+   qiime diversity alpha-group-significance --i-alpha-diversity obs_features.qza --m-metadata-file sample-metadata.tsv  --o-visualization obs-f-group-significance.qzv
 
 The above command as an API call is:
 
