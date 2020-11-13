@@ -804,7 +804,7 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 .. question::
 
    1. Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
-   2. Can we visualize change over time without an animation? What happens if you color the plot by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Trying changing the colormap to a sequential colormap like viridis.*
+   2. Can we visualize change over time without an animation? What happens if you color the plot by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Try changing the colormap to a sequential colormap like viridis.*
 
 .. No clear pattern based on animations
 
