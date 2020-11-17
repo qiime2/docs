@@ -293,10 +293,10 @@ We now have a feature table (observation matrix) of ASVs in each sample and a ph
 
 Although sequencing depth in a microbiome sample does not directly relate to the original biomass in a community, the relative sequencing depth has a large impact on observed communities (`Weiss et al, 2017`_). Therefore, for most diversity metrics, a normalization approach is needed.
 
-Current best practices suggest the use of rarefaction, a normalization via sub-sampling without replacement. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It's both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
+Rarefaction is a method for normalization via sub-sampling without replacement and is commonly used as a workaround for the issue of uneven sequencing depth. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It's both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
 
 We'll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table, we found that the sample with the fewest sequences in the denoised table has 85 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from 22 samples. So, let's set this as our maximum sequencing depth.
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table, we found that the sample with the fewest sequences in the denoised table has 347 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from 22 samples. So, let's set this as our maximum sequencing depth.
 
 By default, 10 rarefied tables are calculated at each sampling depth to provide an error estimate. This can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
 
@@ -483,7 +483,7 @@ Let's also check whether there's a relationship between the cage in which a mous
 .. Yep, donor is a significant and large effect, as we expected from the PCoA
 .. Overall, cage is significant but some of this is drive by between donor differences.
 
-A significant difference in PERMANOVA can reflect a large difference between the group or differences in variances within a group. This means that we might see a statistically significant difference even if it's caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
+A significant difference in PERMANOVA can reflect a large difference between the groups or differences in variances within a group. This means that we might see a statistically significant difference even if it's caused by variation within one group. Distance boxplots can help give a visual sense of this, but it's nice to use a statistical test to confirm this. We can use the `permdisp`_ to help rule out differences due to a high degree of dispersion (within-group variance) in one of the groups of interest.
 
 We can specify that we want to use permdisp using the ``--p-method`` flag in ``qiime diversity beta-group-significance``. Let's explore dispersion based on ``cage_id`` to check whether are cage-related differences are due to large within-cage variance.
 
@@ -514,9 +514,7 @@ We can also use the adonis action to look at a multivariate model. The ``adonis`
 
 .. question::
 
-   1. Is there a significant effect of donor?
-   2. From the metadata, we know that cage C31, C35, and C42 all house mice transplanted from one donor, and that cages C43, C44, and C49 are from the other. Is there a significant difference in the microbial communities between samples collected in cage C31 and C35? How about between C31 and C43? Do the results look the way you expect, based on the boxplots for donor?
-   3. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
+   1. If you adjust for donor in the adonis model, do you retain an effect of genotype? What percentage of the variation does genotype explain?
 
 .. genotype is significant after adjusting for donor (p=~0.02) and explains about 4.25% of the variation, but heck, we'll take it
 
@@ -608,7 +606,7 @@ Now, let's use the filtered table to build an interactive barplot of the taxonom
 
 .. question::
 
-   Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprising you? Why or why not?
+   Visualize the data at level 2 (phylum level) and sort the samples by donor, then by genotype. Can you observe a consistent difference in phylum between the donors? Does this surprise you? Why or why not?
 
 .. No clear difference by phylum by donor. Not shocking given these are based on fecal samples from adults. Hopefully also maybe highlights the fact that phylum level isn't necessarily a good way to compare differential abundance.
 
@@ -619,7 +617,7 @@ Differential abundance with ANCOM
 
 Many microbiome investigators are interested in testing whether individual ASVs or taxa are more or less abundant in different sample groups. This is known as *differential abundance*. Microbiome data present several challenges for performing differential abundance using convential methods. Microbiome abundance data are inherently sparse (have a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with, such as ANOVA or t-tests, are not appropriate for performing differential abundance tests of microbiome data and lead to a high false-positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you're unfamiliar with the technique, it's worthwhile to review the `ANCOM paper`_ to better understand the method.
 
-Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering can provide better resolution and limit false discovery rate (FDR) penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts may be a real feature that is present only in that sample, may be a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stochastic process, or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample, further disrupting the relationship. Here, the filtering is performed as a trade off between the model, computational efficiency, and statistical practicality.
+Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering can provide better resolution and limit false discovery rate (FDR) penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts could be a real feature that is present only in that sample; a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stochastic process; or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample, further disrupting the relationship. Here, the filtering is performed as a trade off between the model, computational efficiency, and statistical practicality.
 
 .. command-block::
 
@@ -629,7 +627,7 @@ Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering
      --p-min-samples 4 \
      --o-filtered-table ./table_2k_abund.qza
 
-ANCOM fundamentally operates on a ``FeatureTable[Frequency]``, which contains the frequencies of features in each sample. However, ANCOM cannot tolerate zeros (because compositional methods typically use a log-transform or a ratio and you can't take the log or divide by zeros). To remove the zeros from our table, we add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
+ANCOM fundamentally operates on a ``FeatureTable[Frequency]``, which contains the frequencies of features in each sample. However, ANCOM cannot tolerate zeros because compositional methods typically use a log-transform or a ratio and you can't take the log or divide by zeros. To remove the zeros from our table, we can add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
 
 .. command-block::
 
@@ -806,7 +804,7 @@ We can start by exploring temporal change in the PCoA using the animations tab.
 .. question::
 
    1. Open the unweighted UniFrac emperor plot and color the samples by mouse id. Click on the “animations” tab and animate using the ``day_post_transplant`` as your gradient and ``mouse_id`` as your trajectory. Do you observe any clear temporal trends based on the PCoA?
-   2. What happens if you color by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Try changing the colormap to a sequential colormap like viridis.*
+   2. Can we visualize change over time without an animation? What happens if you color the plot by ``day_post_transplant``? Do you see a difference based on the day? *Hint: Try changing the colormap to a sequential colormap like viridis.*
 
 .. No clear pattern based on animations
 
@@ -927,7 +925,7 @@ This pipeline generates a number of output artifacts and visualizations. You can
 
 .. a whopping 90% accuracy rate for distinguishing 4 different class labels! Looks like BOTH genotype AND donor status are strong drivers of the microbiome.
 
-Looks like we did pretty well! So we can see what features are most predictive of each sample class (donor and genotype groups). The importance scores are stored in the ``./sample-classifier-results/feature_importance.qza`` artifact (pro tip: this can be view with the ``qiime metadata tabulate`` command we covered earlier). Here we will generate a heatmap showing the mean abundance of the 100 most important ASVs in each genotype and donor group.
+Looks like we did pretty well! So we can see what features are most predictive of each sample class (donor and genotype groups). The importance scores are stored in the ``./sample-classifier-results/feature_importance.qza`` artifact (pro tip: this can be viewed with the ``qiime metadata tabulate`` command we covered earlier). Here we will generate a heatmap showing the mean abundance of the 100 most important ASVs in each genotype and donor group.
 
 .. command-block::
 
