@@ -28,7 +28,7 @@ option for all cases. In general we recommend the following:
 
   - On newer versions of Windows, performing a :doc:`native conda
     installation <native>` in the `Windows Subsystem for Linux`_ usually
-    works well. See :doc:`here <WSL>` for instructions on how to set up the Windows Subsystem.
+    works well. See :doc:`the WSL tutorial <virtual/wsl>` for instructions on how to set up the Windows Subsystem.
   - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
     are good backup options
 
