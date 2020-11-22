@@ -9,7 +9,6 @@ scenario.
    :maxdepth: 2
 
    native
-   WSL
    virtual/index
 
 Recommendations
