@@ -1,4 +1,4 @@
-Setting up Windows to use QIIME 2
+Installing QIIME 2 using WSL
 ---------------------------------
 
 This section will demonstrate how to set up windows to allow QIIME 2 installation. Windows now allows users to install linux as a windows subsystem (WSL), the simplest way to use QIIME 2 on a machine with Windows OS is therefore to use this Windows subsystem for Linux.
@@ -22,4 +22,3 @@ Restart the terminal to have changes take effect. Packages for your project can 
 1. https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
 2. https://wiki.ubuntu.com/WSL
-
