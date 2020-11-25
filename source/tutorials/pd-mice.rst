@@ -252,7 +252,7 @@ After we finish denoising the data, we can check the results by looking at the s
 
 .. After denoising: 287 features
 .. Most sequences: recip.539.ASO.PD4.D14, 4996
-.. With 4250 seqs/sample, we retain 26 of 48 samples => 22 samples remain
+.. With 4250 seqs/sample, we retain 26 of 48 samples. 48-25=23 samples with fewer than 4250 total features.
 .. 3 features are found in 47 samples: 04c8be5a3a6ba2d70446812e99318905, ea2b0e4a93c24c6c3661cbe347f93b74, 1ad289cd8f44e109fd95de0382c5b252
 .. Sample recip.460.WT.HC3.D49 has the lowest final depth with 347 sequences
 .. the sample fails in the denoising stage
@@ -296,7 +296,7 @@ Although sequencing depth in a microbiome sample does not directly relate to the
 Rarefaction is a method for normalization via sub-sampling without replacement and is commonly used as a workaround for the issue of uneven sequencing depth. Rarefaction occurs in two steps: first, samples which are below the rarefaction depth are filtered out of the feature table. Then, all remaining samples are subsampled without replacement to get to the specified sequencing depth. It's both important and sometimes challenging to select a rarefaction depth for diversity analyses. Several strategies exist to figure out an appropriate rarefaction depth - we will primarily consider alpha rarefaction in this tutorial, because it is a data-driven way to approach the problem.
 
 We'll use ``qiime diversity alpha-rarefaction`` to subsample the ASV table at different depths (between ``--p-min-depth`` and
-``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table, we found that the sample with the fewest sequences in the denoised table has 347 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from 22 samples. So, let's set this as our maximum sequencing depth.
+``--p-max-depth``) and calculate the alpha diversity using one or more metrics (``--p-metrics``). When we checked the feature table, we found that the sample with the fewest sequences in the denoised table has 347 features and that the sample with the most has 4996 features. We want to set a maximum depth close to the maximum number of sequences. We also know that if we look at a sequencing depth around 4250 sequences per sample, we'll be looking at information from 25 samples. So, let's set this as our maximum sequencing depth.
 
 By default, 10 rarefied tables are calculated at each sampling depth to provide an error estimate. This can be adjusted using the ``--p-iterations`` parameter. We can check and see if there is a relationship between the alpha diversity and metadata by specifying the metadata file for the ``--m-metadata-file`` parameter.
 
