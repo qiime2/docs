@@ -53,15 +53,15 @@ The datasets required for this tutorial can be found below (to learn how these w
 
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/gneiss/sample-metadata.tsv
+   :url: https://data.qiime2.org/2021.2/tutorials/gneiss/sample-metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/gneiss/table.qza
+   :url: https://data.qiime2.org/2021.2/tutorials/gneiss/table.qza
    :saveas: table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/gneiss/taxa.qza
+   :url: https://data.qiime2.org/2021.2/tutorials/gneiss/taxa.qza
    :saveas: taxa.qza
 
 

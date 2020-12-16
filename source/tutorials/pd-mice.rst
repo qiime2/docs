@@ -105,7 +105,7 @@ Even though the mouse ID looks like a number, we will specify that it is categor
 The metadata is available as a `Google Sheet`_, or you can download it directly and save it as a TSV (tab-separated values) file.
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/sample_metadata.tsv
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/sample_metadata.tsv
    :saveas: metadata.tsv
 
 The sample metadata will be used throughout the tutorial. Let's run our first QIIME 2 command, to summarize and explore the metadata.
@@ -130,11 +130,11 @@ We will import the sequences as ``SampleData[SequencesWithQuality]``, which is t
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/manifest
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/manifest
    :saveas: manifest.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/demultiplexed_seqs.zip
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/demultiplexed_seqs.zip
    :saveas: demultiplexed_seqs.zip
 
 You'll need to unzip sequence archive you just downloaded:
@@ -269,7 +269,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
 First, we will download the reference database:
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/common/sepp-refs-gg-13-8.qza
+   :url: https://data.qiime2.org/2021.2/common/sepp-refs-gg-13-8.qza
    :saveas: sepp-refs-gg-13-8.qza
 
 .. note::
@@ -528,7 +528,7 @@ Up until now we have been performing diversity analyses directly on ASVs; in oth
 For this analysis, we'll use a pre-trained naive Bayes machine-learning classifier that was trained to differentiate taxa present in the 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). `This classifier works`_ by identifying k-mers that are diagnostic for particular taxonomic groups, and using that information to predict the taxonomic affiliation of each ASV. We can download the pre-trained classifier here:
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2021.2/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 It's worth noting that Naive Bayes classifiers perform best when they're trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database, and region of interest.
@@ -679,15 +679,15 @@ If you feel that these samples are not typical stool samples, it is possible to,
 Start by downloading the stool data, along with the 99% Greengene 13_8 reference data.
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/ref_seqs_v4.qza
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/ref_seqs_v4.qza
    :saveas: ref_seqs_v4.qza
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/ref_tax.qza
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/ref_tax.qza
    :saveas: ref_tax.qza
 
 .. download::
-   :url: https://data.qiime2.org/2020.11/tutorials/pd-mice/animal_distal_gut.qza
+   :url: https://data.qiime2.org/2021.2/tutorials/pd-mice/animal_distal_gut.qza
    :saveas: animal_distal_gut.qza
 
 Next retrain the classifier.
@@ -983,7 +983,7 @@ This suggests that there is a genotype-specific effect on the microbiome of mice
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _This classifier works: https://doi.org/10.1186/s40168-018-0470-z
 .. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
-.. _Google Sheet: https://data.qiime2.org/2020.11/tutorials/pd-mice/sample_metadata
+.. _Google Sheet: https://data.qiime2.org/2021.2/tutorials/pd-mice/sample_metadata
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
 .. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
 .. _confusion matrix: https://en.wikipedia.org/wiki/Confusion_matrix
