@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+import sys
+import pathlib
+
 # -*- coding: utf-8 -*-
 #
 # QIIME 2 documentation build configuration file, created by
@@ -27,6 +31,10 @@
 #
 import qiime2
 
+# Required to import from the utils module.
+sys.path.append(".")
+
+from utils import generate_plugin_dir  # noqa: E402
 
 # -- General configuration ------------------------------------------------
 
@@ -49,9 +57,14 @@ extensions = [
     'q2doc.qiime1',
     'q2doc.checkpoint',
     'q2doc.command_block',
-    'q2doc.plugin_directory',
     'q2doc.external_links',
 ]
+
+
+generate_plugin_dir()
+
+root = pathlib.Path(__file__).parent
+bibtex_bibfiles = [str(p.relative_to(root)) for p in root.rglob("*bib")]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
