@@ -396,3 +396,8 @@ linkcheck_timeout = 15
 # -- Options for mathjax --------------------------------------------------
 mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
                 'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+
+
+def setup(app):
+    app.connect('build-finished', cleanup_plugin_rst)
+    return {'version': '0.0.1'}
