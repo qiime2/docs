@@ -36,8 +36,9 @@ sys.path.insert(0, str(root))
 
 from utils import generate_plugin_rst, cleanup_plugin_rst  # noqa: E402
 
-# -- Custom configuration ------------------------------------------------
-# These items provide dynamic content dependencies for the build process.
+# -- Dynamic content configuration ----------------------------------------
+# These items generate and cleanup dynamic content required for the build
+# process.
 
 generate_plugin_rst()
 
