@@ -18,7 +18,7 @@ rst_dir = root / 'plugins' / 'available'
 plugin_directory_rst_dir = rst_dir
 
 
-def generate_rst():
+def generate_plugin_rst():
     logger.info(
         "Generating QIIME 2 plugin directory... (this may take a while)")
 
@@ -32,7 +32,7 @@ def generate_rst():
     loader = jinja2.PackageLoader('utils', '_templates')
     env = jinja2.Environment(loader=loader)
 
-    cleanup_rst()
+    cleanup_plugin_rst()
     os.mkdir(rst_dir)
 
     index_path = os.path.join(rst_dir, 'index.rst')
@@ -93,7 +93,7 @@ def generate_rst():
                 fh.write(rendered)
 
 
-def cleanup_rst():
+def cleanup_plugin_rst():
     if os.path.exists(plugin_directory_rst_dir):
         shutil.rmtree(plugin_directory_rst_dir)
 
@@ -103,8 +103,3 @@ def write_bibtex(records, path):
     for idx, record in enumerate(records):
         citations['key%d' % idx] = record
     citations.save(path)
-
-
-def generate_plugin_dir():
-    generate_rst()
-    cleanup_rst()
