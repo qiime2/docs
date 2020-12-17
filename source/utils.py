@@ -13,7 +13,7 @@ import qiime2.sdk
 
 
 logger = logging.getLogger(__name__)
-root = pathlib.Path(__file__).parent
+root = pathlib.Path(__file__).parent.absolute()
 rst_dir = root / 'plugins' / 'available'
 plugin_directory_rst_dir = rst_dir
 
@@ -93,8 +93,8 @@ def generate_plugin_rst():
                 fh.write(rendered)
 
 
-def cleanup_plugin_rst():
-    if os.path.exists(plugin_directory_rst_dir):
+def cleanup_plugin_rst(*_):
+    if plugin_directory_rst_dir.exists():
         shutil.rmtree(plugin_directory_rst_dir)
 
 
