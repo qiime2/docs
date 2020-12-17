@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-
-import sys
-import pathlib
-
 # -*- coding: utf-8 -*-
 #
 # QIIME 2 documentation build configuration file, created by
