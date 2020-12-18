@@ -28,7 +28,7 @@ help:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)/* ./source/plugins/available
 
 # Disable incremental builds for now until it is safe to use with the
 # `command-block` directive:

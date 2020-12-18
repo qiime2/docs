@@ -25,7 +25,26 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import sys
+import pathlib
+
 import qiime2
+
+# Required to import from the utils module.
+root = pathlib.Path(__file__).parent.absolute()
+sys.path.insert(0, str(root))
+
+from utils import generate_plugin_rst, cleanup_plugin_rst  # noqa: E402
+
+# -- Dynamic content configuration ----------------------------------------
+# These items generate and cleanup dynamic content required for the build
+# process.
+
+generate_plugin_rst()
+
+
+def setup(app):
+    app.connect('build-finished', cleanup_plugin_rst)
 
 
 # -- General configuration ------------------------------------------------
@@ -49,9 +68,11 @@ extensions = [
     'q2doc.qiime1',
     'q2doc.checkpoint',
     'q2doc.command_block',
-    'q2doc.plugin_directory',
     'q2doc.external_links',
 ]
+
+
+bibtex_bibfiles = [str(p.relative_to(root)) for p in root.rglob("*.bib")]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
