@@ -493,7 +493,7 @@ We can specify that we want to use permdisp using the ``--p-method`` flag in ``q
      --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
      --m-metadata-file metadata.tsv \
      --m-metadata-column cage_id \
-     --o-visualization core-metrics-results/unweighted-unifrac-cage-significance_disp.qzv \
+     --o-visualization core-metrics-results/weighted-unifrac-cage-significance_disp.qzv \
      --p-method permdisp
 
 .. question::
