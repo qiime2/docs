@@ -36,6 +36,7 @@ Next we need to install it (both as a Python package, and as a Node.js package):
 .. command-block::
    :no-exec:
 
+   conda install gevent nodejs -c defaults --override-channels
    pip install .
    npm install && npm run build
 
