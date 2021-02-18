@@ -39,6 +39,7 @@ jobs:
         conda env create -q -p ./test-env --file $envFile
 
     - name: install conda dependencies
+      shell: bash -l {0}
       run: |
         source "$CONDA/etc/profile.d/conda.sh"
         conda install -p ./test-env -q pip
@@ -46,6 +47,7 @@ jobs:
     - name: install pip dependencies
       shell: bash -l {0}
       run: |
+        source "$CONDA/etc/profile.d/conda.sh"
         conda activate ./test-env
         pip install -r requirements.txt
 
@@ -54,5 +56,6 @@ jobs:
       env:
         SPHINXOPTS: -q
       run: |
+        source "$CONDA/etc/profile.d/conda.sh"
         conda activate ./test-env
         make clean && make dummy && make preview
