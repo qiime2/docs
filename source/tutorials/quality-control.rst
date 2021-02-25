@@ -16,23 +16,23 @@ We will download and create several files, so first create a working directory.
 Let's download some example data and get started.
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/quality-control/query-seqs.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/quality-control/query-seqs.qza
    :saveas: query-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/quality-control/reference-seqs.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/quality-control/reference-seqs.qza
    :saveas: reference-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/quality-control/query-table.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/quality-control/query-table.qza
    :saveas: query-table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/quality-control/qc-mock-3-expected.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/quality-control/qc-mock-3-expected.qza
    :saveas: qc-mock-3-expected.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/quality-control/qc-mock-3-observed.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/quality-control/qc-mock-3-observed.qza
    :saveas: qc-mock-3-observed.qza
 
 
