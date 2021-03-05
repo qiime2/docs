@@ -19,23 +19,23 @@ First, create a directory to work in and change to that directory.
 Download the data we'll use in the tutorial. This includes sample metadata, a feature table, and a distance matrix:
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2021.4/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/filtering/table.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/filtering/table.qza
    :saveas: table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/filtering/distance-matrix.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/filtering/distance-matrix.qza
    :saveas: distance-matrix.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/filtering/taxonomy.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/filtering/taxonomy.qza
    :saveas: taxonomy.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.2/tutorials/filtering/sequences.qza
+   :url: https://data.qiime2.org/2021.4/tutorials/filtering/sequences.qza
    :saveas: sequences.qza
 
 Filtering feature tables
