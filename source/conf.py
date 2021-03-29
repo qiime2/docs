@@ -14,7 +14,7 @@
 # serve to show the default.
 
 # ----------------------------------------------------------------------------
-# Copyright (c) 2016-2020, QIIME 2 development team.
+# Copyright (c) 2016-2021, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -91,7 +91,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'QIIME 2'
-copyright = '2016-2020, QIIME 2 development team'
+copyright = '2016-2021, QIIME 2 development team'
 author = 'QIIME 2 development team'
 
 # The version info for the project you're documenting, acts as replacement for
