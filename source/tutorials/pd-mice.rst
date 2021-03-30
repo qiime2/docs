@@ -528,7 +528,7 @@ Up until now we have been performing diversity analyses directly on ASVs; in oth
 For this analysis, we'll use a pre-trained naive Bayes machine-learning classifier that was trained to differentiate taxa present in the 99% Greengenes 13_8 reference set trimmed to 250 bp of the V4 hypervariable region (corresponding to the 515F-806R primers). `This classifier works`_ by identifying k-mers that are diagnostic for particular taxonomic groups, and using that information to predict the taxonomic affiliation of each ASV. We can download the pre-trained classifier here:
 
 .. download::
-   :url: https://data.qiime2.org/2021.4/common/gg-13-8-99-515-806-nb-classifier-py38.qza
+   :url: https://s3-us-west-2.amazonaws.com/qiime2-data/2021.4/common/gg-13-8-99-515-806-nb-classifier-py38.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 It's worth noting that Naive Bayes classifiers perform best when they're trained for the specific hypervariable region amplified. You can train a classifier specific for your dataset based on the :doc:`training classifiers tutorial <feature-classifier>` or download classifiers for other datasets from the :doc:`QIIME 2 resource page <../data-resources>`. Classifiers can be re-used for consistent versions of the underlying packages, database, and region of interest.
