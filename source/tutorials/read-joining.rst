@@ -66,31 +66,22 @@ You can next generate a summary of the ``demux-joined.qza`` artifact.
      --i-data demux-joined.qza \
      --o-visualization demux-joined.qzv
 
-This summary is particularly useful for determining approximately how long your
-joined reads are (we’ll come back to this when we denoise with Deblur). When
-looking at the quality plots in this visualization, if you hover over a
-specific position you’ll see how many reads are at least that long (of the
-reads that were sampled for computing sequence quality). Make note of the
-highest sequence position where most (say, > 99%) of your reads are at least
-that long.
+This summary is particularly useful for estimating joined read length an as the
+quality scores at each sequence base position. If you hover over a specific position
+on the interactive quality plot you will see the table below the plot updates itself
+to display the parametric seven-number summary for that sequence base position.
+This table corresponds to what is visually represented by the box plot at that position.
+Between the plot and the table you can see that 10,000 out of the 40,126 sequences
+were used to estimate the quality scores at each position.
 
-For example, when hovering over a black box in this visualization (which is
-generated from a larger data set than the one used in this tutorial), I see
-that 10000 out of the 40126 sequences were used to estimate the quality score
-distribution at this position.
+Hovering over positions towards the other end of the plot and examining their
+respective seven-number summary shows the gradual decline in quality scores that is
+frequently observed.
 
-When I hover over position 250, which is illustrated with a red box, I see that
-some sequences are not this long because only 9994 sequences were used for
-estimating the quality score distribution at this position. The red box and the
-red text below tell me that some sequences were not at least this long.
-
-When I hover over position 254, which is also illustrated with a red box, I see
-that many sequences are not this long because only 845 sequences were used for
-estimating the quality score distribution at this position.
-
-**Based on a comparison of these plots, I will note that most of my sequences
-are at least 250 bases long.** We plan to simplify this process in `the near
-future`_.
+Based on the demultiplexed sequence length summary table at the bottom of this
+visualization, we can see that most of our sequences are at least 250 bases long.
+**This information along with what we've noted about the quality scores above will
+help us to determine the trim length that we'll use in the denoising step below.**
 
 Sequence quality control
 ~~~~~~~~~~~~~~~~~~~~~~~~
