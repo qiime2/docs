@@ -76,7 +76,7 @@ were used to estimate the quality scores at each position.
 
 Hovering over positions towards the other end of the plot and examining their
 respective seven-number summary shows the gradual decline in quality scores that is
-frequently observed.
+frequently observed towards the 3' end.
 
 Based on the demultiplexed sequence length summary table at the bottom of this
 visualization, we can see that most of our sequences are at least 250 bases long.
