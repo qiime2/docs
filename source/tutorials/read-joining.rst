@@ -66,7 +66,7 @@ You can next generate a summary of the ``demux-joined.qza`` artifact.
      --i-data demux-joined.qza \
      --o-visualization demux-joined.qzv
 
-This summary is particularly useful for estimating joined read length an as the
+This summary is particularly useful for estimating joined read length as well as the
 quality scores at each sequence base position. If you hover over a specific position
 on the interactive quality plot you will see the table below the plot updates itself
 to display the parametric seven-number summary for that sequence base position.
