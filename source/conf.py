@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# ----------------------------------------------------------------------------
+# Copyright (c) 2016-2021, QIIME 2 development team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# ----------------------------------------------------------------------------
 # -*- coding: utf-8 -*-
 #
 # QIIME 2 documentation build configuration file, created by
@@ -12,14 +19,6 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-
-# ----------------------------------------------------------------------------
-# Copyright (c) 2016-2020, QIIME 2 development team.
-#
-# Distributed under the terms of the Modified BSD License.
-#
-# The full license is in the file LICENSE, distributed with this software.
-# ----------------------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -91,7 +90,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'QIIME 2'
-copyright = '2016-2020, QIIME 2 development team'
+copyright = '2016-2021, QIIME 2 development team'
 author = 'QIIME 2 development team'
 
 # The version info for the project you're documenting, acts as replacement for
