@@ -10,13 +10,13 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
+.. TODO: uncomment when ready
 .. - `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2021.4/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``TBD``)
 .. - `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.4/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``TBD``)
 
+- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``6bbc9b3f2f9b51d663063a7979dd95f1``)
+- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``9e82e8969303b3a86ac941ceafeeac86``)
 - Silva classifiers coming soon
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``TBD``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``TBD``)
-
 
 Please cite the following references if you use any of these pre-trained classifiers:
 
@@ -25,7 +25,6 @@ Please cite the following references if you use any of these pre-trained classif
 - See the `SILVA website <https://www.arb-silva.de/>`_ and the latest `Greengenes publication <https://www.nature.com/articles/ismej2011139>`_ for the latest citation information for these reference databases.
 
 Please note, these classifiers were trained using scikit-learn 0.24.1, and therefore can only be used with scikit-learn 0.24.1. If you observe errors related to scikit-learn version mismatches, please ensure you are using the pretrained-classifiers that were published with the release of QIIME 2 you are using.
-
 
 .. _`marker gene db`:
 
