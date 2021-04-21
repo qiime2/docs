@@ -67,23 +67,23 @@ like for the environment. In this example, we'll name the environment
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2021.4-py36-osx-conda.yml
-   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py36-osx-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2021.4-py38-osx-conda.yml
+   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py38-osx-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2021.4-py36-osx-conda.yml</pre>
+   rm qiime2-2021.4-py38-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2021.4-py36-linux-conda.yml
-   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py36-linux-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2021.4-py38-linux-conda.yml
+   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py38-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2021.4-py36-linux-conda.yml</pre>
+   rm qiime2-2021.4-py38-linux-conda.yml</pre>
          </div>
          <div id="wsl" class="tab-pane fade">
             <pre># These instructions are identical to the Linux (64-bit) instructions
-   wget https://data.qiime2.org/distro/core/qiime2-2021.4-py36-linux-conda.yml
-   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py36-linux-conda.yml
+   wget https://data.qiime2.org/distro/core/qiime2-2021.4-py38-linux-conda.yml
+   conda env create -n qiime2-2021.4 --file qiime2-2021.4-py38-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2021.4-py36-linux-conda.yml</pre>
+   rm qiime2-2021.4-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
