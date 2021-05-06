@@ -936,8 +936,8 @@ Looks like we did pretty well! So we can see what features are most predictive o
       --m-sample-metadata-column genotype_and_donor_status \
       --p-group-samples \
       --p-feature-count 100 \
-      --o-heatmap ./sample-classifier-results/heatmap.qzv \
-      --o-filtered-table ./sample-classifier-results/filtered-table.qza
+      --o-heatmap ./sample-classifier-results/heatmap_100-features.qzv \
+      --o-filtered-table ./sample-classifier-results/filtered-table_100-features.qza
 
 .. question::
 
