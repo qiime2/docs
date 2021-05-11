@@ -29,7 +29,6 @@ Weighted Taxonomic Classifiers
 These classifiers were trained with weights that take into account the fact that not all species are equally likely to be observed. If your V4 sample comes from any of the 14 habitat types we tested, these weighted classifiers should give you superior classification precision. If your sample doesn't come from one of those habitats, they might still help. If you have the time, training with weights specific to your habitat should help even more. Weights for a range of habitats `are available here <https://github.com/BenKaehler/readytowear>`.
 
 - `Weighted Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2021.4/common/silva-138-99-nb-weighted-classifier.qza>`_ (MD5: ``TBD``)
-- `Weighted Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.4/common/silva-138-99-515-806-nb-weighted-classifier.qza>`_ (MD5: ``TBD``)
 - `Weighted Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-nb-weighted-classifier.qza>`_ (MD5: ``2baf87fce174c5f6c22a4c4086b1f1fe``)
 - `Weighted Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.4/common/gg-13-8-99-515-806-nb-weighted-classifier.qza>`_ (MD5: ``8fb808c4af1c7526a2bdfaafa764e21f``)
 
