@@ -15,7 +15,7 @@ Please see https://www.virtualbox.org for details on how to install VirtualBox o
 2. Download the QIIME 2 Core VirtualBox Image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2021.4``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please see the `VirtualBox Images`_ download link to get the download URL for the latest image. The minimum version of VirtualBox (as determined in Step 1 above) is provided for the latest releases of the VirtualBox image --- please ensure you have installed a version of VirtualBox that is equal to or greater than the version of the QIIME 2 VirtualBox image you wish to install.
+Please note, this installation document uses some placeholders throughout the following steps. ``X.Y.Z`` represents the version of QIIME 2 (e.g. ``2021.8``), and ``build_number`` represents the build identifier for the VirtualBox image (an internal reference used by the QIIME 2 Developement Team). Please see the `VirtualBox Images`_ download link to get the download URL for the latest image. The minimum version of VirtualBox (as determined in Step 1 above) is provided for the latest releases of the VirtualBox image --- please ensure you have installed a version of VirtualBox that is equal to or greater than the version of the QIIME 2 VirtualBox image you wish to install.
 
 3. Unzip the file
 ~~~~~~~~~~~~~~~~~
