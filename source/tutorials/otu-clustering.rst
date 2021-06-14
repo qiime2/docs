@@ -146,12 +146,13 @@ this example, clustering is performed at 85% identity against the Greengenes
      --o-unmatched-sequences unmatched-cr-85.qza
 
 The outputs from ``cluster-features-closed-reference`` are a
-``FeatureTable[Frequency]`` artifact and a ``FeatureData[Sequence]`` artifact.
-The ``FeatureData[Sequence]`` artifact in this case is **not** the sequences
-defining the features in the ``FeatureTable``, but rather the collection of
-feature ids and their sequences that didn't match the reference database at 85%
-identity. The reference sequences provided as input should be used as sequences
-defining the features in the ``FeatureTable`` in closed-reference OTU picking.
+``FeatureTable[Frequency]`` artifact and two ``FeatureData[Sequence]`` artifacts.
+The ``FeatureData[Sequence]`` artifacts consist of the sequences defining the
+features in the ``FeatureTable`` (rep-seqs-cr-85.qza from the command block above)
+as well as the collection of feature ids and their sequences that didn't match the
+reference database at 85% identity. The reference sequences provided as input
+should be used as sequences defining the features in the ``FeatureTable`` in
+closed-reference OTU picking.
 
 Open-reference clustering
 ...........................
