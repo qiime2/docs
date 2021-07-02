@@ -17,7 +17,7 @@ Naive Bayes classifiers trained on:
 
 Please cite the following references if you use any of these pre-trained classifiers:
 
-- Bokulich, N.A., Robeson, M., Dillon, M.R. bokulich-lab/RESCRIPt. Zenodo. http://doi.org/10.5281/zenodo.3891931
+- Michael S Robeson II, Devon R O'Rourke, Benjamin D Kaehler, Michal Ziemski, Matthew R Dillon, Jeffrey T Foster, Nicholas A Bokulich. RESCRIPt: Reproducible sequence taxonomy reference database management for the masses. bioRxiv 2020.10.05.326504; doi: https://doi.org/10.1101/2020.10.05.326504
 - Bokulich, N.A., Kaehler, B.D., Rideout, J.R. et al. Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2’s q2-feature-classifier plugin. Microbiome 6, 90 (2018). https://doi.org/10.1186/s40168-018-0470-z
 - See the `SILVA website <https://www.arb-silva.de/>`_ and the latest `Greengenes publication <https://www.nature.com/articles/ismej2011139>`_ for the latest citation information for these reference databases.
 
@@ -26,13 +26,13 @@ Please note, these classifiers were trained using scikit-learn 0.24.1, and there
 Weighted Taxonomic Classifiers
 ``````````````````````````````
 
-These classifiers were trained with weights that take into account the fact that not all species are equally likely to be observed. If your V4 sample comes from any of the 14 habitat types we tested, these weighted classifiers should give you superior classification precision. If your sample doesn't come from one of those habitats, they might still help. If you have the time, training with weights specific to your habitat should help even more. Weights for a range of habitats `are available here <https://github.com/BenKaehler/readytowear>`_.
+These 16S rRNA gene classifiers were trained with weights that take into account the fact that not all species are equally likely to be observed. If your sample comes from any of the 14 habitat types we tested, these weighted classifiers should give you superior classification precision. If your sample doesn't come from one of those habitats, they might still help. If you have the time, training with weights specific to your habitat should help even more. Weights for a range of habitats `are available here <https://github.com/BenKaehler/readytowear>`_.
 
 - `Weighted Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2021.8/common/silva-138-99-nb-weighted-classifier.qza>`_ (MD5: ``48965bb0a9e63c411452a460d92cfc04``)
 - `Weighted Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2021.8/common/gg-13-8-99-nb-weighted-classifier.qza>`_ (MD5: ``2baf87fce174c5f6c22a4c4086b1f1fe``)
 - `Weighted Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2021.8/common/gg-13-8-99-515-806-nb-weighted-classifier.qza>`_ (MD5: ``8fb808c4af1c7526a2bdfaafa764e21f``)
 
-Please cite the following reference if you use any of these weighted pre-trained classifiers:
+Please cite the following reference, in addition to those listed above, if you use any of these weighted pre-trained classifiers:
 
 - Kaehler, B.D., Bokulich, N.A., McDonald, D. et al. Species abundance information improves sequence taxonomy classification accuracy. Nature Communications 10, 4643 (2019). https://doi.org/10.1038/s41467-019-12669-6
 
@@ -72,7 +72,7 @@ We also provide pre-formatted SILVA reference sequence and taxonomy files here t
 
 Please cite the following references if you use any of these pre-formatted files:
 
-- Bokulich, N.A., Robeson, M., Dillon, M.R. bokulich-lab/RESCRIPt. Zenodo. http://doi.org/10.5281/zenodo.3891931
+- Michael S Robeson II, Devon R O'Rourke, Benjamin D Kaehler, Michal Ziemski, Matthew R Dillon, Jeffrey T Foster, Nicholas A Bokulich. RESCRIPt: Reproducible sequence taxonomy reference database management for the masses. bioRxiv 2020.10.05.326504; doi: https://doi.org/10.1101/2020.10.05.326504
 - See the `SILVA website <https://www.arb-silva.de/>`_ for the latest citation information for SILVA.
 
 License Information:
