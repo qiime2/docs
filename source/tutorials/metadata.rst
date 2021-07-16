@@ -124,13 +124,13 @@ QIIME 2 currently supports *categorical* and *numeric* metadata columns. By defa
 
 QIIME 2 supports an **optional** *comment directive* to allow users to explicitly state a column's type, avoiding the column type inference described above. This can be useful if there is a column that appears to be numeric, but should actually be treated as categorical metadata (e.g. a ``Subject`` column where subjects are labeled ``1``, ``2``, ``3``, etc). Explicitly declaring a column's type also makes your metadata file more descriptive because the intended column type is included with the metadata, instead of relying on software to infer the type (which isn't always transparent).
 
-.. note:: Columns which contain **categorical** metadata (e.g. non-numeric data) cannot be set to numeric column types, due to the way that metadata column types are parsed. This is because integers can be set to string values, but strings cannot be set to integer values.
+.. note:: Columns which contain *non-numerical* metadata (e.g. **categorical** data) cannot be set to the ``numeric`` column type.
 
 You can use an optional *comment directive* to declare column types in your metadata file, either manually or through the q2cli developer tools.
 
 For manual specifications within your metadata file(s), the comment directive must appear **directly** below the header. The row's first cell must be ``#q2:types`` to indicate the row is a *comment directive*. Subsequent cells may contain the values ``categorical`` or ``numeric`` (both case-insensitive). The empty cell is also supported if you do not wish to assign a type to a column (the type will be inferred in that case). Thus, it is easy to include this comment directive without having to declare types for every column in your metadata.
 
-This functionality is now also supported directly through QIIME 2's command line interface (as of the 2021.8 release), via the q2cli cast-metadata developer tool. This tool allows for bulk specifications to your metadata file(s) column types, set to either **categorical** or **numerical**. This tool functions exactly the same as the aformentioned comment directive, but allows for inline data manipulation (or the ability to automate column type assignment through a custom script), which can be a more robust method than manual file manipulation.
+This functionality is now also supported directly through QIIME 2's command line interface, via the ``qiime tools cast-metadata`` tool. This tool allows for bulk specifications to your metadata file(s) column types, set to either **categorical** or **numerical**. This tool functions exactly the same as the aformentioned comment directive, but allows for inline data manipulation (or the ability to automate column type assignment through a custom script), which can be a more robust method than manual file manipulation. A detailed tutorial and example usage for this tool can be found on the `QIIME 2 Utilities`_ tutorial page.
 
 .. tip:: Use ``qiime metadata tabulate`` to see the column types of your QIIME 2 Metadata. This works whether you're using the comment directive, type inference, or a combination of the two approaches.
 
@@ -314,3 +314,4 @@ Finally, there are export options available in the visualizations produced from 
 .. _`Python csv module`: https://docs.python.org/3/library/csv.html
 .. _`evenness vector`: https://docs.qiime2.org/2021.8/data/tutorials/moving-pictures/core-metrics-results/evenness_vector.qza
 .. _`feature table artifact`: https://docs.qiime2.org/2021.8/data/tutorials/moving-pictures/table.qza
+.. _`QIIME 2 Utilities`: https://docs.qiime2.org/2021.4/tutorials/utilities
