@@ -191,27 +191,23 @@ already downloaded the ``sample_metadata.tsv`` file from above.
 
 .. download::
    :url: https://data.qiime2.org/2021.8/tutorials/pd-mice/sample_metadata.tsv
-   :saveas: sample-metadata.tsv
+   :saveas: sample_metadata.tsv
 
 In this example, we will cast the ``days_post_transplant`` column from ``numeric`` to ``categorical``,
 and the ``mouse_id`` column from ``categorical`` to ``numeric``. The rest of the columns contained
 within our metadata will be left as-is.
 
 .. command-block::
-   :no-exec:
+   :stdout:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast days_post_transplant:categorical --cast mouse_id:numeric \
-   --output-file casted_metadata.tsv
+   --cast days_post_transplant:categorical --cast mouse_id:numeric
 
-The output file contains the modified column types that we cast above for the original ``sample-metadata.tsv``.
-
-.. question::
-
-   Open ``casted_metadata.tsv``. How many columns were cast with a different column type? How can you tell?
+If the ``--output-file`` flag is enabled, the specified output file will contain the modified column types that we cast above
+for the original ``sample_metadata.tsv``.
 
 If you do not wish to save your casted metadata to an output file, you can omit the ``--output-file`` parameter and
-the results will be output to ``sdtout``.
+the results will be output to ``sdtout`` (as shown in the example above).
 
 The ``--ignore-extra`` and ``--error-on-missing`` flags are used to handle casted columns not contained within the original
 metadata file, and columns contained within the metadata file that aren't included in the cast call, respectively.
@@ -222,7 +218,7 @@ within the original metadata file. Let's start by looking at what will happen if
 is not enabled.
 
 .. command-block::
-   :stdout:
+   :stderr:
    :allow-error:
 
    qiime tools cast-metadata sample_metadata.tsv \
@@ -232,7 +228,7 @@ Notice that the ``spleen`` column included in the cast call results in a raised 
 are not present in the original metadata file, we can enable the ``--ignore-extra`` flag.
 
 .. command-block::
-   :no-exec:
+   :stdout:
 
    qiime tools cast-metadata sample_metadata.tsv \
    --cast spleen:numeric --ignore-extra
@@ -247,7 +243,7 @@ the metadata must be present in the cast call). If the ``--error-on-missing`` fl
 included in the cast call, otherwise an error will be raised.
 
 .. command-block::
-   :stdout:
+   :stderr:
    :allow-error:
    
    qiime tools cast-metadata sample_metadata.tsv \
