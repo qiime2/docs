@@ -153,7 +153,7 @@ Then, we can run the ``qiime tools inspect-metadata`` command:
 .. question::
 
    How many metadata columns are there in ``sample-metadata.tsv``? How many IDs?
-   Identify how many categorical columns are present. Now do the same for numerical
+   Identify how many categorical columns are present. Now do the same for numeric
    columns.
 
 This tool can be very helpful for learning about Metadata column names for
