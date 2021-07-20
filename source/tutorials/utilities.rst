@@ -177,13 +177,13 @@ run, using ``inspect-metadata``, we can learn all about it:
 
    How many IDs are there? How many columns? Are there any categorical columns? Why?
 
-Casting Metadata
-................
+Casting Metadata Column Types
+.............................
 
-In the :doc:`Metadata tutorial <metadata>` we learned about column types and utilizing the 
+In the :doc:`Metadata tutorial <metadata>` we learned about column types and utilizing the
 ``qiime tools cast-metadata`` tool to specifiy column types within a provided metadata file.
-Below we will go through a few scenarios of how this tool can be used, and some common mistakes
-that may come up.
+Below we will go through a few scenarios of how this tool can be used, and some common
+mistakes that may come up.
 
 We'll start by first downloading some sample metadata. **Note**: This is the same sample
 metadata used in the **Inspect Metadata** section, so you can skip this step if you have
@@ -193,29 +193,33 @@ already downloaded the ``sample_metadata.tsv`` file from above.
    :url: https://data.qiime2.org/2021.8/tutorials/pd-mice/sample_metadata.tsv
    :saveas: sample_metadata.tsv
 
-In this example, we will cast the ``days_post_transplant`` column from ``numeric`` to ``categorical``,
-and the ``mouse_id`` column from ``categorical`` to ``numeric``. The rest of the columns contained
-within our metadata will be left as-is.
+In this example, we will cast the ``days_post_transplant`` column from ``numeric`` to
+``categorical``, and the ``mouse_id`` column from ``categorical`` to ``numeric``. The rest of
+the columns contained within our metadata will be left as-is.
 
 .. command-block::
    :stdout:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast days_post_transplant:categorical --cast mouse_id:numeric
+   --cast days_post_transplant:categorical \
+   --cast mouse_id:numeric
 
-If the ``--output-file`` flag is enabled, the specified output file will contain the modified column types that we cast above
-for the original ``sample_metadata.tsv``.
+If the ``--output-file`` flag is enabled, the specified output file will contain the modified
+column types that we cast above, along with the rest of the columns and associated data
+contained in ``sample_metadata.tsv``.
 
-If you do not wish to save your casted metadata to an output file, you can omit the ``--output-file`` parameter and
-the results will be output to ``sdtout`` (as shown in the example above).
+If you do not wish to save your casted metadata to an output file, you can omit the
+``--output-file`` parameter and the results will be output to ``sdtout`` (as shown in the
+example above).
 
-The ``--ignore-extra`` and ``--error-on-missing`` flags are used to handle casted columns not contained within the original
-metadata file, and columns contained within the metadata file that aren't included in the cast call, respectively.
-We can take a look at how these flags can be used below:
+The ``--ignore-extra`` and ``--error-on-missing`` flags are used to handle casted columns not
+contained within the original metadata file, and columns contained within the metadata file
+that aren't included in the cast call, respectively. We can take a look at how these flags can
+be used below:
 
-In the first example, we'll take a look at utilizing the ``--ignore-extra`` flag when a column is cast that is not included
-within the original metadata file. Let's start by looking at what will happen if an extra column is included and this flag
-is not enabled.
+In the first example, we'll take a look at utilizing the ``--ignore-extra`` flag when a column
+is cast that is not included within the original metadata file. Let's start by looking at what
+will happen if an extra column is included and this flag is not enabled.
 
 .. command-block::
    :stderr:
@@ -224,30 +228,36 @@ is not enabled.
    qiime tools cast-metadata sample_metadata.tsv \
    --cast spleen:numeric
 
-Notice that the ``spleen`` column included in the cast call results in a raised error. If we want to ignore any extra columns that
-are not present in the original metadata file, we can enable the ``--ignore-extra`` flag.
+Notice that the ``spleen`` column included in the cast call results in a raised error. If we
+want to ignore any extra columns that are not present in the original metadata file, we can
+enable the ``--ignore-extra`` flag.
 
 .. command-block::
-   :stdout:
+   :noexec:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast spleen:numeric --ignore-extra
+   --cast spleen:numeric \
+   --ignore-extra
 
-When this flag is enabled, all columns included in the cast that are not present in the original metadata file will be ignored.
+When this flag is enabled, all columns included in the cast that are not present in the
+original metadata file will be ignored. Note that ``stdout`` for this example has been omitted
+since we will not see a raised error with this flag enabled.
 
-In our second example, we'll take a look at the ``--error-on-missing`` flag, which handles columns that are present within the
-metadata that are not included in the cast call.
+In our second example, we'll take a look at the ``--error-on-missing`` flag, which handles
+columns that are present within the metadata that are not included in the cast call.
 
-The default behavior permits a subset of the full metadata file to be included in the cast call (e.g. not all columns within
-the metadata must be present in the cast call). If the ``--error-on-missing`` flag is enabled, all metadata columns must be
-included in the cast call, otherwise an error will be raised.
+The default behavior permits a subset of the full metadata file to be included in the cast
+call (e.g. not all columns within the metadata must be present in the cast call). If the
+``--error-on-missing`` flag is enabled, all metadata columns must be included in the cast
+call, otherwise an error will be raised.
 
 .. command-block::
    :stderr:
    :allow-error:
-   
+
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast mouse_id:numeric --error-on-missing
+   --cast mouse_id:numeric \
+   --error-on-missing
 
 Artifact API
 ------------
