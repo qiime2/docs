@@ -233,7 +233,7 @@ want to ignore any extra columns that are not present in the original metadata f
 enable the ``--ignore-extra`` flag.
 
 .. command-block::
-   :noexec:
+   :no-exec:
 
    qiime tools cast-metadata sample_metadata.tsv \
    --cast spleen:numeric \
