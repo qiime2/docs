@@ -208,11 +208,11 @@ If the ``--output-file`` flag is enabled, the specified output file will contain
 column types that we cast above, along with the rest of the columns and associated data
 contained in ``sample_metadata.tsv``.
 
-If you do not wish to save your casted metadata to an output file, you can omit the
+If you do not wish to save your cast metadata to an output file, you can omit the
 ``--output-file`` parameter and the results will be output to ``sdtout`` (as shown in the
 example above).
 
-The ``--ignore-extra`` and ``--error-on-missing`` flags are used to handle casted columns not
+The ``--ignore-extra`` and ``--error-on-missing`` flags are used to handle cast columns not
 contained within the original metadata file, and columns contained within the metadata file
 that aren't included in the cast call, respectively. We can take a look at how these flags can
 be used below:
