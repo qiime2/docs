@@ -83,6 +83,13 @@ In addition to the predicted class information, the model also reports the indiv
      --m-input-file moving-pictures-classifier/probabilities.qza \
      --o-visualization moving-pictures-classifier/probabilities.qzv
 
+Besides outputting the predictions and probabilities of the test samples, the pipeline also returns the true target values of all train and test samples in ``training_targets.qza`` and ``test_targets.qza`` respectively. Both are ``SampleData[TrueTargets]`` artifacts that can be viewed as metadata and inspected with ``metadata tabulate``, e.g. for ``test_targets.qza``:
+
+.. command-block::
+
+   qiime metadata tabulate \
+     --m-input-file moving-pictures-classifier/test_targets.qza \
+     --o-visualization moving-pictures-classifier/test_targets.qzv
 
 Another really useful output of supervised learning methods is *feature selection*, i.e., they report which features (e.g., ASVs or taxa) are most predictive. A list of all features, and their relative importances (or feature weights or model coefficients, depending on the learning model used), will be reported in ``feature_importance.qza``. Features with higher importance scores were more useful for distinguishing classes. Feature importance scores are assigned directly by the scikit-learn learning estimator that was used; more details on individual estimators and their importance scores should refer to the `scikit-learn documentation`_. Note that some estimators — notably K-nearest neighbors models — do not report feature importance scores, so this output will be meaningless if you are using such an estimator. Feature importances are of the semantic type ``FeatureData[Importance]``, and can be interpreted as (feature) metadata so we can take a look at these feature importances (and/or :ref:`merge with other feature metadata <exploring feature metadata>`) using ``metadata tabulate``:
 
