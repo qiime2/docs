@@ -201,8 +201,8 @@ the columns contained within our metadata will be left as-is.
    :stdout:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast days_post_transplant:categorical \
-   --cast mouse_id:numeric
+     --cast days_post_transplant:categorical \
+     --cast mouse_id:numeric
 
 If the ``--output-file`` flag is enabled, the specified output file will contain the modified
 column types that we cast above, along with the rest of the columns and associated data
@@ -226,7 +226,7 @@ will happen if an extra column is included and this flag is not enabled.
    :allow-error:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast spleen:numeric
+     --cast spleen:numeric
 
 Notice that the ``spleen`` column included in the cast call results in a raised error. If we
 want to ignore any extra columns that are not present in the original metadata file, we can
@@ -236,8 +236,8 @@ enable the ``--ignore-extra`` flag.
    :no-exec:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast spleen:numeric \
-   --ignore-extra
+     --cast spleen:numeric \
+     --ignore-extra
 
 When this flag is enabled, all columns included in the cast that are not present in the
 original metadata file will be ignored. Note that ``stdout`` for this example has been omitted
@@ -256,8 +256,8 @@ call, otherwise an error will be raised.
    :allow-error:
 
    qiime tools cast-metadata sample_metadata.tsv \
-   --cast mouse_id:numeric \
-   --error-on-missing
+     --cast mouse_id:numeric \
+     --error-on-missing
 
 Artifact API
 ------------
