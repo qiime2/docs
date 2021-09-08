@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 import os
 import pathlib
+import uuid
 
 from sphinx.util import logging
 
@@ -107,6 +108,6 @@ def cleanup_plugin_rst(*_):
 
 def write_bibtex(records, path):
     citations = qiime2.sdk.Citations()
-    for idx, record in enumerate(records):
-        citations['key%d' % idx] = record
+    for record in records:
+        citations['key%s' % str(uuid.uuid4())] = record
     citations.save(path)
