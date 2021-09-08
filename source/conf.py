@@ -403,3 +403,6 @@ linkcheck_timeout = 15
 # -- Options for mathjax --------------------------------------------------
 mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
                 'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+
+# -- Options for Sphinx config --------------------------------------------
+suppress_warnings = ["bibtex.duplicate_label"]
