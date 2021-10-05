@@ -261,7 +261,227 @@ call, otherwise an error will be raised.
 
 Artifact API
 ------------
+Unlike q2cli, the :doc:`/interfaces/artifact-api` does not have a single central location for
+utility functions. Rather, utilities are often bound to objects as methods
+which operate on those objects.
 
-.. TODO: finish this section
+Discovering Actions registered to a plugin
+..........................................
+When working with a new plugin, it may be useful to check what Actions are available.
+We first import the plugin, and then query its ``actions`` attribute.
+This gives us a list of public methods, and details of whether they are
+:term:`methods<method>`, :term:`visualizers<visualizer>`, or :term:`pipelines<pipeline>`.
 
-Coming soon, please stay tuned!
+.. code-block:: python
+
+   >>> from qiime2.plugins import feature_table
+   >>> help(feature_table.actions)
+   Help on module qiime2.plugins.feature_table.actions in qiime2.plugins.feature_table:
+
+   NAME
+       qiime2.plugins.feature_table.actions
+
+   DATA
+       __plugin__ = <qiime2.plugin.plugin.Plugin object>
+       core_features = <visualizer qiime2.plugins.feature_table.visualizers.c...
+       filter_features = <method qiime2.plugins.feature_table.methods.filter_...
+       ...
+
+If you already know that you are looking for a method, pipeline, or visualizer,
+you can get that subgroup of actions directly:
+
+.. code-block:: python
+
+   >>> help(feature_table.methods)
+
+If you are working in a Jupyter Notebook or in iPython,
+you may prefer tab-complete to running `help()`:
+
+.. code-block:: python
+
+   >>> feature_table.visualizers.  # press tab after the . for tab-complete...
+
+Getting help with an Action
+............................
+Once you have imported a plugin, action helptext is accessible in interactive sessions
+with the iPython ``?`` operator:
+
+.. code-block::
+
+   >>> feature_table.methods.merge?
+   Call signature:
+   feature_table.methods.merge(
+       tables: List[FeatureTable[Frequency]¹ | FeatureTable[RelativeFrequency]²],
+       overlap_method: Str % Choices('average', 'error_on_overlapping_feature', 'error_on_overlapping_sample', 'sum')¹ | Str % Choices('average', 'error_on_overlapping_feature', 'error_on_overlapping_sample')² = 'error_on_overlapping_sample',
+   ) -> (FeatureTable[Frequency]¹ | FeatureTable[RelativeFrequency]²,)
+   Type:           Method
+   String form:    <method qiime2.plugins.feature_table.methods.merge>
+   File:           ~/miniconda/envs/q2-dev/lib/python3.8/site-packages/qiime2/sdk/action.py
+   Docstring:      QIIME 2 Method
+   Call docstring:
+   Combine multiple tables
+
+   Combines feature tables using the `overlap_method` provided.
+
+   Parameters
+   ----------
+   tables : List[FeatureTable[Frequency]¹ | FeatureTable[RelativeFrequency]²]
+   overlap_method : Str % Choices('average', 'error_on_overlapping_feature', 'error_on_overlapping_sample', 'sum')¹ | Str % Choices('average', 'error_on_overlapping_feature', 'error_on_overlapping_sample')², optional
+       Method for handling overlapping ids.
+
+   Returns
+   -------
+   merged_table : FeatureTable[Frequency]¹ | FeatureTable[RelativeFrequency]²
+       The resulting merged feature table.
+
+Retrieving Citations
+....................
+The Artifact API does not provide a utility for getting all citations from a plugin.
+Per-action citations are accessible in each action's ``citations`` attribute.
+
+.. code-block:: python
+
+   >>> feature_table.actions.rarefy.citations
+   (CitationRecord(type='article', fields={'doi': '10.1186/s40168-017-0237-y', 'issn': '2049-2618', 'pages': '27', 'number': '1', 'volume': '5', 'month': 'Mar', 'year': '2017', 'journal': 'Microbiome', 'title': 'Normalization and microbial differential abundance strategies depend upon data characteristics', 'author': 'Weiss, Sophie and Xu, Zhenjiang Zech and Peddada, Shyamal and Amir, Amnon and Bittinger, Kyle and Gonzalez, Antonio and Lozupone, Catherine and Zaneveld, Jesse R. and Vázquez-Baeza, Yoshiki and Birmingham, Amanda and Hyde, Embriette R. and Knight, Rob'}),)
+
+Peeking at Results
+..................
+The Artifact API provides a ``.peek`` method that displays the
+:term:`UUID`, :term:`Semantic Type`, and :term: `data format` of any QIIME 2 archive.
+
+.. code-block:: python
+
+   >>> from qiime2 import Artifact
+   >>> Artifact.peek('observed_features_vector.qza')
+   ResultMetadata(uuid='2e96b8f3-8f0a-4f6e-b07e-fbf8326232e9', type='SampleData[AlphaDiversity]', format='AlphaDiversityDirectoryFormat')
+
+If you have already loaded an artifact into memory and you're not concerned with the data format,
+the artifact's string representation will give you its UUID and Semantic Type.
+
+.. code-block:: python
+
+   >>> from qiime2 import Artifact
+   >>> table = Artifact.load('table.qza')
+   >>> table
+   <artifact: FeatureTable[Frequency] uuid: 2e96b8f3-8f0a-4f6e-b07e-fbf8326232e9>
+
+
+Validating Results
+..................
+Artifacts may be validated by loading them and then running the ``validate`` method.
+``validate`` takes one parameter, ``level``, which may be set to ``max`` or ``min``,
+defaulting to ``max``. Min validation is useful for quick checks,
+while max validation generally trades comprehensiveness for longer runtimes.
+
+The validate method returns ``None`` if validation is successful;
+simply running ``x.validate()`` in the interpreter will output a blank line.
+If the artifact is invalide, a ``ValidationError`` or ``NotImplementedError`` is raised.
+
+.. code-block:: python
+
+   >>> from qiime2 import Artifact
+   >>> table = Artifact.load('table.qza')
+   >>> table.validate(level='min')
+
+   >>> print(table.validate())  # equivalent to print(table.validate(level='max'))
+   None
+
+Viewing Data
+...............................
+The view API allows us to review many types of data
+without the need to save it as a ``.qza``.
+
+.. code-block:: python
+
+   >>> art = artifact.load('some.qza')
+
+   ...  # perform some analysis, producing a result
+
+   >>> myresult.view(pd.Series)
+   s00000001   74
+   s00000002   48
+   s00000003   79
+   s00000004   113
+   s00000005   111
+   Name: observed_otus, Length: 471, dtype: int64
+
+Viewing data in a specific format is only possible if there is a transformer
+registered from the current view type to the type you want.
+We get an error if there's no transformer.
+E.g. if we try to view this SampleData[AlphaDiversity] as a DataFrame.
+
+.. code-block:: python
+
+   >>> myresult.view(pd.Series)
+   ---------------------------------------------------------------------------
+   Exception                                 Traceback (most recent call last)
+   /tmp/ipykernel_18201/824837086.py in <module>
+        12 # Note: Views are only possible if there are transformers registered from the default
+        13 # view type to the type you want. We get an error if there's no tranformer
+   ---> 14 art.view(pd.DataFrame)
+
+   ... # traceback Here
+
+   Exception: No transformation from <class 'q2_types.sample_data._format.AlphaDiversityDirectoryFormat'> to <class 'pandas.core.frame.DataFrame'>
+
+Some Artifacts are viewable as metadata. If you'd like to check, try:
+
+.. code-block:: python
+
+   >>> art.has_metadata()
+   True
+
+   >>> art_as_md = art.view(Metadata)
+   >>> art_as_md
+   Metadata
+   --------
+   471 IDs x 1 column
+   observed_otus: ColumnProperties(type='numeric')
+
+   Call to_dataframe() for a tabular representation.
+
+Viewing Visualizations
+.......................
+The Artifact API does not provide utilities for viewing QIIME 2 visualizations.
+Users generally save visualizations and use `QIIME 2 View <https://view.qiime2.org>`_
+to explore.
+
+.. code-block:: python
+
+   art.save('obs_features.qza')
+
+Inspecting Metadata
+...................
+
+Metadata sheets can be viewed in summary or displayed nicely in DataFrame format,
+once they have been loaded.
+
+.. code-block:: python
+
+   >>> from qiime2 import Metadata
+   >>> metadata = Metadata.load('simple-metadata.tsv')
+   Metadata
+   --------
+   516 IDs x 3 columns
+   barcode:               ColumnProperties(type='categorical')
+   days:                  ColumnProperties(type='numeric')
+   extraction:            ColumnProperties(type='categorical')
+
+   >>> print(metadata)
+   >>> metadata.to_dataframe()
+                 barcode   days  extraction
+   sampleid
+   s00000001     806rcbc0   1       1
+   s00000002     806rcbc1   3       1
+   s00000003     806rcbc2   7       1
+   s00000004     806rcbc3   1       1
+   s00000005     806rcbc4   11      1
+   ...           ...        ...     ...
+
+
+Casting Metadata Column Types
+.............................
+
+The Artifact API does not provide a utility for casting metadata column type,
+and ``Metadata.columns`` is a read-only property. Editing your ``.tsv`` and
+re-loading is probably your best bet.
