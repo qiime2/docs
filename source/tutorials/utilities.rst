@@ -337,7 +337,8 @@ with the iPython ``?`` operator:
 Retrieving Citations
 ....................
 The Artifact API does not provide a utility for getting all citations from a plugin.
-Per-action citations are accessible in each action's ``citations`` attribute.
+Per-action citations are accessible in each action's ``citations`` attribute,
+in BibTeX format.
 
 .. code-block:: python
 
@@ -482,6 +483,130 @@ once they have been loaded.
 Casting Metadata Column Types
 .............................
 
-The Artifact API does not provide a utility for casting metadata column type,
-and ``Metadata.columns`` is a read-only property. Editing your ``.tsv`` and
-re-loading is probably your best bet.
+The Artifact API does not provide a dedicated utility for casting metadata column type,
+and ``Metadata.columns`` is a read-only property.
+However, it is possible to edit your ``.tsv`` and re-load it with ``Metadata.load``,
+or to cast your Metadata to a Pandas.DataFrame,
+cast the columns whose properties you need to change,
+and reload as Metadata with the types corrected.
+Here's a walkthrough of the latter approach.
+
+Load some Metadata
+~~~~~~~~~~~~~~~~~~
+
+.. code-block :: python
+
+   # Imagine you have loaded a tsv as metadata
+   >>> md = Metadata.load('md.tsv')
+   >>> print(md)
+
+   Metadata
+   --------
+   3 IDs x 5 columns
+   strCatOnly: ColumnProperties(type='categorical')
+   intNum:     ColumnProperties(type='numeric')
+   intCat:     ColumnProperties(type='categorical')
+   floatNum:   ColumnProperties(type='numeric')
+   floatCat:   ColumnProperties(type='categorical')
+
+   Call to_dataframe() for a tabular representation.
+
+We have defined three columns of categorical data in the tsv, and two numeric.
+The column IDs describe the data values (e.g. ``int``)
+and the declared column type (e.g. Num for ``numeric``).
+
+Limitations on casting
+~~~~~~~~~~~~~~~~~~~~~~
+
+The sequences in ``strCatOnly`` are read in as python strings,
+and represented in the Numpy/Pandas stack as "objects".
+Loading the metadata would fail with an error if we typed this column ``numeric``,
+because we don't have a good way to represent strings as numbers.
+Similarly, you won't have much luck casting string data to ``int`` or ``float``
+in Pandas.
+
+Convert to DataFrame
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block :: python
+
+   >>> md = md.to_dataframe()
+
+   >>> print(md)
+   >>> print()
+   >>> print("intCat should be an object (because categorical): ", str(md['intCat'].dtype))
+   >>> print("floatNum should be a float (because numerical): ", str(md['floatNum'].dtype))
+   >>> print("intNum should be a float, not an int (because categorical): ", str(md['intCat'].dtype))
+
+               strCatOnly  intNum intCat  floatNum floatCat
+   sampleid
+   S1        TCCCTTGTCTCC     1.0      1      1.01     1.01
+   S2        ACGAGACTGATT     3.0      3      3.01     3.01
+   S3        GCTGTACGGATT     7.0      7      7.01     7.01
+
+   intCat should be an object (because categorical):  object
+   floatNum should be a float (because numerical):  float64
+   intNum should be a float, not an int (because categorical): float64
+
+
+The ``intNum`` and ``intCat`` columns of the original .tsv contained integer data.
+MetadataColumns typed as ``categorical`` are represented in Pandas as ``object``.
+MetadataColumns typed as ``numeric`` are represented in Pandas as ``float``.
+As such, ``intNum`` is rendered as floating point data when ``to_dataframe`` is called,
+and ``intCat`` is represented as an ``object`` in the DataFrame.
+
+These behaviors roundtrip cleanly.
+If we cast our DataFrame back to Metadata without making any changes,
+the new Metadata will be identical to the original Metadata we loaded from the tsv.
+We're here to see how DataFrames allow us to cast metadata column types, though,
+so let's give it a shot.
+
+Cast columns
+~~~~~~~~~~~~
+
+.. code-block :: python
+
+   >>> md['intCat'] = md['intCat'].astype("int")
+   >>> md['floatNum'] = md['floatNum'].astype('str')
+
+   >>> print(md)
+   >>> print()
+   >>> print("intCat should be an int now: ", str(md['intCat'].dtype))
+   >>> print("floatNum should be an object now: ", str(md['floatNum'].dtype))
+
+               strCatOnly  intNum  intCat floatNum floatCat
+   sampleid
+   S1        TCCCTTGTCTCC     1.0       1     1.01     1.01
+   S2        ACGAGACTGATT     3.0       3     3.01     3.01
+   S3        GCTGTACGGATT     7.0       7     7.01     7.01
+
+   intCat should be an int now:  int64
+   floatNum should be an object now:  object
+
+The DataFrame *looks* the same, but the column dtypes have changed as expected.
+When we turn this DataFrame back into Metadata,
+the ``ColumnProperties`` have changed accordingly.
+Columns represented in Pandas as ``objects`` (including ``strs``) are ``categorical``.
+Columns represented in Pandas as ``ints`` or ``floats`` are ``numeric``.
+
+Cast the DataFrame back to Metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block :: python
+
+   >>> md = Metadata(md)
+   >>> md
+
+   Metadata
+   --------
+   3 IDs x 5 columns
+   strCatOnly: ColumnProperties(type='categorical')
+   intNum:     ColumnProperties(type='numeric')
+   intCat:     ColumnProperties(type='numeric')
+   floatNum:   ColumnProperties(type='categorical')
+   floatCat:   ColumnProperties(type='categorical')
+
+   Call to_dataframe() for a tabular representation.
+
+Note that ``intCat``, formerly ``categorical``, is now ``numeric``,
+while ``floatNum`` has changed from ``numeric`` to ``categorical``.
