@@ -314,4 +314,4 @@ Finally, there are export options available in the visualizations produced from 
 .. _`Python csv module`: https://docs.python.org/3/library/csv.html
 .. _`evenness vector`: https://docs.qiime2.org/2021.11/data/tutorials/moving-pictures/core-metrics-results/evenness_vector.qza
 .. _`feature table artifact`: https://docs.qiime2.org/2021.11/data/tutorials/moving-pictures/table.qza
-.. _`QIIME 2 Utilities`: https://docs.qiime2.org/2021.4/tutorials/utilities
+.. _`QIIME 2 Utilities`: https://docs.qiime2.org/2021.11/tutorials/utilities
