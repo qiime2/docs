@@ -24,6 +24,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import os
 import sys
 import pathlib
 
@@ -68,6 +69,7 @@ extensions = [
     'q2doc.checkpoint',
     'q2doc.command_block',
     'q2doc.external_links',
+    'q2doc.usage',
 ]
 
 
@@ -403,3 +405,5 @@ linkcheck_timeout = 15
 # -- Options for mathjax --------------------------------------------------
 mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
                 'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+
+html_baseurl = os.environ.get('BASE_URL', 'https://docs.qiime2.org/2021.11/')

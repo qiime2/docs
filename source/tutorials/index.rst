@@ -9,6 +9,7 @@ Tutorials
    overview
    qiime2-for-experienced-microbiome-researchers
    moving-pictures
+   moving-pictures-usage
    fmt
    atacama-soils
    pd-mice
