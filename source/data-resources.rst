@@ -10,7 +10,7 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-: `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2022.2/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
+- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2022.2/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
 - `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2022.2/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
 - `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2022.2/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``6bbc9b3f2f9b51d663063a7979dd95f1``)
 - `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2022.2/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``9e82e8969303b3a86ac941ceafeeac86``)
