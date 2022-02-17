@@ -18,6 +18,7 @@ Table of contents
    about
    concepts
    install/index
+   jupyter-book-tutorials
    tutorials/index
    interfaces/index
    plugins/index
