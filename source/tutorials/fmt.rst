@@ -25,7 +25,7 @@ Create a directory to work in called ``qiime2-fmt-tutorial`` and change to that 
 As in the Moving Pictures study, you should begin your analysis by familiarizing yourself with the sample metadata. You can again access the `sample metadata`_ as a Google Spreadsheet. Notice that there are three tabs in this spreadsheet. This first tab (called sample-metadata) contains all of the clinical metadata.
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/fmt/sample_metadata.tsv
+   :url: https://data.qiime2.org/2022.4/tutorials/fmt/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 Next, download the *demultiplexed sequences* that we'll use in this analysis. To learn how to start a QIIME 2 analysis from fastq-formatted sequence data, see the :doc:`importing data tutorial <importing>`. We'll need to download two sets of demultiplexed sequences, each corresponding to one of the sequencing runs.
@@ -38,23 +38,23 @@ In this tutorial we'll work with a small subsample of the complete sequence data
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2022.2/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/fmt/fmt-tutorial-demux-1-10p.qza
    :saveas: fmt-tutorial-demux-1.qza
 
 .. download::
    :no-exec:
-   :url: https://data.qiime2.org/2022.2/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/fmt/fmt-tutorial-demux-2-10p.qza
    :saveas: fmt-tutorial-demux-2.qza
 
 1% subsample data
 ~~~~~~~~~~~~~~~~~
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/fmt/fmt-tutorial-demux-1-1p.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/fmt/fmt-tutorial-demux-1-1p.qza
    :saveas: fmt-tutorial-demux-1.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/fmt/fmt-tutorial-demux-2-1p.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/fmt/fmt-tutorial-demux-2-1p.qza
    :saveas: fmt-tutorial-demux-2.qza
 
 Sequence quality control
@@ -185,5 +185,5 @@ Acknowledgements
 The data in this tutorial was initially presented in: Microbiota Transfer Therapy alters gut ecosystem and improves gastrointestinal and autism symptoms: an open-label study. Dae-Wook Kang, James B. Adams, Ann C. Gregory, Thomas Borody, Lauren Chittick, Alessio Fasano, Alexander Khoruts, Elizabeth Geis, Juan Maldonado, Sharon McDonough-Means, Elena L. Pollard, Simon Roux, Michael J. Sadowsky, Karen Schwarzberg Lipson, Matthew B. Sullivan, J. Gregory Caporaso and Rosa Krajmalnik-Brown. Microbiome (2017) 5:10. DOI: 10.1186/s40168-016-0225-7.
 
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
-.. _sample metadata: https://data.qiime2.org/2022.2/tutorials/fmt/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2022.4/tutorials/fmt/sample_metadata
 .. _Fecal Microbiome Transplant study: http://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-016-0225-7

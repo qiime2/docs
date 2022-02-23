@@ -48,7 +48,7 @@ tab-separated text and save it in the file ``sample-metadata.tsv``. This
        from urllib import request
        from qiime2 import Metadata
        fp, _ = request.urlretrieve(
-           'https://data.qiime2.org/2022.2/tutorials/moving-pictures/sample_metadata.tsv',
+           'https://data.qiime2.org/2022.4/tutorials/moving-pictures/sample_metadata.tsv',
        )
 
        return Metadata.load(fp)
@@ -84,7 +84,7 @@ commands will run quickly.
        from q2_demux._format import EMPSingleEndDirFmt
        from q2_types.per_sample_sequences import FastqGzFormat
 
-       base_url = 'https://data.qiime2.org/2022.2/tutorials/moving-pictures/'
+       base_url = 'https://data.qiime2.org/2022.4/tutorials/moving-pictures/'
        bc_url = base_url + 'emp-single-end-sequences/barcodes.fastq.gz'
        seqs_url = base_url + 'emp-single-end-sequences/sequences.fastq.gz'
 
@@ -798,7 +798,7 @@ from sequence to taxonomy.
        from urllib import request
        from qiime2 import Artifact
        fp, _ = request.urlretrieve(
-           'https://data.qiime2.org/2022.2/common/gg-13-8-99-515-806-nb-classifier.qza',
+           'https://data.qiime2.org/2022.4/common/gg-13-8-99-515-806-nb-classifier.qza',
        )
 
        return Artifact.load(fp)
@@ -956,7 +956,7 @@ level (i.e. level 6 of the Greengenes taxonomy).
    Which genera differ in abundance across subject? In which subject is each
    genus more abundant?
 
-.. _sample metadata: https://data.qiime2.org/2022.2/tutorials/moving-pictures/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2022.4/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
