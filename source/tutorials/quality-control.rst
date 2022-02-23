@@ -16,23 +16,23 @@ We will download and create several files, so first create a working directory.
 Let's download some example data and get started.
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/quality-control/query-seqs.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/quality-control/query-seqs.qza
    :saveas: query-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/quality-control/reference-seqs.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/quality-control/reference-seqs.qza
    :saveas: reference-seqs.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/quality-control/query-table.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/quality-control/query-table.qza
    :saveas: query-table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/quality-control/qc-mock-3-expected.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/quality-control/qc-mock-3-expected.qza
    :saveas: qc-mock-3-expected.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.2/tutorials/quality-control/qc-mock-3-observed.qza
+   :url: https://data.qiime2.org/2022.4/tutorials/quality-control/qc-mock-3-observed.qza
    :saveas: qc-mock-3-observed.qza
 
 
@@ -86,7 +86,7 @@ Taxon accuracy rate, taxon detection rate, and linear regression scores between 
 
 Evaluating sequence quality
 ---------------------------
-``evaluate_seqs`` aligns a set of query (e.g., observed) sequences against a set of reference (e.g., expected) sequences to evaluate the quality of alignment. The intended use is to align observed sequences against expected sequences (e.g., from a mock community) to determine the frequency of mismatches between observed sequences and the most similar expected sequences, e.g., as a measure of sequencing/method errors. However, any sequences may be provided as input to generate a report on pairwise alignment quality against a set of reference sequences. 
+``evaluate_seqs`` aligns a set of query (e.g., observed) sequences against a set of reference (e.g., expected) sequences to evaluate the quality of alignment. The intended use is to align observed sequences against expected sequences (e.g., from a mock community) to determine the frequency of mismatches between observed sequences and the most similar expected sequences, e.g., as a measure of sequencing/method errors. However, any sequences may be provided as input to generate a report on pairwise alignment quality against a set of reference sequences.
 
 .. command-block::
 

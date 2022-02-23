@@ -42,13 +42,13 @@ Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
 Once you have Miniconda installed, create a ``conda`` environment and install
-the QIIME 2 Core 2022.2 distribution within the environment. We **highly**
+the QIIME 2 Core 2022.4 distribution within the environment. We **highly**
 recommend creating a *new* environment specifically for the QIIME 2 release
 being installed, as there are many required dependencies that you may not
 want added to an existing environment. You can choose whatever name you'd
 like for the environment. In this example, we'll name the environment
-``qiime2-2022.2`` to indicate what QIIME 2 release is installed (i.e.
-``2022.2``).
+``qiime2-2022.4`` to indicate what QIIME 2 release is installed (i.e.
+``2022.4``).
 
 
 .. raw:: html
@@ -67,23 +67,23 @@ like for the environment. In this example, we'll name the environment
             </p>
          </div>
          <div id="macOS" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-osx-conda.yml
-   conda env create -n qiime2-2022.2 --file qiime2-2022.2-py38-osx-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.4-py38-osx-conda.yml
+   conda env create -n qiime2-2022.4 --file qiime2-2022.4-py38-osx-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2022.2-py38-osx-conda.yml</pre>
+   rm qiime2-2022.4-py38-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-linux-conda.yml
-   conda env create -n qiime2-2022.2 --file qiime2-2022.2-py38-linux-conda.yml
+            <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.4-py38-linux-conda.yml
+   conda env create -n qiime2-2022.4 --file qiime2-2022.4-py38-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2022.2-py38-linux-conda.yml</pre>
+   rm qiime2-2022.4-py38-linux-conda.yml</pre>
          </div>
          <div id="wsl" class="tab-pane fade">
             <pre># These instructions are identical to the Linux (64-bit) instructions
-   wget https://data.qiime2.org/distro/core/qiime2-2022.2-py38-linux-conda.yml
-   conda env create -n qiime2-2022.2 --file qiime2-2022.2-py38-linux-conda.yml
+   wget https://data.qiime2.org/distro/core/qiime2-2022.4-py38-linux-conda.yml
+   conda env create -n qiime2-2022.4 --file qiime2-2022.4-py38-linux-conda.yml
    # OPTIONAL CLEANUP
-   rm qiime2-2022.2-py38-linux-conda.yml</pre>
+   rm qiime2-2022.4-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -97,7 +97,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   conda activate qiime2-2022.2
+   conda activate qiime2-2022.4
 
 To deactivate an environment, run ``conda deactivate``.
 
@@ -136,13 +136,13 @@ of QIIME 2 and one with the newer version.
 -----------------------
 
 If at any point during the analysis the QIIME 2 conda environment is closed
-or deactivated, QIIME 2 2022.2 can be activated (or reactivated) by running
+or deactivated, QIIME 2 2022.4 can be activated (or reactivated) by running
 the following command:
 
 .. command-block::
    :no-exec:
 
-   conda activate qiime2-2022.2
+   conda activate qiime2-2022.4
 
 To determine the currently active conda environment, run the following
 command and look for the line that starts with "active environment":
