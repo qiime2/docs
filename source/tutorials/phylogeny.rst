@@ -588,7 +588,6 @@ This can all be accomplished by simply running the following:
 .. _Infernal: https://doi.org/10.1093/bioinformatics/btt509
 .. _SINA: https://doi.org/10.1093/bioinformatics/bts252
 .. _SILVA: https://www.arb-silva.de/
-.. _SINA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
 .. _Phylogeny for the faint of heart - a tutorial: http://doi.org/10.1016/S0168-9525(03)00112-4
 .. _Molecular phylogenetics - principles and practice: http://dx.doi.org/10.1038/nrg3186
 .. _Phylogenetics - An Introduction: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics
