@@ -119,14 +119,15 @@ plugin.
 
 *Reference based alignments*
 
-There are a variety of tools such as `PyNAST`_) (using `NAST`_), `Infernal`_,
-and `SINA`_, etc., that attempt to reduce the amount of ambiguously aligned
-regions by using curated reference alignments (e.g. `SILVA`_. Reference
+There are several tools that attempt to reduce the amount of ambiguously aligned
+regions by using curated reference alignments. Traditional, de novo alignment methods mututally align a set of unaligned sequences to create a multiple sequence alignment (MSA) from scratch. Re-running these methods with additional sequences will create MSAs with varying numbers of columns and assignments of bases to each column. These alignments is therefore incompatible with one another and may not be joined through concatenation.
+
+Reference based alignments, on the other hand, are meant to add sequences to an existing alignment. Alignments computed using reference based alignment tools always have widths identical to the reference alignment and maintain the meaning of each column. Therefore, these alignments may be concatenated.
+
+QIIME 2 currently does not wrap any methods for reference-based alignments, but alignments created using these methods can be imported into QIIME 2 as ``FeatureData[AlignedSequence]`` artifacts, provided that the alignments are standard FASTA formats. Some examples of tools for reference-based alignment include `PyNAST`_ (using `NAST`_), `Infernal`_, and `SINA`_. `SILVA`_ Reference
 alignments are particularly powerful for rRNA gene sequence data, as knowledge
 of secondary structure is incorporated into the curation process, thus
-increasing alignment quality. For a more in-depth and eloquent overview of
-reference-based alignment approaches, check out the great `SINA community
-tutorial`_).
+increasing alignment quality. 
 
 .. note:: Alignments constructed using reference based alignment approaches can
    be masked too, just like the above MAFFT example. Also, the reference
@@ -587,7 +588,6 @@ This can all be accomplished by simply running the following:
 .. _Infernal: https://doi.org/10.1093/bioinformatics/btt509
 .. _SINA: https://doi.org/10.1093/bioinformatics/bts252
 .. _SILVA: https://www.arb-silva.de/
-.. _SINA community tutorial: https://forum.qiime2.org/t/q2-alignment-reference-based-alignment-using-sina/6220
 .. _Phylogeny for the faint of heart - a tutorial: http://doi.org/10.1016/S0168-9525(03)00112-4
 .. _Molecular phylogenetics - principles and practice: http://dx.doi.org/10.1038/nrg3186
 .. _Phylogenetics - An Introduction: https://www.ebi.ac.uk/training/online/course/introduction-phylogenetics
