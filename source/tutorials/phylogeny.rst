@@ -71,7 +71,7 @@ Let's start by creating a directory to work in:
 Next, download the data:
 
 .. download::
-   :url: https://data.qiime2.org/2022.4/tutorials/phylogeny/rep-seqs.qza
+   :url: https://data.qiime2.org/2022.8/tutorials/phylogeny/rep-seqs.qza
    :saveas: rep-seqs.qza
 
 **Run MAFFT**
@@ -127,7 +127,7 @@ Reference based alignments, on the other hand, are meant to add sequences to an 
 QIIME 2 currently does not wrap any methods for reference-based alignments, but alignments created using these methods can be imported into QIIME 2 as ``FeatureData[AlignedSequence]`` artifacts, provided that the alignments are standard FASTA formats. Some examples of tools for reference-based alignment include `PyNAST`_ (using `NAST`_), `Infernal`_, and `SINA`_. `SILVA`_ Reference
 alignments are particularly powerful for rRNA gene sequence data, as knowledge
 of secondary structure is incorporated into the curation process, thus
-increasing alignment quality. 
+increasing alignment quality.
 
 .. note:: Alignments constructed using reference based alignment approaches can
    be masked too, just like the above MAFFT example. Also, the reference
