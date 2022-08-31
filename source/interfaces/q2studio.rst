@@ -5,7 +5,7 @@ QIIME 2 Studio (q2studio)
 
 QIIME 2 Studio (``q2studio``) is a graphical user interface for QIIME 2. This document will show you how to install and use QIIME 2 Studio as a desktop application.
 
-.. note:: QIIME 2 Studio currently requires a source installation. In the future, we will provide a package distribution/installer which will greatly simplify the installation process presented here. An experimental build of QIIME 2 Studio is available as a pre-installed package in the :doc:`VirtualBox image <../install/virtual/virtualbox>`.
+.. note:: QIIME 2 Studio currently requires a source installation. In the future, we will provide a package distribution/installer which will greatly simplify the installation process presented here.
 
 Launching QIIME 2 Studio requires an active ``conda`` environment with QIIME 2 installed in it. Failure to activate a compatible ``conda`` environment will likely produce errors, and possibly cause the application to crash. If you have not activated your ``conda`` environment already, please do so now:
 

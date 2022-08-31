@@ -1,7 +1,7 @@
 Installing QIIME 2
 ==================
 
-QIIME 2 can be installed natively or using virtual machines. The following
+QIIME 2 can be installed natively or using a virtual machine. The following
 pages describe how to install the :ref:`core-distribution` in either
 scenario.
 
@@ -21,8 +21,7 @@ option for all cases. In general we recommend the following:
 * `macOS`_ users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 * `Windows`_ users
 
@@ -30,14 +29,12 @@ option for all cases. In general we recommend the following:
     installation <native>` in the `Windows Subsystem for Linux`_ usually
     works well. See :doc:`the WSL guide <virtual/wsl>` for instructions on
     how to set up the Windows Subsystem for Linux.
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 * Linux users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 .. _core-distribution:
 
