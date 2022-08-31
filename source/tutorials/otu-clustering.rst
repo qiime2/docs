@@ -41,11 +41,11 @@ Start by creating a directory to work in.
 Next, download the necessary files:
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/otu-clustering/seqs.fna
+   :url: https://data.qiime2.org/2022.11/tutorials/otu-clustering/seqs.fna
    :saveas: seqs.fna
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/otu-clustering/85_otus.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/otu-clustering/85_otus.qza
    :saveas: 85_otus.qza
 
 Dereplicating a ``SampleData[Sequences]`` artifact
