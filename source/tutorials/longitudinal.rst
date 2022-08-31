@@ -22,15 +22,15 @@ In the examples below, we use data from the `ECAM study`_, a longitudinal study 
    cd longitudinal-tutorial
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/longitudinal/ecam_shannon.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_shannon.qza
    :saveas: shannon.qza
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
    :saveas: unweighted_unifrac_distance_matrix.qza
 
 
@@ -209,7 +209,7 @@ Within microbial communities, microbial populations do not exist in isolation bu
 First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/longitudinal/ecam_table_taxa.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_table_taxa.qza
    :saveas: ecam-table-taxa.qza
 
 Now we are ready run NMIT. The output of this command is a distance matrix that we can pass to other QIIME2 commands for significance testing and visualization.
@@ -264,7 +264,7 @@ This pipeline identifies features that are predictive of a numeric metadata colu
 Let's test this out on the ECAM dataset. First download a table to work with:
 
 .. download::
-   :url: https://data.qiime2.org/2022.8/tutorials/longitudinal/ecam_table_maturity.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 .. command-block::
