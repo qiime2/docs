@@ -66,19 +66,19 @@ like for the environment. In this example, we'll name the environment
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="macOS" class="tab-pane highlight-shell">
+         <div id="macOS" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-osx-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-osx-conda.yml</pre>
    OPTIONAL CLEANUP
    <pre>rm qiime2-2022.11-py38-osx-conda.yml</pre>
          </div>
-         <div id="linux" class="tab-pane fade highlight-shell">
+         <div id="linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-linux-conda.yml</pre>
    OPTIONAL CLEANUP
    <pre>rm qiime2-2022.11-py38-linux-conda.yml</pre>
          </div>
-         <div id="wsl" class="tab-pane fade highlight-shell">
+         <div id="wsl" class="tab-pane fade">
             These instructions are identical to the Linux (64-bit) instructions
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-linux-conda.yml</pre>
