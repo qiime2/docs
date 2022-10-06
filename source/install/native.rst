@@ -56,8 +56,8 @@ like for the environment. In this example, we'll name the environment
    <div class="tabbed">
       <ul class="nav nav-tabs">
          <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#macOS">macOS/OSX (64-bit)</a></li>
-         <li><a data-toggle="tab" href="#M1-macOS">macOS/OSX - M1 chip (64-bit)</a></li>
+         <li><a data-toggle="tab" href="#macOS">OS X (64-bit)</a></li>
+         <li><a data-toggle="tab" href="#M1-macOS">OS X (M1)</a></li>
          <li><a data-toggle="tab" href="#linux">Linux (64-bit)</a></li>
          <li><a data-toggle="tab" href="#wsl">Windows Subsystem for Linux (64-bit)</a></li>
       </ul>
