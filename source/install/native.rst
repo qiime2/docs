@@ -78,6 +78,8 @@ like for the environment. In this example, we'll name the environment
    CONDA_SUBDIR=osx-64 conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-osx-conda.yml
    conda activate qiime2-2022.11
    conda config --env --set subdir osx-64</pre>
+   OPTIONAL CLEANUP
+   <pre>rm qiime2-2022.11-py38-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml
