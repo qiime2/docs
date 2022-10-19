@@ -56,10 +56,10 @@ like for the environment. In this example, we'll name the environment
    <div class="tabbed">
       <ul class="nav nav-tabs">
          <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#macOS">OS X (64-bit)</a></li>
-         <li><a data-toggle="tab" href="#M1-macOS">OS X (M1)</a></li>
-         <li><a data-toggle="tab" href="#linux">Linux (64-bit)</a></li>
-         <li><a data-toggle="tab" href="#wsl">Windows Subsystem for Linux (64-bit)</a></li>
+         <li><a data-toggle="tab" href="#macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#wsl">Windows (via WSL)</a></li>
       </ul>
       <div class="tab-content">
          <div id="instructions" class="tab-pane fade in active">
@@ -67,31 +67,32 @@ like for the environment. In this example, we'll name the environment
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="macOS" class="tab-pane fade">
+         <div id="macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-osx-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-osx-conda.yml</pre>
-   OPTIONAL CLEANUP
+   <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-2022.11-py38-osx-conda.yml</pre>
          </div>
-         <div id="M1-macOS" class="tab-pane fade">
+         <div id="macOS-apple-silicon" class="tab-pane fade">
+            <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-osx-conda.yml
    CONDA_SUBDIR=osx-64 conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-osx-conda.yml
    conda activate qiime2-2022.11
    conda config --env --set subdir osx-64</pre>
-   OPTIONAL CLEANUP
+   <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-2022.11-py38-osx-conda.yml</pre>
          </div>
          <div id="linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-linux-conda.yml</pre>
-   OPTIONAL CLEANUP
+   <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-2022.11-py38-linux-conda.yml</pre>
          </div>
          <div id="wsl" class="tab-pane fade">
-            These instructions are identical to the Linux (64-bit) instructions
+            <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/core/qiime2-2022.11-py38-linux-conda.yml
    conda env create -n qiime2-2022.11 --file qiime2-2022.11-py38-linux-conda.yml</pre>
-   OPTIONAL CLEANUP
+   <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-2022.11-py38-linux-conda.yml</pre>
          </div>
       </div>
