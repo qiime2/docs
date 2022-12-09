@@ -53,7 +53,7 @@ reads:
 
    qiime vsearch merge-pairs \
      --i-demultiplexed-seqs demux.qza \
-     --o-joined-sequences demux-joined.qza
+     --o-merged-sequences demux-joined.qza
 
 Viewing a summary of joined data with read quality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
