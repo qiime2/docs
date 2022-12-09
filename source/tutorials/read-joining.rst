@@ -46,12 +46,12 @@ microbiome tutorial <atacama-soils>`.
 Joining reads
 ~~~~~~~~~~~~~
 
-Next, use the ``join-pairs`` method in the ``q2-vsearch`` plugin to join the
+Next, use the ``merge-pairs`` method in the ``q2-vsearch`` plugin to join the
 reads:
 
 .. command-block::
 
-   qiime vsearch join-pairs \
+   qiime vsearch merge-pairs \
      --i-demultiplexed-seqs demux.qza \
      --o-joined-sequences demux-joined.qza
 

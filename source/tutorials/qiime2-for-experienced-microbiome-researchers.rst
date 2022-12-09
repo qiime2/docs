@@ -117,7 +117,7 @@ Whether or not you need to merge reads depends on how you plan to cluster or den
 If you plan to use deblur or OTU clustering methods next, join your sequences now.
 If you plan to use dada2 to denoise your sequences, do not merge — dada2 performs read merging automatically after denoising each sequence.
 
-If you need to merge your reads, you can use the QIIME 2 :doc:`q2-vsearch plugin <../plugins/available/vsearch/index>`  with the :doc:`join-pairs <../plugins/available/vsearch/join-pairs/>` method.
+If you need to merge your reads, you can use the QIIME 2 :doc:`q2-vsearch plugin <../plugins/available/vsearch/index>`  with the :doc:`merge-pairs <../plugins/available/vsearch/merge-pairs/>` method.
 
 .. _`Remove non-biological sequences`:
 
