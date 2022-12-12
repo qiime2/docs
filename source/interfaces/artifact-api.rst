@@ -80,7 +80,7 @@ Finally, we can save our ``Artifacts`` as ``.qza`` files and exit the interprete
    'obs_features.qza'
    >>> exit
 
-Another powerful feature of QIIME 2 is that you can combine interfaces. For example, you could develop a Python script that automatically processes files for you to generate results as we just did, and then perform analysis of those files using the :doc:`command line interface <q2cli>` or the :doc:`QIIME 2 Studio <q2studio>`. For instance, you could now continue your analysis and view some results on the command line as follows:
+Another powerful feature of QIIME 2 is that you can combine interfaces. For example, you could develop a Python script that automatically processes files for you to generate results as we just did, and then perform analysis of those files using the :doc:`command line interface <q2cli>`. For instance, you could now continue your analysis and view some results on the command line as follows:
 
 .. command-block::
    :no-exec:
