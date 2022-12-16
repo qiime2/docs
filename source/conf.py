@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # ----------------------------------------------------------------------------
-# Copyright (c) 2016-2021, QIIME 2 development team.
+# Copyright (c) 2016-2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -24,6 +24,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import os
 import sys
 import pathlib
 
@@ -68,6 +69,7 @@ extensions = [
     'q2doc.checkpoint',
     'q2doc.command_block',
     'q2doc.external_links',
+    'q2doc.usage',
 ]
 
 
@@ -90,7 +92,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'QIIME 2'
-copyright = '2016-2021, QIIME 2 development team'
+copyright = '2016-2022, QIIME 2 development team'
 author = 'QIIME 2 development team'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -114,7 +116,7 @@ release = qiime2.__version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -403,3 +405,5 @@ linkcheck_timeout = 15
 # -- Options for mathjax --------------------------------------------------
 mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
                 'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+
+html_baseurl = os.environ.get('BASE_URL', 'https://docs.qiime2.org/2021.11/')

@@ -1,5 +1,5 @@
 // Grab all elements with highlight-shell class - these will contain all shell commands
-var highlightShellElements = document.getElementsByClassName("highlight-shell");
+var highlightShellElements = document.querySelectorAll(".highlight-shell, .cli-usage, .artifact-usage");
 
 // Loop through elements with highlight-shell class and add clipboard button to each block
 for (x = 0; x < highlightShellElements.length; x++)

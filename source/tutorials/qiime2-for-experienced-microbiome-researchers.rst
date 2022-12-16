@@ -44,7 +44,7 @@ Alternatively, you can also unzip your artifact directly (``unzip -k file.qza``)
 
 **Pro-tip #2: the QIIME 2 command line interface tools are slow because they have to unzip and re-zip the data contained in the artifacts each time you call them.**
 If you need to process your data more interactively, you might want to use the Python API - it is much faster since objects can be simply stored in memory.
-You can learn more about the different `QIIME 2 interfaces <https://docs.qiime2.org/2021.11/interfaces/>`__.
+You can learn more about the different `QIIME 2 interfaces <https://docs.qiime2.org/2022.11/interfaces/>`__.
 
 Data processing steps
 ---------------------
@@ -117,7 +117,7 @@ Whether or not you need to merge reads depends on how you plan to cluster or den
 If you plan to use deblur or OTU clustering methods next, join your sequences now.
 If you plan to use dada2 to denoise your sequences, do not merge — dada2 performs read merging automatically after denoising each sequence.
 
-If you need to merge your reads, you can use the QIIME 2 :doc:`q2-vsearch plugin <../plugins/available/vsearch/index>`  with the :doc:`join-pairs <../plugins/available/vsearch/join-pairs/>` method.
+If you need to merge your reads, you can use the QIIME 2 :doc:`q2-vsearch plugin <../plugins/available/vsearch/index>`  with the :doc:`merge-pairs <../plugins/available/vsearch/merge-pairs/>` method.
 
 .. _`Remove non-biological sequences`:
 

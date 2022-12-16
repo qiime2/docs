@@ -22,15 +22,15 @@ In the examples below, we use data from the `ECAM study`_, a longitudinal study 
    cd longitudinal-tutorial
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/longitudinal/ecam_shannon.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_shannon.qza
    :saveas: shannon.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/unweighted_unifrac_distance_matrix.qza
    :saveas: unweighted_unifrac_distance_matrix.qza
 
 
@@ -209,7 +209,7 @@ Within microbial communities, microbial populations do not exist in isolation bu
 First let's download a feature table to test. Here we will test genus-level taxa that exhibit a relative abundance > 0.1% in more than 15% of the total samples.
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/longitudinal/ecam_table_taxa.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_table_taxa.qza
    :saveas: ecam-table-taxa.qza
 
 Now we are ready run NMIT. The output of this command is a distance matrix that we can pass to other QIIME2 commands for significance testing and visualization.
@@ -264,7 +264,7 @@ This pipeline identifies features that are predictive of a numeric metadata colu
 Let's test this out on the ECAM dataset. First download a table to work with:
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/longitudinal/ecam_table_maturity.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 .. command-block::
@@ -280,7 +280,7 @@ Let's test this out on the ECAM dataset. First download a table to work with:
 
 All of the parameters used in this pipeline are described for other ``q2-longitudinal`` actions or in the :doc:`sample classifier tutorial <sample-classifier>`, so will not be discussed here. This pipeline produces multiple outputs:
 
-1. ``volatility-plot`` contains an interactive feature volatility plot. This is very similar to the plots produced by the ``volaility`` visualizer described above, with a couple key differences. First, only features are viewable as "metrics" (plotted on the y-axis). Second, feature metadata (feature importances and descriptive statistics) are plotted as bar charts below the volatility plot. The relative frequencies of different features can be plotted in the volatility chart by either selecting the "metric" selection tool, or by clicking on one of the bars in the bar plot. This makes it convenient to select features for viewing based on importance or other feature metadata. By default, the most important feature is plotted in the volatility plot when the visualization is viewed. Different feature metadata can be selected and sorted using the control panel to the right of the bar charts. Most of these should be self-explanatory, except for "cumulative average change" (the cumulative magnitude of change, both positive and negative, across states, and averaged across samples at each state), and "net average change" (positive and negative "cumulative average change" is summed to determine whether a feature increased or decreased in abundance between baseline and end of study).
+1. ``volatility-plot`` contains an interactive feature volatility plot. This is very similar to the plots produced by the ``volatility`` visualizer described above, with a couple key differences. First, only features are viewable as "metrics" (plotted on the y-axis). Second, feature metadata (feature importances and descriptive statistics) are plotted as bar charts below the volatility plot. The relative frequencies of different features can be plotted in the volatility chart by either selecting the "metric" selection tool, or by clicking on one of the bars in the bar plot. This makes it convenient to select features for viewing based on importance or other feature metadata. By default, the most important feature is plotted in the volatility plot when the visualization is viewed. Different feature metadata can be selected and sorted using the control panel to the right of the bar charts. Most of these should be self-explanatory, except for "cumulative average change" (the cumulative magnitude of change, both positive and negative, across states, and averaged across samples at each state), and "net average change" (positive and negative "cumulative average change" is summed to determine whether a feature increased or decreased in abundance between baseline and end of study).
 
 2. ``accuracy-results`` display the predictive accuracy of the regression model. This is important to view, as important features are meaningless if the model is inaccurate. See the :doc:`sample classifier tutorial <sample-classifier>` for more description of regressor accuracy results.
 

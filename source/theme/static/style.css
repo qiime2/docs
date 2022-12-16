@@ -169,6 +169,14 @@ table.citation td.label {
   position: relative;
 }
 
+.cli-usage {
+  position: relative;
+}
+
+.artifact-usage {
+  position: relative;
+}
+
 .clipboard-btn {
   position: absolute;
   top: 0px;

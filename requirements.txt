@@ -1,6 +1,6 @@
 # Documentation building requirements.
 Sphinx
-Jinja2<3
+Jinja2
 sphinxcontrib-bibtex
 lxml
 https://github.com/qiime2/sphinx-ext-qiime2/archive/master.tar.gz

@@ -1,7 +1,7 @@
 Installing QIIME 2
 ==================
 
-QIIME 2 can be installed natively or using virtual machines. The following
+QIIME 2 can be installed natively or using a virtual machine. The following
 pages describe how to install the :ref:`core-distribution` in either
 scenario.
 
@@ -21,8 +21,7 @@ option for all cases. In general we recommend the following:
 * `macOS`_ users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 * `Windows`_ users
 
@@ -30,21 +29,19 @@ option for all cases. In general we recommend the following:
     installation <native>` in the `Windows Subsystem for Linux`_ usually
     works well. See :doc:`the WSL guide <virtual/wsl>` for instructions on
     how to set up the Windows Subsystem for Linux.
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 * Linux users
 
   - A :doc:`native conda installation <native>` usually works well
-  - :doc:`Docker <virtual/docker>` and :doc:`VirtualBox <virtual/virtualbox>`
-    are good backup options
+  - :doc:`Docker <virtual/docker>` is a good backup option
 
 .. _core-distribution:
 
-QIIME 2 Core 2021.11 distribution
+QIIME 2 Core 2022.11 distribution
 ---------------------------------
 
-The QIIME 2 Core 2021.11 distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The QIIME 2 Core 2022.11 distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-alignment``
 - ``q2-composition``
@@ -69,7 +66,7 @@ The QIIME 2 Core 2021.11 distribution includes the QIIME 2 framework, ``q2cli`` 
 - ``q2-types``
 - ``q2-vsearch``
 
-.. note:: The QIIME 2 Core 2021.11 distribution includes plugins and interfaces that are developed, maintained, tested, and distributed by the QIIME 2 development team. The Core distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation. Other types of distributions may be made available in the future in addition to Core.
+.. note:: The QIIME 2 Core 2022.11 distribution includes plugins and interfaces that are developed, maintained, tested, and distributed by the QIIME 2 development team. The Core distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation. Other types of distributions may be made available in the future in addition to Core.
 
 .. _macOS: https://www.apple.com/macos/
 .. _Windows: https://www.microsoft.com/en-us/windows

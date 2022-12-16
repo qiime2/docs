@@ -19,11 +19,11 @@ Start by creating a directory to work in.
 Next, download the necessary files:
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/chimera/atacama-table.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/chimera/atacama-table.qza
    :saveas: atacama-table.qza
 
 .. download::
-   :url: https://data.qiime2.org/2021.11/tutorials/chimera/atacama-rep-seqs.qza
+   :url: https://data.qiime2.org/2022.11/tutorials/chimera/atacama-rep-seqs.qza
    :saveas: atacama-rep-seqs.qza
 
 Run *de novo* chimera checking
