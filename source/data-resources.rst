@@ -24,6 +24,9 @@ For Silva 138, please cite the following references if you use any of these pre-
 For Greengenes2, please cite:
 
 - McDonald, D. et al. Greengenes2 enables a shared data universe for microbiome studies. bioRxiv (2022). https://doi.org/10.1101/2022.12.19.520774
+
+If using the Naive Bayes classifiers with Greengenes2, please cite:
+
 - Bokulich, N.A., Kaehler, B.D., Rideout, J.R. et al. Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2’s q2-feature-classifier plugin. Microbiome 6, 90 (2018). https://doi.org/10.1186/s40168-018-0470-z
 
 Please note, these classifiers were trained using scikit-learn 0.24.1, and therefore can only be used with scikit-learn 0.24.1. If you observe errors related to scikit-learn version mismatches, please ensure you are using the pretrained-classifiers that were published with the release of QIIME 2 you are using.
