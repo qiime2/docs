@@ -15,6 +15,8 @@ Naive Bayes classifiers trained on:
 - `Greengenes2 2022.10 full length sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.full-length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
 - `Greengenes2 2022.10 from 515F/806R region of sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
+.. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the `QIIME 2 2022.11 data resources <https://docs.qiime2.org/2022.11/data-resources/>`_.
+
 For Silva 138, please cite the following references if you use any of these pre-trained classifiers:
 
 - Michael S Robeson II, Devon R O'Rourke, Benjamin D Kaehler, Michal Ziemski, Matthew R Dillon, Jeffrey T Foster, Nicholas A Bokulich. RESCRIPt: Reproducible sequence taxonomy reference database management for the masses. bioRxiv 2020.10.05.326504; doi: https://doi.org/10.1101/2020.10.05.326504
@@ -62,9 +64,7 @@ Greengenes (16S rRNA)
 
 Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_, `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_, and `McDonald (2022) <https://www.biorxiv.org/content/10.1101/2022.12.19.520774v1>`_ papers.
 
-**License Information** can be found on the `Greengenes website <https://greengenes.secondgenome.com/>`_. Greengenes data (prior to 2022) are released under a `Creative Commons Attribution-ShareAlike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/deed.en_US>`_. Greengenes data (2022-) are released under a `BSD-3 license <http://ftp.microbio.me/greengenes_release/2022.10/00LICENSE>`_.
-
-
+**License Information** can be found on the `Greengenes website <https://greengenes.secondgenome.com/>`_ (prior to 2022) or on the Greengenes2 `FTP <http://ftp.microbio.me/greengenes_release/current/>`_. Greengenes data (prior to 2022) are released under a `Creative Commons Attribution-ShareAlike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/deed.en_US>`_. Greengenes2 data (2022-) are released under a `BSD-3 license <http://ftp.microbio.me/greengenes_release/current/00LICENSE>`_.
 
 Silva (16S/18S rRNA)
 ````````````````````
