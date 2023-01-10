@@ -12,14 +12,24 @@ Naive Bayes classifiers trained on:
 
 - `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2022.11/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
 - `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2022.11/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
-- `Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2022.11/common/gg-13-8-99-nb-classifier.qza>`_ (MD5: ``6bbc9b3f2f9b51d663063a7979dd95f1``)
-- `Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2022.11/common/gg-13-8-99-515-806-nb-classifier.qza>`_ (MD5: ``9e82e8969303b3a86ac941ceafeeac86``)
+- `Greengenes2 2022.10 full length sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.full-length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
+- `Greengenes2 2022.10 from 515F/806R region of sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
-Please cite the following references if you use any of these pre-trained classifiers:
+.. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the `QIIME 2 2022.11 data resources <https://docs.qiime2.org/2022.11/data-resources/>`_.
+
+For Silva 138, please cite the following references if you use any of these pre-trained classifiers:
 
 - Michael S Robeson II, Devon R O'Rourke, Benjamin D Kaehler, Michal Ziemski, Matthew R Dillon, Jeffrey T Foster, Nicholas A Bokulich. RESCRIPt: Reproducible sequence taxonomy reference database management for the masses. bioRxiv 2020.10.05.326504; doi: https://doi.org/10.1101/2020.10.05.326504
 - Bokulich, N.A., Kaehler, B.D., Rideout, J.R. et al. Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2’s q2-feature-classifier plugin. Microbiome 6, 90 (2018). https://doi.org/10.1186/s40168-018-0470-z
-- See the `SILVA website <https://www.arb-silva.de/>`_ and the latest `Greengenes publication <https://www.nature.com/articles/ismej2011139>`_ for the latest citation information for these reference databases.
+- See the `SILVA website <https://www.arb-silva.de/>`_ for the latest citation information for this reference database.
+
+For Greengenes2, please cite:
+
+- McDonald, D. et al. Greengenes2 enables a shared data universe for microbiome studies. bioRxiv (2022). https://doi.org/10.1101/2022.12.19.520774
+
+If using the Naive Bayes classifiers with Greengenes2, please cite:
+
+- Bokulich, N.A., Kaehler, B.D., Rideout, J.R. et al. Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2’s q2-feature-classifier plugin. Microbiome 6, 90 (2018). https://doi.org/10.1186/s40168-018-0470-z
 
 Please note, these classifiers were trained using scikit-learn 0.24.1, and therefore can only be used with scikit-learn 0.24.1. If you observe errors related to scikit-learn version mismatches, please ensure you are using the pretrained-classifiers that were published with the release of QIIME 2 you are using.
 
@@ -46,16 +56,15 @@ These marker gene reference databases are formatted for use with QIIME 1 and QII
 Greengenes (16S rRNA)
 `````````````````````
 
-- `13_8 <ftp://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_8_otus.tar.gz>`_ (most recent)
-- `13_5 <ftp://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_5_otus.tar.gz>`_
-- `12_10 <ftp://greengenes.microbio.me/greengenes_release/gg_12_10/gg_12_10_otus.tar.gz>`_
+- `2022.10 <http://ftp.microbio.me/greengenes_release/2022.10/>`_ (most recent)
+- `13_8 <http://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_8_otus.tar.gz>`_ 
+- `13_5 <http://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_5_otus.tar.gz>`_
+- `12_10 <http://greengenes.microbio.me/greengenes_release/gg_12_10/gg_12_10_otus.tar.gz>`_
 - `February 4th, 2011 <http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz>`_
 
-Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_ and `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_ papers.
+Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_, `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_, and `McDonald (2022) <https://www.biorxiv.org/content/10.1101/2022.12.19.520774v1>`_ papers.
 
-**License Information** can be found on the `Greengenes website <https://greengenes.secondgenome.com/>`_. Greengenes data are released under a `Creative Commons Attribution-ShareAlike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/deed.en_US>`_.
-
-
+**License Information** can be found on the `Greengenes website <https://greengenes.secondgenome.com/>`_ (prior to 2022) or on the Greengenes2 `FTP <http://ftp.microbio.me/greengenes_release/current/>`_. Greengenes data (prior to 2022) are released under a `Creative Commons Attribution-ShareAlike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/deed.en_US>`_. Greengenes2 data (2022-) are released under a `BSD-3 license <http://ftp.microbio.me/greengenes_release/current/00LICENSE>`_.
 
 Silva (16S/18S rRNA)
 ````````````````````
