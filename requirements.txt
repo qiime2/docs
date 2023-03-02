@@ -1,5 +1,5 @@
 # Documentation building requirements.
-Sphinx
+Sphinx==5.3.0
 Jinja2
 sphinxcontrib-bibtex
 lxml
