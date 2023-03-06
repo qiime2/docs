@@ -71,7 +71,7 @@ Let's start by creating a directory to work in:
 Next, download the data:
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/phylogeny/rep-seqs.qza
+   :url: https://data.qiime2.org/2023.5/tutorials/phylogeny/rep-seqs.qza
    :saveas: rep-seqs.qza
 
 **Run MAFFT**

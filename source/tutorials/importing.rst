@@ -62,11 +62,11 @@ Obtaining example data
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 Importing data
@@ -105,15 +105,15 @@ Obtaining example data
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/atacama-soils/1p/forward.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/1p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/atacama-soils/1p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/1p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/atacama-soils/1p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/1p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 Importing data
@@ -147,7 +147,7 @@ Obtaining example data
    mkdir muxed-se-barcode-in-seq
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/muxed-se-barcode-in-seq.fastq.gz
    :saveas: muxed-se-barcode-in-seq/sequences.fastq.gz
 
 Importing data
@@ -192,11 +192,11 @@ Obtaining example data
    mkdir muxed-pe-barcode-in-seq
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/muxed-pe-barcode-in-seq/forward.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/muxed-pe-barcode-in-seq/forward.fastq.gz
    :saveas: muxed-pe-barcode-in-seq/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/muxed-pe-barcode-in-seq/reverse.fastq.gz
    :saveas: muxed-pe-barcode-in-seq/reverse.fastq.gz
 
 Importing data
@@ -229,7 +229,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/casava-18-single-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/casava-18-single-end-demultiplexed.zip
    :saveas: casava-18-single-end-demultiplexed.zip
 
 .. command-block::
@@ -266,7 +266,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/casava-18-paired-end-demultiplexed.zip
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/casava-18-paired-end-demultiplexed.zip
    :saveas: casava-18-paired-end-demultiplexed.zip
 
 .. command-block::
@@ -324,11 +324,11 @@ SingleEndFastqManifestPhred33V2
 In this variant of the fastq manifest format, the read directions must all either be forward or reverse. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 33.
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/se-33.zip
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/se-33.zip
    :saveas: se-33.zip
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/se-33-manifest
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/se-33-manifest
    :saveas: se-33-manifest
 
 .. command-block::
@@ -358,11 +358,11 @@ PairedEndFastqManifestPhred64V2
 In this variant of the fastq manifest format, there must be forward and reverse read ``fastq.gz`` / ``fastq`` files for each sample ID. This format assumes that the `PHRED offset`_ used for the positional quality scores in all of the ``fastq.gz`` / ``fastq`` files is 64. During import, QIIME 2 will convert the PHRED 64 encoded quality scores to PHRED 33 encoded quality scores. This conversion will be slow, but will only happen one time.
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/pe-64.zip
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/pe-64.zip
    :saveas: pe-64.zip
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/pe-64-manifest
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/pe-64-manifest
    :saveas: pe-64-manifest
 
 .. command-block::
@@ -396,7 +396,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/sequences.fna
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/sequences.fna
    :saveas: sequences.fna
 
 Importing data
@@ -421,7 +421,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/aligned-sequences.fna
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/aligned-sequences.fna
    :saveas: aligned-sequences.fna
 
 Importing data
@@ -453,7 +453,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/feature-table-v100.biom
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/feature-table-v100.biom
    :saveas: feature-table-v100.biom
 
 Importing data
@@ -479,7 +479,7 @@ Obtaining example data
 ``````````````````````
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/feature-table-v210.biom
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/feature-table-v210.biom
    :saveas: feature-table-v210.biom
 
 Importing data
@@ -505,7 +505,7 @@ Obtaining example data
 **********************
 
 .. download::
-   :url: https://data.qiime2.org/2023.2/tutorials/importing/unrooted-tree.tre
+   :url: https://data.qiime2.org/2023.5/tutorials/importing/unrooted-tree.tre
    :saveas: unrooted-tree.tre
 
 Importing data
