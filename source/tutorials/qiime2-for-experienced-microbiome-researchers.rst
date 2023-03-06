@@ -44,7 +44,7 @@ Alternatively, you can also unzip your artifact directly (``unzip -k file.qza``)
 
 **Pro-tip #2: the QIIME 2 command line interface tools are slow because they have to unzip and re-zip the data contained in the artifacts each time you call them.**
 If you need to process your data more interactively, you might want to use the Python API - it is much faster since objects can be simply stored in memory.
-You can learn more about the different `QIIME 2 interfaces <https://docs.qiime2.org/2023.2/interfaces/>`__.
+You can learn more about the different `QIIME 2 interfaces <https://docs.qiime2.org/2023.5/interfaces/>`__.
 
 Data processing steps
 ---------------------
