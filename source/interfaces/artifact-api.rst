@@ -1,5 +1,5 @@
 Artifact API (using QIIME 2 with Python)
-=======================================
+========================================
 
 .. note:: This guide assumes you have performed the steps in the :doc:`Moving Pictures tutorial <../tutorials/moving-pictures>`. The ``table.qza`` and ``sample-metadata.tsv`` files generated in that tutorial are used here.
 
