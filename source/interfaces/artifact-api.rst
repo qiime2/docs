@@ -53,7 +53,7 @@ You can also view the artifact's data as a ``biom.Table`` object:
 
 
 A powerful feature of QIIME 2 is that you can export different types of views from QIIME 2 artifacts as illustrated here, then operate on the resulting data types, and import those data back into QIIME 2. This is useful if there are some operations that are available on the view's data type (e.g., the ``pandas.DataFrame``) that are not available through the QIIME 2 API.
-.. tip:: You will lose all artifact provenance in the process, because QIIME can't track what happens to data outside of QIIME.
+.. tip:: You will lose all artifact provenance in the process, because QIIME 2 can't track what happens to data outside of QIIME 2.
 
 You can import the ``pandas.DataFrame`` back into a new QIIME artifact as follows:
 
