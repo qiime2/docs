@@ -15,7 +15,7 @@ Naive Bayes classifiers trained on:
 - `Greengenes2 2022.10 full length sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.full-length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
 - `Greengenes2 2022.10 from 515F/806R region of sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
-.. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the `QIIME 2 2023.5 data resources <https://docs.qiime2.org/2023.5/data-resources/>`_.
+.. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the older QIIME 2 data resources pages.
 
 For Silva 138, please cite the following references if you use any of these pre-trained classifiers:
 
