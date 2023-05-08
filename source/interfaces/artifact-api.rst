@@ -5,7 +5,7 @@ Artifact API (using QIIME 2 with Python)
 
 The Artifact API is a Python 3 application programming interface (API) for QIIME 2. The Artifact API supports interactive computing with QIIME 2 using the Python 3 programming language. This API is intended for advanced/technical users. The API is automatically generated, and its availability depends on which QIIME 2 plugins are currently installed. It has been optimized for use in the `Jupyter Notebook`_, which is currently our primary target for use of this API. The Artifact API is a part of the QIIME 2 framework; no additional software needs to be installed to use it.
 
-Using Python to run QIIME2
+Using Python to run QIIME 2
 --------------------------
 
 We'll now explore some of the same methods and visualizers introduced in the :doc:`Moving Pictures tutorial <../tutorials/moving-pictures>`, this time in the Python interpreter instead of the command line interface. First, we'll load a QIIME 2 ``Artifact``, in this case a feature table. We'll then pass that to the ``q2-feature-table`` plugin's ``rarefy`` method, which will return a new Artifact.
