@@ -12,8 +12,8 @@ Naive Bayes classifiers trained on:
 
 - `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2023.5/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
 - `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2023.5/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
-- `Greengenes2 2022.10 full length sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.full-length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
-- `Greengenes2 2022.10 from 515F/806R region of sequences <http://ftp.microbio.me/greengenes_release/2022.10/2022.10.backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
+- `Greengenes2 2022.10 full length sequences <https://data.qiime2.org/classifiers/greengenes/2022_10_backbone_full_length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
+- `Greengenes2 2022.10 from 515F/806R region of sequences <https://data.qiime2.org/classifiers/greengenes/2022_10_backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
 .. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the older QIIME 2 data resources pages.
 
@@ -61,9 +61,9 @@ Greengenes (16S rRNA)
 `````````````````````
 
 - `2022.10 <http://ftp.microbio.me/greengenes_release/2022.10/>`_ (most recent)
-- `13_8 <http://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_8_otus.tar.gz>`_
-- `13_5 <http://greengenes.microbio.me/greengenes_release/gg_13_5/gg_13_5_otus.tar.gz>`_
-- `12_10 <http://greengenes.microbio.me/greengenes_release/gg_12_10/gg_12_10_otus.tar.gz>`_
+- `13_8 <https://data.qiime2.org/classifiers/greengenes/gg_13_8_otus.tar.gz>`_
+- `13_5 <https://data.qiime2.org/classifiers/greengenes/gg_13_5_otus.tar.gz>`_
+- `12_10 <https://data.qiime2.org/classifiers/greengenes/gg_12_10_otus.tar.gz>`_
 - `February 4th, 2011 <http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz>`_
 
 Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_, `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_, and `McDonald (2022) <https://www.biorxiv.org/content/10.1101/2022.12.19.520774v1>`_ papers.
