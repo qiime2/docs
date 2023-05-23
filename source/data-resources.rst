@@ -13,7 +13,7 @@ Naive Bayes classifiers trained on:
 - `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2023.5/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
 - `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2023.5/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
 - `Greengenes2 2022.10 full length sequences <https://data.qiime2.org/classifiers/greengenes/gg_2022_10_backbone_full_length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
-- `Greengenes2 2022.10 from 515F/806R region of sequences <https://data.qiime2.org/classifiers/greengenes/2022_10_backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
+- `Greengenes2 2022.10 from 515F/806R region of sequences <https://data.qiime2.org/classifiers/greengenes/gg_2022_10_backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
 .. note:: Greengenes2 has succeeded Greengenes 13_8. If you still need to access the outdated 13_8 classifiers, for example to reproduce old results or to compare against new classifiers, you can access them through the older QIIME 2 data resources pages.
 
