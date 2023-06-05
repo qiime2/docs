@@ -45,7 +45,7 @@ available as a Google Sheet. This ``sample-metadata.tsv`` file is used
 throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/sample_metadata.tsv
+   :url: https://data.qiime2.org/2023.7/tutorials/atacama-soils/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 
@@ -61,15 +61,15 @@ tutorial to further improve the run time.
    mkdir emp-paired-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/10p/forward.fastq.gz
+   :url: https://data.qiime2.org/2023.7/tutorials/atacama-soils/10p/forward.fastq.gz
    :saveas: emp-paired-end-sequences/forward.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/10p/reverse.fastq.gz
+   :url: https://data.qiime2.org/2023.7/tutorials/atacama-soils/10p/reverse.fastq.gz
    :saveas: emp-paired-end-sequences/reverse.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2023.5/tutorials/atacama-soils/10p/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2023.7/tutorials/atacama-soils/10p/barcodes.fastq.gz
    :saveas: emp-paired-end-sequences/barcodes.fastq.gz
 
 .. _`atacama demux`:
@@ -253,4 +253,4 @@ Califf, Cesar Cardona, Audrey Copeland, Will van Treuren, Karen L. Josephson,
 Rob Knight, Jack A. Gilbert, Jay Quade, J. Gregory Caporaso, and Raina M.
 Maier. mSystems May 2017, 2 (3) e00195-16; DOI: 10.1128/mSystems.00195-16.
 
-.. _sample metadata: https://data.qiime2.org/2023.5/tutorials/atacama-soils/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2023.7/tutorials/atacama-soils/sample_metadata
