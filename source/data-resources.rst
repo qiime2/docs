@@ -27,7 +27,7 @@ For Silva 138, please cite the following references if you use any of these pre-
 
 For Greengenes2, please cite:
 
-- McDonald, D. et al. Greengenes2 enables a shared data universe for microbiome studies. bioRxiv (2022). https://doi.org/10.1101/2022.12.19.520774
+- McDonald, D. et al. Greengenes2 unifies microbial data in a single reference tree. Nature Biotechnology (2023). https://www.nature.com/articles/s41587-023-01845-1
 
 If using the Naive Bayes classifiers with Greengenes2, please cite:
 
@@ -66,7 +66,7 @@ Greengenes (16S rRNA)
 - `12_10 <https://data.qiime2.org/classifiers/greengenes/gg_12_10_otus.tar.gz>`_
 - `February 4th, 2011 <http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz>`_
 
-Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_, `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_, and `McDonald (2022) <https://www.biorxiv.org/content/10.1101/2022.12.19.520774v1>`_ papers.
+Find more information about Greengenes in the `DeSantis (2006) <http://aem.asm.org/content/72/7/5069.full>`_, `McDonald (2012) <https://www.nature.com/articles/ismej2011139>`_, and `McDonald (2023) <https://www.nature.com/articles/s41587-023-01845-1>`_ papers.
 
 **License Information** can be found on the `Greengenes website <https://greengenes.secondgenome.com/>`_ (prior to 2022) or on the Greengenes2 `FTP <http://ftp.microbio.me/greengenes_release/current/>`_. Greengenes data (prior to 2022) are released under a `Creative Commons Attribution-ShareAlike 3.0 License <https://creativecommons.org/licenses/by-sa/3.0/deed.en_US>`_. Greengenes2 data (2022-) are released under a `BSD-3 license <http://ftp.microbio.me/greengenes_release/current/00LICENSE>`_.
 
