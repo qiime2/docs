@@ -52,8 +52,8 @@ Install QIIME 2 within a ``conda`` environment
 Once you have Miniconda installed, create a ``conda`` environment and install
 the QIIME 2 2023.9 distribution of your choice within the environment.
 We **highly** recommend creating a *new* environment specifically for the
-QIIME 2 release being installed, as there are many required dependencies
-that you may not want added to an existing environment.
+QIIME 2 distribution and release being installed, as there are many required
+dependencies that you may not want added to an existing environment.
 You can choose whatever name you'd like for the environment.
 In this example, we'll name the environments ``qiime2-<distro>-2023.9``
 to indicate what QIIME 2 release is installed (i.e. ``2023.9``).

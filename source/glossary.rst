@@ -59,6 +59,14 @@ and another geared toward developers. You can find the
      maintains records on all :term:`results <result>` (for example), QIIME 2’s
      data provenance is described as being decentralized.
 
+   distribution
+     A collection of QIIME 2 plugins that are designed to be installed
+     together. These are generally grouped by a theme. For example, the
+     "amplicon" distribution provides a collection of plugins for analysis of
+     microbiome amplicon data, while the "shotgun" distribution provides a
+     collection of plugins for analysis of microbiome shotgun metagenomics
+     data.
+
    feature
      A unit of observation, such as an operational taxonomic unit, a sequence
      variant, a gene, a metabolite, etc. This generic term is used because
@@ -113,8 +121,8 @@ and another geared toward developers. You can find the
      A plugin provides analysis functionality in the form of
      :term:`actions <action>`. All plugins can be accessed through all
      interfaces. Plugins can be developed and distributed by anyone. As of
-     this writing, several collections of plugins referred to as the "amplicon,
-     shotgun and tiny" distributions are provided on installation of QIIME 2.
+     this writing, several collections of plugins (i.e.,
+     distributions) are referenced in the QIIME 2 installation documentation.
      Additional plugins can be installed, and the primary resource enabling
      discovery of additional plugins is the
      `QIIME 2 Library <https://library.qiime2.org>`_.

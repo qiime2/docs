@@ -1,7 +1,7 @@
 Installing QIIME 2 using a Virtual Machine
 ==========================================
 
-*QIIME 2 Amplicon distribution* builds are available as Docker Images. See :ref:`distributions` for more details about the Amplicon distribution.
+*QIIME 2 Amplicon Distribution* builds are available as Docker Images. See :ref:`distributions` for more details about the Amplicon Distribution.
 
 .. toctree::
    :maxdepth: 1

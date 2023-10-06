@@ -43,14 +43,14 @@ QIIME 2 2023.9 distributions
 
 As of 2023.9, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
-- ``Amplicon``
-- ``Shotgun``
-- ``Tiny``
+- ``amplicon``
+- ``shotgun``
+- ``tiny``
 
-QIIME 2 2023.9 Amplicon distribution
+QIIME 2 2023.9 Amplicon Distribution
 ....................................
 
-The 2023.9 release of the QIIME 2 Amplicon distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2023.9 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-alignment``
 - ``q2-composition``
@@ -74,10 +74,10 @@ The 2023.9 release of the QIIME 2 Amplicon distribution includes the QIIME 2 fra
 - ``q2-types``
 - ``q2-vsearch``
 
-QIIME 2 2023.9 Shotgun distribution
+QIIME 2 2023.9 Shotgun Distribution
 ...................................
 
-The 2023.9 release of the QIIME 2 Shotgun distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2023.9 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-assembly``
 - ``q2-cutadapt``
@@ -98,16 +98,16 @@ The 2023.9 release of the QIIME 2 Shotgun distribution includes the QIIME 2 fram
 - ``q2-types-genomics``
 - ``rescript``
 
-QIIME 2 2023.9 Tiny distribution
+QIIME 2 2023.9 Tiny Distribution
 ................................
 
-The 2023.9 release of the QIIME 2 Tiny distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2023.9 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-types``
 
-The QIIME 2 Tiny distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon or Shotgun distributions in their QIIME 2 environment.
+The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon or Shotgun Distributions in their QIIME 2 environment.
 
-.. note:: The QIIME 2 Amplicon, Shotgun and Tiny distributions include plugins and interfaces that are developed, maintained, tested, and distributed by the QIIME 2 development team. The Amplicon distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation.
+.. note:: The Amplicon Distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation.
 
 .. _macOS: https://www.apple.com/macos/
 .. _Windows: https://www.microsoft.com/en-us/windows
