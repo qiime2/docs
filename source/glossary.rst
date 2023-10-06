@@ -62,8 +62,8 @@ and another geared toward developers. You can find the
    distribution
      A collection of QIIME 2 plugins that are designed to be installed
      together. These are generally grouped by a theme. For example, the
-     "amplicon" distribution provides a collection of plugins for analysis of
-     microbiome amplicon data, while the "shotgun" distribution provides a
+     Amplicon Distribution provides a collection of plugins for analysis of
+     microbiome amplicon data, while the Shotgun Distribution provides a
      collection of plugins for analysis of microbiome shotgun metagenomics
      data.
 
