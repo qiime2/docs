@@ -113,13 +113,13 @@ and another geared toward developers. You can find the
      A plugin provides analysis functionality in the form of
      :term:`actions <action>`. All plugins can be accessed through all
      interfaces. Plugins can be developed and distributed by anyone. As of
-     this writing, a collection of plugins referred to as the "core
-     distribution" is provided on installation of QIIME 2. Additional plugins
-     can be installed, and the primary resource enabling discovery of
-     additional plugins is the `QIIME 2 Library <https://library.qiime2.org>`_.
+     this writing, several collections of plugins referred to as the "amplicon,
+     shotgun and tiny" distributions are provided on installation of QIIME 2.
+     Additional plugins can be installed, and the primary resource enabling
+     discovery of additional plugins is the
+     `QIIME 2 Library <https://library.qiime2.org>`_.
      Anyone with a QIIME 2 Forum account can share their plugins on the QIIME 2
-     Library. We plan to phase out the core distribution as we move toward
-     distributing all QIIME 2 plugins through the QIIME 2 Library.
+     Library.
 
    provenance
      See :term:`decentralized data provenance`.

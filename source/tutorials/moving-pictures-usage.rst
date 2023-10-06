@@ -866,10 +866,9 @@ using this method.
 
 .. note::
    Differential abundance testing in microbiome analysis is an active area of
-   research. There are two QIIME 2 plugins that can be used for this:
-   ``q2-gneiss`` and ``q2-composition``. This section uses ``q2-composition``,
-   but there is :doc:`another tutorial which uses gneiss <gneiss>` on a
-   different dataset if you are interested in learning more.
+   research. There is one QIIME 2 plugin that can be used for this,
+   which will be used below:
+   ``q2-composition``.
 
 ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few
 (less than about 25%) of the features are changing between groups. If you
