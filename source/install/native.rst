@@ -65,25 +65,25 @@ QIIME 2 Amplicon Distribution
 
    <div class="tabbed">
       <ul class="nav nav-tabs">
-         <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#macOS-intel">macOS (Intel) and OS X</a></li>
-         <li><a data-toggle="tab" href="#macOS-apple-silicon">macOS (Apple Silicon)</a></li>
-         <li><a data-toggle="tab" href="#linux">Linux</a></li>
-         <li><a data-toggle="tab" href="#wsl">Windows (via WSL)</a></li>
+         <li class="active"><a data-toggle="tab" href="#amplicon-instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#amplicon-macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#amplicon-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#amplicon-linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#amplicon-wsl">Windows (via WSL)</a></li>
       </ul>
       <div class="tab-content">
-         <div id="instructions" class="tab-pane fade in active">
+         <div id="amplicon-instructions" class="tab-pane fade in active">
             <p class="alert alert-warning" style="margin-bottom: 10px;">
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="macOS-intel" class="tab-pane fade">
+         <div id="amplicon-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-osx-conda.yml
    mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="macOS-apple-silicon" class="tab-pane fade">
+         <div id="amplicon-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-osx-conda.yml
    CONDA_SUBDIR=osx-64 mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml
@@ -92,13 +92,13 @@ QIIME 2 Amplicon Distribution
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="linux" class="tab-pane fade">
+         <div id="amplicon-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
          </div>
-         <div id="wsl" class="tab-pane fade">
+         <div id="amplicon-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
@@ -115,25 +115,25 @@ QIIME 2 Shotgun Distribution
 
    <div class="tabbed">
       <ul class="nav nav-tabs">
-         <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#macOS-intel">macOS (Intel) and OS X</a></li>
-         <li><a data-toggle="tab" href="#macOS-apple-silicon">macOS (Apple Silicon)</a></li>
-         <li><a data-toggle="tab" href="#linux">Linux</a></li>
-         <li><a data-toggle="tab" href="#wsl">Windows (via WSL)</a></li>
+         <li class="active"><a data-toggle="tab" href="#shotgun-instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#shotgun-macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#shotgun-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#shotgun-linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#shotgun-wsl">Windows (via WSL)</a></li>
       </ul>
       <div class="tab-content">
-         <div id="instructions" class="tab-pane fade in active">
+         <div id="shotgun-instructions" class="tab-pane fade in active">
             <p class="alert alert-warning" style="margin-bottom: 10px;">
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="macOS-intel" class="tab-pane fade">
+         <div id="shotgun-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-osx-conda.yml
    mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="macOS-apple-silicon" class="tab-pane fade">
+         <div id="shotgun-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-osx-conda.yml
    CONDA_SUBDIR=osx-64 mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml
@@ -142,13 +142,13 @@ QIIME 2 Shotgun Distribution
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="linux" class="tab-pane fade">
+         <div id="shotgun-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
          </div>
-         <div id="wsl" class="tab-pane fade">
+         <div id="shotgun-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
@@ -165,25 +165,25 @@ QIIME 2 Tiny Distribution
 
    <div class="tabbed">
       <ul class="nav nav-tabs">
-         <li class="active"><a data-toggle="tab" href="#instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#macOS-intel">macOS (Intel) and OS X</a></li>
-         <li><a data-toggle="tab" href="#macOS-apple-silicon">macOS (Apple Silicon)</a></li>
-         <li><a data-toggle="tab" href="#linux">Linux</a></li>
-         <li><a data-toggle="tab" href="#wsl">Windows (via WSL)</a></li>
+         <li class="active"><a data-toggle="tab" href="#tiny-instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#tiny-macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#tiny-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#tiny-linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#tiny-wsl">Windows (via WSL)</a></li>
       </ul>
       <div class="tab-content">
-         <div id="instructions" class="tab-pane fade in active">
+         <div id="tiny-instructions" class="tab-pane fade in active">
             <p class="alert alert-warning" style="margin-bottom: 10px;">
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="macOS-intel" class="tab-pane fade">
+         <div id="tiny-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-osx-conda.yml
    mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="macOS-apple-silicon" class="tab-pane fade">
+         <div id="tiny-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-osx-conda.yml
    CONDA_SUBDIR=osx-64 mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml
@@ -192,13 +192,13 @@ QIIME 2 Tiny Distribution
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
          </div>
-         <div id="linux" class="tab-pane fade">
+         <div id="tiny-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
          </div>
-         <div id="wsl" class="tab-pane fade">
+         <div id="tiny-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-linux-conda.yml
    mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
