@@ -262,7 +262,7 @@ After we finish denoising the data, we can check the results by looking at the s
 Generating a phylogenetic tree for diversity analysis
 =====================================================
 
-QIIME 2 analysis allows the use of phylogenetic trees for diversity metrics such as Faith's Phylogenetic Diversity and UniFrac distance as well as feature-based analyses in Gneiss. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
+QIIME 2 analysis allows the use of phylogenetic trees for diversity metrics such as Faith's Phylogenetic Diversity and UniFrac distance. The tree provides an inherent structure to the data, allowing us to consider an evolutionary relationship between organisms.
 
 QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial, we're going to create a fragment insertion tree using the ``q2-fragment-insertion`` plugin. The authors of the fragment insertion plugin suggest that it can outperform traditional alignment based methods based on short Illumina reads by alignment against a reference tree built out of larger sequences. Our command, ``qiime fragment-insertion sepp`` will use the representative sequences (a ``FeatureData[Sequence]`` artifact) we generated during denoising to create a phylogenetic tree where the sequences have been inserted into the greengenes 13_8 99% identity reference tree backbone.
 
