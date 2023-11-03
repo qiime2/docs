@@ -528,15 +528,13 @@ You can see which formats of input data are importable with the following comman
 
 .. command-block::
 
-   qiime tools import \
-     --show-importable-formats
+   qiime tools list-formats
 
 And which QIIME 2 types you can import these formats as:
 
 .. command-block::
 
-   qiime tools import \
-     --show-importable-types
+   qiime tools list-types --importable
 
 Unfortunately, there isn't currently documentation detailing which data formats can be imported as which QIIME 2 data types, but hopefully the names of these formats and types should be self-explanatory enough to figure it out.
 If you have any questions, please post to the `QIIME 2 Forum`_ for help!
