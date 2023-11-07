@@ -528,7 +528,7 @@ You can see which formats of input data are importable with the following comman
 
 .. command-block::
 
-   qiime tools list-formats
+   qiime tools list-formats --importable
 
 And which QIIME 2 types you can import these formats as:
 
