@@ -217,7 +217,7 @@ Casava 1.8 single-end demultiplexed fastq
 Format description
 ******************
 
-In the `Casava 1.8 demultiplexed`_ (single-end) format, there is one ``fastq.gz`` file for each sample in the study which contains the `single-end` reads for that sample. The file name includes the sample identifier and should look like ``L2S357_15_L001_R1_001.fastq.gz``. The underscore-separated fields in this file name are:
+In the Casava 1.8 demultiplexed (single-end) format, there is one ``fastq.gz`` file for each sample in the study which contains the `single-end` reads for that sample. The file name includes the sample identifier and should look like ``L2S357_15_L001_R1_001.fastq.gz``. The underscore-separated fields in this file name are:
 
 1. the sample identifier,
 2. the barcode sequence or a barcode identifier,
@@ -253,7 +253,7 @@ Casava 1.8 paired-end demultiplexed fastq
 Format description
 ******************
 
-In `Casava 1.8 demultiplexed`_ (paired-end) format, there are two ``fastq.gz`` files for each sample in the study, each containing the forward or reverse reads for that sample. The file name includes the sample identifier. The forward and reverse read file names for a single sample might look like ``L2S357_15_L001_R1_001.fastq.gz`` and ``L2S357_15_L001_R2_001.fastq.gz``, respectively.
+In Casava 1.8 demultiplexed (paired-end) format, there are two ``fastq.gz`` files for each sample in the study, each containing the forward or reverse reads for that sample. The file name includes the sample identifier. The forward and reverse read file names for a single sample might look like ``L2S357_15_L001_R1_001.fastq.gz`` and ``L2S357_15_L001_R2_001.fastq.gz``, respectively.
 The underscore-separated fields in this file name are:
 
 1. the sample identifier,
@@ -528,22 +528,18 @@ You can see which formats of input data are importable with the following comman
 
 .. command-block::
 
-   qiime tools import \
-     --show-importable-formats
+   qiime tools list-formats --importable
 
 And which QIIME 2 types you can import these formats as:
 
 .. command-block::
 
-   qiime tools import \
-     --show-importable-types
+   qiime tools list-types
 
 Unfortunately, there isn't currently documentation detailing which data formats can be imported as which QIIME 2 data types, but hopefully the names of these formats and types should be self-explanatory enough to figure it out.
 If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 
 .. _Earth Microbiome Project (EMP) protocol: http://www.earthmicrobiome.org/protocols-and-standards/
-
-.. _Casava 1.8 demultiplexed:  http://illumina.bioinfo.ucr.edu/ht/documentation/data-analysis-docs/CASAVA-FASTQ.pdf/view
 
 .. _QIIME 2 Forum: https://forum.qiime2.org
 
