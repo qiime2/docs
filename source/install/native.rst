@@ -38,14 +38,6 @@ Installing ``wget``
 
    conda install wget
 
-Installing ``mamba``
-....................
-
-.. command-block::
-   :no-exec:
-
-   conda install mamba
-
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
@@ -79,14 +71,14 @@ QIIME 2 Amplicon Distribution
          </div>
          <div id="amplicon-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-osx-conda.yml
-   mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
+   conda env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-osx-conda.yml</pre>
          </div>
          <div id="amplicon-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-osx-conda.yml
    conda activate qiime2-amplicon-2023.9
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
@@ -94,14 +86,14 @@ QIIME 2 Amplicon Distribution
          </div>
          <div id="amplicon-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
          </div>
          <div id="amplicon-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-amplicon-2023.9 --file qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-amplicon-2023.9-py38-linux-conda.yml</pre>
          </div>
@@ -129,14 +121,14 @@ QIIME 2 Shotgun Distribution
          </div>
          <div id="shotgun-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-osx-conda.yml
-   mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
+   conda env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-osx-conda.yml</pre>
          </div>
          <div id="shotgun-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-osx-conda.yml
    conda activate qiime2-shotgun-2023.9
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
@@ -144,14 +136,14 @@ QIIME 2 Shotgun Distribution
          </div>
          <div id="shotgun-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
          </div>
          <div id="shotgun-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-shotgun-2023.9 --file qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-shotgun-2023.9-py38-linux-conda.yml</pre>
          </div>
@@ -179,14 +171,14 @@ QIIME 2 Tiny Distribution
          </div>
          <div id="tiny-macOS-intel" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-osx-conda.yml
-   mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
+   conda env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-osx-conda.yml</pre>
          </div>
          <div id="tiny-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-osx-conda.yml
    conda activate qiime2-tiny-2023.9
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
@@ -194,14 +186,14 @@ QIIME 2 Tiny Distribution
          </div>
          <div id="tiny-linux" class="tab-pane fade">
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
          </div>
          <div id="tiny-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
             <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2023.9-py38-linux-conda.yml
-   mamba env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
+   conda env create -n qiime2-tiny-2023.9 --file qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
    <pre>rm qiime2-tiny-2023.9-py38-linux-conda.yml</pre>
          </div>
