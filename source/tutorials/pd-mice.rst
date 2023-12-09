@@ -612,10 +612,10 @@ Now, let's use the filtered table to build an interactive barplot of the taxonom
 
 .. end L2 Taxonomy barchart
 
-Differential abundance with ANCOM
-=================================
+Differential abundance with ANCOM-BC
+====================================
 
-Many microbiome investigators are interested in testing whether individual ASVs or taxa are more or less abundant in different sample groups. This is known as *differential abundance*. Microbiome data present several challenges for performing differential abundance using convential methods. Microbiome abundance data are inherently sparse (have a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with, such as ANOVA or t-tests, are not appropriate for performing differential abundance tests of microbiome data and lead to a high false-positive rate. ANCOM is a compositionally aware alternative that allows to test for differentially abundant features. If you're unfamiliar with the technique, it's worthwhile to review the `ANCOM paper`_ to better understand the method.
+Many microbiome investigators are interested in testing whether individual ASVs or taxa are more or less abundant in different sample groups. This is known as *differential abundance*. Microbiome data present several challenges for performing differential abundance using convential methods. Microbiome abundance data are inherently sparse (have a lot of zeros) and compositional (everything adds up to 1). Because of this, traditional statistical methods that you may be familiar with, such as ANOVA or t-tests, are not appropriate for performing differential abundance tests of microbiome data and lead to a high false-positive rate. ANCOM-BC is a compositionally-aware linear regression-based alternative that allows for testing differentially abundant features across groups that also handles bias correction. Microbiome data are typically subject to two sources of biases: unequal sampling fractions (sample-specific biases) and differential sequencing efficiencies (taxon-specific biases). Methodologies included in the ANCOM-BC package are designed to correct these biases and construct statistically consistent estimators. If you’re unfamiliar with the technique, it’s worthwhile to review the `ANCOM-BC paper`_ to better understand the method. We also note that accurately identifying features that are differentially abundant across sample types in microbiome data is a challenging problem and an open area of research. New approaches for differential abundance testing are regularly introduced, and it’s worth assessing the current state of the field when performing differential abundance testing to see if there are new methods that might be useful for your data.
 
 Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering can provide better resolution and limit false discovery rate (FDR) penalty on features that are too far below the noise threshhold to be applicable to a statistical test. A feature that shows up with 10 counts could be a real feature that is present only in that sample; a feature that's present in several samples but only got amplified and sequenced in one sample because PCR is a somewhat stochastic process; or it may be noise. It's not possible to tell, so feature-based analysis may be better after filtering low abundance features. However, filtering also shifts the composition of a sample, further disrupting the relationship. Here, the filtering is performed as a trade off between the model, computational efficiency, and statistical practicality.
 
@@ -627,47 +627,62 @@ Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering
      --p-min-samples 4 \
      --o-filtered-table ./table_2k_abund.qza
 
-ANCOM fundamentally operates on a ``FeatureTable[Frequency]``, which contains the frequencies of features in each sample. However, ANCOM cannot tolerate zeros because compositional methods typically use a log-transform or a ratio and you can't take the log or divide by zeros. To remove the zeros from our table, we can add a pseudocount to the ``FeatureTable[Frequency]`` Artifact, creating a ``FeatureTable[Composition]`` in its place.
+ANCOM-BC fundamentally operates on a FeatureTable[Frequency], which contains the frequencies of features in each sample. ANCOM-BC accounts for sampling fraction by introducing a sample-specific offset term in a linear regression framework that is estimated from the observed data. The offset term serves as the bias correction, and the linear regression framework in log scale is analogous to log-ratio transformation to deal with the compositionality of microbiome data.
+
+Let’s use ANCOM-BC to check whether there is a difference in the gut microbiome of the mice based on their donor and their genetic background. We'll set a significance threshold for each group to narrow down the features based on their log-fold change (LFC) value. Features above that threshold will not be included in each group's visualization.
 
 .. command-block::
-
-   qiime composition add-pseudocount \
-     --i-table ./table_2k_abund.qza \
-     --o-composition-table ./table2k_abund_comp.qza
-
-Let's use ANCOM to check whether there is a difference in the mice based on their donor and then by their genetic background. The test will calculate the number of ratios between pairs of ASVs that are significantly different with FDR-corrected p < 0.05.
-
-.. command-block::
-
-   qiime composition ancom \
+   qiime composition ancombc \
      --i-table ./table2k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
-     --m-metadata-column donor \
-     --o-visualization ./ancom_donor.qzv
+     --p-formula 'donor' \
+     --o-differentials ./ancombc_donor.qza
 
-   qiime composition ancom \
+   qiime composition da-barplot \
+     --i-data ./ancombc_donor.qza \
+     --p-significance-threshold 0.001 \
+     --o-visualization da_barplot_donor.qzv
+
+   qiime composition ancombc \
      --i-table ./table2k_abund_comp.qza \
      --m-metadata-file ./metadata.tsv \
-     --m-metadata-column genotype \
-     --o-visualization ./ancom_genotype.qzv
+     --p-formula 'genotype' \
+     --o-differentials ./ancombc_genotype.qza
 
-When you open the ANCOM visualizations, you'll see a `volcano plot`_ on top, which relates the ANCOM W statistic to the CLR (center log transform) for the groups. The W statistic is the number of ANCOM subhypotheses that have passed for each individual taxon, indicating that the ratios of that taxon’s relative abundance to the relative abundances of ``W`` other taxa were detected to be significantly different (typically FDR-adjusted p < 0.05). Because differential abundance in ANCOM is based on the ratio between tests, it does not produce a traditional p-value.
+   # TODO: Greg, this threshold had to be significantly increased to show more than one feature - thoughts on this?
+   qiime composition da-barplot \
+     --i-data ./ancombc_genotype.qza \
+     --p-significance-threshold 0.05 \
+     --o-visualization da_barplot_genotype.qzv
+
+   qiime composition ancombc \
+     --i-table ./table2k_abund_comp \
+     --m-metadata-file ./metadata.tsv \
+     --p-formula 'donor + genotype' \
+     --o-differentials ./ancombc_donor_genotype.qza
+
+   qiime composition da-barplot \
+     --i-data ./ancombc_donor_genotype.qza \
+     --p-significance-threshold 0.001 \
+     --o-visualization da_barplot_donor_genotype.qzv
+
+When you open the differential abundance bar plots generated from your ANCOM-BC results, you’ll see one bar plot per column from the group(s) included in the formula parameter in the ANCOM-BC output (excluding the selected intercept(s) pulled from the reference level parameter). Each plot visualizes   features in each group compared to the intercept as  LFC (log-fold change), sorted by the most relatively enriched feature to the most relatively depleted feature. Additionally, this visualization can be filtered by q-value (i.e., false discovery rate corrected p-value).
 
 .. question::
 
-   Open the ANCOM visualizations for the donor and genotype and the taxonomy visualization artifact.
-
+   Open the da-barplot visualizations for donor and genotype as the selected ANCOM-BC formula term.
+   # TODO: these questions might be a bit weird to answer if we have differing significance thresholds
    1. Are there more differentially abundant features between the donors or the mouse genotype? Did you expect this result based on the beta diversity?
    2. Are there any features that are differentially abundant in both the donors and by genotype?
-   3. How many differentially abundant features are there between the two genotypes? Using the percentile abundances and volcano plot as a guide, can you tell if they are more abundant in wild type or susceptible mice?
-   4. Use taxonomy metadata visualization and search sequence identifiers for the significantly different features by genotype. What genera do they belong to?
+   # TODO: re-word this to contextualize group visualized relative to reference
+   3. How many differentially abundant features are there between the two genotypes? Using the bar chart as a guide, can you tell if they are more abundant in wild type or susceptible mice?
 
+# TODO: double-check that these are still correct
 .. More differentially abundant features by donor than genotype. Not surprising given the size of donor in b-div vs the size of genotype
 .. Nope. Whoo! :celebrate:
 .. There are three 3 features that are differentially abundant. All three are more abundant in WT mice
-.. ac5402de1ddf427ab8d2b0a8a0a44f19: g__Bacteriodetes; 79280cea51a6fe8a3432b2f266dd34db: g__Faecalibacterium (prausnitzii); 3017f87a3b0f5200ed54eca17eef3cbb: f__[Mogibacteriaceae]
 
-.. end L2 Differential abundance with ANCOM
+.. end L2 Differential abundance with ANCOM-BC
 
 Taxonomic classification again
 ==============================
@@ -718,12 +733,16 @@ We can use the new classifier in exactly the same way as the standard classifier
    Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke_taxonomy.qzv`` visualization.
 
    1. Search for "ovatus" in both. Is there an ASV in the new taxonomy that wasn't present in the original?
-   2. Revisit the ``ancom_donor.qzv`` visualization. Can you find that ASV?
+   # SAME ARE PRESENT IN BOTH
+   # TODO: make sure this is named consistently
+   2. Revisit the ``da_barplot_donor.qzv`` visualization. Can you find that ASV?
+   # WE NEED TO USE ANOTHER EXAMPLE BECAUSE ONLY c162a4f3943238810eba8a25f0563cca IS PRESENT IN THE DONOR VIZ AND NONE ARE PRESENT IN THE GENOTYPE VIZ
+   # IT'S ALSO DIFFICULT TO QUICKLY SEARCH FOR FEATURES WITHOUT OPENING UP THE VEGA EDITOR
 
 .. c162a4f3943238810eba8a25f0563cca
 .. it's differentially abundant (W=87)
 
-When analyzing ANCOM results, it is possible to trace the ASVs that we found using the taxonomies that we have created. It is also possible to run ANCOM directly on taxonomic groups that we have discovered in our samples by counting features according to taxonomic classification. This has the advantage of pooling feature counts across taxonomically similar ASVs, for instance allowing exact species substitution between samples. The output is also more readable. On the down side, it has all the inaccuracies that come with automated taxonomic classification.
+When analyzing ANCOM-BC results, it is possible to trace the ASVs that we found using the taxonomies that we have created. It is also possible to run ANCOM-BC directly on taxonomic groups that we have discovered in our samples by counting features according to taxonomic classification. This has the advantage of pooling feature counts across taxonomically similar ASVs, for instance allowing exact species substitution between samples. The output is also more readable. On the down side, it has all the inaccuracies that come with automated taxonomic classification.
 
 We will run through the pipeline twice, once with our original taxonomy and once with the new taxonomy, for the purpose of comparison. First using the original taxonomy:
 
@@ -741,15 +760,17 @@ We will run through the pipeline twice, once with our original taxonomy and once
      --p-min-samples 4 \
      --o-filtered-table ./filtered_uniform_table.qza
 
-   qiime composition add-pseudocount \
-     --i-table ./filtered_uniform_table.qza \
-     --o-composition-table ./cfu_table.qza
-
-   qiime composition ancom \
+#TODO: RUN THESE AND EXAMINE RESULTS
+   qiime composition ancombc \
      --i-table ./cfu_table.qza \
      --m-metadata-file ./metadata.tsv \
-     --m-metadata-column donor \
-     --o-visualization ./ancom_donor_uniform.qzv
+     --p-formula 'donor' \
+     --o-differentials ./ancombc_donor_uniform.qza
+
+   qiime composition da-barplot \
+     --i-data ./ancombc_donor_uniform.qza \
+     --p-significance-threshold 0.001 \
+     --o-visualization ./da_barplot_donor_uniform.qzv
 
 Now redo with the new taxonomy:
 
@@ -767,22 +788,25 @@ Now redo with the new taxonomy:
      --p-min-samples 4 \
      --o-filtered-table ./filtered_bespoke_table.qza
 
-   qiime composition add-pseudocount \
-     --i-table ./filtered_bespoke_table.qza \
-     --o-composition-table ./cfb_table.qza
-
-   qiime composition ancom \
+#TODO: RUN THESE AND EXAMINE RESULTS
+   qiime composition ancombc \
      --i-table ./cfb_table.qza \
      --m-metadata-file ./metadata.tsv \
-     --m-metadata-column donor \
-     --o-visualization ./ancom_donor_bespoke.qzv
+     --p-formula 'donor' \
+     --o-differentials ./ancombc_donor_bespoke.qza
+
+   qiime composition da-barplot \
+     --i-data ./ancombc_donor_bespoke.qza \
+     --p-significance-threshold 0.001 \
+     --o-visualization ./da_barplot_donor_bespoke.qzv
 
 .. question::
 
-   Compare final ANCOM visualizations. They are fairly similar, which is good.
+   # TODO: make sure these are still fairly similar and the questions below still make sense
+   Compare final da-barplot visualizations. They are fairly similar, which is good.
 
-   1. Is *Bacteroides ovatus* present in the ANCOM results derived from our original taxonomy?
-   2. Is *B. ovatus* present in the new ANCOM results?
+   1. Is *Bacteroides ovatus* present in the ANCOM-BC results derived from our original taxonomy?
+   2. Is *B. ovatus* present in the new ANCOM-BC results?
    3. Why is that?
 
 .. no
@@ -956,7 +980,7 @@ We found that the donor is the primary driver of alpha diversity.
 
 But, we saw differences by donor and genotype based on beta diversity. Using the PCoA emperor plots, we can see clear separation between the mice from the two donors. After adjusting for the donor, we saw a significant difference between the genotypes.
 
-Although there wasn't a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes using ANCOM and Random Forest classification. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is separate from the difference due to donor.
+Although there wasn't a clear pattern in the barchart at the phylum level between donors or genotypes, we were still able to find ASVs which differentiated the genotypes using ANCOM-BC and Random Forest classification. There was no overlap between these ASVs in the donor and genetic background, supporting the hypothesis that the difference due to genotype is separate from the difference due to donor.
 
 The volatility plots and temporal analysis showed that the microbiome in different genetic backgrounds changed differently over time.
 
@@ -982,7 +1006,7 @@ This suggests that there is a genotype-specific effect on the microbiome of mice
 .. _view.qiime2.org: http://www.view.qiime2.org/
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _This classifier works: https://doi.org/10.1186/s40168-018-0470-z
-.. _ancom paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
+.. _ancom-bc paper: https://pubmed.ncbi.nlm.nih.gov/32665548/
 .. _Google Sheet: https://data.qiime2.org/2023.9/tutorials/pd-mice/sample_metadata
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
 .. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
