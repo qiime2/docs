@@ -633,7 +633,7 @@ Let’s use ANCOM-BC to check whether there is a difference in the gut microbiom
 
 .. command-block::
    qiime composition ancombc \
-     --i-table ./table2k_abund_comp.qza \
+     --i-table ./table_2k_abund.qza \
      --m-metadata-file ./metadata.tsv \
      --p-formula 'donor' \
      --o-differentials ./ancombc_donor.qza
@@ -644,19 +644,18 @@ Let’s use ANCOM-BC to check whether there is a difference in the gut microbiom
      --o-visualization da_barplot_donor.qzv
 
    qiime composition ancombc \
-     --i-table ./table2k_abund_comp.qza \
+     --i-table ./table_2k_abund.qza \
      --m-metadata-file ./metadata.tsv \
      --p-formula 'genotype' \
      --o-differentials ./ancombc_genotype.qza
 
-   # TODO: Greg, this threshold had to be significantly increased to show more than one feature - thoughts on this?
    qiime composition da-barplot \
      --i-data ./ancombc_genotype.qza \
-     --p-significance-threshold 0.05 \
+     --p-significance-threshold 0.001 \
      --o-visualization da_barplot_genotype.qzv
 
    qiime composition ancombc \
-     --i-table ./table2k_abund_comp \
+     --i-table ./table_2k_abund.qza \
      --m-metadata-file ./metadata.tsv \
      --p-formula 'donor + genotype' \
      --o-differentials ./ancombc_donor_genotype.qza
@@ -666,21 +665,19 @@ Let’s use ANCOM-BC to check whether there is a difference in the gut microbiom
      --p-significance-threshold 0.001 \
      --o-visualization da_barplot_donor_genotype.qzv
 
-When you open the differential abundance bar plots generated from your ANCOM-BC results, you’ll see one bar plot per column from the group(s) included in the formula parameter in the ANCOM-BC output (excluding the selected intercept(s) pulled from the reference level parameter). Each plot visualizes   features in each group compared to the intercept as  LFC (log-fold change), sorted by the most relatively enriched feature to the most relatively depleted feature. Additionally, this visualization can be filtered by q-value (i.e., false discovery rate corrected p-value).
+When you open the differential abundance bar plots generated from your ANCOM-BC results, you’ll see one bar plot per column from the group(s) included in the formula parameter in the ANCOM-BC output (excluding the selected intercept(s) pulled from the reference level parameter). Each plot visualizes features in each group compared to the intercept as  LFC (log-fold change), sorted by the most relatively enriched feature to the most relatively depleted feature. Additionally, this visualization can be filtered by q-value (i.e., false discovery rate corrected p-value).
 
 .. question::
 
    Open the da-barplot visualizations for donor and genotype as the selected ANCOM-BC formula term.
-   # TODO: these questions might be a bit weird to answer if we have differing significance thresholds
+
    1. Are there more differentially abundant features between the donors or the mouse genotype? Did you expect this result based on the beta diversity?
    2. Are there any features that are differentially abundant in both the donors and by genotype?
-   # TODO: re-word this to contextualize group visualized relative to reference
-   3. How many differentially abundant features are there between the two genotypes? Using the bar chart as a guide, can you tell if they are more abundant in wild type or susceptible mice?
+   3. How do the bar plots for the combined formula ('donor + genotype') compare with the individual donor and mouse genotype bar plots? Are there more differentially abundant features in the individual plots or the combined?
 
-# TODO: double-check that these are still correct
 .. More differentially abundant features by donor than genotype. Not surprising given the size of donor in b-div vs the size of genotype
 .. Nope. Whoo! :celebrate:
-.. There are three 3 features that are differentially abundant. All three are more abundant in WT mice
+.. Very similar - we see one additional enriched feature in the genotype plot for the combined formula and one less enriched feature in the donor plot for the combined formula
 
 .. end L2 Differential abundance with ANCOM-BC
 
@@ -729,18 +726,15 @@ We can use the new classifier in exactly the same way as the standard classifier
      --o-visualization ./bespoke_taxonomy.qzv
 
 .. question::
+   # s__producta 2 in original, 1 in bespoke, same in da_barplots (x3)
 
    Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke_taxonomy.qzv`` visualization.
 
-   1. Search for "ovatus" in both. Is there an ASV in the new taxonomy that wasn't present in the original?
-   # SAME ARE PRESENT IN BOTH
-   # TODO: make sure this is named consistently
-   2. Revisit the ``da_barplot_donor.qzv`` visualization. Can you find that ASV?
-   # WE NEED TO USE ANOTHER EXAMPLE BECAUSE ONLY c162a4f3943238810eba8a25f0563cca IS PRESENT IN THE DONOR VIZ AND NONE ARE PRESENT IN THE GENOTYPE VIZ
-   # IT'S ALSO DIFFICULT TO QUICKLY SEARCH FOR FEATURES WITHOUT OPENING UP THE VEGA EDITOR
+   1. Search for "blautia" in both. Do you see any differences in the ASVs that are present in the original vs. the new taxonomy?
+   2. Revisit the ``da_barplot_donor.qzv`` visualization. Can you find an ASV that's present in both the ``taxonomy.qzv`` and ``bespoke_taxonomy.qzv`` visualizations?
 
-.. c162a4f3943238810eba8a25f0563cca
-.. it's differentially abundant (W=87)
+.. Yes: efdc10ad96caaf61068e37a40a1caec6
+.. 599ba6458e91e2527f358f547ea39261
 
 When analyzing ANCOM-BC results, it is possible to trace the ASVs that we found using the taxonomies that we have created. It is also possible to run ANCOM-BC directly on taxonomic groups that we have discovered in our samples by counting features according to taxonomic classification. This has the advantage of pooling feature counts across taxonomically similar ASVs, for instance allowing exact species substitution between samples. The output is also more readable. On the down side, it has all the inaccuracies that come with automated taxonomic classification.
 
@@ -760,9 +754,8 @@ We will run through the pipeline twice, once with our original taxonomy and once
      --p-min-samples 4 \
      --o-filtered-table ./filtered_uniform_table.qza
 
-#TODO: RUN THESE AND EXAMINE RESULTS
    qiime composition ancombc \
-     --i-table ./cfu_table.qza \
+     --i-table ./filtered_uniform_table.qza \
      --m-metadata-file ./metadata.tsv \
      --p-formula 'donor' \
      --o-differentials ./ancombc_donor_uniform.qza
@@ -788,9 +781,8 @@ Now redo with the new taxonomy:
      --p-min-samples 4 \
      --o-filtered-table ./filtered_bespoke_table.qza
 
-#TODO: RUN THESE AND EXAMINE RESULTS
    qiime composition ancombc \
-     --i-table ./cfb_table.qza \
+     --i-table ./filtered_bespoke_table.qza \
      --m-metadata-file ./metadata.tsv \
      --p-formula 'donor' \
      --o-differentials ./ancombc_donor_bespoke.qza
@@ -802,10 +794,9 @@ Now redo with the new taxonomy:
 
 .. question::
 
-   # TODO: make sure these are still fairly similar and the questions below still make sense
    Compare final da-barplot visualizations. They are fairly similar, which is good.
-
-   1. Is *Bacteroides ovatus* present in the ANCOM-BC results derived from our original taxonomy?
+   .. TODO: we need a different story to tell here, there isn't a comparable one for ANCOM-BC results (i.e. better resolution with one taxonomy vs. the other)
+   1. Is *Blautia* present in the ANCOM-BC results derived from our original taxonomy?
    2. Is *B. ovatus* present in the new ANCOM-BC results?
    3. Why is that?
 
