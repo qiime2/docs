@@ -997,7 +997,7 @@ This suggests that there is a genotype-specific effect on the microbiome of mice
 .. _view.qiime2.org: http://www.view.qiime2.org/
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _This classifier works: https://doi.org/10.1186/s40168-018-0470-z
-.. _ancom-bc paper: https://pubmed.ncbi.nlm.nih.gov/32665548/
+.. _ANCOM-BC paper: https://pubmed.ncbi.nlm.nih.gov/32665548/
 .. _Google Sheet: https://data.qiime2.org/2023.9/tutorials/pd-mice/sample_metadata
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
 .. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
