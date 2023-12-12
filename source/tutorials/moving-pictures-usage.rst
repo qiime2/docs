@@ -852,7 +852,7 @@ visualization.
    and the later timepoints?
 
 .. TODO: uncomment when/if this doc becomes canon: .. _`ancom`:
-
+.. TODO: replace with ancombc updates
 Differential abundance testing with ANCOM
 -----------------------------------------
 
