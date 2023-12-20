@@ -440,8 +440,6 @@ We'll start by creating a feature table that contains only the gut samples. (To 
 
 ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCOM-BC on the subject column to determine what features differ in abundance across the gut samples of the two subjects.
 
-.. TODO: run the commands below and check that outputs make sense in the context of the question below
-
 .. command-block::
    qiime composition ancombc \
      --i-table gut-table.qza \
@@ -455,11 +453,13 @@ ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCO
      --o-visualization da-barplot-subject.qzv
 
 .. question::
-   Which sequence variants differ in abundance across Subject? In which subject is each sequence variant more abundant? What are the taxonomies of some of these sequence variants? (To answer the last question you'll need to refer to another visualization that was generated in this tutorial.)
+   1. Which ASV is most enriched, relative to the reference? Which is most depleted?
+   2. What would you expect to change if the ``reference-level`` was changed from ``subject-1`` (the default) to ``subject-2``?
+
+   .. 868528ca947bc57b69ffdf83e6b73bae (enriched), 4b5eeb300368260019c1fbc7a3c718fc (depleted)
+   .. The direction of differental abundance (i.e. enriched features would be depleted and vice versa)
 
 We're also often interested in performing a differential abundance test at a specific taxonomic level. To do this, we can collapse the features in our ``FeatureTable[Frequency]`` at the taxonomic level of interest, and then re-run the above steps. In this tutorial, we collapse our feature table at the genus level (i.e. level 6 of the Greengenes taxonomy).
-
-.. TODO: run the commands below and make sure outputs are reasonable in context of questions below
 
 .. command-block::
 
@@ -478,11 +478,15 @@ We're also often interested in performing a differential abundance test at a spe
    qiime composition da-barplot \
      --i-data l6-ancombc-subject.qza \
      --p-significance-threshold 0.001 \
+     --p-level-delimiter ';' \
      --o-visualization l6-da-barplot-subject.qzv
 
 .. question::
-   Which genera differ in abundance across subject? In which subject is each genus more abundant?
+   1. Which genera is most enriched? Which is most depleted?
+   2. Do we see more differentially abundant features in the ``da-barplot-subject.qzv`` visualization, or in the ``l6-da-barplot-subject.qzv`` visualization? Why?
 
+.. g__Parabacteroides (enriched), g__Paraprevotella (depleted)
+.. We see more in the original vs. the collapsed table, which is reasonable since we are collapsing at L6 and thus losing some resolution.
 
 .. _sample metadata: https://data.qiime2.org/2023.9/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
