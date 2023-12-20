@@ -721,88 +721,31 @@ We can use the new classifier in exactly the same way as the standard classifier
      --i-classifier ./bespoke.qza \
      --o-classification ./bespoke_taxonomy.qza
 
-   qiime metadata tabulate \
-     --m-input-file ./bespoke_taxonomy.qza \
-     --o-visualization ./bespoke_taxonomy.qzv
-
-.. question::
-   # s__producta 2 in original, 1 in bespoke, same in da_barplots (x3)
-
-   Open up the old ``taxonomy.qzv`` visualization and compare it to the ``bespoke_taxonomy.qzv`` visualization.
-
-   1. Search for "blautia" in both. Do you see any differences in the ASVs that are present in the original vs. the new taxonomy?
-   2. Revisit the ``da_barplot_donor.qzv`` visualization. Can you find an ASV that's present in both the ``taxonomy.qzv`` and ``bespoke_taxonomy.qzv`` visualizations?
-
-.. Yes: efdc10ad96caaf61068e37a40a1caec6
-.. 599ba6458e91e2527f358f547ea39261
-
-When analyzing ANCOM-BC results, it is possible to trace the ASVs that we found using the taxonomies that we have created. It is also possible to run ANCOM-BC directly on taxonomic groups that we have discovered in our samples by counting features according to taxonomic classification. This has the advantage of pooling feature counts across taxonomically similar ASVs, for instance allowing exact species substitution between samples. The output is also more readable. On the down side, it has all the inaccuracies that come with automated taxonomic classification.
-
-We will run through the pipeline twice, once with our original taxonomy and once with the new taxonomy, for the purpose of comparison. First using the original taxonomy:
+We'll use this new taxonomy along with the original taxonomy to examine the taxonomic resolution for some of our most abundant ASVs from ``da_barplot_donor.qzv``. Since we'll be using multiple taxonomies, we'll need to first put them in a directory that we'll pass in to ``tabulate-seqs`` below as a Collection.
 
 .. command-block::
 
-   qiime taxa collapse \
-     --i-table ./table_2k.qza \
-     --i-taxonomy ./taxonomy.qza \
-     --o-collapsed-table ./uniform_table.qza \
-     --p-level 7 # means that we group at species level
-
-   qiime feature-table filter-features \
-     --i-table ./uniform_table.qza \
-     --p-min-frequency 50 \
-     --p-min-samples 4 \
-     --o-filtered-table ./filtered_uniform_table.qza
-
-   qiime composition ancombc \
-     --i-table ./filtered_uniform_table.qza \
-     --m-metadata-file ./metadata.tsv \
-     --p-formula 'donor' \
-     --o-differentials ./ancombc_donor_uniform.qza
-
-   qiime composition da-barplot \
-     --i-data ./ancombc_donor_uniform.qza \
-     --p-significance-threshold 0.001 \
-     --o-visualization ./da_barplot_donor_uniform.qzv
-
-Now redo with the new taxonomy:
+   mkdir ./multi-taxonomy
+   mv ./taxonomy.qza ./multi-taxonomy
+   mv ./bespoke_taxonomy.qza ./multi-taxonomy
 
 .. command-block::
 
-   qiime taxa collapse \
-     --i-table ./table_2k.qza \
-     --i-taxonomy ./bespoke_taxonomy.qza \
-     --p-level 7 \
-     --o-collapsed-table ./bespoke_table.qza
-
-   qiime feature-table filter-features \
-     --i-table ./bespoke_table.qza \
-     --p-min-frequency 50 \
-     --p-min-samples 4 \
-     --o-filtered-table ./filtered_bespoke_table.qza
-
-   qiime composition ancombc \
-     --i-table ./filtered_bespoke_table.qza \
-     --m-metadata-file ./metadata.tsv \
-     --p-formula 'donor' \
-     --o-differentials ./ancombc_donor_bespoke.qza
-
-   qiime composition da-barplot \
-     --i-data ./ancombc_donor_bespoke.qza \
-     --p-significance-threshold 0.001 \
-     --o-visualization ./da_barplot_donor_bespoke.qzv
+   qiime feature-table tabulate-seqs \
+     --i-data dada2_rep_set.qza \
+     --i-taxonomy multi-taxonomy/ \
+     --o-visualization dada2_rep_set_multi_taxonomy.qzv
 
 .. question::
+   Open up the ``dada2_rep_set_multi_taxonomy.qzv`` visualization and the ``da_barplot_donor.qzv`` visualization.
 
-   Compare final da-barplot visualizations. They are fairly similar, which is good.
-   .. TODO: we need a different story to tell here, there isn't a comparable one for ANCOM-BC results (i.e. better resolution with one taxonomy vs. the other)
-   1. Is *Blautia* present in the ANCOM-BC results derived from our original taxonomy?
-   2. Is *B. ovatus* present in the new ANCOM-BC results?
-   3. Why is that?
+   1. Examine the enriched ASVs in the ``da_barplot_donor.qzv`` visualization. Are there any of these enriched ASVs that have differing taxonomic resolution in the ``dada2_rep_set_multi_taxonomy.qzv`` visualization?
+   2. If so, which taxonomy provided better resolution?
+   3. Is this what we expect, based on what we learned about taxonomic classification, accuracy, and re-training earlier in the tutorial?
 
-.. no
-.. yes
-.. The original taxonomy lumped it in with g__Bacteroides; __ and the effect was washed out.
+.. Yes: 04195686f2b70585790ec75320de0d6f, 54f7ee881a58ad84fe3f81d76968b072, d2d1d9d57e61a764383ea2c84cef04c5
+.. 04195686f2b70585790ec75320de0d6f (bespoke), 54f7ee881a58ad84fe3f81d76968b072 (original), d2d1d9d57e61a764383ea2c84cef04c5 (bespoke)
+.. Bespoke provided slightly better resolution overall, which is reasonable since that was the taxonomy that we trained using animal stool samples.
 
 .. end L2 Taxonomic classification again
 
