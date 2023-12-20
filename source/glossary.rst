@@ -144,6 +144,27 @@ and another geared toward developers. You can find the
    qzv
      See :term:`visualization`.
 
+   rarefy
+     A technique to minimize uneven sampling depth by subsampling without 
+     replacement so that all :term: `samples <sample>` have the same sampling
+     depth. As decribed in `Waste not, want not: 
+     Revisiting the analysis that called into question the practice of 
+     rarefaction
+     <https://www.biorxiv.org/content/10.1101/2023.06.23.546312v1.full>` by
+     Patrick Schloss.
+     
+
+   rarefaction
+     An iterative technique to minimize uneven sampling depth. First, :term: 
+     `rarefy` a feature table. Second, use the table to
+     run diversity metrics. Third, rarefy and run diversity
+     metrics for multiple iterations (typically 100 or 1000) and lastly,
+     compute summary statistics. Also decribed in `Waste not, want not: 
+     Revisiting the analysis that called into question the practice of 
+     rarefaction
+     <https://www.biorxiv.org/content/10.1101/2023.06.23.546312v1.full>` by
+     Patrick Schloss.
+     
    result
      A general term for an :term:`artifact` or a :term:`visualization`.
 
