@@ -629,7 +629,7 @@ Before we begin, we will filter out low abundance/low prevalence ASVs. Filtering
 
 ANCOM-BC fundamentally operates on a FeatureTable[Frequency], which contains the frequencies of features in each sample. ANCOM-BC accounts for sampling fraction by introducing a sample-specific offset term in a linear regression framework that is estimated from the observed data. The offset term serves as the bias correction, and the linear regression framework in log scale is analogous to log-ratio transformation to deal with the compositionality of microbiome data.
 
-Let’s use ANCOM-BC to check whether there is a difference in the gut microbiome of the mice based on their donor and their genetic background. We'll set a significance threshold for each group to narrow down the features based on their log-fold change (LFC) value. Features above that threshold will not be included in each group's visualization.
+Let’s use ANCOM-BC to check whether there is a difference in the gut microbiome of the mice based on their donor and their genetic background. We'll set a significance threshold for each group to narrow down the features based on their q-value (i.e., false discovery rate corrected p-value). Features above that threshold will not be included in each group's visualization.
 
 .. command-block::
    qiime composition ancombc \
@@ -665,7 +665,9 @@ Let’s use ANCOM-BC to check whether there is a difference in the gut microbiom
      --p-significance-threshold 0.001 \
      --o-visualization da_barplot_donor_genotype.qzv
 
-When you open the differential abundance bar plots generated from your ANCOM-BC results, you’ll see one bar plot per column from the group(s) included in the formula parameter in the ANCOM-BC output (excluding the selected intercept(s) pulled from the reference level parameter). Each plot visualizes features in each group compared to the intercept as  LFC (log-fold change), sorted by the most relatively enriched feature to the most relatively depleted feature. Additionally, this visualization can be filtered by q-value (i.e., false discovery rate corrected p-value).
+When you open the differential abundance bar plots generated from your ANCOM-BC results, you’ll see one bar plot per column from the group(s) included in the formula parameter in the ANCOM-BC output, excluding the selected intercept(s) pulled from the reference level parameter. If a particular group is not specified in the reference level parameter, the intercept will default to the highest alphanumeric group (e.g. in alphabetical or numeric order, as applicable) within each formula term.
+
+Each plot visualizes features in each group compared to the intercept as LFC (log-fold change), sorted by the most relatively enriched feature to the most relatively depleted feature. As mentioned above, this visualization can be filtered by q-value (i.e., false discovery rate corrected p-value).
 
 .. question::
 
@@ -675,9 +677,9 @@ When you open the differential abundance bar plots generated from your ANCOM-BC 
    2. Are there any features that are differentially abundant in both the donors and by genotype?
    3. How do the bar plots for the combined formula ('donor + genotype') compare with the individual donor and mouse genotype bar plots? Are there more differentially abundant features in the individual plots or the combined?
 
-.. More differentially abundant features by donor than genotype. Not surprising given the size of donor in b-div vs the size of genotype
+.. More differentially abundant features by donor than genotype. Not surprising given the size of donor in b-div vs the size of genotype.
 .. Nope. Whoo! :celebrate:
-.. Very similar - we see one additional enriched feature in the genotype plot for the combined formula and one less enriched feature in the donor plot for the combined formula
+.. Very similar - we see one additional enriched feature in the genotype plot for the combined formula and one less enriched feature in the donor plot for the combined formula.
 
 .. end L2 Differential abundance with ANCOM-BC
 
