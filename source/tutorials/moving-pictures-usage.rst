@@ -886,7 +886,7 @@ ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCO
 
 .. usage::
 
-   abcombc_subject, = use.action(
+   ancombc_subject, = use.action(
         use.UsageAction(plugin_id='composition', action_id='ancombc'),
         use.UsageInputs(table=gut_table, metadata=sample_metadata, formula='subject'),
         use.UsageOutputNames(differentials='ancombc_subject'),
