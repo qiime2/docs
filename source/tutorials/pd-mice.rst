@@ -745,7 +745,7 @@ We'll use this new taxonomy along with the original taxonomy to examine the taxo
 
 .. Yes: 04195686f2b70585790ec75320de0d6f, 54f7ee881a58ad84fe3f81d76968b072, d2d1d9d57e61a764383ea2c84cef04c5
 .. 04195686f2b70585790ec75320de0d6f (bespoke), 54f7ee881a58ad84fe3f81d76968b072 (original), d2d1d9d57e61a764383ea2c84cef04c5 (bespoke)
-.. Bespoke provided slightly better resolution overall, which is reasonable since that was the taxonomy that we trained using animal stool samples.
+.. Bespoke provided slightly better resolution overall, which is reasonable since that was the classifier that we trained using animal stool samples.
 
 .. end L2 Taxonomic classification again
 
