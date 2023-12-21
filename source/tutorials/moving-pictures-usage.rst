@@ -889,7 +889,7 @@ ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCO
    abcombc_subject, = use.action(
         use.UsageAction(plugin_id='composition', action_id='ancombc'),
         use.UsageInputs(table=gut_table, metadata=sample_metadata, formula='subject'),
-        use.UsageOutputNames(visualization='ancombc_subject'),
+        use.UsageOutputNames(differentials='ancombc_subject'),
    )
 
    use.action(
@@ -922,7 +922,7 @@ level (i.e. level 6 of the Greengenes taxonomy).
    l6_ancombc_subject, = use.action(
         use.UsageAction(plugin_id='composition', action_id='ancombc'),
         use.UsageInputs(table=l6_gut_table, metadata=sample_metadata, formula='subject'),
-        use.UsageOutputNames(composition_table='l6_ancombc_subject'),
+        use.UsageOutputNames(differentials='l6_ancombc_subject'),
    )
 
    use.action(
