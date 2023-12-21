@@ -438,7 +438,7 @@ We'll start by creating a feature table that contains only the gut samples. (To 
      --p-where "[body-site]='gut'" \
      --o-filtered-table gut-table.qza
 
-ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCOM-BC on the subject column to determine what features differ in abundance across the gut samples of the two subjects.
+ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCOM-BC on the subject column to determine what features differ in abundance across gut samples of the two subjects.
 
 .. command-block::
    qiime composition ancombc \
