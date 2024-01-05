@@ -145,7 +145,7 @@ and another geared toward developers. You can find the
      See :term:`visualization`.
 
    rarefy
-     A technique to minimize uneven sampling depth by subsampling without 
+     A technique to remove uneven sampling depth by subsampling without 
      replacement so that all :term: `samples <sample>` have the same sampling
      depth. See `Schloss (2024) <https://doi.org/10.1128/msphere.00355-23>` for additional information. 
      
