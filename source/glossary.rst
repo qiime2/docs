@@ -155,11 +155,7 @@ and another geared toward developers. You can find the
      `rarefy` a feature table. Second, use the table to
      run diversity metrics. Third, rarefy and run diversity
      metrics for multiple iterations (typically 100 or 1000) and lastly,
-     compute summary statistics. Also decribed in `Waste not, want not: 
-     Revisiting the analysis that called into question the practice of 
-     rarefaction
-     <https://www.biorxiv.org/content/10.1101/2023.06.23.546312v1.full>` by
-     Patrick Schloss.
+     compute summary statistics. See `Schloss (2024) <https://doi.org/10.1128/msphere.00355-23>` for additional information. 
      
    result
      A general term for an :term:`artifact` or a :term:`visualization`.
