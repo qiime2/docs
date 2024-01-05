@@ -144,6 +144,19 @@ and another geared toward developers. You can find the
    qzv
      See :term:`visualization`.
 
+   rarefy
+     A technique to remove uneven sampling depth by subsampling without 
+     replacement so that all :term: `samples <sample>` have the same sampling
+     depth. See `Schloss (2024) <https://doi.org/10.1128/msphere.00355-23>` for additional information. 
+     
+
+   rarefaction
+     An iterative technique to minimize effects of controlling for uneven 
+     sampling depth where a feature table is :term:`rarefied<rarefy>` 
+     multiple times (typically 100 or 1000), and diversity 
+     metrics are applied to each rarefied table and subsequently used to
+     compute summary statistics. See `Schloss (2024) <https://doi.org/10.1128/msphere.00355-23>` for additional information. 
+     
    result
      A general term for an :term:`artifact` or a :term:`visualization`.
 
