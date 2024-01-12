@@ -483,7 +483,7 @@ We're also often interested in performing a differential abundance test at a spe
 
 .. question::
    1. Which genera is most enriched? Which is most depleted?
-   2. Do we see more differentially abundant features in the ``da-barplot-subject.qzv`` visualization, or in the ``l6-da-barplot-subject.qzv`` visualization? Why?
+   2. Do we see more differentially abundant features in the ``da-barplot-subject.qzv`` visualization, or in the ``l6-da-barplot-subject.qzv`` visualization? Why might you expect this?
 
 .. g__Parabacteroides (enriched), g__Paraprevotella (depleted)
 .. We see more differentially abundant features in the original compared to the collapsed table, which is reasonable since we are collapsing at the genus level and thus losing some resolution. However, collapsing at level 6 may allow us to investigate patterns that aren't present when looking at ASVs.
