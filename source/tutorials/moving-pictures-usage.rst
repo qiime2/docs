@@ -851,34 +851,23 @@ visualization.
    change across the two subjects between ``days-since-experiment-start`` ``0``
    and the later timepoints?
 
-.. TODO: uncomment when/if this doc becomes canon: .. _`ancom`:
-
-Differential abundance testing with ANCOM
------------------------------------------
+Differential abundance testing with ANCOM-BC
+--------------------------------------------
 
 .. usage-selector::
 
-ANCOM can be applied to identify features that are differentially abundant
+ANCOM-BC can be applied to identify features that are differentially abundant
 (i.e. present in different abundances) across sample groups. As with any
 bioinformatics method, you should be aware of the assumptions and limitations
-of ANCOM before using it. We recommend reviewing the `ANCOM paper`_ before
+of ANCOM-BC before using it. We recommend reviewing the `ANCOM-BC paper`_ before
 using this method.
 
 .. note::
-   Differential abundance testing in microbiome analysis is an active area of
-   research. There is one QIIME 2 plugin that can be used for this,
-   which will be used below:
-   ``q2-composition``.
+   Accurately identifying features that are differentially abundant across sample types in microbiome data is a challenging problem and an open area of research. There is one QIIME 2 plugin that can be used for this: ``q2-composition`` (used in this section). In addition to the methods contained in this plugin, new approaches for differential abundance testing are regularly introduced, and it’s worth assessing the current state of the field when performing differential abundance testing to see if there are new methods that might be useful for your data.
 
-ANCOM is implemented in the ``q2-composition`` plugin. ANCOM assumes that few
-(less than about 25%) of the features are changing between groups. If you
-expect that more features are changing between your groups, you should not use
-ANCOM as it will be more error-prone (an increase in both Type I and Type II
-errors is possible). Because we expect a lot of features to change in abundance
-across body sites, in this tutorial we'll filter our full feature table to only
-contain gut samples. We'll then apply ANCOM to determine which, if any,
-sequence variants and genera are differentially abundant across the gut samples
-of our two subjects.
+ANCOM-BC is a compositionally-aware linear regression model that allows for testing differentially abundant features across groups while also implementing bias correction, and is currently implemented in the ``q2-composition`` plugin.
+
+Because we expect a lot of features to change in abundance across body sites, in this tutorial we'll filter our full feature table to only contain gut samples. We'll then apply ANCOM-BC to determine which, if any, sequence variants and genera are differentially abundant across the gut samples of our two subjects.
 
 We'll start by creating a feature table that contains only the gut samples. (To
 learn more about filtering, see the :doc:`Filtering Data <filtering>`
@@ -889,41 +878,32 @@ tutorial.)
    gut_table, = use.action(
         use.UsageAction(plugin_id='feature_table', action_id='filter_samples'),
         use.UsageInputs(table=table_dada2, metadata=sample_metadata,
-                        where='[body-site]=\'gut\''),
+                        where='[body-site]="gut"'),
         use.UsageOutputNames(filtered_table='gut_table'),
    )
 
-ANCOM operates on a ``FeatureTable[Composition]`` QIIME 2 artifact, which is
-based on frequencies of features on a per-sample basis, but cannot tolerate
-frequencies of zero. To build the composition artifact, a
-``FeatureTable[Frequency]``  artifact must be provided to ``add-pseudocount``
-(an imputation method), which will produce the ``FeatureTable[Composition]``
-artifact.
+ANCOM-BC operates on a FeatureTable[Frequency] QIIME 2 artifact. We can run ANCOM-BC on the subject column to determine what features differ in abundance across gut samples of the two subjects.
 
 .. usage::
 
-   comp_gut_table, = use.action(
-        use.UsageAction(plugin_id='composition', action_id='add_pseudocount'),
-        use.UsageInputs(table=gut_table),
-        use.UsageOutputNames(composition_table='comp_gut_table'),
+   ancombc_subject, = use.action(
+        use.UsageAction(plugin_id='composition', action_id='ancombc'),
+        use.UsageInputs(table=gut_table, metadata=sample_metadata, formula='subject'),
+        use.UsageOutputNames(differentials='ancombc_subject'),
    )
 
-We can then run ANCOM on the ``subject`` column to determine what features
-differ in abundance across the gut samples of the two subjects.
-
-.. usage::
-
    use.action(
-        use.UsageAction(plugin_id='composition', action_id='ancom'),
-        use.UsageInputs(table=comp_gut_table, metadata=subject_col),
-        use.UsageOutputNames(visualization='ancom_subject'),
+      use.UsageAction(plugin_id='composition', action_id='da_barplot'),
+      use.UsageInputs(data=ancombc_subject, significance_threshold=0.001),
+      use.UsageOutputNames(visualization='da_barplot_subject'),
    )
 
 .. question::
-   Which sequence variants differ in abundance across Subject? In which subject
-   is each sequence variant more abundant? What are the taxonomies of some of
-   these sequence variants? (To answer the last question you'll need to refer
-   to another visualization that was generated in this tutorial.)
+   1. Which ASV is most enriched, relative to the reference? Which is most depleted?
+   2. What would you expect to change if the ``reference-level`` was changed from ``subject-1`` (the default) to ``subject-2``?
+
+   .. 868528ca947bc57b69ffdf83e6b73bae (enriched), 4b5eeb300368260019c1fbc7a3c718fc (depleted)
+   .. The direction of differental abundance (i.e. enriched features would be depleted and vice versa)
 
 We're also often interested in performing a differential abundance test at a
 specific taxonomic level. To do this, we can collapse the features in our
@@ -939,21 +919,24 @@ level (i.e. level 6 of the Greengenes taxonomy).
         use.UsageOutputNames(collapsed_table='gut_table_l6'),
    )
 
-   comp_gut_table_l6, = use.action(
-        use.UsageAction(plugin_id='composition', action_id='add_pseudocount'),
-        use.UsageInputs(table=l6_gut_table),
-        use.UsageOutputNames(composition_table='comp_gut_table_l6'),
+   l6_ancombc_subject, = use.action(
+        use.UsageAction(plugin_id='composition', action_id='ancombc'),
+        use.UsageInputs(table=l6_gut_table, metadata=sample_metadata, formula='subject'),
+        use.UsageOutputNames(differentials='l6_ancombc_subject'),
    )
 
    use.action(
-        use.UsageAction(plugin_id='composition', action_id='ancom'),
-        use.UsageInputs(table=comp_gut_table_l6, metadata=subject_col),
-        use.UsageOutputNames(visualization='l6_ancom_subject'),
+        use.UsageAction(plugin_id='composition', action_id='da_barplot'),
+        use.UsageInputs(data=l6_ancombc_subject, significance_threshold=0.001),
+        use.UsageOutputNames(visualization='l6_da_barplot_subject'),
    )
 
 .. question::
-   Which genera differ in abundance across subject? In which subject is each
-   genus more abundant?
+   1. Which genera is most enriched? Which is most depleted?
+   2. Do we see more differentially abundant features in the ``da-barplot-subject.qzv`` visualization, or in the ``l6-da-barplot-subject.qzv`` visualization? Why might you expect this?
+
+.. g__Parabacteroides (enriched), g__Paraprevotella (depleted)
+.. We see more differentially abundant features in the original compared to the collapsed table, which is reasonable since we are collapsing at the genus level and thus losing some resolution. However, collapsing at level 6 may allow us to investigate patterns that aren't present when looking at ASVs.
 
 .. _sample metadata: https://data.qiime2.org/2023.9/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
@@ -970,4 +953,4 @@ level (i.e. level 6 of the Greengenes taxonomy).
 .. _Deblur: http://msystems.asm.org/content/2/2/e00191-16
 .. _basic quality-score-based filtering: http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
 .. _Bokulich et al. (2013): http://www.nature.com/nmeth/journal/v10/n1/abs/nmeth.2276.html
-.. _ANCOM paper: https://www.ncbi.nlm.nih.gov/pubmed/26028277
+.. _ANCOM-BC paper: https://pubmed.ncbi.nlm.nih.gov/32665548/
