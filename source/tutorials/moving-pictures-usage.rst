@@ -878,7 +878,7 @@ tutorial.)
    gut_table, = use.action(
         use.UsageAction(plugin_id='feature_table', action_id='filter_samples'),
         use.UsageInputs(table=table_dada2, metadata=sample_metadata,
-                        where='[body-site]=\'gut\''),
+                        where='[body-site]="gut"'),
         use.UsageOutputNames(filtered_table='gut_table'),
    )
 
