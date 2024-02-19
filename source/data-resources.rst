@@ -10,8 +10,8 @@ Taxonomy classifiers for use with q2-feature-classifier
 
 Naive Bayes classifiers trained on:
 
-- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2024.2/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
-- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2024.2/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
+- `Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2024.5/common/silva-138-99-nb-classifier.qza>`_ (MD5: ``b8609f23e9b17bd4a1321a8971303310``)
+- `Silva 138 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2024.5/common/silva-138-99-515-806-nb-classifier.qza>`_ (MD5: ``e05afad0fe87542704be96ff483824d4``)
 - `Greengenes2 2022.10 full length sequences <https://data.qiime2.org/classifiers/greengenes/gg_2022_10_backbone_full_length.nb.qza>`_ (MD5: ``98d34227fe67b34f62b464466cca4ffa``)
 - `Greengenes2 2022.10 from 515F/806R region of sequences <https://data.qiime2.org/classifiers/greengenes/gg_2022_10_backbone.v4.nb.qza>`_ (MD5: ``43de361005ae6dcae61b078c0c835021``)
 
@@ -40,9 +40,9 @@ Weighted Taxonomic Classifiers
 
 These 16S rRNA gene classifiers were trained with weights that take into account the fact that not all species are equally likely to be observed. If your sample comes from any of the 14 habitat types we tested, these weighted classifiers should give you superior classification precision. If your sample doesn't come from one of those habitats, they might still help. If you have the time, training with weights specific to your habitat should help even more. Weights for a range of habitats `are available here <https://github.com/BenKaehler/readytowear>`_.
 
-- `Weighted Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2024.2/common/silva-138-99-nb-weighted-classifier.qza>`_ (MD5: ``48965bb0a9e63c411452a460d92cfc04``)
-- `Weighted Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2024.2/common/gg-13-8-99-nb-weighted-classifier.qza>`_ (MD5: ``2baf87fce174c5f6c22a4c4086b1f1fe``)
-- `Weighted Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2024.2/common/gg-13-8-99-515-806-nb-weighted-classifier.qza>`_ (MD5: ``8fb808c4af1c7526a2bdfaafa764e21f``)
+- `Weighted Silva 138 99% OTUs full-length sequences <https://data.qiime2.org/2024.5/common/silva-138-99-nb-weighted-classifier.qza>`_ (MD5: ``48965bb0a9e63c411452a460d92cfc04``)
+- `Weighted Greengenes 13_8 99% OTUs full-length sequences <https://data.qiime2.org/2024.5/common/gg-13-8-99-nb-weighted-classifier.qza>`_ (MD5: ``2baf87fce174c5f6c22a4c4086b1f1fe``)
+- `Weighted Greengenes 13_8 99% OTUs from 515F/806R region of sequences <https://data.qiime2.org/2024.5/common/gg-13-8-99-515-806-nb-weighted-classifier.qza>`_ (MD5: ``8fb808c4af1c7526a2bdfaafa764e21f``)
 
 Please cite the following reference, in addition to those listed above, if you use any of these weighted pre-trained classifiers:
 
@@ -77,10 +77,10 @@ QIIME-compatible SILVA releases (up to release 132), as well as the licensing in
 
 We also provide pre-formatted SILVA reference sequence and taxonomy files here that were processed using `RESCRIPt <https://github.com/bokulich-lab/RESCRIPt>`_. See licensing information below if you use these files.
 
-- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2024.2/common/silva-138-99-seqs.qza>`_ (MD5: ``de8886bb2c059b1e8752255d271f3010``)
-- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2024.2/common/silva-138-99-tax.qza>`_ (MD5: ``f12d5b78bf4b1519721fe52803581c3d``)
-- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2024.2/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``a914837bc3f8964b156a9653e2420d22``)
-- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2024.2/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``e2c40ae4c60cbf75e24312bb24652f2c``)
+- `Silva 138 SSURef NR99 full-length sequences <https://data.qiime2.org/2024.5/common/silva-138-99-seqs.qza>`_ (MD5: ``de8886bb2c059b1e8752255d271f3010``)
+- `Silva 138 SSURef NR99 full-length taxonomy <https://data.qiime2.org/2024.5/common/silva-138-99-tax.qza>`_ (MD5: ``f12d5b78bf4b1519721fe52803581c3d``)
+- `Silva 138 SSURef NR99 515F/806R region sequences <https://data.qiime2.org/2024.5/common/silva-138-99-seqs-515-806.qza>`_ (MD5: ``a914837bc3f8964b156a9653e2420d22``)
+- `Silva 138 SSURef NR99 515F/806R region taxonomy <https://data.qiime2.org/2024.5/common/silva-138-99-tax-515-806.qza>`_ (MD5: ``e2c40ae4c60cbf75e24312bb24652f2c``)
 
 
 Please cite the following references if you use any of these pre-formatted files:
@@ -123,5 +123,5 @@ The following databases are intended for use with q2-fragment-insertion, and
 are constructed directly from the
 `SEPP-Refs project <https://github.com/smirarab/sepp-refs/>`_.
 
-- `Silva 128 SEPP reference database <https://data.qiime2.org/2024.2/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
-- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2024.2/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
+- `Silva 128 SEPP reference database <https://data.qiime2.org/2024.5/common/sepp-refs-silva-128.qza>`_ (MD5: ``7879792a6f42c5325531de9866f5c4de``)
+- `Greengenes 13_8 SEPP reference database <https://data.qiime2.org/2024.5/common/sepp-refs-gg-13-8.qza>`_ (MD5: ``9ed215415b52c362e25cb0a8a46e1076``)
