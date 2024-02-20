@@ -278,8 +278,8 @@ Now go forth an have fun! 💃
 .. _q2-phylogeny tutorial: https://forum.qiime2.org/t/q2-phylogeny-community-tutorial/4455
 .. _q2-fragment-insertion tutorial: https://library.qiime2.org/plugins/q2-fragment-insertion/16/
 .. _diversity metrics: https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282
-.. _q2-feature-table: https://docs.qiime2.org/2024.5/plugins/available/feature-table/
-.. _many different useful actions: https://docs.qiime2.org/2024.5/plugins/available/diversity/
+.. _q2-feature-table: https://docs.qiime2.org/2024.2/plugins/available/feature-table/
+.. _many different useful actions: https://docs.qiime2.org/2024.2/plugins/available/diversity/
 .. _Principal coordinates analysis: https://mb3is.megx.net/gustame/dissimilarity-based-methods/principal-coordinates-analysis
 .. _longitudinal experiments: https://en.wikipedia.org/wiki/Longitudinal_study
 .. _predict cancer susceptibility: https://dx.doi.org/10.1128%2FmSphere.00001-15

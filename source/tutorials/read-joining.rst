@@ -40,7 +40,7 @@ artifact, which contains the demultiplexed reads from the :doc:`Atacama soil
 microbiome tutorial <atacama-soils>`.
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/tutorials/read-joining/atacama-seqs.qza
+   :url: https://data.qiime2.org/2024.2/tutorials/read-joining/atacama-seqs.qza
    :saveas: demux.qza
 
 Joining reads
@@ -53,7 +53,8 @@ reads:
 
    qiime vsearch merge-pairs \
      --i-demultiplexed-seqs demux.qza \
-     --o-merged-sequences demux-joined.qza
+     --o-merged-sequences demux-joined.qza \
+     --o-unmerged-sequences demux-unjoined.qza
 
 Viewing a summary of joined data with read quality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +166,7 @@ First, download the following demultiplexed and joined read data, which
 has been joined on a per-sample basis with ``fastq-join``.
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/tutorials/read-joining/fj-joined.zip
+   :url: https://data.qiime2.org/2024.2/tutorials/read-joining/fj-joined.zip
    :saveas: fj-joined.zip
 
 Unzip this file as follows:
