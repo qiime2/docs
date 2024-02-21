@@ -38,19 +38,19 @@ option for all cases. In general we recommend the following:
 
 .. _distributions:
 
-QIIME 2 2024.5 distributions
+QIIME 2 2024.2 distributions
 ----------------------------
 
-As of 2024.5, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
+As of 2024.2, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
 - ``amplicon``
 - ``shotgun``
 - ``tiny``
 
-QIIME 2 2024.5 Amplicon Distribution
+QIIME 2 2024.2 Amplicon Distribution
 ....................................
 
-The 2024.5 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.2 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-alignment``
 - ``q2-composition``
@@ -74,10 +74,10 @@ The 2024.5 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fra
 - ``q2-types``
 - ``q2-vsearch``
 
-QIIME 2 2024.5 Shotgun Distribution
+QIIME 2 2024.2 Shotgun Distribution
 ...................................
 
-The 2024.5 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.2 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-assembly``
 - ``q2-cutadapt``
@@ -98,10 +98,10 @@ The 2024.5 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 fram
 - ``q2-types-genomics``
 - ``rescript``
 
-QIIME 2 2024.5 Tiny Distribution
+QIIME 2 2024.2 Tiny Distribution
 ................................
 
-The 2024.5 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.2 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-types``
 
