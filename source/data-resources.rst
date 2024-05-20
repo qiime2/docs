@@ -8,8 +8,6 @@ Taxonomy classifiers have been moved to the external page https://resources.qiim
 
 .. _`marker gene db`:
 
-.. note:: The Silva classifiers provided here include species-level taxonomy. While Silva annotations do include species, Silva does not curate the species-level taxonomy so this information may be unreliable. In a future version of QIIME 2 we will no longer include species-level information in our Silva taxonomy classifiers. This is discussed on the QIIME 2 Forum `here <https://forum.qiime2.org/t/processing-filtering-and-evaluating-the-silva-database-and-other-reference-sequence-data-with-rescript/15494#heading--second-header>`_ (see *Species-labels: caveat emptor!*).
-
 Marker gene reference databases
 -------------------------------
 
