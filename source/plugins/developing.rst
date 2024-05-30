@@ -220,7 +220,7 @@ This manual refreshing of the ``q2cli`` cache is necessary because it can't dete
 Plugin testing
 --------------
 
-Many of the QIIME 2 plugins, including `q2-emperor`_ and `q2-diversity`_, have continuous integration (CI) configuration for `Travis-CI`_ in their software repositories. This allows for automated testing any time a change to the plugin code is committed on GitHub if Travis-CI is enabled on the plugin's software repository. Plugin CI testing generally includes ``flake8`` linting/style-checking and a ``nose`` or ``py.test`` command for running unit tests.
+Many of the QIIME 2 plugins, including `q2-emperor`_ and `q2-diversity`_, have continuous integration (CI) configuration for `GitHub Actions`_ in their software repositories. This allows for automated testing any time a change to the plugin code is committed on GitHub if GitHub Actions are enabled on the plugin's software repository. Plugin CI testing generally includes ``flake8`` linting/style-checking and a ``nose`` or ``py.test`` command for running unit tests.
 
 Plugin developers are encouraged to add unit tests for their plugin's functionality, and to perform style checking with ``flake8``. Unit tests are an important part of determining if your software is working as expected, which will give you and your users confidence in the plugin. Adhering to a style convention, and checking that style with a tool like ``flake8``, is very helpful for others who want to understand your code, including users who want an in depth understanding of the functionality and potential open source software contributors.
 
@@ -251,7 +251,7 @@ Example plugins
 
 .. _`q2-diversity`: https://github.com/qiime2/q2-diversity
 
-.. _`Travis-CI`: https://travis-ci.org/
+.. _`GitHub Actions`: https://docs.github.com/en/actions
 
 .. _`mypy`: http://mypy-lang.org/
 
