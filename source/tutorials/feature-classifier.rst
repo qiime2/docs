@@ -32,10 +32,6 @@ We will also download the representative sequences from the `Moving Pictures`_ t
    :url: https://data.qiime2.org/2024.2/tutorials/training-feature-classifiers/85_otu_taxonomy.txt
    :saveas: 85_otu_taxonomy.txt
 
-.. download::
-   :url: https://data.qiime2.org/2024.2/tutorials/training-feature-classifiers/rep-seqs.qza
-   :saveas: rep-seqs.qza
-
 Next we import these data into QIIME 2 Artifacts. Since the Greengenes reference taxonomy file (:file:`85_otu_taxonomy.txt`) is a tab-separated (TSV) file without a header, we must specify ``HeaderlessTSVTaxonomyFormat`` as the *source format* since the default *source format* requires a header.
 
 .. command-block::
@@ -91,6 +87,10 @@ Test the classifier
 -------------------
 
 Finally, we verify that the classifier works by classifying the representative sequences from the `Moving Pictures`_ tutorial and visualizing the resulting taxonomic assignments.
+
+.. download::
+   :url: https://data.qiime2.org/2024.2/tutorials/training-feature-classifiers/rep-seqs.qza
+   :saveas: rep-seqs.qza
 
 .. command-block::
 
