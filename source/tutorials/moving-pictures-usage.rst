@@ -81,7 +81,7 @@ commands will run quickly.
        import tempfile
        from urllib import request
 
-       from q2_demux._format import EMPSingleEndDirFmt
+       from q2_types.multiplexed_sequences._format import EMPSingleEndDirFmt
        from q2_types.per_sample_sequences import FastqGzFormat
 
        base_url = 'https://data.qiime2.org/2024.5/tutorials/moving-pictures/'
