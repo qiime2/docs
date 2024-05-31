@@ -657,7 +657,7 @@ Let’s use ANCOM-BC to check whether there is a difference in the gut microbiom
    qiime composition ancombc \
      --i-table ./table_2k_abund.qza \
      --m-metadata-file ./metadata.tsv \
-     --p-formula 'donor * genotype' \
+     --p-formula 'donor + genotype' \
      --o-differentials ./ancombc_donor_genotype.qza
 
    qiime composition da-barplot \
