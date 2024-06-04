@@ -39,7 +39,7 @@ option for all cases. In general we recommend the following:
 .. _distributions:
 
 QIIME 2 2024.10 distributions
-----------------------------
+-----------------------------
 
 As of 2024.10, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
@@ -48,7 +48,7 @@ As of 2024.10, QIIME 2 releases now include the following QIIME 2 distributions 
 - ``tiny``
 
 QIIME 2 2024.10 Amplicon Distribution
-....................................
+.....................................
 
 The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
@@ -75,7 +75,7 @@ The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fr
 - ``q2-vsearch``
 
 QIIME 2 2024.10 Shotgun Distribution
-...................................
+....................................
 
 The 2024.10 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
@@ -99,7 +99,7 @@ The 2024.10 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 fra
 - ``rescript``
 
 QIIME 2 2024.10 Tiny Distribution
-................................
+.................................
 
 The 2024.10 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
