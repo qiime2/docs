@@ -38,19 +38,19 @@ option for all cases. In general we recommend the following:
 
 .. _distributions:
 
-QIIME 2 2024.10 distributions
------------------------------
+QIIME 2 2024.5 distributions
+----------------------------
 
-As of 2024.10, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
+As of 2024.5, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
 - ``amplicon``
-- ``shotgun``
+- ``metagenome``
 - ``tiny``
 
-QIIME 2 2024.10 Amplicon Distribution
-.....................................
+QIIME 2 2024.5 Amplicon Distribution
+....................................
 
-The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.5 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-alignment``
 - ``q2-composition``
@@ -73,13 +73,15 @@ The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fr
 - ``q2-taxa``
 - ``q2-types``
 - ``q2-vsearch``
+- ``rescript``
 
-QIIME 2 2024.10 Shotgun Distribution
-....................................
+QIIME 2 2024.5 Metagenome Distribution
+......................................
 
-The 2024.10 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.5 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-assembly``
+- ``q2-composition``
 - ``q2-cutadapt``
 - ``q2-demux``
 - ``q2-diversity``
@@ -87,6 +89,8 @@ The 2024.10 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 fra
 - ``q2-emperor``
 - ``q2-feature-classifier``
 - ``q2-feature-table``
+- ``q2-fondue``
+- ``q2-longitudinal``
 - ``q2-metadata``
 - ``q2-moshpit``
 - ``q2-quality-control``
@@ -95,17 +99,17 @@ The 2024.10 release of the QIIME 2 Shotgun Distribution includes the QIIME 2 fra
 - ``q2-sapienns``
 - ``q2-taxa``
 - ``q2-types``
-- ``q2-types-genomics``
+- ``q2-vsearch``
 - ``rescript``
 
-QIIME 2 2024.10 Tiny Distribution
-.................................
+QIIME 2 2024.5 Tiny Distribution
+................................
 
-The 2024.10 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2024.5 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-types``
 
-The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon or Shotgun Distributions in their QIIME 2 environment.
+The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon or Metagenome Distributions in their QIIME 2 environment.
 
 .. note:: The Amplicon Distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation.
 
