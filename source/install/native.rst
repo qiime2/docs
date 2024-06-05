@@ -100,52 +100,52 @@ QIIME 2 Amplicon Distribution
       </div>
    </div>
 
-QIIME 2 Shotgun Distribution
+QIIME 2 Metagenome Distribution
 ............................
 
 .. raw:: html
 
    <div class="tabbed">
       <ul class="nav nav-tabs">
-         <li class="active"><a data-toggle="tab" href="#shotgun-instructions">Instructions</a></li>
-         <li><a data-toggle="tab" href="#shotgun-macOS-intel">macOS (Intel) and OS X</a></li>
-         <li><a data-toggle="tab" href="#shotgun-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
-         <li><a data-toggle="tab" href="#shotgun-linux">Linux</a></li>
-         <li><a data-toggle="tab" href="#shotgun-wsl">Windows (via WSL)</a></li>
+         <li class="active"><a data-toggle="tab" href="#metagenome-instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#metagenome-macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#metagenome-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#metagenome-linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#metagenome-wsl">Windows (via WSL)</a></li>
       </ul>
       <div class="tab-content">
-         <div id="shotgun-instructions" class="tab-pane fade in active">
+         <div id="metagenome-instructions" class="tab-pane fade in active">
             <p class="alert alert-warning" style="margin-bottom: 10px;">
               From the above tabs, please choose the installation instructions that are appropriate for your platform.
             </p>
          </div>
-         <div id="shotgun-macOS-intel" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2024.10-py38-osx-conda.yml
-   conda env create -n qiime2-shotgun-2024.10 --file qiime2-shotgun-2024.10-py38-osx-conda.yml</pre>
+         <div id="metagenome-macOS-intel" class="tab-pane fade">
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-osx-conda.yml
+   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-shotgun-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
          </div>
-         <div id="shotgun-macOS-apple-silicon" class="tab-pane fade">
+         <div id="metagenome-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2024.10-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 conda env create -n qiime2-shotgun-2024.10 --file qiime2-shotgun-2024.10-py38-osx-conda.yml
-   conda activate qiime2-shotgun-2024.10
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-osx-conda.yml
+   conda activate qiime2-metagenome-2024.10
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-shotgun-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
          </div>
-         <div id="shotgun-linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-shotgun-2024.10 --file qiime2-shotgun-2024.10-py38-linux-conda.yml</pre>
+         <div id="metagenome-linux" class="tab-pane fade">
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-linux-conda.yml
+   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-shotgun-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
          </div>
-         <div id="shotgun-wsl" class="tab-pane fade">
+         <div id="metagenome-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/shotgun/qiime2-shotgun-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-shotgun-2024.10 --file qiime2-shotgun-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-linux-conda.yml
+   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-shotgun-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
