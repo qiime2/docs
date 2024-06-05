@@ -42,13 +42,13 @@ Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
 Once you have Miniconda installed, create a ``conda`` environment and install
-the QIIME 2 2024.10 distribution of your choice within the environment.
+the QIIME 2 2024.5 distribution of your choice within the environment.
 We **highly** recommend creating a *new* environment specifically for the
 QIIME 2 distribution and release being installed, as there are many required
 dependencies that you may not want added to an existing environment.
 You can choose whatever name you'd like for the environment.
-In this example, we'll name the environments ``qiime2-<distro>-2024.10``
-to indicate what QIIME 2 release is installed (i.e. ``2024.10``).
+In this example, we'll name the environments ``qiime2-<distro>-2024.5``
+to indicate what QIIME 2 release is installed (i.e. ``2024.5``).
 
 QIIME 2 Amplicon Distribution
 .............................
@@ -70,32 +70,32 @@ QIIME 2 Amplicon Distribution
             </p>
          </div>
          <div id="amplicon-macOS-intel" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py38-osx-conda.yml
-   conda env create -n qiime2-amplicon-2024.10 --file qiime2-amplicon-2024.10-py38-osx-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py38-osx-conda.yml
+   conda env create -n qiime2-amplicon-2024.5 --file qiime2-amplicon-2024.5-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-amplicon-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-amplicon-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="amplicon-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 conda env create -n qiime2-amplicon-2024.10 --file qiime2-amplicon-2024.10-py38-osx-conda.yml
-   conda activate qiime2-amplicon-2024.10
+            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-amplicon-2024.5 --file qiime2-amplicon-2024.5-py38-osx-conda.yml
+   conda activate qiime2-amplicon-2024.5
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-amplicon-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-amplicon-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="amplicon-linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-amplicon-2024.10 --file qiime2-amplicon-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-amplicon-2024.5 --file qiime2-amplicon-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-amplicon-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-amplicon-2024.5-py38-linux-conda.yml</pre>
          </div>
          <div id="amplicon-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-amplicon-2024.10 --file qiime2-amplicon-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-amplicon-2024.5 --file qiime2-amplicon-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-amplicon-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-amplicon-2024.5-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -120,32 +120,32 @@ QIIME 2 Metagenome Distribution
             </p>
          </div>
          <div id="metagenome-macOS-intel" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-osx-conda.yml
-   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.5-py38-osx-conda.yml
+   conda env create -n qiime2-metagenome-2024.5 --file qiime2-metagenome-2024.5-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="metagenome-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-osx-conda.yml
-   conda activate qiime2-metagenome-2024.10
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.5-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-metagenome-2024.5 --file qiime2-metagenome-2024.5-py38-osx-conda.yml
+   conda activate qiime2-metagenome-2024.5
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-metagenome-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="metagenome-linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-metagenome-2024.5 --file qiime2-metagenome-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.5-py38-linux-conda.yml</pre>
          </div>
          <div id="metagenome-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-metagenome-2024.10 --file qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-metagenome-2024.5 --file qiime2-metagenome-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-metagenome-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-metagenome-2024.5-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -170,32 +170,32 @@ QIIME 2 Tiny Distribution
             </p>
          </div>
          <div id="tiny-macOS-intel" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py38-osx-conda.yml
-   conda env create -n qiime2-tiny-2024.10 --file qiime2-tiny-2024.10-py38-osx-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.5-py38-osx-conda.yml
+   conda env create -n qiime2-tiny-2024.5 --file qiime2-tiny-2024.5-py38-osx-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-tiny-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-tiny-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="tiny-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py38-osx-conda.yml
-   CONDA_SUBDIR=osx-64 conda env create -n qiime2-tiny-2024.10 --file qiime2-tiny-2024.10-py38-osx-conda.yml
-   conda activate qiime2-tiny-2024.10
+            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.5-py38-osx-conda.yml
+   CONDA_SUBDIR=osx-64 conda env create -n qiime2-tiny-2024.5 --file qiime2-tiny-2024.5-py38-osx-conda.yml
+   conda activate qiime2-tiny-2024.5
    conda config --env --set subdir osx-64</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-tiny-2024.10-py38-osx-conda.yml</pre>
+   <pre>rm qiime2-tiny-2024.5-py38-osx-conda.yml</pre>
          </div>
          <div id="tiny-linux" class="tab-pane fade">
-            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-tiny-2024.10 --file qiime2-tiny-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-tiny-2024.5 --file qiime2-tiny-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-tiny-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-tiny-2024.5-py38-linux-conda.yml</pre>
          </div>
          <div id="tiny-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py38-linux-conda.yml
-   conda env create -n qiime2-tiny-2024.10 --file qiime2-tiny-2024.10-py38-linux-conda.yml</pre>
+            <pre>wget https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.5-py38-linux-conda.yml
+   conda env create -n qiime2-tiny-2024.5 --file qiime2-tiny-2024.5-py38-linux-conda.yml</pre>
    <span>OPTIONAL CLEANUP</span>
-   <pre>rm qiime2-tiny-2024.10-py38-linux-conda.yml</pre>
+   <pre>rm qiime2-tiny-2024.5-py38-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -208,7 +208,7 @@ Now that you have a QIIME 2 environment, activate it using the environment's nam
 .. command-block::
    :no-exec:
 
-   conda activate qiime2-<distro>-2024.10
+   conda activate qiime2-<distro>-2024.5
 
 To deactivate an environment, run ``conda deactivate``.
 
@@ -247,13 +247,13 @@ of QIIME 2 and one with the newer version.
 -----------------------
 
 If at any point during the analysis the QIIME 2 conda environment is closed
-or deactivated, QIIME 2 2024.10 can be activated (or reactivated) by running
+or deactivated, QIIME 2 2024.5 can be activated (or reactivated) by running
 the following command:
 
 .. command-block::
    :no-exec:
 
-   conda activate qiime2-<distro>-2024.10
+   conda activate qiime2-<distro>-2024.5
 
 To determine the currently active conda environment, run the following
 command and look for the line that starts with "active environment":

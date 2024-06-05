@@ -23,11 +23,11 @@ Predicting categorical sample data
 Supervised learning classifiers predict the categorical metadata classes of unlabeled samples by learning the composition of labeled training samples. For example, we may use a classifier to diagnose or predict disease susceptibility based on stool microbiome composition, or predict sample type as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the :doc:`moving pictures tutorial data <moving-pictures>` to train a classifier that predicts the body site from which a sample was collected. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2024.10/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2024.5/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: moving-pictures-sample-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2024.10/tutorials/sample-classifier/moving-pictures-table.qza
+   :url: https://data.qiime2.org/2024.5/tutorials/sample-classifier/moving-pictures-table.qza
    :saveas: moving-pictures-table.qza
 
 Next, we will train and test a classifier that predicts which body site a sample originated from based on its microbial composition. We will do so using the ``classify-samples`` pipeline, which performs a series of steps under the hood:
@@ -181,11 +181,11 @@ Predicting continuous (i.e., numerical) sample data
 Supervised learning regressors predict continuous metadata values of unlabeled samples by learning the composition of labeled training samples. For example, we may use a regressor to predict the abundance of a metabolite that will be produced by a microbial community, or a sample's pH,  temperature, or altitude as a function of the sequence variants, microbial taxa, or metabolites detected in a sample. In this tutorial, we will use the `ECAM study`_, a longitudinal cohort study of microbiome development in U.S. infants. Download the feature table and sample metadata with the following links:
 
 .. download::
-   :url: https://data.qiime2.org/2024.10/tutorials/longitudinal/sample_metadata.tsv
+   :url: https://data.qiime2.org/2024.5/tutorials/longitudinal/sample_metadata.tsv
    :saveas: ecam-metadata.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2024.10/tutorials/longitudinal/ecam_table_maturity.qza
+   :url: https://data.qiime2.org/2024.5/tutorials/longitudinal/ecam_table_maturity.qza
    :saveas: ecam-table.qza
 
 Next, we will train a regressor to predict an infant's age based on its microbiota composition, using the ``regress-samples`` pipeline.

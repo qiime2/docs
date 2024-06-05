@@ -14,7 +14,7 @@ In a terminal with Docker activated, run:
 .. command-block::
    :no-exec:
 
-   docker pull quay.io/qiime2/amplicon:2024.10
+   docker pull quay.io/qiime2/amplicon:2024.5
 
 3. Confirm the installation
 ---------------------------
@@ -24,4 +24,4 @@ Run the following to confirm that the image was successfully fetched.
 .. command-block::
    :no-exec:
 
-   docker run -t -i -v $(pwd):/data quay.io/qiime2/amplicon:2024.10 qiime
+   docker run -t -i -v $(pwd):/data quay.io/qiime2/amplicon:2024.5 qiime
