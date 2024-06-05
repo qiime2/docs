@@ -101,7 +101,7 @@ QIIME 2 Amplicon Distribution
    </div>
 
 QIIME 2 Metagenome Distribution
-............................
+...............................
 
 .. raw:: html
 
