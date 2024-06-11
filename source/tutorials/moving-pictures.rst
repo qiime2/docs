@@ -24,7 +24,7 @@ Sample metadata
 Before starting the analysis, explore the sample metadata to familiarize yourself with the samples used in this study. The `sample metadata`_ is available as a Google Sheet. You can download this file as tab-separated text by selecting ``File`` > ``Download as`` > ``Tab-separated values``. Alternatively, the following command will download the sample metadata as tab-separated text and save it in the file ``sample-metadata.tsv``. This ``sample-metadata.tsv`` file is used throughout the rest of the tutorial.
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/tutorials/moving-pictures/sample_metadata.tsv
+   :url: https://data.qiime2.org/2024.10/tutorials/moving-pictures/sample_metadata.tsv
    :saveas: sample-metadata.tsv
 
 .. tip:: `Keemei`_ is a Google Sheets add-on for validating sample metadata. Validation of sample metadata is important before beginning any analysis. Try installing Keemei following the instructions on its website, and then validate the sample metadata spreadsheet linked above. The spreadsheet also includes a sheet with some invalid data to try out with Keemei.
@@ -41,11 +41,11 @@ Download the sequence reads that we'll use in this analysis. In this tutorial we
    mkdir emp-single-end-sequences
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
+   :url: https://data.qiime2.org/2024.10/tutorials/moving-pictures/emp-single-end-sequences/barcodes.fastq.gz
    :saveas: emp-single-end-sequences/barcodes.fastq.gz
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
+   :url: https://data.qiime2.org/2024.10/tutorials/moving-pictures/emp-single-end-sequences/sequences.fastq.gz
    :saveas: emp-single-end-sequences/sequences.fastq.gz
 
 All data that is used as input to QIIME 2 is in form of QIIME 2 artifacts, which contain information about the type of data and the source of the data. So, the first thing we need to do is import these sequence data files into a QIIME 2 artifact.
@@ -383,7 +383,7 @@ In the next sections we'll begin to explore the taxonomic composition of the sam
 
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/common/gg-13-8-99-515-806-nb-classifier.qza
+   :url: https://data.qiime2.org/2024.10/common/gg-13-8-99-515-806-nb-classifier.qza
    :saveas: gg-13-8-99-515-806-nb-classifier.qza
 
 .. command-block::
@@ -488,7 +488,7 @@ We're also often interested in performing a differential abundance test at a spe
 .. g__Parabacteroides (enriched), g__Paraprevotella (depleted)
 .. We see more differentially abundant features in the original compared to the collapsed table, which is reasonable since we are collapsing at the genus level and thus losing some resolution. However, collapsing at level 6 may allow us to investigate patterns that aren't present when looking at ASVs.
 
-.. _sample metadata: https://data.qiime2.org/2024.5/tutorials/moving-pictures/sample_metadata
+.. _sample metadata: https://data.qiime2.org/2024.10/tutorials/moving-pictures/sample_metadata
 .. _Keemei: https://keemei.qiime2.org
 .. _DADA2: https://www.ncbi.nlm.nih.gov/pubmed/27214047
 .. _Illumina Overview Tutorial: http://nbviewer.jupyter.org/github/biocore/qiime/blob/1.9.1/examples/ipynb/illumina_overview_tutorial.ipynb
