@@ -798,7 +798,7 @@ from sequence to taxonomy.
        from urllib import request
        from qiime2 import Artifact
        fp, _ = request.urlretrieve(
-           'https://data.qiime2.org/2024.5/common/gg-13-8-99-515-806-nb-classifier.qza',
+           'https://data.qiime2.org/classifiers/sklearn-1.4.2/greengenes/gg-13-8-99-515-806-nb-classifier.qza',
        )
 
        return Artifact.load(fp)
