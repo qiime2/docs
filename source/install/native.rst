@@ -30,14 +30,6 @@ running the latest version of ``conda``:
 
    conda update conda
 
-Installing ``wget``
-...................
-
-.. command-block::
-   :no-exec:
-
-   conda install wget
-
 Install QIIME 2 within a ``conda`` environment
 ----------------------------------------------
 
