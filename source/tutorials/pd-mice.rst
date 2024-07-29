@@ -269,7 +269,7 @@ QIIME 2 offers several ways to construct a phylogenetic tree. For this tutorial,
 First, we will download the reference database:
 
 .. download::
-   :url: https://data.qiime2.org/2024.5/common/sepp-refs-gg-13-8.qza
+   :url: https://data.qiime2.org/classifiers/sepp-ref-dbs/sepp-refs-gg-13-8.qza
    :saveas: sepp-refs-gg-13-8.qza
 
 .. note::
