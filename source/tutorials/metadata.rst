@@ -107,7 +107,7 @@ The following rules apply to column names:
 
 - May consist of any Unicode characters.
 - Cannot be empty (i.e. column names must consist of at least one character).
-- Must be unique (exact string matching is performed to detect duplicates).
+- Must be unique without regard to case (e.g., columns `foo` and `Foo` in the same file are not allowed).
 - Column names cannot use any of the reserved ID column names described in the section :ref:`identifier-column`.
 
 The following rules apply to column values:
