@@ -62,20 +62,20 @@ QIIME 2 Amplicon Distribution
             </p>
          </div>
          <div id="amplicon-macOS-intel" class="tab-pane fade">
-            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py39-osx-conda.yml</pre>
+            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py310-osx-conda.yml</pre>
          </div>
          <div id="amplicon-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py39-osx-conda.yml
+            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py310-osx-conda.yml
    conda activate qiime2-amplicon-2024.10
    conda config --env --set subdir osx-64</pre>
          </div>
          <div id="amplicon-linux" class="tab-pane fade">
-            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py310-linux-conda.yml</pre>
          </div>
          <div id="amplicon-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-amplicon-2024.10 --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.10-py310-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -100,20 +100,58 @@ QIIME 2 Metagenome Distribution
             </p>
          </div>
          <div id="metagenome-macOS-intel" class="tab-pane fade">
-            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py39-osx-conda.yml</pre>
+            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py310-osx-conda.yml</pre>
          </div>
          <div id="metagenome-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py39-osx-conda.yml
+            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py310-osx-conda.yml
    conda activate qiime2-metagenome-2024.10
    conda config --env --set subdir osx-64</pre>
          </div>
          <div id="metagenome-linux" class="tab-pane fade">
-            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py310-linux-conda.yml</pre>
          </div>
          <div id="metagenome-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-metagenome-2024.10 --file https://data.qiime2.org/distro/metagenome/qiime2-metagenome-2024.10-py310-linux-conda.yml</pre>
+         </div>
+      </div>
+   </div>
+
+QIIME 2 Pathogenome Distribution
+................................
+
+.. raw:: html
+
+   <div class="tabbed">
+      <ul class="nav nav-tabs">
+         <li class="active"><a data-toggle="tab" href="#pathogenome-instructions">Instructions</a></li>
+         <li><a data-toggle="tab" href="#pathogenome-macOS-intel">macOS (Intel) and OS X</a></li>
+         <li><a data-toggle="tab" href="#pathogenome-macOS-apple-silicon">macOS (Apple Silicon)</a></li>
+         <li><a data-toggle="tab" href="#pathogenome-linux">Linux</a></li>
+         <li><a data-toggle="tab" href="#pathogenome-wsl">Windows (via WSL)</a></li>
+      </ul>
+      <div class="tab-content">
+         <div id="pathogenome-instructions" class="tab-pane fade in active">
+            <p class="alert alert-warning" style="margin-bottom: 10px;">
+              From the above tabs, please choose the installation instructions that are appropriate for your platform.
+            </p>
+         </div>
+         <div id="pathogenome-macOS-intel" class="tab-pane fade">
+            <pre>conda env create -n qiime2-pathogenome-2024.10 --file https://data.qiime2.org/distro/pathogenome/qiime2-pathogenome-2024.10-py310-osx-conda.yml</pre>
+         </div>
+         <div id="pathogenome-macOS-apple-silicon" class="tab-pane fade">
+            <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
+            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-pathogenome-2024.10 --file https://data.qiime2.org/distro/pathogenome/qiime2-pathogenome-2024.10-py310-osx-conda.yml
+   conda activate qiime2-pathogenome-2024.10
+   conda config --env --set subdir osx-64</pre>
+         </div>
+         <div id="pathogenome-linux" class="tab-pane fade">
+            <pre>conda env create -n qiime2-pathogenome-2024.10 --file https://data.qiime2.org/distro/pathogenome/qiime2-pathogenome-2024.10-py310-linux-conda.yml</pre>
+         </div>
+         <div id="pathogenome-wsl" class="tab-pane fade">
+            <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
+            <pre>conda env create -n qiime2-pathogenome-2024.10 --file https://data.qiime2.org/distro/pathogenome/qiime2-pathogenome-2024.10-py310-linux-conda.yml</pre>
          </div>
       </div>
    </div>
@@ -138,20 +176,20 @@ QIIME 2 Tiny Distribution
             </p>
          </div>
          <div id="tiny-macOS-intel" class="tab-pane fade">
-            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py39-osx-conda.yml</pre>
+            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py310-osx-conda.yml</pre>
          </div>
          <div id="tiny-macOS-apple-silicon" class="tab-pane fade">
             <p>These instructions are for users with <a href="https://support.apple.com/en-us/HT211814">Apple Silicon</a> chips (M1, M2, etc), and configures the installation of QIIME 2 in <a href="https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment">Rosetta 2 emulation mode</a>.</p>
-            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py39-osx-conda.yml
+            <pre>CONDA_SUBDIR=osx-64 conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py310-osx-conda.yml
    conda activate qiime2-tiny-2024.10
    conda config --env --set subdir osx-64</pre>
          </div>
          <div id="tiny-linux" class="tab-pane fade">
-            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py310-linux-conda.yml</pre>
          </div>
          <div id="tiny-wsl" class="tab-pane fade">
             <p>These instructions are identical to the Linux instructions and are intended for users of the <a href="https://learn.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a>.</p>
-            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py39-linux-conda.yml</pre>
+            <pre>conda env create -n qiime2-tiny-2024.10 --file https://data.qiime2.org/distro/tiny/qiime2-tiny-2024.10-py310-linux-conda.yml</pre>
          </div>
       </div>
    </div>

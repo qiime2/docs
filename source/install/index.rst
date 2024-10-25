@@ -39,16 +39,17 @@ option for all cases. In general we recommend the following:
 .. _distributions:
 
 QIIME 2 2024.10 distributions
-----------------------------
+-----------------------------
 
 As of 2024.10, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
 - ``amplicon``
 - ``metagenome``
+- ``pathogenome``
 - ``tiny``
 
 QIIME 2 2024.10 Amplicon Distribution
-....................................
+.....................................
 
 The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
@@ -76,7 +77,7 @@ The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fr
 - ``rescript``
 
 QIIME 2 2024.10 Metagenome Distribution
-......................................
+.......................................
 
 The 2024.10 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
@@ -102,14 +103,33 @@ The 2024.10 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 
 - ``q2-vsearch``
 - ``rescript``
 
+QIIME 2 2024.10 Pathogenome Distribution
+........................................
+
+The 2024.10 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+
+- ``q2-amrfinderplus``
+- ``q2-assembly``
+- ``q2-demux``
+- ``q2-feature-classifier``
+- ``q2-feature-table``
+- ``q2-longitudinal``
+- ``q2-quality-control``
+- ``q2-sample-classifier``
+- ``q2-taxa``
+- ``q2-types``
+- ``q2-viromics``
+- ``q2-vizard``
+- ``rescript``
+
 QIIME 2 2024.10 Tiny Distribution
-................................
+.................................
 
 The 2024.10 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-types``
 
-The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon or Metagenome Distributions in their QIIME 2 environment.
+The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon, Metagenome or Pathogenome Distributions in their QIIME 2 environment.
 
 .. note:: The Amplicon Distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation.
 
