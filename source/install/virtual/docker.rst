@@ -5,6 +5,7 @@ The following QIIME 2 distributions are available as Docker images:
 
 - ``amplicon``
 - ``metagenome``
+- ``pathogenome``
 - ``tiny``
 
 Please replace <distribution> with your desired distribution in the installation instructions below.
