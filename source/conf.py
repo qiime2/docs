@@ -406,4 +406,4 @@ linkcheck_timeout = 15
 mathjax_path = ('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/'
                 'MathJax.js?config=TeX-AMS-MML_HTMLorMML')
 
-html_baseurl = os.environ.get('BASE_URL', 'https://docs.qiime2.org/2024.10/')
+html_baseurl = os.environ.get('BASE_URL', 'https://docs.qiime2.org/2025.4/')

@@ -35,7 +35,7 @@ jobs:
     - name: install QIIME 2 amplicon distro
       run: |
         envFile=qiime2-amplicon-ubuntu-latest-conda.yml
-        wget https://raw.githubusercontent.com/qiime2/distributions/dev/2024.10/amplicon/released/$envFile
+        wget https://raw.githubusercontent.com/qiime2/distributions/dev/2025.4/amplicon/released/$envFile
         conda env create -q -p ./test-env --file $envFile
 
     - name: install conda dependencies
