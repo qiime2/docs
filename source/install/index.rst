@@ -71,8 +71,10 @@ The 2024.10 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fr
 - ``q2-quality-control``
 - ``q2-quality-filter``
 - ``q2-sample-classifier``
+- ``q2-stats``
 - ``q2-taxa``
 - ``q2-types``
+- ``q2-vizard``
 - ``q2-vsearch``
 - ``rescript``
 
@@ -98,8 +100,10 @@ The 2024.10 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 
 - ``q2-quality-filter``
 - ``q2-sample-classifier``
 - ``q2-sapienns``
+- ``q2-sourmash``
 - ``q2-taxa``
 - ``q2-types``
+- ``q2-vizard``
 - ``q2-vsearch``
 - ``rescript``
 
@@ -114,6 +118,7 @@ The 2024.10 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 
 - ``q2-feature-classifier``
 - ``q2-feature-table``
 - ``q2-longitudinal``
+- ``q2-metadata``
 - ``q2-quality-control``
 - ``q2-sample-classifier``
 - ``q2-taxa``
@@ -127,6 +132,7 @@ QIIME 2 2024.10 Tiny Distribution
 
 The 2024.10 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
+- ``q2-metadata``
 - ``q2-types``
 
 The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon, Metagenome or Pathogenome Distributions in their QIIME 2 environment.
