@@ -44,7 +44,7 @@ QIIME 2 2025.4 distributions
 As of 2025.4, QIIME 2 releases now include the following QIIME 2 distributions that are available for install:
 
 - ``amplicon``
-- ``metagenome``
+- ``moshpit``
 - ``pathogenome``
 - ``tiny``
 
@@ -71,16 +71,19 @@ The 2025.4 release of the QIIME 2 Amplicon Distribution includes the QIIME 2 fra
 - ``q2-quality-control``
 - ``q2-quality-filter``
 - ``q2-sample-classifier``
+- ``q2-stats``
 - ``q2-taxa``
 - ``q2-types``
+- ``q2-vizard``
 - ``q2-vsearch``
 - ``rescript``
 
-QIIME 2 2025.4 Metagenome Distribution
-......................................
+QIIME 2 2025.4 MOSHPIT (formerly Metagenome) Distribution
+.........................................................
 
-The 2025.4 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2025.4 release of the QIIME 2 MOSHPIT (formerly Metagenome) Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
+- ``q2-alignment``
 - ``q2-assembly``
 - ``q2-composition``
 - ``q2-cutadapt``
@@ -98,15 +101,17 @@ The 2025.4 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 f
 - ``q2-quality-filter``
 - ``q2-sample-classifier``
 - ``q2-sapienns``
+- ``q2-sourmash``
 - ``q2-taxa``
 - ``q2-types``
+- ``q2-vizard``
 - ``q2-vsearch``
 - ``rescript``
 
 QIIME 2 2025.4 Pathogenome Distribution
 .......................................
 
-The 2025.4 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
+The 2025.4 release of the QIIME 2 Pathogenome Distribution includes the QIIME 2 framework, ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
 - ``q2-amrfinderplus``
 - ``q2-assembly``
@@ -114,6 +119,7 @@ The 2025.4 release of the QIIME 2 Metagenome Distribution includes the QIIME 2 f
 - ``q2-feature-classifier``
 - ``q2-feature-table``
 - ``q2-longitudinal``
+- ``q2-metadata``
 - ``q2-quality-control``
 - ``q2-sample-classifier``
 - ``q2-taxa``
@@ -127,9 +133,10 @@ QIIME 2 2025.4 Tiny Distribution
 
 The 2025.4 release of the QIIME 2 Tiny Distribution includes the QIIME 2 framework and ``q2cli`` (a QIIME 2 command-line interface) and the following plugins:
 
+- ``q2-metadata``
 - ``q2-types``
 
-The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon, Metagenome or Pathogenome Distributions in their QIIME 2 environment.
+The QIIME 2 Tiny Distribution is a minimal QIIME 2 environment that can be used by developers who are in need of a basic development environment, or community plugin users who do not need the entire Amplicon, MOSHPIT or Pathogenome Distributions in their QIIME 2 environment.
 
 .. note:: The Amplicon Distribution is necessary to run the commands in the :doc:`QIIME 2 tutorials <../tutorials/index>`. If there are additional QIIME 2 plugins or interfaces you would like to install, please consult the relevant package(s) documentation.
 
