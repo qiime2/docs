@@ -1,6 +1,8 @@
 Available plugins
 =================
 
+.. include:: ../../_old_docs_warning.rst
+
 QIIME 2 microbiome analysis functionality is made available to users via plugins. The following official plugins are currently included in QIIME 2 train releases:
 
 .. toctree::

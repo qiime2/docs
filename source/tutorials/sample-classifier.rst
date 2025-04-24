@@ -1,6 +1,8 @@
 Predicting sample metadata values with q2-sample-classifier
 ===========================================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: Documentation for using all plugin actions through the Python API and command line interface is available in the q2-sample-classifier :doc:`reference documentation <../plugins/available/sample-classifier/index>`.
 
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.

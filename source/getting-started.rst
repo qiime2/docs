@@ -1,6 +1,8 @@
 Getting started
 ===============
 
+.. include:: _old_docs_warning.rst
+
 This guide will walk you through the steps necessary to understand, install, and use QIIME 2 for your own microbiome analyses:
 
 1. Familiarize yourself with the :doc:`core concepts <concepts>` of QIIME 2 before starting to use the system.

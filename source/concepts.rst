@@ -1,6 +1,8 @@
 Core concepts
 =============
 
+.. include:: _old_docs_warning.rst
+
 This page describes several core concepts in QIIME 2 that are important to understand before starting to use the software. The :doc:`glossary <glossary>` may be helpful to refer to as you read through this page and other documentation on the site.
 
 Data files: QIIME 2 artifacts

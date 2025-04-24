@@ -1,6 +1,8 @@
 Exporting data
 ==============
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This tutorial assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 In order to use QIIME 2, your input data must be stored in *QIIME 2 artifacts* (i.e. ``.qza`` files). This is what enables distributed and automatic provenance tracking, as well as semantic type validation and transformations between data formats (see the :doc:`core concepts <../concepts>` page for more details about QIIME 2 artifacts).

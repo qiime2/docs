@@ -1,6 +1,8 @@
 Installing QIIME 2
 ==================
 
+.. include:: ../_old_docs_warning.rst
+
 QIIME 2 can be installed natively or using a virtual machine. The following
 pages describe how to install the available :ref:`distributions`
 in either scenario.

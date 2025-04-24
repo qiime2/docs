@@ -1,6 +1,8 @@
 Installing QIIME 2 using Docker
 ===============================
 
+.. include:: ../../_old_docs_warning.rst
+
 The following QIIME 2 distributions are available as Docker images:
 
 - ``amplicon``

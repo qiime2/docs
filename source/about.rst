@@ -1,6 +1,8 @@
 What is QIIME 2?
 ================
 
+.. include:: _old_docs_warning.rst
+
 QIIME 2 is a powerful, extensible, and decentralized microbiome analysis package with a focus on data and analysis transparency. QIIME 2 enables researchers to start an analysis with raw DNA sequence data and finish with publication-quality figures and statistical results.
 
 Key features:

@@ -1,6 +1,8 @@
 Importing data
 ==============
 
+.. include:: ../_old_docs_warning.rst
+
 .. contents:: Importing data
    :depth: 2
 
@@ -541,7 +543,6 @@ If you have any questions, please post to the `QIIME 2 Forum`_ for help!
 
 .. _Earth Microbiome Project (EMP) protocol: http://www.earthmicrobiome.org/protocols-and-standards/
 
-.. _QIIME 2 Forum: https://forum.qiime2.org
 
 .. _BIOM v1.0.0 format specification: http://biom-format.org/documentation/format_versions/biom-1.0.html
 

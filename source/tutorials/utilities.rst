@@ -1,6 +1,8 @@
 Utilities in QIIME 2
 ====================
 
+.. include:: ../_old_docs_warning.rst
+
 .. contents::
    :depth: 3
 

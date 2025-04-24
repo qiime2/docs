@@ -1,6 +1,8 @@
 Semantic types
 ==============
 
+.. include:: _old_docs_warning.rst
+
 All QIIME 2 artifacts have defined semantic types. This document is a placeholder for full documentation of how to use these types and how to define new semantic types in QIIME 2 plugins.
 
 Why define semantic types?

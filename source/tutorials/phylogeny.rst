@@ -1,6 +1,8 @@
 Phylogenetic inference with q2-phylogeny
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. include:: ../_old_docs_warning.rst
+
 .. contents:: Phylogenetic inference with q2-phylogeny
    :depth: 4
 

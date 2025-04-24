@@ -1,6 +1,8 @@
 Parkinson's Mouse Tutorial
 --------------------------
 
+.. include:: ../_old_docs_warning.rst
+
 This tutorial will demonstrate a "typical" QIIME 2 analysis of 16S rRNA gene amplicon data, using a set of fecal samples from `humanized`_ mice. The original study, `Sampson et al, 2016`_, was designed to determine whether the fecal microbiome contributed to the development of Parkinson's Disease (PD). Several observation studies showed a difference in the microbiome between PD patients and controls, although the organisms identified across studies were not consistent. However, this was sufficient evidence to suggest that there might be a relationship between PD and the fecal microbiome.
 
 To determine whether that relationship was incidental or actually disease associated, a second study was needed. A human cohort study was not feasible; the disease only affects about 1% of the population over 60 years old, PD takes a long time to develop and to be diagnosed, and it would be difficult to determine when to collect the samples. Therefore, a gnotobiotic mouse study was utilized to evaluate the role of the microbiome in the development of PD symptoms. Feces were collected from six donors with Parkinson's disease and six age- and sex-matched neurologically healthy controls, and then transplanted into mice who were either predisposed to developing Parkinson's disease due to a mutation ("aSyn") or resistant wild type mice ("BDF1"). Mice from different donors were kept in separate cages, but mice from different genetic backgrounds were co-housed. The mice were followed for 7 weeks to see if they developed symptoms of Parkinson's disease.

@@ -1,6 +1,8 @@
 Filtering data
 ==============
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 This tutorial describes how to filter feature tables, sequences, and distance matrices in QIIME 2, and will be expanded as more filtering functionality becomes available.

@@ -1,6 +1,8 @@
 Alternative methods of read-joining in QIIME 2
 ==============================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This tutorial does not cover read-joining and denoising with
    DADA2. Instead, this tutorial focuses on alternative approaches to analyzing
    paired-end reads in QIIME 2. If you are interested in joining and denoising

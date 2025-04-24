@@ -1,6 +1,8 @@
 Overview of QIIME 2 Plugin Workflows
 ====================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: Abandon all hope, ye who enter, if you have not read the :doc:`glossary <../glossary>`. 👺
 
 .. note:: This is a guide for novice QIIME 2 users, and particularly for those who are new to microbiome research. For experienced users who are already well versed in microbiome analysis, and those who are averse to uncontrolled use of emoji, mosey on over to the :doc:`overview tutorial for experienced users <qiime2-for-experienced-microbiome-researchers>`.

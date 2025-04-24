@@ -1,6 +1,8 @@
 Natively installing QIIME 2
 ===========================
 
+.. include:: ../_old_docs_warning.rst
+
 This guide describes how to natively install the available :ref:`distributions`.
 
 Miniconda
