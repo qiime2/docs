@@ -1,6 +1,8 @@
 Evaluating and controlling data quality with q2-quality-control
 ===============================================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
 
 This tutorial will demonstrate how to use the ``q2-quality-control`` plugin to evaluate data quality based on mock communities (or other samples with known compositions) and filter sequence data.

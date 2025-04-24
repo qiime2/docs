@@ -1,6 +1,8 @@
 Supplementary resources
 =======================
 
+.. include:: _old_docs_warning.rst
+
 Educational content
 -------------------
 

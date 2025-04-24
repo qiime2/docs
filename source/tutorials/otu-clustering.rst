@@ -1,6 +1,8 @@
 Clustering sequences into OTUs using q2-vsearch
 ===============================================
 
+.. include:: ../_old_docs_warning.rst
+
 *De novo*, closed-reference, and open-reference clustering are currently
 supported in QIIME 2.
 

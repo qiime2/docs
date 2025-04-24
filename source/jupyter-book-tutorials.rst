@@ -1,6 +1,8 @@
 Jupyter Book Tutorials
 ============================
 
+.. include:: _old_docs_warning.rst
+
 These tutorials are powered by `Jupyter Book <https://jupyterbook.org/intro.html>`_,
 a Jupyter-based documentation tool developed with support from the
 `Sloan Foundation <https://sloan.org/grant-detail/9231>`_.

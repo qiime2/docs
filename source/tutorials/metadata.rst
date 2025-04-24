@@ -1,6 +1,8 @@
 Metadata in QIIME 2
 ===================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>` and completed the :doc:`moving pictures tutorial <moving-pictures>`.
 
 Metadata provides the key to gaining biological insight from your data. In QIIME 2, *sample metadata* may include technical details, such as the DNA barcodes that were used for each sample in a multiplexed sequencing run, or descriptions of the samples, such as which subject, time point, and body site each sample came from in a human microbiome time series. *Feature metadata* is often a feature annotation, such as the taxonomy assigned to a sequence variant or OTU. Sample and feature metadata are used by many plugins in QIIME 2, and examples are provided in this tutorial (and other QIIME 2 tutorials) illustrating how to use metadata in your own microbiome analyses.

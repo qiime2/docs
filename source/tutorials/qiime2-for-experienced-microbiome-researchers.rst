@@ -1,6 +1,7 @@
 QIIME 2 for Experienced Microbiome Researchers
 ##############################################
 
+.. include:: ../_old_docs_warning.rst
 
 .. contents:: QIIME 2 for Experienced Microbiome Researchers
    :depth: 3

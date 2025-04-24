@@ -1,6 +1,8 @@
 Installing QIIME 2 using a Virtual Machine
 ==========================================
 
+.. include:: ../../_old_docs_warning.rst
+
 *QIIME 2 Distribution* builds are available as Docker Images. See :ref:`distributions` for more details about the available distributions.
 
 .. toctree::

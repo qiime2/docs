@@ -1,6 +1,8 @@
 Identifying and filtering chimeric feature sequences with q2-vsearch
 ====================================================================
 
+.. include:: ../_old_docs_warning.rst
+
 Chimera checking in QIIME 2 is performed on a pair of ``FeatureTable[Frequency]`` and ``FeatureData[Sequences]`` artifacts. QIIME 2 wraps the Uchime *de novo* and reference pipelines from vsearch. For details on how these work, see the original `Uchime paper`_, and the `vsearch`_ documentation.
 
 In this tutorial, we'll use the table and sequences from the :doc:`Atacama soils tutorial <atacama-soils>`.

@@ -1,3 +1,5 @@
+.. include:: ../../../_old_docs_warning.rst
+
 {{ title }}
 {{ '=' * title|length }}
 

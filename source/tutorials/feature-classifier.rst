@@ -1,6 +1,8 @@
 Training feature classifiers with q2-feature-classifier
 =======================================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 This tutorial will demonstrate how to train ``q2-feature-classifier`` for a particular dataset. We will train the `Naive Bayes`_ classifier using `Greengenes`_ reference sequences and classify the representative sequences from the `Moving Pictures`_ dataset.
@@ -111,7 +113,6 @@ In our experience, fungal ITS classifiers trained on the `UNITE reference databa
 
 
 .. _Moving Pictures: ../moving-pictures/index.html
-.. _QIIME 2 forum: https://forum.qiime2.org/c/community-contributions/data-resources
 .. _Naive Bayes: http://scikit-learn.org/stable/modules/naive_bayes.html#multinomial-naive-bayes
 .. _Greengenes: http://qiime.org/home_static/dataFiles.html
 .. _(Werner et al., 2012): https://www.ncbi.nlm.nih.gov/pubmed/21716311

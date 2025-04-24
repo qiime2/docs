@@ -1,6 +1,8 @@
 Data resources
 ==============
 
+.. include:: _old_docs_warning.rst
+
 Taxonomy classifiers for use with q2-feature-classifier
 -------------------------------------------------------
 

@@ -1,6 +1,8 @@
 QIIME 2 command-line interface (q2cli)
 ======================================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed the QIIME 2 Amplicon distribution using one of the procedures in the :doc:`install documents <../install/index>`.
 
 This guide provides an introduction to ``q2cli``, a QIIME 2 command-line interface included in each of the available QIIME 2 distributions. The :doc:`tutorials <../tutorials/index>` use ``q2cli`` extensively, so it is recommended to review this document first before beginning the tutorials. This document is a work-in-progress and will be expanded in the future.

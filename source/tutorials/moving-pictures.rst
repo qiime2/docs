@@ -1,6 +1,8 @@
 "Moving Pictures" tutorial
 ==========================
 
+.. include:: ../_old_docs_warning.rst
+
 .. note:: This guide assumes you have installed QIIME 2 using one of the procedures in the :doc:`install documents <../install/index>`.
 
 .. note:: This guide uses QIIME 2-specific terminology, please see the :doc:`glossary <../glossary>` for more details.

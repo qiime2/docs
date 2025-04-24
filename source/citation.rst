@@ -1,6 +1,8 @@
 Citing QIIME 2
 ==============
 
+.. include:: _old_docs_warning.rst
+
 Please note that almost all QIIME 2 plugins implement methods that were developed independently of the QIIME 2 framework, which should be cited in addition to the QIIME 2 framework itself. This information can be extracted as described below.
 
 If you use QIIME 2 in your research, please cite the following `paper`_:
@@ -35,7 +37,7 @@ Each time any action is performed in QIIME 2, that information is logged in the 
 2. Click on the "Provenance" tab in the upper right-hand corner of the browser window.
 3. Click on the "Citations" tab that appears in the window below to view a list of citations.
 4. Click "Download" to download the list in BibTeX format.
-5. Review the citations list and use common sense to make sure that you are citing all software and methods appropriately. If you notice any discrepancies in the citations that are listed by any QIIME 2 plugin, please verify which plugin/action is missing citations or mis-citing, using the directions above for retrieving plugin-specific citation information. Then get in touch on the `QIIME 2 forum`_ to let us know!
+5. Review the citations list and use common sense to make sure that you are citing all software and methods appropriately. If you notice any discrepancies in the citations that are listed by any QIIME 2 plugin, please verify which plugin/action is missing citations or mis-citing, using the directions above for retrieving plugin-specific citation information. Then get in touch on the QIIME 2 Forum to let us know!
 
 
 Example methods descriptions
@@ -72,5 +74,4 @@ This methods section was adapted from `Pearson et al. 2019`_ (and shortened in t
 .. _paper: https://doi.org/10.1038/s41587-019-0209-9
 .. _VSEARCH: https://github.com/torognes/vsearch
 .. _q2-feature-classifier: https://doi.org/10.1186/s40168-018-0470-z
-.. _QIIME 2 forum: https://forum.qiime2.org/
 .. _Pearson et al. 2019: https://doi.org/10.1002/cam4.1965

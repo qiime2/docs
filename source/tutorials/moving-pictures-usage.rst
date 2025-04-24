@@ -1,6 +1,8 @@
 "Moving Pictures" tutorial - Multiple Interface Edition
 =======================================================
 
+.. include:: ../_old_docs_warning.rst
+
 Beta preview note
 -----------------
 
