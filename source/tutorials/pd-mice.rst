@@ -105,7 +105,7 @@ Even though the mouse ID looks like a number, we will specify that it is categor
 The metadata is available as a `Google Sheet`_, or you can download it directly and save it as a TSV (tab-separated values) file.
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/sample_metadata.tsv
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/sample_metadata.tsv
    :saveas: metadata.tsv
 
 The sample metadata will be used throughout the tutorial. Let's run our first QIIME 2 command, to summarize and explore the metadata.
@@ -130,11 +130,11 @@ We will import the sequences as ``SampleData[SequencesWithQuality]``, which is t
 Let's start by downloading the manifest and corresponding sequences.
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/manifest
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/manifest
    :saveas: manifest.tsv
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/demultiplexed_seqs.zip
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/demultiplexed_seqs.zip
    :saveas: demultiplexed_seqs.zip
 
 You'll need to unzip sequence archive you just downloaded:
@@ -693,15 +693,15 @@ If you feel that these samples are not typical stool samples, it is possible to,
 Start by downloading the stool data, along with the 99% Greengene 13_8 reference data.
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/ref_seqs_v4.qza
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/ref_seqs_v4.qza
    :saveas: ref_seqs_v4.qza
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/ref_tax.qza
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/ref_tax.qza
    :saveas: ref_tax.qza
 
 .. download::
-   :url: https://data.qiime2.org/2025.4/tutorials/pd-mice/animal_distal_gut.qza
+   :url: https://data.qiime2.org/2024.10/tutorials/pd-mice/animal_distal_gut.qza
    :saveas: animal_distal_gut.qza
 
 Next retrain the classifier.
@@ -943,7 +943,7 @@ This suggests that there is a genotype-specific effect on the microbiome of mice
 .. _PERMANOVA: https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1442-9993.2001.01070.pp.x
 .. _This classifier works: https://doi.org/10.1186/s40168-018-0470-z
 .. _ANCOM-BC paper: https://pubmed.ncbi.nlm.nih.gov/32665548/
-.. _Google Sheet: https://data.qiime2.org/2025.4/tutorials/pd-mice/sample_metadata
+.. _Google Sheet: https://data.qiime2.org/2024.10/tutorials/pd-mice/sample_metadata
 .. _permdisp: https://www.ncbi.nlm.nih.gov/pubmed/16706913
 .. _volcano plot: https://en.wikipedia.org/wiki/Volcano_plot_(statistics)
 .. _confusion matrix: https://en.wikipedia.org/wiki/Confusion_matrix
